@@ -25,6 +25,24 @@ interface JobStateFileProps {
   isSelected: boolean;
 }
 
+function BuildTitle(name: string) {
+  let re = new RegExp('^((failed|unreachable|skipped)/)?(PLAY|TASK)(.*)');
+  let title;
+  
+  if (re.test(name)) {
+    title = name.replace(re, '$3$4');
+  } else {
+    title = `TASK [${name}] `;
+  }
+  return `${title} `.padEnd(80, "*")
+}
+
+function ShowCaret(name: string) {
+  let re = new RegExp('^((failed|unreachable|skipped)/)?(PLAY [\\[]|PLAYBOOK)');
+  
+  return !(re.test(name))
+}
+
 export default function JobStateFile({
   id,
   link,
@@ -73,10 +91,10 @@ export default function JobStateFile({
         <ShareLink href={link} isSelected={isSelected}>
           <LinkIcon />
         </ShareLink>
-        <CaretIcon>
+        {ShowCaret(file.name) ? <CaretIcon>
           {seeDetails ? <CaretDownIcon /> : <CaretRightIcon />}
-        </CaretIcon>
-        <FileName>{`TASK [${file.name}] `.padEnd(80, "*")}</FileName>
+         </CaretIcon> : null}
+      <FileName>{BuildTitle(file.name)}</FileName>
         <LabelBox>
           <Label>{`${Math.round(file.duration)}s`}</Label>
         </LabelBox>
