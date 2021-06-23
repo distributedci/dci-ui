@@ -126,7 +126,7 @@ export default function JobPage() {
       {activeTabKey === 0 && job && (
         <Stack>
           <StackItem>
-            <JobSummary job={job} />
+            <JobSummary showComment job={job} />
           </StackItem>
           <JobStatesList job={job} />
           <StackItem></StackItem>
@@ -135,7 +135,7 @@ export default function JobPage() {
       {activeTabKey === 1 && job && job.tests && (
         <Stack>
           <StackItem>
-            <JobSummary job={job} />
+            <JobSummary showComment job={job} />
           </StackItem>
           <TestsList tests={job.tests} />
           <StackItem></StackItem>
@@ -144,7 +144,7 @@ export default function JobPage() {
       {activeTabKey === 2 && job && job.files && (
         <Stack>
           <StackItem>
-            <JobSummary job={job} />
+            <JobSummary showComment job={job} />
           </StackItem>
           <FilesList files={job.files} />
           <StackItem></StackItem>
