@@ -27,11 +27,8 @@ export default function App() {
       <PrivateRoute path="/files/:id">
         <Pages.FilePage />
       </PrivateRoute>
-      <PrivateRoute path="/trends">
-        <Pages.TrendsPage />
-      </PrivateRoute>
-      <PrivateRoute path="/performance">
-        <Pages.PerformancePage />
+      <PrivateRoute path="/analytics/tasks_duration_per_job">
+        <Pages.TasksDurationPerJobPage />
       </PrivateRoute>
       <PrivateRoute path="/products">
         <Pages.ProductsPage />

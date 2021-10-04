@@ -100,9 +100,8 @@ export default function AppLayout({ children, ...props }: AppLayoutProps) {
         <DCINavItem to="/currentUser/notifications">Notifications</DCINavItem>
       </NavGroup>
       {identity.hasReadOnlyRole && (
-        <NavGroup title="Red Hat">
-          <DCINavItem to="/trends">Trends</DCINavItem>
-          <DCINavItem to="/performance">Performance</DCINavItem>
+        <NavGroup title="Analytics">
+          <DCINavItem to="/analytics/tasks_duration_per_job">Jobs</DCINavItem>
         </NavGroup>
       )}
       {identity.hasEPMRole && (
