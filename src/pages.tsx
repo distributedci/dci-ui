@@ -23,6 +23,7 @@ import LoginPage from "./auth/LoginPage";
 import LoginCallbackPage from "./auth/LoginCallbackPage";
 import SilentRedirectPage from "./auth/SilentRedirectPage";
 import Page404 from "./layout/Page404";
+import TasksDurationPerJobPage from "./analytics/jobs/TasksDurationPerJobPage"
 
 const Pages = {
   DashboardPage,
@@ -30,6 +31,7 @@ const Pages = {
   JobsPage,
   JobPage,
   FilePage,
+  TasksDurationPerJobPage,
   ProductsPage,
   TopicsPage,
   TopicPage,
