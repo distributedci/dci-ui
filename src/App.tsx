@@ -195,6 +195,15 @@ export default function App() {
         }
       />
 
+      <Route
+        path="/analytics/tasks_duration_per_job"
+        element={
+          <PrivateRoute>
+            <Pages.TasksDurationPerJobPage />
+          </PrivateRoute>
+        }
+      />
+
       <Route path="/login" element={<Pages.LoginPage />} />
       <Route path="/login_callback" element={<Pages.LoginCallbackPage />} />
       <Route path="/silent_redirect" element={<Pages.SilentRedirectPage />} />
