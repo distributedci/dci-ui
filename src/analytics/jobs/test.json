@@ -1,0 +1,4450 @@
+{
+    "8ed5caf8-99a9-4784-a000-1d0784c55dd8": [
+        {
+            "x": "task 1: PLAYBOOK: dci-openshift-agent.yml",
+            "y": 0
+        },
+        {
+            "x": "task 2: PLAY [Set dci variables]",
+            "y": 0
+        },
+        {
+            "x": "task 3: TASK [Gathering Facts]",
+            "y": 0
+        },
+        {
+            "x": "task 4: TASK [Read credentials from env vars]",
+            "y": 0
+        },
+        {
+            "x": "task 5: skipped/TASK [Schedule a new job]",
+            "y": 0
+        },
+        {
+            "x": "task 6: TASK [Assertions]",
+            "y": 1
+        },
+        {
+            "x": "task 7: TASK [Set the job id]",
+            "y": 1
+        },
+        {
+            "x": "task 8: skipped/TASK [copy the job_id to the JOB_ID_FILE if it exists]",
+            "y": 1
+        },
+        {
+            "x": "task 9: TASK [UI URL]",
+            "y": 2
+        },
+        {
+            "x": "task 10: TASK [Set DCI tags for the current job]",
+            "y": 3
+        },
+        {
+            "x": "task 11: TASK [pre-run]",
+            "y": 3
+        },
+        {
+            "x": "task 12: PLAY [Launch pre-run]",
+            "y": 5
+        },
+        {
+            "x": "task 13: TASK [Gathering Facts]",
+            "y": 5
+        },
+        {
+            "x": "task 14: skipped/TASK [Run the pre-run]",
+            "y": 5
+        },
+        {
+            "x": "task 15: TASK [Validate we have all the pieces to run in disconnected mode]",
+            "y": 5
+        },
+        {
+            "x": "task 16: skipped/TASK [Configure jumpbox]",
+            "y": 9
+        },
+        {
+            "x": "task 17: TASK [Install helper tools]",
+            "y": 11
+        },
+        {
+            "x": "task 18: TASK [Install grpcurl]",
+            "y": 12
+        },
+        {
+            "x": "task 19: TASK [Ensure Apache is running]",
+            "y": 13
+        },
+        {
+            "x": "task 20: TASK [Open port 80 on the firewall]",
+            "y": 13
+        },
+        {
+            "x": "task 21: TASK [Ensure proper directories are created]",
+            "y": 15
+        },
+        {
+            "x": "task 22: TASK [Clean up /home/dciteam/clusterconfigs-cluster5]",
+            "y": 15
+        },
+        {
+            "x": "task 23: TASK [Create /home/dciteam/clusterconfigs-cluster5]",
+            "y": 15
+        },
+        {
+            "x": "task 24: TASK [Setup podman on the jumphost]",
+            "y": 15
+        },
+        {
+            "x": "task 25: skipped/TASK [ansible-role-dci-podman : Install binaries and other packages in system]",
+            "y": 23
+        },
+        {
+            "x": "task 26: TASK [ansible-role-dci-podman : Install packages needed for podman]",
+            "y": 23
+        },
+        {
+            "x": "task 27: skipped/TASK [ansible-role-dci-podman : Configure system]",
+            "y": 23
+        },
+        {
+            "x": "task 28: TASK [ansible-role-dci-podman : Check /proc/sys/user/max_user_namespaces is correct]",
+            "y": 23
+        },
+        {
+            "x": "task 29: skipped/TASK [ansible-role-dci-podman : Create /etc/sysctl.d/userns.conf]",
+            "y": 23
+        },
+        {
+            "x": "task 30: skipped/TASK [ansible-role-dci-podman : Update sysctl]",
+            "y": 23
+        },
+        {
+            "x": "task 31: TASK [ansible-role-dci-podman : Add default subuid entry for ansible_user_id]",
+            "y": 23
+        },
+        {
+            "x": "task 32: TASK [ansible-role-dci-podman : Add additional subuid entries]",
+            "y": 23
+        },
+        {
+            "x": "task 33: TASK [ansible-role-dci-podman : Add default subgid entry for ansible_user_id]",
+            "y": 23
+        },
+        {
+            "x": "task 34: TASK [ansible-role-dci-podman : Add additional subgid entries]",
+            "y": 23
+        },
+        {
+            "x": "task 35: TASK [Import remoteci SSL keys]",
+            "y": 24
+        },
+        {
+            "x": "task 36: TASK [dci-import-keys : Ensure the SSL directories exist]",
+            "y": 25
+        },
+        {
+            "x": "task 37: TASK [dci-import-keys : Retrieve remoteci key and certificate from DCI]",
+            "y": 26
+        },
+        {
+            "x": "task 38: TASK [dci-import-keys : Create the certificate file]",
+            "y": 26
+        },
+        {
+            "x": "task 39: TASK [dci-import-keys : Create the private key file]",
+            "y": 26
+        },
+        {
+            "x": "task 40: TASK [Get openshift_version from job.components]",
+            "y": 26
+        },
+        {
+            "x": "task 41: TASK [Get build from tag]",
+            "y": 26
+        },
+        {
+            "x": "task 42: TASK [Set pullsecret from job_info]",
+            "y": 26
+        },
+        {
+            "x": "task 43: TASK [Read Disconnected auths]",
+            "y": 26
+        },
+        {
+            "x": "task 44: skipped/TASK [Set build:ga when build:candidate]",
+            "y": 26
+        },
+        {
+            "x": "task 45: TASK [Mirror release]",
+            "y": 27
+        },
+        {
+            "x": "task 46: TASK [mirror-ocp-release : Validate required input]",
+            "y": 27
+        },
+        {
+            "x": "task 47: TASK [mirror-ocp-release : Mirroring OCP]",
+            "y": 27
+        },
+        {
+            "x": "task 48: skipped/TASK [mirror-ocp-release : Create directory structure]",
+            "y": 27
+        },
+        {
+            "x": "task 49: TASK [mirror-ocp-release : Create master cache directory]",
+            "y": 27
+        },
+        {
+            "x": "task 50: TASK [mirror-ocp-release : Create cache directory for release]",
+            "y": 27
+        },
+        {
+            "x": "task 51: skipped/TASK [mirror-ocp-release : Fetch release resources]",
+            "y": 27
+        },
+        {
+            "x": "task 52: TASK [mirror-ocp-release : Check if release.txt exists]",
+            "y": 27
+        },
+        {
+            "x": "task 53: TASK [mirror-ocp-release : Check if signature.bin exists]",
+            "y": 28
+        },
+        {
+            "x": "task 54: TASK [mirror-ocp-release : Check if release.dig exists]",
+            "y": 28
+        },
+        {
+            "x": "task 55: TASK [mirror-ocp-release : Check if clients exists]",
+            "y": 29
+        },
+        {
+            "x": "task 56: TASK [mirror-ocp-release : Fetch release.txt]",
+            "y": 29
+        },
+        {
+            "x": "task 57: TASK [mirror-ocp-release : Read release_version from release.txt]",
+            "y": 29
+        },
+        {
+            "x": "task 58: TASK [mirror-ocp-release : Read release_image from release.txt]",
+            "y": 29
+        },
+        {
+            "x": "task 59: TASK [mirror-ocp-release : Get digest for release]",
+            "y": 30
+        },
+        {
+            "x": "task 60: TASK [mirror-ocp-release : Fetch release signature]",
+            "y": 31
+        },
+        {
+            "x": "task 61: TASK [mirror-ocp-release : Base64 encode binary signature]",
+            "y": 32
+        },
+        {
+            "x": "task 62: TASK [mirror-ocp-release : Fetch channel upgrade graph]",
+            "y": 36
+        },
+        {
+            "x": "task 63: TASK [mirror-ocp-release : Fetch client tools tarballs]",
+            "y": 41
+        },
+        {
+            "x": "task 64: TASK [mirror-ocp-release : Untar client tools]",
+            "y": 41
+        },
+        {
+            "x": "task 65: skipped/TASK [mirror-ocp-release : Fetch client tools tarballs (pre 4.6.17)]",
+            "y": 41
+        },
+        {
+            "x": "task 66: skipped/TASK [mirror-ocp-release : Untar client tools (pre 4.6.17)]",
+            "y": 41
+        },
+        {
+            "x": "task 67: TASK [mirror-ocp-release : Marker for client tools downloaded]",
+            "y": 41
+        },
+        {
+            "x": "task 68: skipped/TASK [mirror-ocp-release : Create mirror files]",
+            "y": 42
+        },
+        {
+            "x": "task 69: TASK [mirror-ocp-release : Write release digest]",
+            "y": 43
+        },
+        {
+            "x": "task 70: TASK [mirror-ocp-release : Write pull secret file to cache]",
+            "y": 44
+        },
+        {
+            "x": "task 71: TASK [mirror-ocp-release : Write mirrored image content source policy]",
+            "y": 45
+        },
+        {
+            "x": "task 72: TASK [mirror-ocp-release : Write signature config map]",
+            "y": 45
+        },
+        {
+            "x": "task 73: skipped/TASK [mirror-ocp-release : Setup installer]",
+            "y": 46
+        },
+        {
+            "x": "task 74: TASK [mirror-ocp-release : Check if commands were extracted]",
+            "y": 55
+        },
+        {
+            "x": "task 75: TASK [mirror-ocp-release : Extract installer commands]",
+            "y": 56
+        },
+        {
+            "x": "task 76: TASK [mirror-ocp-release : Set executable permission on commands]",
+            "y": 56
+        },
+        {
+            "x": "task 77: skipped/TASK [mirror-ocp-release : Mirror images]",
+            "y": 57
+        },
+        {
+            "x": "task 78: TASK [mirror-ocp-release : Check if rhcos.json exists]",
+            "y": 57
+        },
+        {
+            "x": "task 79: TASK [mirror-ocp-release : Get git SHA from installer]",
+            "y": 57
+        },
+        {
+            "x": "task 80: skipped/TASK [mirror-ocp-release : Fetch rhcos.json File [<= 4.7]]",
+            "y": 58
+        },
+        {
+            "x": "task 81: TASK [mirror-ocp-release : Fetch rhcos.json File [>= 4.8]]",
+            "y": 58
+        },
+        {
+            "x": "task 82: TASK [mirror-ocp-release : Load variables from rhcos.json]",
+            "y": 58
+        },
+        {
+            "x": "task 83: skipped/TASK [mirror-ocp-release : Setting image facts [<= 4.7]]",
+            "y": 58
+        },
+        {
+            "x": "task 84: TASK [mirror-ocp-release : Setting image facts [>= 4.8]]",
+            "y": 58
+        },
+        {
+            "x": "task 85: TASK [mirror-ocp-release : Check if QEMU image exists]",
+            "y": 58
+        },
+        {
+            "x": "task 86: skipped/TASK [mirror-ocp-release : Download QEMU image]",
+            "y": 58
+        },
+        {
+            "x": "task 87: TASK [mirror-ocp-release : Check if OpenStack image exists]",
+            "y": 58
+        },
+        {
+            "x": "task 88: skipped/TASK [mirror-ocp-release : Download OpenStack image]",
+            "y": 58
+        },
+        {
+            "x": "task 89: TASK [mirror-ocp-release : Set facts for *osimage URL overrides]",
+            "y": 58
+        },
+        {
+            "x": "task 90: TASK [mirror-ocp-release : Check if container_images.done exists]",
+            "y": 151
+        },
+        {
+            "x": "task 91: TASK [mirror-ocp-release : Mirror release images to local registry]",
+            "y": 152
+        },
+        {
+            "x": "task 92: TASK [mirror-ocp-release : Marker for container images mirrored]",
+            "y": 154
+        },
+        {
+            "x": "task 93: TASK [Clone/update baremetal-deploy repo]",
+            "y": 154
+        },
+        {
+            "x": "task 94: skipped/TASK [include_tasks]",
+            "y": 154
+        },
+        {
+            "x": "task 95: TASK [get last commit id]",
+            "y": 154
+        },
+        {
+            "x": "task 96: TASK [get repo url]",
+            "y": 155
+        },
+        {
+            "x": "task 97: TASK [Create git repo component]",
+            "y": 156
+        },
+        {
+            "x": "task 98: TASK [Attach git component to the job]",
+            "y": 156
+        },
+        {
+            "x": "task 99: TASK [get last commit id]",
+            "y": 156
+        },
+        {
+            "x": "task 100: TASK [get repo url]",
+            "y": 157
+        },
+        {
+            "x": "task 101: TASK [Create git repo component]",
+            "y": 157
+        },
+        {
+            "x": "task 102: TASK [Attach git component to the job]",
+            "y": 157
+        },
+        {
+            "x": "task 103: TASK [get last commit id]",
+            "y": 158
+        },
+        {
+            "x": "task 104: TASK [get repo url]",
+            "y": 159
+        },
+        {
+            "x": "task 105: TASK [Create git repo component]",
+            "y": 159
+        },
+        {
+            "x": "task 106: TASK [Attach git component to the job]",
+            "y": 161
+        },
+        {
+            "x": "task 107: TASK [Gather the package facts]",
+            "y": 161
+        },
+        {
+            "x": "task 108: skipped/TASK [include_tasks]",
+            "y": 162
+        },
+        {
+            "x": "task 109: TASK [Create package component]",
+            "y": 165
+        },
+        {
+            "x": "task 110: TASK [Attach package component to the job]",
+            "y": 166
+        },
+        {
+            "x": "task 111: TASK [Create package component]",
+            "y": 167
+        },
+        {
+            "x": "task 112: TASK [Attach package component to the job]",
+            "y": 168
+        },
+        {
+            "x": "task 113: TASK [Create package component]",
+            "y": 169
+        },
+        {
+            "x": "task 114: TASK [Attach package component to the job]",
+            "y": 170
+        },
+        {
+            "x": "task 115: TASK [Create package component]",
+            "y": 171
+        },
+        {
+            "x": "task 116: TASK [Attach package component to the job]",
+            "y": 172
+        },
+        {
+            "x": "task 117: TASK [Create package component]",
+            "y": 173
+        },
+        {
+            "x": "task 118: TASK [Attach package component to the job]",
+            "y": 174
+        },
+        {
+            "x": "task 119: TASK [Create package component]",
+            "y": 175
+        },
+        {
+            "x": "task 120: TASK [Attach package component to the job]",
+            "y": 175
+        },
+        {
+            "x": "task 121: TASK [dci-openshift-agent : Mirror Operators]",
+            "y": 175
+        },
+        {
+            "x": "task 122: skipped/TASK [operators-mirror : Set Facts]",
+            "y": 175
+        },
+        {
+            "x": "task 123: TASK [operators-mirror : Basic facts]",
+            "y": 175
+        },
+        {
+            "x": "task 124: TASK [operators-mirror : Set facts for newer ocp versions]",
+            "y": 175
+        },
+        {
+            "x": "task 125: skipped/TASK [operators-mirror : Install Packages]",
+            "y": 179
+        },
+        {
+            "x": "task 126: TASK [operators-mirror : Install skopeo]",
+            "y": 179
+        },
+        {
+            "x": "task 127: skipped/TASK [operators-mirror : Mirror]",
+            "y": 179
+        },
+        {
+            "x": "task 128: TASK [operators-mirror : set OPM version (non GA)]",
+            "y": 179
+        },
+        {
+            "x": "task 129: skipped/TASK [operators-mirror : set OPM version (GA)]",
+            "y": 180
+        },
+        {
+            "x": "task 130: skipped/TASK [operators-mirror : Build Operator catalog index]",
+            "y": 180
+        },
+        {
+            "x": "task 131: TASK [operators-mirror : Create a tmp directory for the prune image]",
+            "y": 201
+        },
+        {
+            "x": "task 132: TASK [operators-mirror : Prune source index but opm list]",
+            "y": 202
+        },
+        {
+            "x": "task 133: TASK [operators-mirror : Push the new index image to the local registry]",
+            "y": 203
+        },
+        {
+            "x": "task 134: TASK [operators-mirror : Get index SHA256]",
+            "y": 203
+        },
+        {
+            "x": "task 135: TASK [operators-mirror : Create a tmp directory Index DB]",
+            "y": 208
+        },
+        {
+            "x": "task 136: TASK [operators-mirror : Mirror catalog manifests]",
+            "y": 208
+        },
+        {
+            "x": "task 137: TASK [operators-mirror : Delete tmp Index directory]",
+            "y": 208
+        },
+        {
+            "x": "task 138: TASK [operators-mirror : Generate mirror entries]",
+            "y": 209
+        },
+        {
+            "x": "task 139: TASK [operators-mirror : Generate mirror bundle]",
+            "y": 209
+        },
+        {
+            "x": "task 140: TASK [operators-mirror : Copy trust bundle]",
+            "y": 209
+        },
+        {
+            "x": "task 141: TASK [operators-mirror : Add Dynamic mirror to trust bundle]",
+            "y": 209
+        },
+        {
+            "x": "task 142: TASK [operators-mirror : Override disconnected_registry_mirrors_file]",
+            "y": 215
+        },
+        {
+            "x": "task 143: TASK [dci-openshift-agent : Mirror must-gather images]",
+            "y": 216
+        },
+        {
+            "x": "task 144: TASK [Get provisioner SSH identity]",
+            "y": 225
+        },
+        {
+            "x": "task 145: TASK [Erase bootloader to prevent old OS to boot]",
+            "y": 228
+        },
+        {
+            "x": "task 146: TASK [Empty Console log files if present]",
+            "y": 228
+        },
+        {
+            "x": "task 147: skipped/TASK [Run the pre-run hook]",
+            "y": 242
+        },
+        {
+            "x": "task 148: TASK [Set BootMode to UEFI]",
+            "y": 243
+        },
+        {
+            "x": "task 149: TASK [running]",
+            "y": 243
+        },
+        {
+            "x": "task 150: RUNNING HANDLER [operators-mirror : Fix permissions and removing tmp files]",
+            "y": 243
+        },
+        {
+            "x": "task 151: PLAY [Launch configure]",
+            "y": 245
+        },
+        {
+            "x": "task 152: TASK [Gathering Facts]",
+            "y": 245
+        },
+        {
+            "x": "task 153: skipped/TASK [Configure provisioner]",
+            "y": 245
+        },
+        {
+            "x": "task 154: TASK [Configure extra repositories]",
+            "y": 248
+        },
+        {
+            "x": "task 155: TASK [Install packages]",
+            "y": 248
+        },
+        {
+            "x": "task 156: TASK [Launch configure]",
+            "y": 248
+        },
+        {
+            "x": "task 157: PLAY [Launch install]",
+            "y": 251
+        },
+        {
+            "x": "task 158: TASK [Gathering Facts]",
+            "y": 251
+        },
+        {
+            "x": "task 159: skipped/TASK [dci-openshift-agent : Launch install]",
+            "y": 251
+        },
+        {
+            "x": "task 160: skipped/TASK [installer : set EXTERNAL_SUBNET]",
+            "y": 251
+        },
+        {
+            "x": "task 161: TASK [installer : Get version and build from localhost vars]",
+            "y": 251
+        },
+        {
+            "x": "task 162: TASK [installer : Get pullsecret from localhost vars]",
+            "y": 252
+        },
+        {
+            "x": "task 163: TASK [installer: Check if .cache directory exists]",
+            "y": 253
+        },
+        {
+            "x": "task 164: TASK [installer: Retrieve images older than max_images_age]",
+            "y": 253
+        },
+        {
+            "x": "task 165: TASK [installer: Delete images older than max_images_age]",
+            "y": 253
+        },
+        {
+            "x": "task 166: TASK [installer : Populate clusterosimage]",
+            "y": 254
+        },
+        {
+            "x": "task 167: TASK [installer : Populate bootstraposimage]",
+            "y": 255
+        },
+        {
+            "x": "task 168: skipped/TASK [node-prep : include_tasks]",
+            "y": 255
+        },
+        {
+            "x": "task 169: skipped/TASK [node-prep : Check ansible version]",
+            "y": 255
+        },
+        {
+            "x": "task 170: TASK [node-prep : Ensure Python libraries are installed]",
+            "y": 255
+        },
+        {
+            "x": "task 171: skipped/TASK [node-prep : Fail if Python modules are missing]",
+            "y": 255
+        },
+        {
+            "x": "task 172: skipped/TASK [node-prep : Fail if version is undefined or empty.]",
+            "y": 255
+        },
+        {
+            "x": "task 173: skipped/TASK [node-prep : Fail if build is undefined or empty]",
+            "y": 255
+        },
+        {
+            "x": "task 174: skipped/TASK [node-prep : Fail if a required install-config variable is undefined or empty.]",
+            "y": 255
+        },
+        {
+            "x": "task 175: skipped/TASK [node-prep : Fail if both bootstraposimage and clusterosimage variables are empty.]",
+            "y": 255
+        },
+        {
+            "x": "task 176: skipped/TASK [node-prep : Conditions to set cache_enabled to true]",
+            "y": 255
+        },
+        {
+            "x": "task 177: TASK [node-prep : Conditions to set cache_enabled to false]",
+            "y": 255
+        },
+        {
+            "x": "task 178: TASK [node-prep : Check whether caching is enabled]",
+            "y": 255
+        },
+        {
+            "x": "task 179: skipped/TASK [node-prep : Verify DNS records for Wildcard (Ingress) VIP]",
+            "y": 255
+        },
+        {
+            "x": "task 180: skipped/TASK [node-prep : Verify DNS records for API VIP]",
+            "y": 255
+        },
+        {
+            "x": "task 181: TASK [node-prep : Display API VIP IP]",
+            "y": 255
+        },
+        {
+            "x": "task 182: TASK [node-prep : Display Ingress VIP IP]",
+            "y": 255
+        },
+        {
+            "x": "task 183: skipped/TASK [node-prep : Fail if incorrect API VIP]",
+            "y": 255
+        },
+        {
+            "x": "task 184: skipped/TASK [node-prep : Fail if incorrect Ingress VIP]",
+            "y": 255
+        },
+        {
+            "x": "task 185: TASK [node-prep : Set release_url for development envs]",
+            "y": 255
+        },
+        {
+            "x": "task 186: skipped/TASK [node-prep : Set release_url for GA envs]",
+            "y": 257
+        },
+        {
+            "x": "task 187: TASK [node-prep : Confirm whether or not internet connectivity on provisioner host]",
+            "y": 257
+        },
+        {
+            "x": "task 188: TASK [node-prep : Set fact disconnected_registry_auths_file]",
+            "y": 257
+        },
+        {
+            "x": "task 189: TASK [node-prep : Set fact disconnected_registry_mirrors_file]",
+            "y": 257
+        },
+        {
+            "x": "task 190: TASK [node-prep : Verify Registry host details]",
+            "y": 257
+        },
+        {
+            "x": "task 191: TASK [node-prep : Check if disconnected_registry_auths_file is set]",
+            "y": 258
+        },
+        {
+            "x": "task 192: TASK [node-prep : Check if disconnected_registry_mirrors_file is set]",
+            "y": 258
+        },
+        {
+            "x": "task 193: skipped/TASK [node-prep : Fail when provision host no online access and registry host not creating registry (can't assume access)]",
+            "y": 258
+        },
+        {
+            "x": "task 194: skipped/TASK [node-prep : Check if Python cryptography libraries are installed]",
+            "y": 258
+        },
+        {
+            "x": "task 195: skipped/TASK [node-prep : Check if Python PyOpenSSL libraries are installed]",
+            "y": 258
+        },
+        {
+            "x": "task 196: skipped/TASK [node-prep : Fail on missing required cryptography libraries cryptography OR PyOpenSSL]",
+            "y": 264
+        },
+        {
+            "x": "task 197: TASK [node-prep : Get Release.txt File]",
+            "y": 264
+        },
+        {
+            "x": "task 198: TASK [node-prep : Set Fact for Release Image]",
+            "y": 264
+        },
+        {
+            "x": "task 199: TASK [node-prep : Get the release version]",
+            "y": 264
+        },
+        {
+            "x": "task 200: skipped/TASK [node-prep : Fail if dual-stack is requested and build does not support it]",
+            "y": 264
+        },
+        {
+            "x": "task 201: skipped/TASK [node-prep : Fail if dualstack_baremetal and ipv4_baremetal are both true]",
+            "y": 264
+        },
+        {
+            "x": "task 202: skipped/TASK [node-prep : Check for valid extcidrnet (IPv4)]",
+            "y": 264
+        },
+        {
+            "x": "task 203: skipped/TASK [node-prep : Check for valid extcidrnet (IPv6)]",
+            "y": 264
+        },
+        {
+            "x": "task 204: skipped/TASK [node-prep : Check for valid extcidrnet and extcidrnet6 (Dual-Stack)]",
+            "y": 265
+        },
+        {
+            "x": "task 205: TASK [node-prep : Check if openshift-client-linux-4.10.0-0.nightly-2021-11-23-133134.tar.gz exists]",
+            "y": 265
+        },
+        {
+            "x": "task 206: skipped/TASK [node-prep : Fail if hostgroups not defined in inventory/hosts file]",
+            "y": 265
+        },
+        {
+            "x": "task 207: TASK [node-prep : Set Fact of num of workers and masters based on inventory]",
+            "y": 267
+        },
+        {
+            "x": "task 208: TASK [node-prep : Gather the rpm package facts]",
+            "y": 267
+        },
+        {
+            "x": "task 209: skipped/TASK [node-prep : Set Fact for firewall variable]",
+            "y": 267
+        },
+        {
+            "x": "task 210: TASK [node-prep : Set Fact for provisioning nic]",
+            "y": 267
+        },
+        {
+            "x": "task 211: skipped/TASK [node-prep : Fail if DNSVIP not set (OCP 4.4 or lower)]",
+            "y": 280
+        },
+        {
+            "x": "task 212: TASK [node-prep : Get all the chassis results from all the hosts]",
+            "y": 348
+        },
+        {
+            "x": "task 213: TASK [node-prep : Get all the firmware results from all the hosts]",
+            "y": 348
+        },
+        {
+            "x": "task 214: skipped/TASK [node-prep : Add all the hosts that are Dell to a group with iDRAC firmware higher than 4.20.20.20]",
+            "y": 348
+        },
+        {
+            "x": "task 215: TASK [node-prep : Add all the hosts that are HP to a group]",
+            "y": 348
+        },
+        {
+            "x": "task 216: skipped/TASK [node-prep : Fail when provisioningHostIP and bootstrapProvisioningIP are not set when virtualmedia option is enabled]",
+            "y": 348
+        },
+        {
+            "x": "task 217: skipped/TASK [node-prep : Fail when bootstrapProvisioningIP are not set when virtualmedia option is enabled]",
+            "y": 348
+        },
+        {
+            "x": "task 218: skipped/TASK [node-prep : include_tasks]",
+            "y": 348
+        },
+        {
+            "x": "task 219: TASK [node-prep : Set fact disconnected_registry_auths_file]",
+            "y": 348
+        },
+        {
+            "x": "task 220: TASK [node-prep : Set fact disconnected_registry_mirrors_file]",
+            "y": 349
+        },
+        {
+            "x": "task 221: skipped/TASK [node-prep : Set fact registry_port]",
+            "y": 349
+        },
+        {
+            "x": "task 222: TASK [node-prep : Set fact disconnected_registry_mirrors_file]",
+            "y": 349
+        },
+        {
+            "x": "task 223: TASK [node-prep : Check if disconnected_registry_auths_file is set]",
+            "y": 349
+        },
+        {
+            "x": "task 224: TASK [node-prep : Check if disconnected_registry_mirrors_file is set]",
+            "y": 349
+        },
+        {
+            "x": "task 225: skipped/TASK [node-prep : Make sure disconnected_registry_variables are sane]",
+            "y": 349
+        },
+        {
+            "x": "task 226: TASK [node-prep : Check if using existing disconnected registry.]",
+            "y": 349
+        },
+        {
+            "x": "task 227: skipped/TASK [node-prep : Check if creating a new disconnected registry.]",
+            "y": 349
+        },
+        {
+            "x": "task 228: skipped/TASK [node-prep : include_tasks]",
+            "y": 349
+        },
+        {
+            "x": "task 229: skipped/TASK [node-prep : Register host via Activation key]",
+            "y": 349
+        },
+        {
+            "x": "task 230: skipped/TASK [node-prep : include_tasks]",
+            "y": 349
+        },
+        {
+            "x": "task 231: skipped/TASK [node-prep : Create list of packages to be installed]",
+            "y": 354
+        },
+        {
+            "x": "task 232: TASK [node-prep : Install required packages]",
+            "y": 354
+        },
+        {
+            "x": "task 233: skipped/TASK [node-prep : include_tasks]",
+            "y": 355
+        },
+        {
+            "x": "task 234: TASK [node-prep : Get the provision connection name]",
+            "y": 356
+        },
+        {
+            "x": "task 235: TASK [node-prep : Get the public connection name]",
+            "y": 357
+        },
+        {
+            "x": "task 236: TASK [node-prep : Disconnect provisioning bridge connection]",
+            "y": 358
+        },
+        {
+            "x": "task 237: TASK [node-prep : Delete eno5np0 due to modify nmcli bug]",
+            "y": 360
+        },
+        {
+            "x": "task 238: TASK [node-prep : Delete eno5np0 due to modify nmcli bug]",
+            "y": 362
+        },
+        {
+            "x": "task 239: TASK [node-prep : Delete provisioning bridge if it exists]",
+            "y": 362
+        },
+        {
+            "x": "task 240: skipped/TASK [node-prep : set provisioning network fact]",
+            "y": 363
+        },
+        {
+            "x": "task 241: TASK [node-prep : Create Bridge labeled provisioning bridge ipv4]",
+            "y": 364
+        },
+        {
+            "x": "task 242: TASK [node-prep : Create Bridge slave on provisioning nic ipv4]",
+            "y": 364
+        },
+        {
+            "x": "task 243: skipped/TASK [node-prep : Create Bridge labeled provisioning bridge ipv6]",
+            "y": 364
+        },
+        {
+            "x": "task 244: skipped/TASK [node-prep : Create Bridge slave on provisioning nic ipv6]",
+            "y": 365
+        },
+        {
+            "x": "task 245: TASK [node-prep : Create Bridge labeled baremetal for ipv4]",
+            "y": 365
+        },
+        {
+            "x": "task 246: skipped/TASK [node-prep : Create Bridge labeled baremetal for ipv6/dual-stack]",
+            "y": 366
+        },
+        {
+            "x": "task 247: TASK [node-prep : Create Bridge slave on ens3f1]",
+            "y": 368
+        },
+        {
+            "x": "task 248: TASK [node-prep : Reload baremetal bridge and slave interfaces]",
+            "y": 370
+        },
+        {
+            "x": "task 249: TASK [node-prep : Reload provisioning bridge and slave interfaces]",
+            "y": 370
+        },
+        {
+            "x": "task 250: skipped/TASK [node-prep : include_tasks]",
+            "y": 371
+        },
+        {
+            "x": "task 251: TASK [node-prep : Regather Network Facts]",
+            "y": 371
+        },
+        {
+            "x": "task 252: skipped/TASK [node-prep : Set External Subnet with IPv4]",
+            "y": 371
+        },
+        {
+            "x": "task 253: skipped/TASK [node-prep : Set External Subnet with IPv6]",
+            "y": 371
+        },
+        {
+            "x": "task 254: TASK [node-prep : set provisioning subnet with IPV4]",
+            "y": 371
+        },
+        {
+            "x": "task 255: skipped/TASK [node-prep : set provisioning subnet with IPV6]",
+            "y": 371
+        },
+        {
+            "x": "task 256: TASK [node-prep : Show external subnet]",
+            "y": 371
+        },
+        {
+            "x": "task 257: TASK [node-prep : Show provisioning subnet]",
+            "y": 371
+        },
+        {
+            "x": "task 258: skipped/TASK [node-prep : include_tasks]",
+            "y": 373
+        },
+        {
+            "x": "task 259: TASK [node-prep : Add \"kni\" user to libvirt group and get ssh key setup]",
+            "y": 373
+        },
+        {
+            "x": "task 260: skipped/TASK [node-prep : include_tasks]",
+            "y": 374
+        },
+        {
+            "x": "task 261: TASK [node-prep : Enable and restart Services]",
+            "y": 374
+        },
+        {
+            "x": "task 262: skipped/TASK [node-prep : Enable Services (iptables)]",
+            "y": 375
+        },
+        {
+            "x": "task 263: TASK [node-prep : Enable Services (firewalld)]",
+            "y": 375
+        },
+        {
+            "x": "task 264: skipped/TASK [node-prep : include_tasks]",
+            "y": 376
+        },
+        {
+            "x": "task 265: TASK [node-prep : Enable HTTP for firewalld]",
+            "y": 376
+        },
+        {
+            "x": "task 266: skipped/TASK [node-prep : Open port 8080/tcp, zone public, for cache for firewalld]",
+            "y": 376
+        },
+        {
+            "x": "task 267: skipped/TASK [node-prep : Enable HTTP for iptables]",
+            "y": 376
+        },
+        {
+            "x": "task 268: skipped/TASK [node-prep : Open port 8080/tcp for cache for iptables]",
+            "y": 376
+        },
+        {
+            "x": "task 269: skipped/TASK [node-prep : Allow related and established connections for iptables]",
+            "y": 376
+        },
+        {
+            "x": "task 270: skipped/TASK [node-prep : Save iptables configuration]",
+            "y": 376
+        },
+        {
+            "x": "task 271: skipped/TASK [node-prep : include_tasks]",
+            "y": 377
+        },
+        {
+            "x": "task 272: TASK [node-prep : Define Storage Pool for default]",
+            "y": 378
+        },
+        {
+            "x": "task 273: TASK [node-prep : Start Storage Pool for default]",
+            "y": 379
+        },
+        {
+            "x": "task 274: TASK [node-prep : Autostart Storage Pool for default]",
+            "y": 379
+        },
+        {
+            "x": "task 275: skipped/TASK [node-prep : include_tasks]",
+            "y": 380
+        },
+        {
+            "x": "task 276: TASK [node-prep : Clear config dir (if any, in case this is a re-run)]",
+            "y": 381
+        },
+        {
+            "x": "task 277: TASK [node-prep : Create config dir]",
+            "y": 381
+        },
+        {
+            "x": "task 278: skipped/TASK [installer : include_tasks]",
+            "y": 381
+        },
+        {
+            "x": "task 279: skipped/TASK [installer : Check if creating a new disconnected registry and registry exists]",
+            "y": 382
+        },
+        {
+            "x": "task 280: TASK [installer : Find any old tmp dirs with OpenShift related binaries]",
+            "y": 383
+        },
+        {
+            "x": "task 281: TASK [installer : Delete any old tmp dirs with OpenShift related binaries]",
+            "y": 384
+        },
+        {
+            "x": "task 282: TASK [installer : Find any existing /usr/local/bin OpenShift binaries]",
+            "y": 386
+        },
+        {
+            "x": "task 283: TASK [installer : Remove any existing /usr/local/bin OpenShift binaries]",
+            "y": 387
+        },
+        {
+            "x": "task 284: TASK [installer : Create tmp directory to store OpenShift binaries]",
+            "y": 387
+        },
+        {
+            "x": "task 285: TASK [installer : Set fact for tmp directory]",
+            "y": 387
+        },
+        {
+            "x": "task 286: skipped/TASK [installer : Create tmp directory to store OpenShift binaries on registry host]",
+            "y": 387
+        },
+        {
+            "x": "task 287: skipped/TASK [installer : Set fact for tmp directory on registry host]",
+            "y": 387
+        },
+        {
+            "x": "task 288: TASK [installer : Setting Fact of which ansible temp file to use]",
+            "y": 388
+        },
+        {
+            "x": "task 289: TASK [installer : Get the ocp client tar gunzip file]",
+            "y": 388
+        },
+        {
+            "x": "task 290: skipped/TASK [installer : Get the openshift-client-linux-4.10.0-0.nightly-2021-11-23-133134.tar.gz from registry host into temp file on control machine]",
+            "y": 388
+        },
+        {
+            "x": "task 291: skipped/TASK [installer : Copy the openshift-client-linux-4.10.0-0.nightly-2021-11-23-133134.tar.gz from control machine to the provisioner host]",
+            "y": 388
+        },
+        {
+            "x": "task 292: skipped/TASK [installer : Remove the temporary copy of the openshift-client-linux-4.10.0-0.nightly-2021-11-23-133134.tar.gz on control machine]",
+            "y": 391
+        },
+        {
+            "x": "task 293: TASK [installer : Untar the openshift-client-linux-4.10.0-0.nightly-2021-11-23-133134.tar.gz]",
+            "y": 393
+        },
+        {
+            "x": "task 294: TASK [installer : Copy oc binary to /usr/local/bin]",
+            "y": 393
+        },
+        {
+            "x": "task 295: skipped/TASK [installer : include_tasks]",
+            "y": 393
+        },
+        {
+            "x": "task 296: TASK [installer : Get stats of /home/dciteam/clusterconfigs-cluster5/trust-bundle.yml]",
+            "y": 393
+        },
+        {
+            "x": "task 297: skipped/TASK [installer : Check if the /home/dciteam/clusterconfigs-cluster5/trust-bundle.yml exists]",
+            "y": 393
+        },
+        {
+            "x": "task 298: TASK [installer : Read the contents of /home/dciteam/clusterconfigs-cluster5/trust-bundle.yml]",
+            "y": 393
+        },
+        {
+            "x": "task 299: TASK [installer : Set the install_config_appends fact]",
+            "y": 393
+        },
+        {
+            "x": "task 300: TASK [installer : Get stats of /opt/cluster5-registry-auths.json]",
+            "y": 393
+        },
+        {
+            "x": "task 301: skipped/TASK [installer : Check if the /opt/cluster5-registry-auths.json exists]",
+            "y": 396
+        },
+        {
+            "x": "task 302: TASK [installer : Read disconnected auths]",
+            "y": 396
+        },
+        {
+            "x": "task 303: TASK [installer : append auth to pullsecret]",
+            "y": 396
+        },
+        {
+            "x": "task 304: TASK [installer : set pullsecret with new auth]",
+            "y": 396
+        },
+        {
+            "x": "task 305: skipped/TASK [installer : include_tasks]",
+            "y": 396
+        },
+        {
+            "x": "task 306: skipped/TASK [installer : include_tasks]",
+            "y": 397
+        },
+        {
+            "x": "task 307: TASK [installer : Copy PullSecret into /home/kni/clusterconfigs/pull-secret.txt]",
+            "y": 397
+        },
+        {
+            "x": "task 308: skipped/TASK [installer : Get the PullSecret from provisioner into temp file on control machine]",
+            "y": 397
+        },
+        {
+            "x": "task 309: skipped/TASK [installer : Create config dir]",
+            "y": 398
+        },
+        {
+            "x": "task 310: skipped/TASK [installer : Copy the PullSecret from control machine to the registry host]",
+            "y": 398
+        },
+        {
+            "x": "task 311: skipped/TASK [installer : Remove the temporary copy of the PullSecret on control machine]",
+            "y": 400
+        },
+        {
+            "x": "task 312: TASK [installer : Confirm whether or not internet connectivity on provisioner host]",
+            "y": 400
+        },
+        {
+            "x": "task 313: TASK [installer : Setting Fact of which ansible temp file to use]",
+            "y": 400
+        },
+        {
+            "x": "task 314: skipped/TASK [Extracting the installer]",
+            "y": 400
+        },
+        {
+            "x": "task 315: skipped/TASK [installer : Remove the temporary copy of the PullSecret on registry host]",
+            "y": 404
+        },
+        {
+            "x": "task 316: TASK [installer : OFFLINE mode requires openshift-baremetal-install pre-extracted]",
+            "y": 407
+        },
+        {
+            "x": "task 317: TASK [installer : Copy openshift-baremetal-install binary to /usr/local/bin]",
+            "y": 407
+        },
+        {
+            "x": "task 318: skipped/TASK [installer : Get the openshift-baremetal-install from registry host into temp file on control machine]",
+            "y": 407
+        },
+        {
+            "x": "task 319: skipped/TASK [installer : Copy the openshift-baremetal-install binary from control machine to the provisioner host]",
+            "y": 407
+        },
+        {
+            "x": "task 320: skipped/TASK [installer : Remove the temporary copy of the openshift-baremetal-install binary on control machine]",
+            "y": 407
+        },
+        {
+            "x": "task 321: skipped/TASK [installer : include_tasks]",
+            "y": 407
+        },
+        {
+            "x": "task 322: skipped/TASK [installer : include_tasks]",
+            "y": 407
+        },
+        {
+            "x": "task 323: skipped/TASK [installer : include_tasks]",
+            "y": 408
+        },
+        {
+            "x": "task 324: TASK [installer : Verify that SSH key for kni exists]",
+            "y": 409
+        },
+        {
+            "x": "task 325: TASK [installer : Get the contents of the ssh key for kni]",
+            "y": 409
+        },
+        {
+            "x": "task 326: TASK [installer : Set Fact for the ssh key of kni]",
+            "y": 410
+        },
+        {
+            "x": "task 327: TASK [installer : Generate install-config.yaml]",
+            "y": 410
+        },
+        {
+            "x": "task 328: skipped/TASK [installer : Generate virtualmedia install-config.yaml]",
+            "y": 411
+        },
+        {
+            "x": "task 329: TASK [installer : Make a backup of the install-config.yaml file]",
+            "y": 411
+        },
+        {
+            "x": "task 330: skipped/TASK [installer : include_tasks]",
+            "y": 411
+        },
+        {
+            "x": "task 331: skipped/TASK [installer : include_tasks]",
+            "y": 413
+        },
+        {
+            "x": "task 332: TASK [installer : Create OpenShift Manifest]",
+            "y": 414
+        },
+        {
+            "x": "task 333: TASK [installer : Ensure the manifests dir is owned by kni]",
+            "y": 414
+        },
+        {
+            "x": "task 334: skipped/TASK [installer : Copy the metal3-config.yaml to /home/kni/clusterconfigs/openshift directory]",
+            "y": 414
+        },
+        {
+            "x": "task 335: skipped/TASK [installer : include_tasks]",
+            "y": 414
+        },
+        {
+            "x": "task 336: TASK [installer : Check if override path is defined for extra openshift manifests]",
+            "y": 415
+        },
+        {
+            "x": "task 337: skipped/TASK [installer : Copy Dual-Stack related manifest]",
+            "y": 415
+        },
+        {
+            "x": "task 338: TASK [installer : Add Manifests from files dir]",
+            "y": 415
+        },
+        {
+            "x": "task 339: TASK [installer : Check if override path is defined for extramanifests]",
+            "y": 418
+        },
+        {
+            "x": "task 340: TASK [installer : Add Manifests from files dir]",
+            "y": 418
+        },
+        {
+            "x": "task 341: skipped/TASK [installer : Create chrony.conf]",
+            "y": 418
+        },
+        {
+            "x": "task 342: skipped/TASK [installer : Inject chrony.conf in a machine-config object]",
+            "y": 418
+        },
+        {
+            "x": "task 343: skipped/TASK [installer : include_tasks]",
+            "y": 418
+        },
+        {
+            "x": "task 344: TASK [installer : Check if override path is defined for customize_filesystem]",
+            "y": 419
+        },
+        {
+            "x": "task 345: TASK [Verify if /var/lib/dci-pipeline/baremetal_deploy_repo/ansible-ipi-install/roles/installer/files/customize_filesystem/master/worker is empty]",
+            "y": 419
+        },
+        {
+            "x": "task 346: skipped/TASK [installer : Create OpenShift Ignition Configs]",
+            "y": 419
+        },
+        {
+            "x": "task 347: skipped/TASK [installer : Copy Ignition Config Files]",
+            "y": 419
+        },
+        {
+            "x": "task 348: skipped/TASK [installer : Copy customize_filesystem to tempdir]",
+            "y": 419
+        },
+        {
+            "x": "task 349: skipped/TASK [installer : Cleanup Any .gitkeep Files in the Fake Root]",
+            "y": 419
+        },
+        {
+            "x": "task 350: skipped/TASK [installer : Augment Ignition Config Files]",
+            "y": 419
+        },
+        {
+            "x": "task 351: skipped/TASK [installer : Create backup of ignition config files]",
+            "y": 419
+        },
+        {
+            "x": "task 352: skipped/TASK [installer : include_tasks]",
+            "y": 420
+        },
+        {
+            "x": "task 353: TASK [installer : Get list of all VMs]",
+            "y": 421
+        },
+        {
+            "x": "task 354: TASK [installer : Get list of all running VMs]",
+            "y": 423
+        },
+        {
+            "x": "task 355: TASK [installer : Get list of all paused VMs]",
+            "y": 423
+        },
+        {
+            "x": "task 356: TASK [installer : Destroy old bootstrap VMs, if any]",
+            "y": 423
+        },
+        {
+            "x": "task 357: TASK [installer : Undefine old bootstrap VMs, if any]",
+            "y": 424
+        },
+        {
+            "x": "task 358: TASK [installer : Find old bootstrap VM Storage]",
+            "y": 424
+        },
+        {
+            "x": "task 359: TASK [installer : Create list of old paths]",
+            "y": 424
+        },
+        {
+            "x": "task 360: TASK [installer : Delete old bootstrap VMs Storage]",
+            "y": 424
+        },
+        {
+            "x": "task 361: skipped/TASK [installer : include_tasks]",
+            "y": 424
+        },
+        {
+            "x": "task 362: TASK [installer : Create list of hosts that are going to be powered off]",
+            "y": 467
+        },
+        {
+            "x": "task 363: TASK [installer : Power off hosts]",
+            "y": 467
+        },
+        {
+            "x": "task 364: skipped/TASK [installer : include_tasks]",
+            "y": 468
+        },
+        {
+            "x": "task 365: TASK [installer : Add Kubeconfig to Ansible User .bashrc]",
+            "y": 468
+        },
+        {
+            "x": "task 366: TASK [installer : Show File to monitor for installation status]",
+            "y": 468
+        },
+        {
+            "x": "task 367: skipped/TASK [installer : Deploy OpenShift Cluster]",
+            "y": 469
+        },
+        {
+            "x": "task 368: TASK [installer : Run OpenShift Cluster install as async task]",
+            "y": 474
+        },
+        {
+            "x": "task 369: TASK [installer : Wait for kubeconfig file]",
+            "y": 2767
+        },
+        {
+            "x": "task 370: TASK [installer : Wait for Bootstrap Complete]",
+            "y": 4426
+        },
+        {
+            "x": "task 371: TASK [installer : Wait for Install Complete]",
+            "y": 4426
+        },
+        {
+            "x": "task 372: skipped/TASK [sno-node-prep : include_tasks]",
+            "y": 4426
+        },
+        {
+            "x": "task 373: skipped/TASK [sno-node-prep : include_tasks]",
+            "y": 4426
+        },
+        {
+            "x": "task 374: skipped/TASK [sno-node-prep : include_tasks]",
+            "y": 4426
+        },
+        {
+            "x": "task 375: skipped/TASK [sno-node-prep : include_tasks]",
+            "y": 4426
+        },
+        {
+            "x": "task 376: skipped/TASK [sno-node-prep : include_tasks]",
+            "y": 4426
+        },
+        {
+            "x": "task 377: skipped/TASK [sno-node-prep : include_tasks]",
+            "y": 4426
+        },
+        {
+            "x": "task 378: skipped/TASK [sno-node-prep : include_tasks]",
+            "y": 4426
+        },
+        {
+            "x": "task 379: skipped/TASK [sno-node-prep : include_tasks]",
+            "y": 4426
+        },
+        {
+            "x": "task 380: skipped/TASK [sno-node-prep : include_tasks]",
+            "y": 4426
+        },
+        {
+            "x": "task 381: skipped/TASK [sno-node-prep : include_tasks]",
+            "y": 4426
+        },
+        {
+            "x": "task 382: skipped/TASK [sno-node-prep : include_tasks]",
+            "y": 4426
+        },
+        {
+            "x": "task 383: skipped/TASK [sno-node-prep : include_tasks]",
+            "y": 4426
+        },
+        {
+            "x": "task 384: skipped/TASK [sno-node-prep : include_tasks]",
+            "y": 4426
+        },
+        {
+            "x": "task 385: skipped/TASK [sno-installer : include_tasks]",
+            "y": 4426
+        },
+        {
+            "x": "task 386: skipped/TASK [sno-installer : include_tasks]",
+            "y": 4426
+        },
+        {
+            "x": "task 387: skipped/TASK [sno-installer : include_tasks]",
+            "y": 4426
+        },
+        {
+            "x": "task 388: skipped/TASK [sno-installer : include_tasks]",
+            "y": 4426
+        },
+        {
+            "x": "task 389: skipped/TASK [sno-installer : include_tasks]",
+            "y": 4426
+        },
+        {
+            "x": "task 390: skipped/TASK [sno-installer : include_tasks]",
+            "y": 4426
+        },
+        {
+            "x": "task 391: skipped/TASK [sno-installer : include_tasks]",
+            "y": 4426
+        },
+        {
+            "x": "task 392: skipped/TASK [sno-installer : include_tasks]",
+            "y": 4426
+        },
+        {
+            "x": "task 393: skipped/TASK [sno-installer : include_tasks]",
+            "y": 4426
+        },
+        {
+            "x": "task 394: skipped/TASK [sno-installer : include_tasks]",
+            "y": 4426
+        },
+        {
+            "x": "task 395: skipped/TASK [sno-installer : include_tasks]",
+            "y": 4426
+        },
+        {
+            "x": "task 396: skipped/TASK [sno-installer : include_tasks]",
+            "y": 4426
+        },
+        {
+            "x": "task 397: TASK [installer : Setup openshift access in jumphost]",
+            "y": 4426
+        },
+        {
+            "x": "task 398: skipped/TASK [oc-setup : Install binaries and other packages in jumphost]",
+            "y": 4433
+        },
+        {
+            "x": "task 399: TASK [oc-setup : Get oc binary and KUBECONFIG from provisioner node]",
+            "y": 4437
+        },
+        {
+            "x": "task 400: TASK [oc-setup : Install packages needed for login]",
+            "y": 4449
+        },
+        {
+            "x": "task 401: TASK [test_ oc-setup : Check inventory to match ocp cluster config]",
+            "y": 4449
+        },
+        {
+            "x": "task 402: skipped/TASK [oc-setup : Configure clients in jumphost]",
+            "y": 4449
+        },
+        {
+            "x": "task 403: TASK [oc-setup : Generate Random password for admin user]",
+            "y": 4449
+        },
+        {
+            "x": "task 404: TASK [oc-setup : Generate random password for nonadmin user]",
+            "y": 4450
+        },
+        {
+            "x": "task 405: TASK [oc-setup : Save passwords to the cluster configs directory]",
+            "y": 4450
+        },
+        {
+            "x": "task 406: TASK [oc-setup : Create users.htpasswd file]",
+            "y": 4451
+        },
+        {
+            "x": "task 407: TASK [oc-setup : Set htpasswd config secret in openshift]",
+            "y": 4452
+        },
+        {
+            "x": "task 408: TASK [oc-setup : Upload the IDP config to the jumphost]",
+            "y": 4453
+        },
+        {
+            "x": "task 409: TASK [oc-setup : Setup htpasswd auth IDP backend in openshift]",
+            "y": 4455
+        },
+        {
+            "x": "task 410: TASK [oc-setup : Give cluster-admin to the admin user]",
+            "y": 4455
+        },
+        {
+            "x": "task 411: TASK [installer : Apply node labels]",
+            "y": 4465
+        },
+        {
+            "x": "task 412: TASK [label-nodes : Label nodes]",
+            "y": 4465
+        },
+        {
+            "x": "task 413: PLAY [Deploy operators to OCP cluster]",
+            "y": 4466
+        },
+        {
+            "x": "task 414: TASK [Gathering Facts]",
+            "y": 4468
+        },
+        {
+            "x": "task 415: skipped/TASK [include_tasks]",
+            "y": 4468
+        },
+        {
+            "x": "task 416: TASK [deploy-operators : Set default redhat-operators]",
+            "y": 4468
+        },
+        {
+            "x": "task 417: TASK [Get oc version output]",
+            "y": 4468
+        },
+        {
+            "x": "task 418: skipped/TASK [Get OCP version]",
+            "y": 4468
+        },
+        {
+            "x": "task 419: skipped/TASK [operators-catalog : Set facts]",
+            "y": 4469
+        },
+        {
+            "x": "task 420: TASK [operators-catalog : Basic facts]",
+            "y": 4470
+        },
+        {
+            "x": "task 421: TASK [operators-catalog : Disable default catalog sources for disconnected deployment]",
+            "y": 4471
+        },
+        {
+            "x": "task 422: skipped/TASK [operators-catalog : Deploy Red Hat Catalog Source]",
+            "y": 4472
+        },
+        {
+            "x": "task 423: TASK [operators-catalog : Create CatalogSource for Red Hat operators]",
+            "y": 4473
+        },
+        {
+            "x": "task 424: TASK [prepare-cnf : test_ Check the master nodes managed by MCP are updated and ready]",
+            "y": 4474
+        },
+        {
+            "x": "task 425: TASK [prepare-cnf : test_ Check the worker nodes managed by MCP are updated and ready]",
+            "y": 4474
+        },
+        {
+            "x": "task 426: TASK [deploy-operators : Prepare cluster for CNF]",
+            "y": 4475
+        },
+        {
+            "x": "task 427: TASK [prepare-cnf : Get all nodes]",
+            "y": 4476
+        },
+        {
+            "x": "task 428: TASK [prepare-cnf : Get worker node count]",
+            "y": 4476
+        },
+        {
+            "x": "task 429: skipped/TASK [prepare-cnf : test_ Check enough worker nodes availability]",
+            "y": 4477
+        },
+        {
+            "x": "task 430: TASK [deploy-operators : Increase maxUnavailable count to n-1]",
+            "y": 4477
+        },
+        {
+            "x": "task 431: TASK [deploy-operators : Install performance profile operator]",
+            "y": 4478
+        },
+        {
+            "x": "task 432: TASK [operator-performance-profile : Create namespace for Performance Addon operator]",
+            "y": 4479
+        },
+        {
+            "x": "task 433: TASK [operator-performance-profile : Create operatorgroup for Performance Addon operator]",
+            "y": 4480
+        },
+        {
+            "x": "task 434: TASK [operator-performance-profile : Create subscription for Performance Addon operator without channel]",
+            "y": 4480
+        },
+        {
+            "x": "task 435: skipped/TASK [operator-performance-profile : Create subscription for Performance Addon operator with channel (4.5 and older)]",
+            "y": 4505
+        },
+        {
+            "x": "task 436: TASK [operator-performance-profile : test_ Check if performance-addon-operator csv is installed]",
+            "y": 4506
+        },
+        {
+            "x": "task 437: TASK [operator-performance-profile : Apply label to worker mcp]",
+            "y": 4507
+        },
+        {
+            "x": "task 438: TASK [operator-performance-profile : Create PerformanceProfile]",
+            "y": 4537
+        },
+        {
+            "x": "task 439: TASK [operator-performance-profile : Pause for Machine Config to be created]",
+            "y": 4537
+        },
+        {
+            "x": "task 440: TASK [Check nodes]",
+            "y": 4538
+        },
+        {
+            "x": "task 441: TASK [prepare-cnf : test_ Check the master nodes managed by MCP are updated and ready]",
+            "y": 5196
+        },
+        {
+            "x": "task 442: TASK [prepare-cnf : test_ Check the worker nodes managed by MCP are updated and ready]",
+            "y": 5197
+        },
+        {
+            "x": "task 443: TASK [deploy-operators : Install SRIOV operator]",
+            "y": 5199
+        },
+        {
+            "x": "task 444: TASK [operator-sriov : Create namespace for SR-IOV operator]",
+            "y": 5200
+        },
+        {
+            "x": "task 445: TASK [operator-sriov : Create operatorgroup for SR-IOV operator]",
+            "y": 5200
+        },
+        {
+            "x": "task 446: skipped/TASK [operator-sriov : Create subscription for SR-IOV operator with channel (4.5 and older)]",
+            "y": 5201
+        },
+        {
+            "x": "task 447: TASK [operator-sriov : Create subscription for SR-IOV operator without channel]",
+            "y": 5208
+        },
+        {
+            "x": "task 448: TASK [operator-sriov : Get SRIOV InstallPlan details]",
+            "y": 5208
+        },
+        {
+            "x": "task 449: TASK [operator-sriov : Set SRIOV CSV name from IP]",
+            "y": 5227
+        },
+        {
+            "x": "task 450: TASK [operator-sriov : get CSVs in sriov-network-operator ns]",
+            "y": 5229
+        },
+        {
+            "x": "task 451: TASK [operator-sriov : Get all nodes]",
+            "y": 5234
+        },
+        {
+            "x": "task 452: TASK [operator-sriov : Add sriov label to worker nodes]",
+            "y": 5236
+        },
+        {
+            "x": "task 453: TASK [operator-sriov : Get one worker node]",
+            "y": 5259
+        },
+        {
+            "x": "task 454: TASK [operator-sriov : Get SriovNetworkNodeState for one of the worker node]",
+            "y": 5259
+        },
+        {
+            "x": "task 455: skipped/TASK [operator-sriov : Create SriovNetworkNodePolicy {{ cnf_test_sriov_policy }} for CNF tests]",
+            "y": 5259
+        },
+        {
+            "x": "task 456: TASK [Check nodes]",
+            "y": 5260
+        },
+        {
+            "x": "task 457: TASK [prepare-cnf : test_ Check the master nodes managed by MCP are updated and ready]",
+            "y": 5261
+        },
+        {
+            "x": "task 458: TASK [prepare-cnf : test_ Check the worker nodes managed by MCP are updated and ready]",
+            "y": 5262
+        },
+        {
+            "x": "task 459: TASK [deploy-operators : Reset maxUnavailable count to default value 1]",
+            "y": 5262
+        },
+        {
+            "x": "task 460: skipped/TASK [deploy-operators : Setup cluster for CNV]",
+            "y": 5262
+        },
+        {
+            "x": "task 461: skipped/TASK [deploy-operators : Define OCS CatalogSource]",
+            "y": 5262
+        },
+        {
+            "x": "task 462: skipped/TASK [deploy-operators : Install OCS Operator]",
+            "y": 5262
+        },
+        {
+            "x": "task 463: skipped/TASK [deploy-operators : Define LocalStorage CatalogSource]",
+            "y": 5262
+        },
+        {
+            "x": "task 464: skipped/TASK [deploy-operators : Install LocalStorage Operator]",
+            "y": 5262
+        },
+        {
+            "x": "task 465: skipped/TASK [deploy-operators : Create all Custom Resources]",
+            "y": 5262
+        },
+        {
+            "x": "task 466: skipped/PLAY [Launch hook install]",
+            "y": 5264
+        },
+        {
+            "x": "task 467: TASK [Gathering Facts]",
+            "y": 5264
+        },
+        {
+            "x": "task 468: TASK [dci-openshift-agent : Launch partner install]",
+            "y": 5264
+        },
+        {
+            "x": "task 469: PLAY [Launch upgrade]",
+            "y": 5265
+        },
+        {
+            "x": "task 470: TASK [Gathering Facts]",
+            "y": 5265
+        },
+        {
+            "x": "task 471: skipped/TASK [dci-openshift-agent : Launch upgrade]",
+            "y": 5265
+        },
+        {
+            "x": "task 472: skipped/PLAY [Launch hook upgrade]",
+            "y": 5267
+        },
+        {
+            "x": "task 473: TASK [Gathering Facts]",
+            "y": 5267
+        },
+        {
+            "x": "task 474: skipped/TASK [dci-openshift-agent : Launch partner upgrade]",
+            "y": 5267
+        },
+        {
+            "x": "task 475: skipped/PLAY [Launch Red Hat tests]",
+            "y": 5270
+        },
+        {
+            "x": "task 476: TASK [Gathering Facts]",
+            "y": 5270
+        },
+        {
+            "x": "task 477: skipped/TASK [include_tasks]",
+            "y": 5270
+        },
+        {
+            "x": "task 478: TASK [dci-openshift-agent : Setup podman on the jumphost]",
+            "y": 5270
+        },
+        {
+            "x": "task 479: skipped/TASK [ansible-role-dci-podman : Install binaries and other packages in system]",
+            "y": 5278
+        },
+        {
+            "x": "task 480: TASK [ansible-role-dci-podman : Install packages needed for podman]",
+            "y": 5278
+        },
+        {
+            "x": "task 481: skipped/TASK [ansible-role-dci-podman : Configure system]",
+            "y": 5278
+        },
+        {
+            "x": "task 482: TASK [ansible-role-dci-podman : Check /proc/sys/user/max_user_namespaces is correct]",
+            "y": 5278
+        },
+        {
+            "x": "task 483: skipped/TASK [ansible-role-dci-podman : Create /etc/sysctl.d/userns.conf]",
+            "y": 5278
+        },
+        {
+            "x": "task 484: skipped/TASK [ansible-role-dci-podman : Update sysctl]",
+            "y": 5278
+        },
+        {
+            "x": "task 485: TASK [ansible-role-dci-podman : Add default subuid entry for ansible_user_id]",
+            "y": 5278
+        },
+        {
+            "x": "task 486: TASK [ansible-role-dci-podman : Add additional subuid entries]",
+            "y": 5279
+        },
+        {
+            "x": "task 487: TASK [ansible-role-dci-podman : Add default subgid entry for ansible_user_id]",
+            "y": 5279
+        },
+        {
+            "x": "task 488: TASK [ansible-role-dci-podman : Add additional subgid entries]",
+            "y": 5279
+        },
+        {
+            "x": "task 489: TASK [Get oc version output]",
+            "y": 5279
+        },
+        {
+            "x": "task 490: skipped/TASK [Get OCP version]",
+            "y": 5279
+        },
+        {
+            "x": "task 491: skipped/TASK [dci-openshift-agent : Run Red Hat test suite]",
+            "y": 5279
+        },
+        {
+            "x": "task 492: skipped/TASK [Mirror images to local registry for disconnected cnf-tests]",
+            "y": 5279
+        },
+        {
+            "x": "task 493: TASK [Create images.json file]",
+            "y": 5281
+        },
+        {
+            "x": "task 494: TASK [Mirror cnf-tests and dpdk images to local repo]",
+            "y": 5281
+        },
+        {
+            "x": "task 495: skipped/TASK [Run cnf tests]",
+            "y": 5281
+        },
+        {
+            "x": "task 496: TASK [Get date]",
+            "y": 5281
+        },
+        {
+            "x": "task 497: TASK [set cnf_tests_image_registry for offline env]",
+            "y": 5281
+        },
+        {
+            "x": "task 498: skipped/TASK [set cnf_tests_image_registry for online env]",
+            "y": 5282
+        },
+        {
+            "x": "task 499: TASK [test_ Check the worker nodes managed by MCP are ready for running tests]",
+            "y": 5282
+        },
+        {
+            "x": "task 500: skipped/TASK [Run SCTP tests]",
+            "y": 5282
+        },
+        {
+            "x": "task 501: skipped/TASK [Run PTP tests]",
+            "y": 5282
+        },
+        {
+            "x": "task 502: skipped/TASK [Run performance tests]",
+            "y": 5282
+        },
+        {
+            "x": "task 503: skipped/TASK [Run SRIOV tests]",
+            "y": 5282
+        },
+        {
+            "x": "task 504: skipped/TASK [Run DPDK tests]",
+            "y": 5282
+        },
+        {
+            "x": "task 505: TASK [Rename junit xml files with the feature name]",
+            "y": 5282
+        },
+        {
+            "x": "task 506: skipped/TASK [create CVP namespace]",
+            "y": 5282
+        },
+        {
+            "x": "task 507: skipped/TASK [Run CVP/OVP tests if bundle_spec is defined]",
+            "y": 5282
+        },
+        {
+            "x": "task 508: skipped/PLAY [Launch partner tests]",
+            "y": 5286
+        },
+        {
+            "x": "task 509: TASK [Gathering Facts]",
+            "y": 5286
+        },
+        {
+            "x": "task 510: TASK [Run the partner tests]",
+            "y": 5286
+        },
+        {
+            "x": "task 511: TASK [post-run]",
+            "y": 5286
+        },
+        {
+            "x": "task 512: PLAY [Launch post run]",
+            "y": 5288
+        },
+        {
+            "x": "task 513: TASK [Gathering Facts]",
+            "y": 5288
+        },
+        {
+            "x": "task 514: skipped/TASK [include_tasks]",
+            "y": 5288
+        },
+        {
+            "x": "task 515: TASK [set outputs to be copied]",
+            "y": 5289
+        },
+        {
+            "x": "task 516: TASK [Copy outputs if defined]",
+            "y": 5289
+        },
+        {
+            "x": "task 517: skipped/TASK [Upload logs]",
+            "y": 5289
+        },
+        {
+            "x": "task 518: TASK [Find test text files]",
+            "y": 5292
+        },
+        {
+            "x": "task 519: TASK [Upload test text files results to DCI Control Server]",
+            "y": 5292
+        },
+        {
+            "x": "task 520: TASK [Find test Junit files]",
+            "y": 5292
+        },
+        {
+            "x": "task 521: TASK [Upload Junit files to DCI Control Server]",
+            "y": 5292
+        },
+        {
+            "x": "task 522: TASK [Generate temp dir for deployment logs]",
+            "y": 5394
+        },
+        {
+            "x": "task 523: TASK [Get logs from OCP deployment]",
+            "y": 5394
+        },
+        {
+            "x": "task 524: TASK [Find deployment logs (text)]",
+            "y": 5394
+        },
+        {
+            "x": "task 525: skipped/TASK [Upload text logs]",
+            "y": 5396
+        },
+        {
+            "x": "task 526: TASK [Upload openshift_install.log to DCI Control Server]",
+            "y": 5397
+        },
+        {
+            "x": "task 527: TASK [Upload install-config-yaml.txt to DCI Control Server]",
+            "y": 5400
+        },
+        {
+            "x": "task 528: TASK [Upload journal-master-0.log to DCI Control Server]",
+            "y": 5402
+        },
+        {
+            "x": "task 529: TASK [Upload journal-master-1.log to DCI Control Server]",
+            "y": 5404
+        },
+        {
+            "x": "task 530: TASK [Upload journal-master-2.log to DCI Control Server]",
+            "y": 5406
+        },
+        {
+            "x": "task 531: TASK [Upload journal-worker-0.log to DCI Control Server]",
+            "y": 5408
+        },
+        {
+            "x": "task 532: TASK [Upload journal-worker-1.log to DCI Control Server]",
+            "y": 5410
+        },
+        {
+            "x": "task 533: TASK [Upload journal-worker-2.log to DCI Control Server]",
+            "y": 5412
+        },
+        {
+            "x": "task 534: TASK [Upload journal-worker-3.log to DCI Control Server]",
+            "y": 5413
+        },
+        {
+            "x": "task 535: TASK [Upload version.txt to DCI Control Server]",
+            "y": 5415
+        },
+        {
+            "x": "task 536: TASK [Upload clusterversion.txt to DCI Control Server]",
+            "y": 5416
+        },
+        {
+            "x": "task 537: TASK [Upload clusteroperator.txt to DCI Control Server]",
+            "y": 5418
+        },
+        {
+            "x": "task 538: TASK [Upload clusternetwork.txt to DCI Control Server]",
+            "y": 5419
+        },
+        {
+            "x": "task 539: TASK [Upload nodes.txt to DCI Control Server]",
+            "y": 5421
+        },
+        {
+            "x": "task 540: TASK [Upload events.txt to DCI Control Server]",
+            "y": 5423
+        },
+        {
+            "x": "task 541: TASK [Upload pods.txt to DCI Control Server]",
+            "y": 5423
+        },
+        {
+            "x": "task 542: TASK [Find deployment logs (compressed)]",
+            "y": 5423
+        },
+        {
+            "x": "task 543: skipped/TASK [Upload compressed logs]",
+            "y": 5426
+        },
+        {
+            "x": "task 544: TASK [Upload must_gather.tar.gz to DCI Control Server]",
+            "y": 5426
+        },
+        {
+            "x": "task 545: TASK [Clean up Temp dir]",
+            "y": 5426
+        },
+        {
+            "x": "task 546: TASK [Run the partner post-run]",
+            "y": 5427
+        },
+        {
+            "x": "task 547: TASK [success]",
+            "y": 5427
+        },
+        {
+            "x": "task 548: PLAY [Success]",
+            "y": 5429
+        },
+        {
+            "x": "task 549: TASK [Gathering Facts]",
+            "y": 5429
+        },
+        {
+            "x": "task 550: TASK [Run the success hook]",
+            "y": 5429
+        },
+        {
+            "x": "task 551: skipped/TASK [Run the teardown play]",
+            "y": 5430
+        },
+        {
+            "x": "task 552: TASK [Find console logs]",
+            "y": 5431
+        },
+        {
+            "x": "task 553: TASK [Create tmp directory for console logs]",
+            "y": 5438
+        },
+        {
+            "x": "task 554: TASK [Copy console logs into tmp directory]",
+            "y": 5455
+        },
+        {
+            "x": "task 555: TASK [Upload iLo logs to DCI Control Server]",
+            "y": 5456
+        },
+        {
+            "x": "task 556: TASK [Delete tmp directory]",
+            "y": 5456
+        },
+        {
+            "x": "task 557: TASK [Run the teardown hooks]",
+            "y": 5456
+        }
+    ],
+    "f0525bee-574d-495d-9733-1fb7e126813c": [
+        {
+            "x": "task 1: PLAYBOOK: dci-openshift-agent.yml",
+            "y": 1
+        },
+        {
+            "x": "task 2: PLAY [Set dci variables]",
+            "y": 1
+        },
+        {
+            "x": "task 3: TASK [Gathering Facts]",
+            "y": 1
+        },
+        {
+            "x": "task 4: TASK [Read credentials from env vars]",
+            "y": 1
+        },
+        {
+            "x": "task 5: skipped/TASK [Schedule a new job]",
+            "y": 1
+        },
+        {
+            "x": "task 6: TASK [Assertions]",
+            "y": 1
+        },
+        {
+            "x": "task 7: TASK [Set the job id]",
+            "y": 2
+        },
+        {
+            "x": "task 8: skipped/TASK [copy the job_id to the JOB_ID_FILE if it exists]",
+            "y": 2
+        },
+        {
+            "x": "task 9: TASK [UI URL]",
+            "y": 3
+        },
+        {
+            "x": "task 10: TASK [Set DCI tags for the current job]",
+            "y": 4
+        },
+        {
+            "x": "task 11: TASK [pre-run]",
+            "y": 4
+        },
+        {
+            "x": "task 12: PLAY [Launch pre-run]",
+            "y": 6
+        },
+        {
+            "x": "task 13: TASK [Gathering Facts]",
+            "y": 6
+        },
+        {
+            "x": "task 14: skipped/TASK [Run the pre-run]",
+            "y": 6
+        },
+        {
+            "x": "task 15: TASK [Validate we have all the pieces to run in disconnected mode]",
+            "y": 6
+        },
+        {
+            "x": "task 16: skipped/TASK [Configure jumpbox]",
+            "y": 10
+        },
+        {
+            "x": "task 17: TASK [Install helper tools]",
+            "y": 12
+        },
+        {
+            "x": "task 18: TASK [Install grpcurl]",
+            "y": 13
+        },
+        {
+            "x": "task 19: TASK [Ensure Apache is running]",
+            "y": 14
+        },
+        {
+            "x": "task 20: TASK [Open port 80 on the firewall]",
+            "y": 14
+        },
+        {
+            "x": "task 21: TASK [Ensure proper directories are created]",
+            "y": 14
+        },
+        {
+            "x": "task 22: TASK [Clean up /home/dciteam/clusterconfigs-cluster6]",
+            "y": 14
+        },
+        {
+            "x": "task 23: TASK [Create /home/dciteam/clusterconfigs-cluster6]",
+            "y": 14
+        },
+        {
+            "x": "task 24: TASK [Setup podman on the jumphost]",
+            "y": 14
+        },
+        {
+            "x": "task 25: skipped/TASK [ansible-role-dci-podman : Install binaries and other packages in system]",
+            "y": 21
+        },
+        {
+            "x": "task 26: TASK [ansible-role-dci-podman : Install packages needed for podman]",
+            "y": 21
+        },
+        {
+            "x": "task 27: skipped/TASK [ansible-role-dci-podman : Configure system]",
+            "y": 21
+        },
+        {
+            "x": "task 28: TASK [ansible-role-dci-podman : Check /proc/sys/user/max_user_namespaces is correct]",
+            "y": 21
+        },
+        {
+            "x": "task 29: skipped/TASK [ansible-role-dci-podman : Create /etc/sysctl.d/userns.conf]",
+            "y": 21
+        },
+        {
+            "x": "task 30: skipped/TASK [ansible-role-dci-podman : Update sysctl]",
+            "y": 22
+        },
+        {
+            "x": "task 31: TASK [ansible-role-dci-podman : Add default subuid entry for ansible_user_id]",
+            "y": 22
+        },
+        {
+            "x": "task 32: TASK [ansible-role-dci-podman : Add additional subuid entries]",
+            "y": 22
+        },
+        {
+            "x": "task 33: TASK [ansible-role-dci-podman : Add default subgid entry for ansible_user_id]",
+            "y": 22
+        },
+        {
+            "x": "task 34: TASK [ansible-role-dci-podman : Add additional subgid entries]",
+            "y": 22
+        },
+        {
+            "x": "task 35: TASK [Import remoteci SSL keys]",
+            "y": 22
+        },
+        {
+            "x": "task 36: TASK [dci-import-keys : Ensure the SSL directories exist]",
+            "y": 23
+        },
+        {
+            "x": "task 37: TASK [dci-import-keys : Retrieve remoteci key and certificate from DCI]",
+            "y": 24
+        },
+        {
+            "x": "task 38: TASK [dci-import-keys : Create the certificate file]",
+            "y": 25
+        },
+        {
+            "x": "task 39: TASK [dci-import-keys : Create the private key file]",
+            "y": 25
+        },
+        {
+            "x": "task 40: TASK [Get openshift_version from job.components]",
+            "y": 25
+        },
+        {
+            "x": "task 41: TASK [Get build from tag]",
+            "y": 25
+        },
+        {
+            "x": "task 42: TASK [Set pullsecret from job_info]",
+            "y": 25
+        },
+        {
+            "x": "task 43: TASK [Read Disconnected auths]",
+            "y": 25
+        },
+        {
+            "x": "task 44: skipped/TASK [Set build:ga when build:candidate]",
+            "y": 26
+        },
+        {
+            "x": "task 45: TASK [Mirror release]",
+            "y": 26
+        },
+        {
+            "x": "task 46: TASK [mirror-ocp-release : Validate required input]",
+            "y": 26
+        },
+        {
+            "x": "task 47: TASK [mirror-ocp-release : Mirroring OCP]",
+            "y": 26
+        },
+        {
+            "x": "task 48: skipped/TASK [mirror-ocp-release : Create directory structure]",
+            "y": 26
+        },
+        {
+            "x": "task 49: TASK [mirror-ocp-release : Create master cache directory]",
+            "y": 26
+        },
+        {
+            "x": "task 50: TASK [mirror-ocp-release : Create cache directory for release]",
+            "y": 26
+        },
+        {
+            "x": "task 51: skipped/TASK [mirror-ocp-release : Fetch release resources]",
+            "y": 26
+        },
+        {
+            "x": "task 52: TASK [mirror-ocp-release : Check if release.txt exists]",
+            "y": 26
+        },
+        {
+            "x": "task 53: TASK [mirror-ocp-release : Check if signature.bin exists]",
+            "y": 26
+        },
+        {
+            "x": "task 54: TASK [mirror-ocp-release : Check if release.dig exists]",
+            "y": 26
+        },
+        {
+            "x": "task 55: TASK [mirror-ocp-release : Check if clients exists]",
+            "y": 27
+        },
+        {
+            "x": "task 56: TASK [mirror-ocp-release : Fetch release.txt]",
+            "y": 28
+        },
+        {
+            "x": "task 57: TASK [mirror-ocp-release : Read release_version from release.txt]",
+            "y": 28
+        },
+        {
+            "x": "task 58: TASK [mirror-ocp-release : Read release_image from release.txt]",
+            "y": 28
+        },
+        {
+            "x": "task 59: TASK [mirror-ocp-release : Get digest for release]",
+            "y": 29
+        },
+        {
+            "x": "task 60: TASK [mirror-ocp-release : Fetch release signature]",
+            "y": 30
+        },
+        {
+            "x": "task 61: TASK [mirror-ocp-release : Base64 encode binary signature]",
+            "y": 31
+        },
+        {
+            "x": "task 62: TASK [mirror-ocp-release : Fetch channel upgrade graph]",
+            "y": 39
+        },
+        {
+            "x": "task 63: TASK [mirror-ocp-release : Fetch client tools tarballs]",
+            "y": 41
+        },
+        {
+            "x": "task 64: TASK [mirror-ocp-release : Untar client tools]",
+            "y": 41
+        },
+        {
+            "x": "task 65: skipped/TASK [mirror-ocp-release : Fetch client tools tarballs (pre 4.6.17)]",
+            "y": 41
+        },
+        {
+            "x": "task 66: skipped/TASK [mirror-ocp-release : Untar client tools (pre 4.6.17)]",
+            "y": 41
+        },
+        {
+            "x": "task 67: TASK [mirror-ocp-release : Marker for client tools downloaded]",
+            "y": 41
+        },
+        {
+            "x": "task 68: skipped/TASK [mirror-ocp-release : Create mirror files]",
+            "y": 42
+        },
+        {
+            "x": "task 69: TASK [mirror-ocp-release : Write release digest]",
+            "y": 43
+        },
+        {
+            "x": "task 70: TASK [mirror-ocp-release : Write pull secret file to cache]",
+            "y": 44
+        },
+        {
+            "x": "task 71: TASK [mirror-ocp-release : Write mirrored image content source policy]",
+            "y": 44
+        },
+        {
+            "x": "task 72: TASK [mirror-ocp-release : Write signature config map]",
+            "y": 44
+        },
+        {
+            "x": "task 73: skipped/TASK [mirror-ocp-release : Setup installer]",
+            "y": 45
+        },
+        {
+            "x": "task 74: TASK [mirror-ocp-release : Check if commands were extracted]",
+            "y": 53
+        },
+        {
+            "x": "task 75: TASK [mirror-ocp-release : Extract installer commands]",
+            "y": 53
+        },
+        {
+            "x": "task 76: TASK [mirror-ocp-release : Set executable permission on commands]",
+            "y": 53
+        },
+        {
+            "x": "task 77: skipped/TASK [mirror-ocp-release : Mirror images]",
+            "y": 53
+        },
+        {
+            "x": "task 78: TASK [mirror-ocp-release : Check if rhcos.json exists]",
+            "y": 53
+        },
+        {
+            "x": "task 79: TASK [mirror-ocp-release : Get git SHA from installer]",
+            "y": 53
+        },
+        {
+            "x": "task 80: skipped/TASK [mirror-ocp-release : Fetch rhcos.json File [<= 4.7]]",
+            "y": 53
+        },
+        {
+            "x": "task 81: TASK [mirror-ocp-release : Fetch rhcos.json File [>= 4.8]]",
+            "y": 53
+        },
+        {
+            "x": "task 82: TASK [mirror-ocp-release : Load variables from rhcos.json]",
+            "y": 53
+        },
+        {
+            "x": "task 83: skipped/TASK [mirror-ocp-release : Setting image facts [<= 4.7]]",
+            "y": 54
+        },
+        {
+            "x": "task 84: TASK [mirror-ocp-release : Setting image facts [>= 4.8]]",
+            "y": 54
+        },
+        {
+            "x": "task 85: TASK [mirror-ocp-release : Check if QEMU image exists]",
+            "y": 54
+        },
+        {
+            "x": "task 86: skipped/TASK [mirror-ocp-release : Download QEMU image]",
+            "y": 54
+        },
+        {
+            "x": "task 87: TASK [mirror-ocp-release : Check if OpenStack image exists]",
+            "y": 54
+        },
+        {
+            "x": "task 88: skipped/TASK [mirror-ocp-release : Download OpenStack image]",
+            "y": 54
+        },
+        {
+            "x": "task 89: TASK [mirror-ocp-release : Set facts for *osimage URL overrides]",
+            "y": 54
+        },
+        {
+            "x": "task 90: TASK [mirror-ocp-release : Check if container_images.done exists]",
+            "y": 181
+        },
+        {
+            "x": "task 91: TASK [mirror-ocp-release : Mirror release images to local registry]",
+            "y": 181
+        },
+        {
+            "x": "task 92: TASK [mirror-ocp-release : Marker for container images mirrored]",
+            "y": 184
+        },
+        {
+            "x": "task 93: TASK [Clone/update baremetal-deploy repo]",
+            "y": 184
+        },
+        {
+            "x": "task 94: skipped/TASK [include_tasks]",
+            "y": 184
+        },
+        {
+            "x": "task 95: TASK [get last commit id]",
+            "y": 184
+        },
+        {
+            "x": "task 96: TASK [get repo url]",
+            "y": 185
+        },
+        {
+            "x": "task 97: TASK [Create git repo component]",
+            "y": 186
+        },
+        {
+            "x": "task 98: TASK [Attach git component to the job]",
+            "y": 186
+        },
+        {
+            "x": "task 99: TASK [get last commit id]",
+            "y": 188
+        },
+        {
+            "x": "task 100: TASK [get repo url]",
+            "y": 188
+        },
+        {
+            "x": "task 101: TASK [Create git repo component]",
+            "y": 189
+        },
+        {
+            "x": "task 102: TASK [Attach git component to the job]",
+            "y": 189
+        },
+        {
+            "x": "task 103: TASK [get last commit id]",
+            "y": 190
+        },
+        {
+            "x": "task 104: TASK [get repo url]",
+            "y": 191
+        },
+        {
+            "x": "task 105: TASK [Create git repo component]",
+            "y": 193
+        },
+        {
+            "x": "task 106: TASK [Attach git component to the job]",
+            "y": 195
+        },
+        {
+            "x": "task 107: TASK [Gather the package facts]",
+            "y": 196
+        },
+        {
+            "x": "task 108: skipped/TASK [include_tasks]",
+            "y": 197
+        },
+        {
+            "x": "task 109: TASK [Create package component]",
+            "y": 198
+        },
+        {
+            "x": "task 110: TASK [Attach package component to the job]",
+            "y": 199
+        },
+        {
+            "x": "task 111: TASK [Create package component]",
+            "y": 200
+        },
+        {
+            "x": "task 112: TASK [Attach package component to the job]",
+            "y": 201
+        },
+        {
+            "x": "task 113: TASK [Create package component]",
+            "y": 202
+        },
+        {
+            "x": "task 114: TASK [Attach package component to the job]",
+            "y": 203
+        },
+        {
+            "x": "task 115: TASK [Create package component]",
+            "y": 203
+        },
+        {
+            "x": "task 116: TASK [Attach package component to the job]",
+            "y": 204
+        },
+        {
+            "x": "task 117: TASK [Create package component]",
+            "y": 205
+        },
+        {
+            "x": "task 118: TASK [Attach package component to the job]",
+            "y": 206
+        },
+        {
+            "x": "task 119: TASK [Create package component]",
+            "y": 208
+        },
+        {
+            "x": "task 120: TASK [Attach package component to the job]",
+            "y": 208
+        },
+        {
+            "x": "task 121: TASK [dci-openshift-agent : Mirror Operators]",
+            "y": 208
+        },
+        {
+            "x": "task 122: skipped/TASK [operators-mirror : Set Facts]",
+            "y": 208
+        },
+        {
+            "x": "task 123: TASK [operators-mirror : Basic facts]",
+            "y": 208
+        },
+        {
+            "x": "task 124: TASK [operators-mirror : Set facts for newer ocp versions]",
+            "y": 208
+        },
+        {
+            "x": "task 125: skipped/TASK [operators-mirror : Install Packages]",
+            "y": 212
+        },
+        {
+            "x": "task 126: TASK [operators-mirror : Install skopeo]",
+            "y": 212
+        },
+        {
+            "x": "task 127: skipped/TASK [operators-mirror : Mirror]",
+            "y": 212
+        },
+        {
+            "x": "task 128: TASK [operators-mirror : set OPM version (non GA)]",
+            "y": 212
+        },
+        {
+            "x": "task 129: skipped/TASK [operators-mirror : set OPM version (GA)]",
+            "y": 212
+        },
+        {
+            "x": "task 130: skipped/TASK [operators-mirror : Build Operator catalog index]",
+            "y": 212
+        },
+        {
+            "x": "task 131: TASK [operators-mirror : Create a tmp directory for the prune image]",
+            "y": 229
+        },
+        {
+            "x": "task 132: TASK [operators-mirror : Prune source index but opm list]",
+            "y": 230
+        },
+        {
+            "x": "task 133: TASK [operators-mirror : Push the new index image to the local registry]",
+            "y": 231
+        },
+        {
+            "x": "task 134: TASK [operators-mirror : Get index SHA256]",
+            "y": 231
+        },
+        {
+            "x": "task 135: TASK [operators-mirror : Create a tmp directory Index DB]",
+            "y": 236
+        },
+        {
+            "x": "task 136: TASK [operators-mirror : Mirror catalog manifests]",
+            "y": 236
+        },
+        {
+            "x": "task 137: TASK [operators-mirror : Delete tmp Index directory]",
+            "y": 237
+        },
+        {
+            "x": "task 138: TASK [operators-mirror : Generate mirror entries]",
+            "y": 237
+        },
+        {
+            "x": "task 139: TASK [operators-mirror : Generate mirror bundle]",
+            "y": 237
+        },
+        {
+            "x": "task 140: TASK [operators-mirror : Copy trust bundle]",
+            "y": 238
+        },
+        {
+            "x": "task 141: TASK [operators-mirror : Add Dynamic mirror to trust bundle]",
+            "y": 238
+        },
+        {
+            "x": "task 142: TASK [operators-mirror : Override disconnected_registry_mirrors_file]",
+            "y": 245
+        },
+        {
+            "x": "task 143: TASK [dci-openshift-agent : Mirror must-gather images]",
+            "y": 246
+        },
+        {
+            "x": "task 144: TASK [Get provisioner SSH identity]",
+            "y": 255
+        },
+        {
+            "x": "task 145: TASK [Erase bootloader to prevent old OS to boot]",
+            "y": 258
+        },
+        {
+            "x": "task 146: TASK [Empty Console log files if present]",
+            "y": 258
+        },
+        {
+            "x": "task 147: skipped/TASK [Run the pre-run hook]",
+            "y": 271
+        },
+        {
+            "x": "task 148: TASK [Set BootMode to UEFI]",
+            "y": 272
+        },
+        {
+            "x": "task 149: TASK [running]",
+            "y": 272
+        },
+        {
+            "x": "task 150: RUNNING HANDLER [operators-mirror : Fix permissions and removing tmp files]",
+            "y": 274
+        },
+        {
+            "x": "task 151: PLAY [Launch configure]",
+            "y": 276
+        },
+        {
+            "x": "task 152: TASK [Gathering Facts]",
+            "y": 276
+        },
+        {
+            "x": "task 153: skipped/TASK [Configure provisioner]",
+            "y": 276
+        },
+        {
+            "x": "task 154: TASK [Configure extra repositories]",
+            "y": 279
+        },
+        {
+            "x": "task 155: TASK [Install packages]",
+            "y": 279
+        },
+        {
+            "x": "task 156: TASK [Launch configure]",
+            "y": 279
+        },
+        {
+            "x": "task 157: PLAY [Launch install]",
+            "y": 281
+        },
+        {
+            "x": "task 158: TASK [Gathering Facts]",
+            "y": 281
+        },
+        {
+            "x": "task 159: skipped/TASK [dci-openshift-agent : Launch install]",
+            "y": 281
+        },
+        {
+            "x": "task 160: skipped/TASK [installer : set EXTERNAL_SUBNET]",
+            "y": 281
+        },
+        {
+            "x": "task 161: TASK [installer : Get version and build from localhost vars]",
+            "y": 281
+        },
+        {
+            "x": "task 162: TASK [installer : Get pullsecret from localhost vars]",
+            "y": 282
+        },
+        {
+            "x": "task 163: TASK [installer: Check if .cache directory exists]",
+            "y": 283
+        },
+        {
+            "x": "task 164: TASK [installer: Retrieve images older than max_images_age]",
+            "y": 283
+        },
+        {
+            "x": "task 165: TASK [installer: Delete images older than max_images_age]",
+            "y": 284
+        },
+        {
+            "x": "task 166: TASK [installer : Populate clusterosimage]",
+            "y": 284
+        },
+        {
+            "x": "task 167: TASK [installer : Populate bootstraposimage]",
+            "y": 284
+        },
+        {
+            "x": "task 168: skipped/TASK [node-prep : include_tasks]",
+            "y": 284
+        },
+        {
+            "x": "task 169: skipped/TASK [node-prep : Check ansible version]",
+            "y": 284
+        },
+        {
+            "x": "task 170: TASK [node-prep : Ensure Python libraries are installed]",
+            "y": 284
+        },
+        {
+            "x": "task 171: skipped/TASK [node-prep : Fail if Python modules are missing]",
+            "y": 284
+        },
+        {
+            "x": "task 172: skipped/TASK [node-prep : Fail if version is undefined or empty.]",
+            "y": 284
+        },
+        {
+            "x": "task 173: skipped/TASK [node-prep : Fail if build is undefined or empty]",
+            "y": 284
+        },
+        {
+            "x": "task 174: skipped/TASK [node-prep : Fail if a required install-config variable is undefined or empty.]",
+            "y": 284
+        },
+        {
+            "x": "task 175: skipped/TASK [node-prep : Fail if both bootstraposimage and clusterosimage variables are empty.]",
+            "y": 284
+        },
+        {
+            "x": "task 176: skipped/TASK [node-prep : Conditions to set cache_enabled to true]",
+            "y": 284
+        },
+        {
+            "x": "task 177: TASK [node-prep : Conditions to set cache_enabled to false]",
+            "y": 284
+        },
+        {
+            "x": "task 178: TASK [node-prep : Check whether caching is enabled]",
+            "y": 284
+        },
+        {
+            "x": "task 179: skipped/TASK [node-prep : Verify DNS records for Wildcard (Ingress) VIP]",
+            "y": 286
+        },
+        {
+            "x": "task 180: skipped/TASK [node-prep : Verify DNS records for API VIP]",
+            "y": 286
+        },
+        {
+            "x": "task 181: TASK [node-prep : Display API VIP IP]",
+            "y": 286
+        },
+        {
+            "x": "task 182: TASK [node-prep : Display Ingress VIP IP]",
+            "y": 286
+        },
+        {
+            "x": "task 183: skipped/TASK [node-prep : Fail if incorrect API VIP]",
+            "y": 286
+        },
+        {
+            "x": "task 184: skipped/TASK [node-prep : Fail if incorrect Ingress VIP]",
+            "y": 286
+        },
+        {
+            "x": "task 185: TASK [node-prep : Set release_url for development envs]",
+            "y": 286
+        },
+        {
+            "x": "task 186: skipped/TASK [node-prep : Set release_url for GA envs]",
+            "y": 288
+        },
+        {
+            "x": "task 187: TASK [node-prep : Confirm whether or not internet connectivity on provisioner host]",
+            "y": 288
+        },
+        {
+            "x": "task 188: TASK [node-prep : Set fact disconnected_registry_auths_file]",
+            "y": 288
+        },
+        {
+            "x": "task 189: TASK [node-prep : Set fact disconnected_registry_mirrors_file]",
+            "y": 288
+        },
+        {
+            "x": "task 190: TASK [node-prep : Verify Registry host details]",
+            "y": 288
+        },
+        {
+            "x": "task 191: TASK [node-prep : Check if disconnected_registry_auths_file is set]",
+            "y": 290
+        },
+        {
+            "x": "task 192: TASK [node-prep : Check if disconnected_registry_mirrors_file is set]",
+            "y": 290
+        },
+        {
+            "x": "task 193: skipped/TASK [node-prep : Fail when provision host no online access and registry host not creating registry (can't assume access)]",
+            "y": 290
+        },
+        {
+            "x": "task 194: skipped/TASK [node-prep : Check if Python cryptography libraries are installed]",
+            "y": 290
+        },
+        {
+            "x": "task 195: skipped/TASK [node-prep : Check if Python PyOpenSSL libraries are installed]",
+            "y": 290
+        },
+        {
+            "x": "task 196: skipped/TASK [node-prep : Fail on missing required cryptography libraries cryptography OR PyOpenSSL]",
+            "y": 291
+        },
+        {
+            "x": "task 197: TASK [node-prep : Get Release.txt File]",
+            "y": 291
+        },
+        {
+            "x": "task 198: TASK [node-prep : Set Fact for Release Image]",
+            "y": 291
+        },
+        {
+            "x": "task 199: TASK [node-prep : Get the release version]",
+            "y": 291
+        },
+        {
+            "x": "task 200: skipped/TASK [node-prep : Fail if dual-stack is requested and build does not support it]",
+            "y": 291
+        },
+        {
+            "x": "task 201: skipped/TASK [node-prep : Fail if dualstack_baremetal and ipv4_baremetal are both true]",
+            "y": 291
+        },
+        {
+            "x": "task 202: skipped/TASK [node-prep : Check for valid extcidrnet (IPv4)]",
+            "y": 291
+        },
+        {
+            "x": "task 203: skipped/TASK [node-prep : Check for valid extcidrnet (IPv6)]",
+            "y": 291
+        },
+        {
+            "x": "task 204: skipped/TASK [node-prep : Check for valid extcidrnet and extcidrnet6 (Dual-Stack)]",
+            "y": 292
+        },
+        {
+            "x": "task 205: TASK [node-prep : Check if openshift-client-linux-4.10.0-0.nightly-2021-11-24-213526.tar.gz exists]",
+            "y": 292
+        },
+        {
+            "x": "task 206: skipped/TASK [node-prep : Fail if hostgroups not defined in inventory/hosts file]",
+            "y": 293
+        },
+        {
+            "x": "task 207: TASK [node-prep : Set Fact of num of workers and masters based on inventory]",
+            "y": 295
+        },
+        {
+            "x": "task 208: TASK [node-prep : Gather the rpm package facts]",
+            "y": 295
+        },
+        {
+            "x": "task 209: skipped/TASK [node-prep : Set Fact for firewall variable]",
+            "y": 295
+        },
+        {
+            "x": "task 210: TASK [node-prep : Set Fact for provisioning nic]",
+            "y": 295
+        },
+        {
+            "x": "task 211: skipped/TASK [node-prep : Fail if DNSVIP not set (OCP 4.4 or lower)]",
+            "y": 308
+        },
+        {
+            "x": "task 212: TASK [node-prep : Get all the chassis results from all the hosts]",
+            "y": 371
+        },
+        {
+            "x": "task 213: TASK [node-prep : Get all the firmware results from all the hosts]",
+            "y": 371
+        },
+        {
+            "x": "task 214: skipped/TASK [node-prep : Add all the hosts that are Dell to a group with iDRAC firmware higher than 4.20.20.20]",
+            "y": 371
+        },
+        {
+            "x": "task 215: TASK [node-prep : Add all the hosts that are HP to a group]",
+            "y": 371
+        },
+        {
+            "x": "task 216: skipped/TASK [node-prep : Fail when provisioningHostIP and bootstrapProvisioningIP are not set when virtualmedia option is enabled]",
+            "y": 371
+        },
+        {
+            "x": "task 217: skipped/TASK [node-prep : Fail when bootstrapProvisioningIP are not set when virtualmedia option is enabled]",
+            "y": 371
+        },
+        {
+            "x": "task 218: skipped/TASK [node-prep : include_tasks]",
+            "y": 372
+        },
+        {
+            "x": "task 219: TASK [node-prep : Set fact disconnected_registry_auths_file]",
+            "y": 373
+        },
+        {
+            "x": "task 220: TASK [node-prep : Set fact disconnected_registry_mirrors_file]",
+            "y": 373
+        },
+        {
+            "x": "task 221: skipped/TASK [node-prep : Set fact registry_port]",
+            "y": 373
+        },
+        {
+            "x": "task 222: TASK [node-prep : Set fact disconnected_registry_mirrors_file]",
+            "y": 373
+        },
+        {
+            "x": "task 223: TASK [node-prep : Check if disconnected_registry_auths_file is set]",
+            "y": 373
+        },
+        {
+            "x": "task 224: TASK [node-prep : Check if disconnected_registry_mirrors_file is set]",
+            "y": 373
+        },
+        {
+            "x": "task 225: skipped/TASK [node-prep : Make sure disconnected_registry_variables are sane]",
+            "y": 373
+        },
+        {
+            "x": "task 226: TASK [node-prep : Check if using existing disconnected registry.]",
+            "y": 373
+        },
+        {
+            "x": "task 227: skipped/TASK [node-prep : Check if creating a new disconnected registry.]",
+            "y": 373
+        },
+        {
+            "x": "task 228: skipped/TASK [node-prep : include_tasks]",
+            "y": 373
+        },
+        {
+            "x": "task 229: skipped/TASK [node-prep : Register host via Activation key]",
+            "y": 374
+        },
+        {
+            "x": "task 230: skipped/TASK [node-prep : include_tasks]",
+            "y": 374
+        },
+        {
+            "x": "task 231: skipped/TASK [node-prep : Create list of packages to be installed]",
+            "y": 379
+        },
+        {
+            "x": "task 232: TASK [node-prep : Install required packages]",
+            "y": 380
+        },
+        {
+            "x": "task 233: skipped/TASK [node-prep : include_tasks]",
+            "y": 381
+        },
+        {
+            "x": "task 234: TASK [node-prep : Get the provision connection name]",
+            "y": 382
+        },
+        {
+            "x": "task 235: TASK [node-prep : Get the public connection name]",
+            "y": 383
+        },
+        {
+            "x": "task 236: TASK [node-prep : Disconnect provisioning bridge connection]",
+            "y": 384
+        },
+        {
+            "x": "task 237: TASK [node-prep : Delete eno5np0 due to modify nmcli bug]",
+            "y": 386
+        },
+        {
+            "x": "task 238: TASK [node-prep : Delete eno5np0 due to modify nmcli bug]",
+            "y": 387
+        },
+        {
+            "x": "task 239: TASK [node-prep : Delete provisioning bridge if it exists]",
+            "y": 387
+        },
+        {
+            "x": "task 240: skipped/TASK [node-prep : set provisioning network fact]",
+            "y": 388
+        },
+        {
+            "x": "task 241: TASK [node-prep : Create Bridge labeled provisioning bridge ipv4]",
+            "y": 389
+        },
+        {
+            "x": "task 242: TASK [node-prep : Create Bridge slave on provisioning nic ipv4]",
+            "y": 389
+        },
+        {
+            "x": "task 243: skipped/TASK [node-prep : Create Bridge labeled provisioning bridge ipv6]",
+            "y": 389
+        },
+        {
+            "x": "task 244: skipped/TASK [node-prep : Create Bridge slave on provisioning nic ipv6]",
+            "y": 390
+        },
+        {
+            "x": "task 245: TASK [node-prep : Create Bridge labeled baremetal for ipv4]",
+            "y": 390
+        },
+        {
+            "x": "task 246: skipped/TASK [node-prep : Create Bridge labeled baremetal for ipv6/dual-stack]",
+            "y": 391
+        },
+        {
+            "x": "task 247: TASK [node-prep : Create Bridge slave on ens3f1]",
+            "y": 396
+        },
+        {
+            "x": "task 248: TASK [node-prep : Reload baremetal bridge and slave interfaces]",
+            "y": 398
+        },
+        {
+            "x": "task 249: TASK [node-prep : Reload provisioning bridge and slave interfaces]",
+            "y": 398
+        },
+        {
+            "x": "task 250: skipped/TASK [node-prep : include_tasks]",
+            "y": 400
+        },
+        {
+            "x": "task 251: TASK [node-prep : Regather Network Facts]",
+            "y": 400
+        },
+        {
+            "x": "task 252: skipped/TASK [node-prep : Set External Subnet with IPv4]",
+            "y": 400
+        },
+        {
+            "x": "task 253: skipped/TASK [node-prep : Set External Subnet with IPv6]",
+            "y": 400
+        },
+        {
+            "x": "task 254: TASK [node-prep : set provisioning subnet with IPV4]",
+            "y": 400
+        },
+        {
+            "x": "task 255: skipped/TASK [node-prep : set provisioning subnet with IPV6]",
+            "y": 400
+        },
+        {
+            "x": "task 256: TASK [node-prep : Show external subnet]",
+            "y": 400
+        },
+        {
+            "x": "task 257: TASK [node-prep : Show provisioning subnet]",
+            "y": 400
+        },
+        {
+            "x": "task 258: skipped/TASK [node-prep : include_tasks]",
+            "y": 401
+        },
+        {
+            "x": "task 259: TASK [node-prep : Add \"kni\" user to libvirt group and get ssh key setup]",
+            "y": 401
+        },
+        {
+            "x": "task 260: skipped/TASK [node-prep : include_tasks]",
+            "y": 404
+        },
+        {
+            "x": "task 261: TASK [node-prep : Enable and restart Services]",
+            "y": 404
+        },
+        {
+            "x": "task 262: skipped/TASK [node-prep : Enable Services (iptables)]",
+            "y": 405
+        },
+        {
+            "x": "task 263: TASK [node-prep : Enable Services (firewalld)]",
+            "y": 406
+        },
+        {
+            "x": "task 264: skipped/TASK [node-prep : include_tasks]",
+            "y": 407
+        },
+        {
+            "x": "task 265: TASK [node-prep : Enable HTTP for firewalld]",
+            "y": 407
+        },
+        {
+            "x": "task 266: skipped/TASK [node-prep : Open port 8080/tcp, zone public, for cache for firewalld]",
+            "y": 407
+        },
+        {
+            "x": "task 267: skipped/TASK [node-prep : Enable HTTP for iptables]",
+            "y": 407
+        },
+        {
+            "x": "task 268: skipped/TASK [node-prep : Open port 8080/tcp for cache for iptables]",
+            "y": 407
+        },
+        {
+            "x": "task 269: skipped/TASK [node-prep : Allow related and established connections for iptables]",
+            "y": 407
+        },
+        {
+            "x": "task 270: skipped/TASK [node-prep : Save iptables configuration]",
+            "y": 407
+        },
+        {
+            "x": "task 271: skipped/TASK [node-prep : include_tasks]",
+            "y": 408
+        },
+        {
+            "x": "task 272: TASK [node-prep : Define Storage Pool for default]",
+            "y": 409
+        },
+        {
+            "x": "task 273: TASK [node-prep : Start Storage Pool for default]",
+            "y": 410
+        },
+        {
+            "x": "task 274: TASK [node-prep : Autostart Storage Pool for default]",
+            "y": 410
+        },
+        {
+            "x": "task 275: skipped/TASK [node-prep : include_tasks]",
+            "y": 411
+        },
+        {
+            "x": "task 276: TASK [node-prep : Clear config dir (if any, in case this is a re-run)]",
+            "y": 412
+        },
+        {
+            "x": "task 277: TASK [node-prep : Create config dir]",
+            "y": 412
+        },
+        {
+            "x": "task 278: skipped/TASK [installer : include_tasks]",
+            "y": 412
+        },
+        {
+            "x": "task 279: skipped/TASK [installer : Check if creating a new disconnected registry and registry exists]",
+            "y": 413
+        },
+        {
+            "x": "task 280: TASK [installer : Find any old tmp dirs with OpenShift related binaries]",
+            "y": 414
+        },
+        {
+            "x": "task 281: TASK [installer : Delete any old tmp dirs with OpenShift related binaries]",
+            "y": 415
+        },
+        {
+            "x": "task 282: TASK [installer : Find any existing /usr/local/bin OpenShift binaries]",
+            "y": 417
+        },
+        {
+            "x": "task 283: TASK [installer : Remove any existing /usr/local/bin OpenShift binaries]",
+            "y": 418
+        },
+        {
+            "x": "task 284: TASK [installer : Create tmp directory to store OpenShift binaries]",
+            "y": 418
+        },
+        {
+            "x": "task 285: TASK [installer : Set fact for tmp directory]",
+            "y": 418
+        },
+        {
+            "x": "task 286: skipped/TASK [installer : Create tmp directory to store OpenShift binaries on registry host]",
+            "y": 418
+        },
+        {
+            "x": "task 287: skipped/TASK [installer : Set fact for tmp directory on registry host]",
+            "y": 418
+        },
+        {
+            "x": "task 288: TASK [installer : Setting Fact of which ansible temp file to use]",
+            "y": 419
+        },
+        {
+            "x": "task 289: TASK [installer : Get the ocp client tar gunzip file]",
+            "y": 419
+        },
+        {
+            "x": "task 290: skipped/TASK [installer : Get the openshift-client-linux-4.10.0-0.nightly-2021-11-24-213526.tar.gz from registry host into temp file on control machine]",
+            "y": 419
+        },
+        {
+            "x": "task 291: skipped/TASK [installer : Copy the openshift-client-linux-4.10.0-0.nightly-2021-11-24-213526.tar.gz from control machine to the provisioner host]",
+            "y": 419
+        },
+        {
+            "x": "task 292: skipped/TASK [installer : Remove the temporary copy of the openshift-client-linux-4.10.0-0.nightly-2021-11-24-213526.tar.gz on control machine]",
+            "y": 423
+        },
+        {
+            "x": "task 293: TASK [installer : Untar the openshift-client-linux-4.10.0-0.nightly-2021-11-24-213526.tar.gz]",
+            "y": 425
+        },
+        {
+            "x": "task 294: TASK [installer : Copy oc binary to /usr/local/bin]",
+            "y": 425
+        },
+        {
+            "x": "task 295: skipped/TASK [installer : include_tasks]",
+            "y": 425
+        },
+        {
+            "x": "task 296: TASK [installer : Get stats of /home/dciteam/clusterconfigs-cluster6/trust-bundle.yml]",
+            "y": 425
+        },
+        {
+            "x": "task 297: skipped/TASK [installer : Check if the /home/dciteam/clusterconfigs-cluster6/trust-bundle.yml exists]",
+            "y": 425
+        },
+        {
+            "x": "task 298: TASK [installer : Read the contents of /home/dciteam/clusterconfigs-cluster6/trust-bundle.yml]",
+            "y": 425
+        },
+        {
+            "x": "task 299: TASK [installer : Set the install_config_appends fact]",
+            "y": 425
+        },
+        {
+            "x": "task 300: TASK [installer : Get stats of /opt/cluster6-registry-auths.json]",
+            "y": 425
+        },
+        {
+            "x": "task 301: skipped/TASK [installer : Check if the /opt/cluster6-registry-auths.json exists]",
+            "y": 425
+        },
+        {
+            "x": "task 302: TASK [installer : Read disconnected auths]",
+            "y": 425
+        },
+        {
+            "x": "task 303: TASK [installer : append auth to pullsecret]",
+            "y": 425
+        },
+        {
+            "x": "task 304: TASK [installer : set pullsecret with new auth]",
+            "y": 425
+        },
+        {
+            "x": "task 305: skipped/TASK [installer : include_tasks]",
+            "y": 425
+        },
+        {
+            "x": "task 306: skipped/TASK [installer : include_tasks]",
+            "y": 426
+        },
+        {
+            "x": "task 307: TASK [installer : Copy PullSecret into /home/kni/clusterconfigs/pull-secret.txt]",
+            "y": 426
+        },
+        {
+            "x": "task 308: skipped/TASK [installer : Get the PullSecret from provisioner into temp file on control machine]",
+            "y": 426
+        },
+        {
+            "x": "task 309: skipped/TASK [installer : Create config dir]",
+            "y": 426
+        },
+        {
+            "x": "task 310: skipped/TASK [installer : Copy the PullSecret from control machine to the registry host]",
+            "y": 427
+        },
+        {
+            "x": "task 311: skipped/TASK [installer : Remove the temporary copy of the PullSecret on control machine]",
+            "y": 429
+        },
+        {
+            "x": "task 312: TASK [installer : Confirm whether or not internet connectivity on provisioner host]",
+            "y": 429
+        },
+        {
+            "x": "task 313: TASK [installer : Setting Fact of which ansible temp file to use]",
+            "y": 429
+        },
+        {
+            "x": "task 314: skipped/TASK [Extracting the installer]",
+            "y": 429
+        },
+        {
+            "x": "task 315: skipped/TASK [installer : Remove the temporary copy of the PullSecret on registry host]",
+            "y": 433
+        },
+        {
+            "x": "task 316: TASK [installer : OFFLINE mode requires openshift-baremetal-install pre-extracted]",
+            "y": 438
+        },
+        {
+            "x": "task 317: TASK [installer : Copy openshift-baremetal-install binary to /usr/local/bin]",
+            "y": 438
+        },
+        {
+            "x": "task 318: skipped/TASK [installer : Get the openshift-baremetal-install from registry host into temp file on control machine]",
+            "y": 438
+        },
+        {
+            "x": "task 319: skipped/TASK [installer : Copy the openshift-baremetal-install binary from control machine to the provisioner host]",
+            "y": 438
+        },
+        {
+            "x": "task 320: skipped/TASK [installer : Remove the temporary copy of the openshift-baremetal-install binary on control machine]",
+            "y": 438
+        },
+        {
+            "x": "task 321: skipped/TASK [installer : include_tasks]",
+            "y": 438
+        },
+        {
+            "x": "task 322: skipped/TASK [installer : include_tasks]",
+            "y": 438
+        },
+        {
+            "x": "task 323: skipped/TASK [installer : include_tasks]",
+            "y": 439
+        },
+        {
+            "x": "task 324: TASK [installer : Verify that SSH key for kni exists]",
+            "y": 440
+        },
+        {
+            "x": "task 325: TASK [installer : Get the contents of the ssh key for kni]",
+            "y": 440
+        },
+        {
+            "x": "task 326: TASK [installer : Set Fact for the ssh key of kni]",
+            "y": 441
+        },
+        {
+            "x": "task 327: TASK [installer : Generate install-config.yaml]",
+            "y": 441
+        },
+        {
+            "x": "task 328: skipped/TASK [installer : Generate virtualmedia install-config.yaml]",
+            "y": 442
+        },
+        {
+            "x": "task 329: TASK [installer : Make a backup of the install-config.yaml file]",
+            "y": 442
+        },
+        {
+            "x": "task 330: skipped/TASK [installer : include_tasks]",
+            "y": 442
+        },
+        {
+            "x": "task 331: skipped/TASK [installer : include_tasks]",
+            "y": 443
+        },
+        {
+            "x": "task 332: TASK [installer : Create OpenShift Manifest]",
+            "y": 444
+        },
+        {
+            "x": "task 333: TASK [installer : Ensure the manifests dir is owned by kni]",
+            "y": 444
+        },
+        {
+            "x": "task 334: skipped/TASK [installer : Copy the metal3-config.yaml to /home/kni/clusterconfigs/openshift directory]",
+            "y": 444
+        },
+        {
+            "x": "task 335: skipped/TASK [installer : include_tasks]",
+            "y": 444
+        },
+        {
+            "x": "task 336: TASK [installer : Check if override path is defined for extra openshift manifests]",
+            "y": 444
+        },
+        {
+            "x": "task 337: skipped/TASK [installer : Copy Dual-Stack related manifest]",
+            "y": 444
+        },
+        {
+            "x": "task 338: TASK [installer : Add Manifests from files dir]",
+            "y": 444
+        },
+        {
+            "x": "task 339: TASK [installer : Check if override path is defined for extramanifests]",
+            "y": 447
+        },
+        {
+            "x": "task 340: TASK [installer : Add Manifests from files dir]",
+            "y": 447
+        },
+        {
+            "x": "task 341: skipped/TASK [installer : Create chrony.conf]",
+            "y": 447
+        },
+        {
+            "x": "task 342: skipped/TASK [installer : Inject chrony.conf in a machine-config object]",
+            "y": 447
+        },
+        {
+            "x": "task 343: skipped/TASK [installer : include_tasks]",
+            "y": 447
+        },
+        {
+            "x": "task 344: TASK [installer : Check if override path is defined for customize_filesystem]",
+            "y": 448
+        },
+        {
+            "x": "task 345: TASK [Verify if /var/lib/dci-pipeline/baremetal_deploy_repo/ansible-ipi-install/roles/installer/files/customize_filesystem/master/worker is empty]",
+            "y": 448
+        },
+        {
+            "x": "task 346: skipped/TASK [installer : Create OpenShift Ignition Configs]",
+            "y": 448
+        },
+        {
+            "x": "task 347: skipped/TASK [installer : Copy Ignition Config Files]",
+            "y": 448
+        },
+        {
+            "x": "task 348: skipped/TASK [installer : Copy customize_filesystem to tempdir]",
+            "y": 450
+        },
+        {
+            "x": "task 349: skipped/TASK [installer : Cleanup Any .gitkeep Files in the Fake Root]",
+            "y": 450
+        },
+        {
+            "x": "task 350: skipped/TASK [installer : Augment Ignition Config Files]",
+            "y": 450
+        },
+        {
+            "x": "task 351: skipped/TASK [installer : Create backup of ignition config files]",
+            "y": 450
+        },
+        {
+            "x": "task 352: skipped/TASK [installer : include_tasks]",
+            "y": 451
+        },
+        {
+            "x": "task 353: TASK [installer : Get list of all VMs]",
+            "y": 453
+        },
+        {
+            "x": "task 354: TASK [installer : Get list of all running VMs]",
+            "y": 455
+        },
+        {
+            "x": "task 355: TASK [installer : Get list of all paused VMs]",
+            "y": 455
+        },
+        {
+            "x": "task 356: TASK [installer : Destroy old bootstrap VMs, if any]",
+            "y": 455
+        },
+        {
+            "x": "task 357: TASK [installer : Undefine old bootstrap VMs, if any]",
+            "y": 457
+        },
+        {
+            "x": "task 358: TASK [installer : Find old bootstrap VM Storage]",
+            "y": 457
+        },
+        {
+            "x": "task 359: TASK [installer : Create list of old paths]",
+            "y": 457
+        },
+        {
+            "x": "task 360: TASK [installer : Delete old bootstrap VMs Storage]",
+            "y": 457
+        },
+        {
+            "x": "task 361: skipped/TASK [installer : include_tasks]",
+            "y": 457
+        },
+        {
+            "x": "task 362: TASK [installer : Create list of hosts that are going to be powered off]",
+            "y": 499
+        },
+        {
+            "x": "task 363: TASK [installer : Power off hosts]",
+            "y": 499
+        },
+        {
+            "x": "task 364: skipped/TASK [installer : include_tasks]",
+            "y": 501
+        },
+        {
+            "x": "task 365: TASK [installer : Add Kubeconfig to Ansible User .bashrc]",
+            "y": 501
+        },
+        {
+            "x": "task 366: TASK [installer : Show File to monitor for installation status]",
+            "y": 501
+        },
+        {
+            "x": "task 367: skipped/TASK [installer : Deploy OpenShift Cluster]",
+            "y": 502
+        },
+        {
+            "x": "task 368: TASK [installer : Run OpenShift Cluster install as async task]",
+            "y": 507
+        },
+        {
+            "x": "task 369: TASK [installer : Wait for kubeconfig file]",
+            "y": 2638
+        },
+        {
+            "x": "task 370: TASK [installer : Wait for Bootstrap Complete]",
+            "y": 4356
+        },
+        {
+            "x": "task 371: TASK [installer : Wait for Install Complete]",
+            "y": 4356
+        },
+        {
+            "x": "task 372: skipped/TASK [sno-node-prep : include_tasks]",
+            "y": 4356
+        },
+        {
+            "x": "task 373: skipped/TASK [sno-node-prep : include_tasks]",
+            "y": 4356
+        },
+        {
+            "x": "task 374: skipped/TASK [sno-node-prep : include_tasks]",
+            "y": 4356
+        },
+        {
+            "x": "task 375: skipped/TASK [sno-node-prep : include_tasks]",
+            "y": 4356
+        },
+        {
+            "x": "task 376: skipped/TASK [sno-node-prep : include_tasks]",
+            "y": 4356
+        },
+        {
+            "x": "task 377: skipped/TASK [sno-node-prep : include_tasks]",
+            "y": 4356
+        },
+        {
+            "x": "task 378: skipped/TASK [sno-node-prep : include_tasks]",
+            "y": 4356
+        },
+        {
+            "x": "task 379: skipped/TASK [sno-node-prep : include_tasks]",
+            "y": 4356
+        },
+        {
+            "x": "task 380: skipped/TASK [sno-node-prep : include_tasks]",
+            "y": 4356
+        },
+        {
+            "x": "task 381: skipped/TASK [sno-node-prep : include_tasks]",
+            "y": 4356
+        },
+        {
+            "x": "task 382: skipped/TASK [sno-node-prep : include_tasks]",
+            "y": 4356
+        },
+        {
+            "x": "task 383: skipped/TASK [sno-node-prep : include_tasks]",
+            "y": 4356
+        },
+        {
+            "x": "task 384: skipped/TASK [sno-node-prep : include_tasks]",
+            "y": 4356
+        },
+        {
+            "x": "task 385: skipped/TASK [sno-installer : include_tasks]",
+            "y": 4356
+        },
+        {
+            "x": "task 386: skipped/TASK [sno-installer : include_tasks]",
+            "y": 4356
+        },
+        {
+            "x": "task 387: skipped/TASK [sno-installer : include_tasks]",
+            "y": 4356
+        },
+        {
+            "x": "task 388: skipped/TASK [sno-installer : include_tasks]",
+            "y": 4356
+        },
+        {
+            "x": "task 389: skipped/TASK [sno-installer : include_tasks]",
+            "y": 4356
+        },
+        {
+            "x": "task 390: skipped/TASK [sno-installer : include_tasks]",
+            "y": 4356
+        },
+        {
+            "x": "task 391: skipped/TASK [sno-installer : include_tasks]",
+            "y": 4356
+        },
+        {
+            "x": "task 392: skipped/TASK [sno-installer : include_tasks]",
+            "y": 4356
+        },
+        {
+            "x": "task 393: skipped/TASK [sno-installer : include_tasks]",
+            "y": 4356
+        },
+        {
+            "x": "task 394: skipped/TASK [sno-installer : include_tasks]",
+            "y": 4358
+        },
+        {
+            "x": "task 395: skipped/TASK [sno-installer : include_tasks]",
+            "y": 4358
+        },
+        {
+            "x": "task 396: skipped/TASK [sno-installer : include_tasks]",
+            "y": 4358
+        },
+        {
+            "x": "task 397: TASK [installer : Setup openshift access in jumphost]",
+            "y": 4358
+        },
+        {
+            "x": "task 398: skipped/TASK [oc-setup : Install binaries and other packages in jumphost]",
+            "y": 4365
+        },
+        {
+            "x": "task 399: TASK [oc-setup : Get oc binary and KUBECONFIG from provisioner node]",
+            "y": 4369
+        },
+        {
+            "x": "task 400: TASK [oc-setup : Install packages needed for login]",
+            "y": 4381
+        },
+        {
+            "x": "task 401: TASK [test_ oc-setup : Check inventory to match ocp cluster config]",
+            "y": 4381
+        },
+        {
+            "x": "task 402: skipped/TASK [oc-setup : Configure clients in jumphost]",
+            "y": 4381
+        },
+        {
+            "x": "task 403: TASK [oc-setup : Generate Random password for admin user]",
+            "y": 4381
+        },
+        {
+            "x": "task 404: TASK [oc-setup : Generate random password for nonadmin user]",
+            "y": 4382
+        },
+        {
+            "x": "task 405: TASK [oc-setup : Save passwords to the cluster configs directory]",
+            "y": 4382
+        },
+        {
+            "x": "task 406: TASK [oc-setup : Create users.htpasswd file]",
+            "y": 4383
+        },
+        {
+            "x": "task 407: TASK [oc-setup : Set htpasswd config secret in openshift]",
+            "y": 4383
+        },
+        {
+            "x": "task 408: TASK [oc-setup : Upload the IDP config to the jumphost]",
+            "y": 4384
+        },
+        {
+            "x": "task 409: TASK [oc-setup : Setup htpasswd auth IDP backend in openshift]",
+            "y": 4385
+        },
+        {
+            "x": "task 410: TASK [oc-setup : Give cluster-admin to the admin user]",
+            "y": 4385
+        },
+        {
+            "x": "task 411: TASK [installer : Apply node labels]",
+            "y": 4396
+        },
+        {
+            "x": "task 412: TASK [label-nodes : Label nodes]",
+            "y": 4396
+        },
+        {
+            "x": "task 413: PLAY [Deploy operators to OCP cluster]",
+            "y": 4397
+        },
+        {
+            "x": "task 414: TASK [Gathering Facts]",
+            "y": 4397
+        },
+        {
+            "x": "task 415: skipped/TASK [include_tasks]",
+            "y": 4397
+        },
+        {
+            "x": "task 416: TASK [deploy-operators : Set default redhat-operators]",
+            "y": 4397
+        },
+        {
+            "x": "task 417: TASK [Get oc version output]",
+            "y": 4397
+        },
+        {
+            "x": "task 418: skipped/TASK [Get OCP version]",
+            "y": 4397
+        },
+        {
+            "x": "task 419: skipped/TASK [operators-catalog : Set facts]",
+            "y": 4398
+        },
+        {
+            "x": "task 420: TASK [operators-catalog : Basic facts]",
+            "y": 4399
+        },
+        {
+            "x": "task 421: TASK [operators-catalog : Disable default catalog sources for disconnected deployment]",
+            "y": 4399
+        },
+        {
+            "x": "task 422: skipped/TASK [operators-catalog : Deploy Red Hat Catalog Source]",
+            "y": 4400
+        },
+        {
+            "x": "task 423: TASK [operators-catalog : Create CatalogSource for Red Hat operators]",
+            "y": 4401
+        },
+        {
+            "x": "task 424: TASK [prepare-cnf : Wait for ALL nodes to be in a Done state]",
+            "y": 4401
+        },
+        {
+            "x": "task 425: TASK [deploy-operators : Prepare cluster for CNF]",
+            "y": 4402
+        },
+        {
+            "x": "task 426: TASK [prepare-cnf : Get all nodes]",
+            "y": 4404
+        },
+        {
+            "x": "task 427: TASK [prepare-cnf : Get worker node count]",
+            "y": 4404
+        },
+        {
+            "x": "task 428: skipped/TASK [prepare-cnf : test_ Check enough worker nodes availability]",
+            "y": 4405
+        },
+        {
+            "x": "task 429: TASK [deploy-operators : Increase maxUnavailable count to n-1]",
+            "y": 4406
+        },
+        {
+            "x": "task 430: TASK [deploy-operators : Install performance profile operator]",
+            "y": 4408
+        },
+        {
+            "x": "task 431: TASK [operator-performance-profile : Create namespace for Performance Addon operator]",
+            "y": 4409
+        },
+        {
+            "x": "task 432: TASK [operator-performance-profile : Create operatorgroup for Performance Addon operator]",
+            "y": 4410
+        },
+        {
+            "x": "task 433: TASK [operator-performance-profile : Create subscription for Performance Addon operator without channel]",
+            "y": 4410
+        },
+        {
+            "x": "task 434: skipped/TASK [operator-performance-profile : Create subscription for Performance Addon operator with channel (4.5 and older)]",
+            "y": 4435
+        },
+        {
+            "x": "task 435: TASK [operator-performance-profile : test_ Check if performance-addon-operator csv is installed]",
+            "y": 4435
+        },
+        {
+            "x": "task 436: TASK [operator-performance-profile : Apply label to worker mcp]",
+            "y": 4498
+        },
+        {
+            "x": "task 437: TASK [operator-performance-profile : Create PerformanceProfile]",
+            "y": 4529
+        },
+        {
+            "x": "task 438: TASK [operator-performance-profile : Pause for Machine Config to be created]",
+            "y": 4529
+        },
+        {
+            "x": "task 439: TASK [Check nodes]",
+            "y": 5179
+        },
+        {
+            "x": "task 440: TASK [prepare-cnf : Wait for ALL nodes to be in a Done state]",
+            "y": 5179
+        },
+        {
+            "x": "task 441: TASK [deploy-operators : Install SRIOV operator]",
+            "y": 5180
+        },
+        {
+            "x": "task 442: TASK [operator-sriov : Create namespace for SR-IOV operator]",
+            "y": 5181
+        },
+        {
+            "x": "task 443: TASK [operator-sriov : Create operatorgroup for SR-IOV operator]",
+            "y": 5181
+        },
+        {
+            "x": "task 444: skipped/TASK [operator-sriov : Create subscription for SR-IOV operator with channel (4.5 and older)]",
+            "y": 5182
+        },
+        {
+            "x": "task 445: TASK [operator-sriov : Create subscription for SR-IOV operator without channel]",
+            "y": 5189
+        },
+        {
+            "x": "task 446: TASK [operator-sriov : Get SRIOV InstallPlan details]",
+            "y": 5189
+        },
+        {
+            "x": "task 447: TASK [operator-sriov : Set SRIOV CSV name from IP]",
+            "y": 5208
+        },
+        {
+            "x": "task 448: TASK [operator-sriov : get CSVs in sriov-network-operator ns]",
+            "y": 5211
+        },
+        {
+            "x": "task 449: TASK [operator-sriov : Get all nodes]",
+            "y": 5216
+        },
+        {
+            "x": "task 450: TASK [operator-sriov : Add sriov label to worker nodes]",
+            "y": 5218
+        },
+        {
+            "x": "task 451: TASK [operator-sriov : Get one worker node]",
+            "y": 5230
+        },
+        {
+            "x": "task 452: TASK [operator-sriov : Get SriovNetworkNodeState for one of the worker node]",
+            "y": 5230
+        },
+        {
+            "x": "task 453: skipped/TASK [operator-sriov : Create SriovNetworkNodePolicy {{ cnf_test_sriov_policy }} for CNF tests]",
+            "y": 5231
+        },
+        {
+            "x": "task 454: TASK [Check nodes]",
+            "y": 5233
+        },
+        {
+            "x": "task 455: TASK [prepare-cnf : Wait for ALL nodes to be in a Done state]",
+            "y": 5234
+        },
+        {
+            "x": "task 456: TASK [deploy-operators : Reset maxUnavailable count to default value 1]",
+            "y": 5234
+        },
+        {
+            "x": "task 457: skipped/TASK [deploy-operators : Setup cluster for CNV]",
+            "y": 5234
+        },
+        {
+            "x": "task 458: skipped/TASK [deploy-operators : Define OCS CatalogSource]",
+            "y": 5234
+        },
+        {
+            "x": "task 459: skipped/TASK [deploy-operators : Install OCS Operator]",
+            "y": 5234
+        },
+        {
+            "x": "task 460: skipped/TASK [deploy-operators : Define LocalStorage CatalogSource]",
+            "y": 5234
+        },
+        {
+            "x": "task 461: skipped/TASK [deploy-operators : Install LocalStorage Operator]",
+            "y": 5234
+        },
+        {
+            "x": "task 462: skipped/TASK [deploy-operators : Create all Custom Resources]",
+            "y": 5234
+        },
+        {
+            "x": "task 463: skipped/PLAY [Launch hook install]",
+            "y": 5236
+        },
+        {
+            "x": "task 464: TASK [Gathering Facts]",
+            "y": 5236
+        },
+        {
+            "x": "task 465: TASK [dci-openshift-agent : Launch partner install]",
+            "y": 5237
+        },
+        {
+            "x": "task 466: PLAY [Launch upgrade]",
+            "y": 5239
+        },
+        {
+            "x": "task 467: TASK [Gathering Facts]",
+            "y": 5239
+        },
+        {
+            "x": "task 468: skipped/TASK [dci-openshift-agent : Launch upgrade]",
+            "y": 5239
+        },
+        {
+            "x": "task 469: skipped/PLAY [Launch hook upgrade]",
+            "y": 5240
+        },
+        {
+            "x": "task 470: TASK [Gathering Facts]",
+            "y": 5240
+        },
+        {
+            "x": "task 471: skipped/TASK [dci-openshift-agent : Launch partner upgrade]",
+            "y": 5240
+        },
+        {
+            "x": "task 472: skipped/PLAY [Launch Red Hat tests]",
+            "y": 5244
+        },
+        {
+            "x": "task 473: TASK [Gathering Facts]",
+            "y": 5244
+        },
+        {
+            "x": "task 474: skipped/TASK [include_tasks]",
+            "y": 5244
+        },
+        {
+            "x": "task 475: TASK [dci-openshift-agent : Setup podman on the jumphost]",
+            "y": 5244
+        },
+        {
+            "x": "task 476: skipped/TASK [ansible-role-dci-podman : Install binaries and other packages in system]",
+            "y": 5252
+        },
+        {
+            "x": "task 477: TASK [ansible-role-dci-podman : Install packages needed for podman]",
+            "y": 5252
+        },
+        {
+            "x": "task 478: skipped/TASK [ansible-role-dci-podman : Configure system]",
+            "y": 5252
+        },
+        {
+            "x": "task 479: TASK [ansible-role-dci-podman : Check /proc/sys/user/max_user_namespaces is correct]",
+            "y": 5252
+        },
+        {
+            "x": "task 480: skipped/TASK [ansible-role-dci-podman : Create /etc/sysctl.d/userns.conf]",
+            "y": 5253
+        },
+        {
+            "x": "task 481: skipped/TASK [ansible-role-dci-podman : Update sysctl]",
+            "y": 5253
+        },
+        {
+            "x": "task 482: TASK [ansible-role-dci-podman : Add default subuid entry for ansible_user_id]",
+            "y": 5253
+        },
+        {
+            "x": "task 483: TASK [ansible-role-dci-podman : Add additional subuid entries]",
+            "y": 5253
+        },
+        {
+            "x": "task 484: TASK [ansible-role-dci-podman : Add default subgid entry for ansible_user_id]",
+            "y": 5253
+        },
+        {
+            "x": "task 485: TASK [ansible-role-dci-podman : Add additional subgid entries]",
+            "y": 5253
+        },
+        {
+            "x": "task 486: TASK [Get oc version output]",
+            "y": 5254
+        },
+        {
+            "x": "task 487: skipped/TASK [Get OCP version]",
+            "y": 5254
+        },
+        {
+            "x": "task 488: skipped/TASK [dci-openshift-agent : Run Red Hat test suite]",
+            "y": 5254
+        },
+        {
+            "x": "task 489: skipped/TASK [Mirror images to local registry for disconnected cnf-tests]",
+            "y": 5254
+        },
+        {
+            "x": "task 490: TASK [Create images.json file]",
+            "y": 5256
+        },
+        {
+            "x": "task 491: TASK [Mirror cnf-tests and dpdk images to local repo]",
+            "y": 5256
+        },
+        {
+            "x": "task 492: skipped/TASK [Run cnf tests]",
+            "y": 5256
+        },
+        {
+            "x": "task 493: TASK [Get date]",
+            "y": 5256
+        },
+        {
+            "x": "task 494: TASK [set cnf_tests_image_registry for offline env]",
+            "y": 5256
+        },
+        {
+            "x": "task 495: skipped/TASK [set cnf_tests_image_registry for online env]",
+            "y": 5257
+        },
+        {
+            "x": "task 496: TASK [test_ Wait for ALL nodes to be in a Done state]",
+            "y": 5257
+        },
+        {
+            "x": "task 497: skipped/TASK [Run SCTP tests]",
+            "y": 5257
+        },
+        {
+            "x": "task 498: skipped/TASK [Run PTP tests]",
+            "y": 5257
+        },
+        {
+            "x": "task 499: skipped/TASK [Run performance tests]",
+            "y": 5257
+        },
+        {
+            "x": "task 500: skipped/TASK [Run SRIOV tests]",
+            "y": 5257
+        },
+        {
+            "x": "task 501: skipped/TASK [Run DPDK tests]",
+            "y": 5258
+        },
+        {
+            "x": "task 502: TASK [Rename junit xml files with the feature name]",
+            "y": 5258
+        },
+        {
+            "x": "task 503: skipped/TASK [create CVP namespace]",
+            "y": 5258
+        },
+        {
+            "x": "task 504: skipped/TASK [Run CVP/OVP tests if bundle_spec is defined]",
+            "y": 5258
+        },
+        {
+            "x": "task 505: skipped/PLAY [Launch partner tests]",
+            "y": 5260
+        },
+        {
+            "x": "task 506: TASK [Gathering Facts]",
+            "y": 5260
+        },
+        {
+            "x": "task 507: TASK [Run the partner tests]",
+            "y": 5261
+        },
+        {
+            "x": "task 508: TASK [post-run]",
+            "y": 5261
+        },
+        {
+            "x": "task 509: PLAY [Launch post run]",
+            "y": 5263
+        },
+        {
+            "x": "task 510: TASK [Gathering Facts]",
+            "y": 5263
+        },
+        {
+            "x": "task 511: skipped/TASK [include_tasks]",
+            "y": 5263
+        },
+        {
+            "x": "task 512: TASK [set outputs to be copied]",
+            "y": 5264
+        },
+        {
+            "x": "task 513: TASK [Copy outputs if defined]",
+            "y": 5264
+        },
+        {
+            "x": "task 514: skipped/TASK [Upload logs]",
+            "y": 5264
+        },
+        {
+            "x": "task 515: TASK [Find test text files]",
+            "y": 5267
+        },
+        {
+            "x": "task 516: TASK [Upload test text files results to DCI Control Server]",
+            "y": 5267
+        },
+        {
+            "x": "task 517: TASK [Find test Junit files]",
+            "y": 5267
+        },
+        {
+            "x": "task 518: TASK [Upload Junit files to DCI Control Server]",
+            "y": 5267
+        },
+        {
+            "x": "task 519: TASK [Generate temp dir for deployment logs]",
+            "y": 5403
+        },
+        {
+            "x": "task 520: TASK [Get logs from OCP deployment]",
+            "y": 5403
+        },
+        {
+            "x": "task 521: TASK [Find deployment logs (text)]",
+            "y": 5403
+        },
+        {
+            "x": "task 522: skipped/TASK [Upload text logs]",
+            "y": 5407
+        },
+        {
+            "x": "task 523: TASK [Upload openshift_install.log to DCI Control Server]",
+            "y": 5408
+        },
+        {
+            "x": "task 524: TASK [Upload install-config-yaml.txt to DCI Control Server]",
+            "y": 5410
+        },
+        {
+            "x": "task 525: TASK [Upload journal-master-0.log to DCI Control Server]",
+            "y": 5412
+        },
+        {
+            "x": "task 526: TASK [Upload journal-master-1.log to DCI Control Server]",
+            "y": 5414
+        },
+        {
+            "x": "task 527: TASK [Upload journal-master-2.log to DCI Control Server]",
+            "y": 5417
+        },
+        {
+            "x": "task 528: TASK [Upload journal-worker-0.log to DCI Control Server]",
+            "y": 5419
+        },
+        {
+            "x": "task 529: TASK [Upload journal-worker-1.log to DCI Control Server]",
+            "y": 5423
+        },
+        {
+            "x": "task 530: TASK [Upload journal-worker-2.log to DCI Control Server]",
+            "y": 5425
+        },
+        {
+            "x": "task 531: TASK [Upload journal-worker-3.log to DCI Control Server]",
+            "y": 5428
+        },
+        {
+            "x": "task 532: TASK [Upload version.txt to DCI Control Server]",
+            "y": 5430
+        },
+        {
+            "x": "task 533: TASK [Upload clusterversion.txt to DCI Control Server]",
+            "y": 5431
+        },
+        {
+            "x": "task 534: TASK [Upload clusteroperator.txt to DCI Control Server]",
+            "y": 5434
+        },
+        {
+            "x": "task 535: TASK [Upload clusternetwork.txt to DCI Control Server]",
+            "y": 5435
+        },
+        {
+            "x": "task 536: TASK [Upload nodes.txt to DCI Control Server]",
+            "y": 5440
+        },
+        {
+            "x": "task 537: TASK [Upload events.txt to DCI Control Server]",
+            "y": 5441
+        },
+        {
+            "x": "task 538: TASK [Upload pods.txt to DCI Control Server]",
+            "y": 5441
+        },
+        {
+            "x": "task 539: TASK [Find deployment logs (compressed)]",
+            "y": 5443
+        },
+        {
+            "x": "task 540: skipped/TASK [Upload compressed logs]",
+            "y": 5446
+        },
+        {
+            "x": "task 541: TASK [Upload must_gather.tar.gz to DCI Control Server]",
+            "y": 5446
+        },
+        {
+            "x": "task 542: TASK [Clean up Temp dir]",
+            "y": 5446
+        },
+        {
+            "x": "task 543: TASK [Run the partner post-run]",
+            "y": 5446
+        },
+        {
+            "x": "task 544: TASK [success]",
+            "y": 5446
+        },
+        {
+            "x": "task 545: PLAY [Success]",
+            "y": 5448
+        },
+        {
+            "x": "task 546: TASK [Gathering Facts]",
+            "y": 5448
+        },
+        {
+            "x": "task 547: TASK [Run the success hook]",
+            "y": 5448
+        },
+        {
+            "x": "task 548: skipped/TASK [Run the teardown play]",
+            "y": 5449
+        },
+        {
+            "x": "task 549: TASK [Find console logs]",
+            "y": 5450
+        },
+        {
+            "x": "task 550: TASK [Create tmp directory for console logs]",
+            "y": 5457
+        },
+        {
+            "x": "task 551: TASK [Copy console logs into tmp directory]",
+            "y": 5474
+        },
+        {
+            "x": "task 552: TASK [Upload iLo logs to DCI Control Server]",
+            "y": 5475
+        },
+        {
+            "x": "task 553: TASK [Delete tmp directory]",
+            "y": 5475
+        },
+        {
+            "x": "task 554: TASK [Run the teardown hooks]",
+            "y": 5475
+        }
+    ]
+}

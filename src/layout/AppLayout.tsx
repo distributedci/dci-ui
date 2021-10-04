@@ -86,6 +86,9 @@ export default function AppLayout({ children, ...props }: AppLayoutProps) {
           <DCINavItem to="/remotecis">Remotecis</DCINavItem>
         )}
       </NavGroup>
+      <NavGroup title="Analytics">
+        <DCINavItem to="/analytics/tasks_duration_per_job">Jobs</DCINavItem>
+      </NavGroup>
       <NavGroup title="User Preferences">
         <DCINavItem to="/currentUser/settings">Settings</DCINavItem>
         <DCINavItem to="/currentUser/notifications">Notifications</DCINavItem>
