@@ -21,6 +21,7 @@ import PermissionsPage from "./permissions/PermissionsPage";
 import NotAuthenticatedLoadingPage from "./layout/NotAuthenticatedLoadingPage";
 import LoginPage from "./auth/LoginPage";
 import Page404 from "./layout/Page404";
+import TasksDurationPerJobPage from "./analytics/jobs/TasksDurationPerJobPage"
 
 const Pages = {
   DashboardPage,
@@ -28,6 +29,7 @@ const Pages = {
   JobsPage,
   JobPage,
   FilePage,
+  TasksDurationPerJobPage,
   ProductsPage,
   TopicsPage,
   TopicPage,
