@@ -18,8 +18,6 @@ import NotificationsPage from "./currentUser/notifications/NotificationsPage";
 import PermissionsPage from "./permissions/PermissionsPage";
 import NotAuthenticatedLoadingPage from "./layout/NotAuthenticatedLoadingPage";
 import LoginPage from "./auth/LoginPage";
-import LoginCallbackPage from "./auth/LoginCallbackPage";
-import SilentRedirectPage from "./auth/SilentRedirectPage";
 import Page404 from "./layout/Page404";
 import TasksDurationPerJobPage from "./analytics/TasksDurationPerJob/TasksDurationPerJobPage";
 import AnalyticsPage from "./analytics/AnalyticsPage";
@@ -51,8 +49,6 @@ const Pages = {
   NotificationsPage,
   NotAuthenticatedLoadingPage,
   LoginPage,
-  LoginCallbackPage,
-  SilentRedirectPage,
   Page404,
 };
 
