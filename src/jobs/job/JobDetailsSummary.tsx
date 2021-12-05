@@ -105,7 +105,6 @@ const JobId = styled.div`
 const JobComponents = styled.div`
   grid-area: components;
   padding: 1em;
-  padding-bottom: 0;
   overflow: hidden;
 `;
 
@@ -267,7 +266,7 @@ export default function JobDetailsSummary({
       </JobTitle>
       {isEmpty(innerJob.tags) ? null : (
         <JobTags>
-          <LabelGroup categoryName="Tags" numLabels={8}>
+          <LabelGroup numLabels={8}>
             {innerJob.tags.map((tag, index) => (
               <Label
                 key={index}

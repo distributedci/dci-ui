@@ -29,6 +29,7 @@ export const getJobs = createSelector(
           tests: [],
           jobstates: [],
           files: [],
+          previous_job: null,
         };
       }),
       [(job) => new Date(job.created_at)]

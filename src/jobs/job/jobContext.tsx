@@ -28,6 +28,7 @@ function JobProvider({ children }: JobProviderProps) {
 
   useEffect(() => {
     if (id) {
+      setIsLoading(true);
       dispatch(
         jobsActions.one(id, {
           embed: "results,team,remoteci,components,topic,files",
@@ -37,10 +38,16 @@ function JobProvider({ children }: JobProviderProps) {
           const job = response.data.job;
           const q1 = await getResults(job);
           const q2 = await getJobStatesWithFiles(job);
+          let previous_job = null;
+          if (job.previous_job_id) {
+            const q3 = await dispatch(jobsActions.one(job.previous_job_id));
+            previous_job = q3.data.job;
+          }
           const enhancedJob = {
             ...job,
             tests: sortByName<ITest>(q1.data.results),
             jobstates: q2.data.jobstates,
+            previous_job,
           };
           setJob(enhancedJob);
           return response;

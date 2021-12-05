@@ -437,6 +437,7 @@ export interface IEnhancedJob extends IJob {
   jobstates: IJobState[];
   tests: ITest[];
   files: IFile[];
+  previous_job: IJob | null;
 }
 
 export interface IJobsById {

@@ -13,6 +13,8 @@ import {
 } from "@patternfly/react-core";
 import JobDetailsSummary from "./JobDetailsSummary";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { getBackground } from "jobs/jobSummary/jobSummaryUtils";
 
 export default function JobPageWithMenu() {
   const { job } = useJob();
@@ -74,18 +76,46 @@ export default function JobPageWithMenu() {
         />
       }
     >
-      <JobDetailsSummary
-        onTagClicked={(tag) => navigate(`/jobs?where=tags:${tag}`)}
-        onRemoteciClicked={(remoteci) =>
-          navigate(`/jobs?where=remoteci_id:${remoteci.id}`)
-        }
-        onTeamClicked={(team) => navigate(`/jobs?where=team_id:${team.id}`)}
-        onTopicClicked={(topic) => navigate(`/jobs?where=topic_id:${topic.id}`)}
-        onConfigurationClicked={(configuration) =>
-          navigate(`/jobs?where=configuration:${configuration}`)
-        }
-        job={job}
-      />
+      <div style={{ display: "flex", alignItems: "center" }}>
+        {job.previous_job && (
+          <div
+            style={{
+              minHeight: "120px",
+              backgroundColor: "white",
+              padding: "1em 0.5em",
+              paddingLeft: "calc(0.5em + 5px)",
+              alignSelf: "stretch",
+              marginRight: "10px",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              background: getBackground(job.previous_job.status),
+            }}
+          >
+            <Link
+              to={`/jobs/${job.previous_job.id}/jobStates`}
+              style={{ writingMode: "vertical-rl", transform: "scale(-1)" }}
+            >
+              {job.previous_job.name}
+            </Link>
+          </div>
+        )}
+
+        <JobDetailsSummary
+          onTagClicked={(tag) => navigate(`/jobs?where=tags:${tag}`)}
+          onRemoteciClicked={(remoteci) =>
+            navigate(`/jobs?where=remoteci_id:${remoteci.id}`)
+          }
+          onTeamClicked={(team) => navigate(`/jobs?where=team_id:${team.id}`)}
+          onTopicClicked={(topic) =>
+            navigate(`/jobs?where=topic_id:${topic.id}`)
+          }
+          onConfigurationClicked={(configuration) =>
+            navigate(`/jobs?where=configuration:${configuration}`)
+          }
+          job={job}
+        />
+      </div>
       <Outlet />
     </Page>
   );
