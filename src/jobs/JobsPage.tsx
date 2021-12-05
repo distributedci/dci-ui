@@ -5,7 +5,7 @@ import { EmptyState, Breadcrumb } from "ui";
 import { useDispatch, useSelector } from "react-redux";
 import jobsActions from "./jobsActions";
 import { getJobs, isFetchingJobs } from "./jobsSelectors";
-import JobsList from "./JobsList";
+import JobsList2 from "./JobsList2";
 import JobsToolbar from "./toolbar/JobsToolbar";
 import {
   parseFiltersFromSearch,
@@ -69,7 +69,7 @@ export default function JobsPage() {
         <Breadcrumb links={[{ to: "/", title: "DCI" }, { title: "Jobs" }]} />
       }
     >
-      <JobsList filters={filters} setFilters={setFilters} jobs={jobs} />
+      <JobsList2 filters={filters} setFilters={setFilters} jobs={jobs} />
     </Page>
   );
 }
