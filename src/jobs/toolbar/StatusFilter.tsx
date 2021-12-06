@@ -5,11 +5,13 @@ import { Select, SelectOption, ToolbarFilter } from "@patternfly/react-core";
 type StatusFilterProps = {
   filters: IJobFilters;
   setFilters: (filters: IJobFilters) => void;
+  showToolbarItem?: boolean;
 };
 
 export default function StatusFilter({
   filters,
   setFilters,
+  showToolbarItem = true,
 }: StatusFilterProps) {
   const [isOpen, setIsOpen] = useState(false);
   const clearStatus = () => setFilters({ ...filters, status: null });
@@ -18,7 +20,7 @@ export default function StatusFilter({
       chips={filters.status ? [filters.status] : []}
       deleteChip={clearStatus}
       categoryName="Status"
-      showToolbarItem
+      showToolbarItem={showToolbarItem}
     >
       <Select
         onToggle={setIsOpen}

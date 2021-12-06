@@ -18,7 +18,7 @@ export default function ProductsFilter({
   product_id,
   onSelect,
   onClear,
-  showToolbarItem = true,
+  showToolbarItem=true,
 }: ProductsFilterProps) {
   const products = useSelector(getProducts);
   const product = useSelector(getProductById(product_id));

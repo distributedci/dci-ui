@@ -18,7 +18,7 @@ export default function RemotecisFilter({
   remoteci_id,
   onSelect,
   onClear,
-  showToolbarItem = true,
+  showToolbarItem=true,
 }: RemotecisFilterProps) {
   const remotecis = useSelector(getRemotecis);
   const remoteci = useSelector(getRemoteciById(remoteci_id));
