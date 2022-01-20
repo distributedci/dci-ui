@@ -29,11 +29,13 @@ import TasksDurationPerJobPage from "./analytics/TasksDurationPerJob/TasksDurati
 import AnalyticsPage from "./analytics/AnalyticsPage";
 import LatestJobStatusPage from "./analytics/LatestJobStatus/LatestJobStatusPage";
 import LatestJobStatusDetailsPage from "./analytics/LatestJobStatus/LatestJobStatusDetailsPage";
+import ComponentMatrixPage from "./analytics/ComponentMatrix/ComponentMatrixPage";
 
 const Pages = {
   AnalyticsPage,
   TasksDurationPerJobPage,
   LatestJobStatusPage,
+  ComponentMatrixPage,
   LatestJobStatusDetailsPage,
   JobsPage,
   JobPage,

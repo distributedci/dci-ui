@@ -44,6 +44,14 @@ export default function App() {
         }
       />
       <Route
+        path="/analytics/component_matrix"
+        element={
+          <PrivateRoute>
+            <Pages.ComponentMatrixPage />
+          </PrivateRoute>
+        }
+      />
+      <Route
         path="/jobs"
         element={
           <PrivateRoute>

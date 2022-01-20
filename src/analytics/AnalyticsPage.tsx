@@ -12,6 +12,7 @@ import {
 import { Breadcrumb } from "ui";
 import { useNavigate } from "react-router-dom";
 import TasksPerJobHeaderImage from "./TasksDurationPerJob/tasks_per_job.png";
+import ComponentMatrixImage from "./ComponentMatrix/component_matrix.png";
 import LatestJobsStatusHeaderImage from "./LatestJobStatus/latest_jos_status.png";
 
 export default function AnalyticsPage() {
@@ -29,6 +30,28 @@ export default function AnalyticsPage() {
     >
       <PageSection>
         <Gallery hasGutter>
+          <GalleryItem>
+            <Card
+              className="pointer"
+              onClick={() => navigate("/analytics/component_matrix")}
+            >
+              <CardHeader>
+                <CardHeaderMain>
+                  <img
+                    src={ComponentMatrixImage}
+                    alt="Component matrix"
+                    height={100}
+                    width="auto"
+                  />
+                </CardHeaderMain>
+              </CardHeader>
+              <CardTitle>Component matrix</CardTitle>
+              <CardBody>
+                See which components has been tested. Table of components and
+                associated jobs.
+              </CardBody>
+            </Card>
+          </GalleryItem>
           <GalleryItem>
             <Card
               className="pointer"
