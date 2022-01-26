@@ -172,25 +172,25 @@ function ComponentsTable({ topic }: ComponentsProps) {
 export default function TopicPage() {
   const currentUser = useSelector(getCurrentUser);
   const dispatch = useDispatch<AppDispatch>();
-  const { id } = useParams();
+  const { topic_id } = useParams();
   const [isFetching, setIsFetching] = useState(true);
   const [topic, setTopic] = useState<IEnhancedTopic | null>(null);
   const products = useSelector(getProducts);
 
   const getTopicCallback = useCallback(() => {
-    if (id) {
-      dispatch(topicsActions.one(id))
+    if (topic_id) {
+      dispatch(topicsActions.one(topic_id))
         .then((response) => setTopic(response.data.topic))
         .finally(() => setIsFetching(false));
     }
-  }, [dispatch, id, setIsFetching]);
+  }, [dispatch, topic_id, setIsFetching]);
 
   useEffect(() => {
     getTopicCallback();
     dispatch(productsActions.all());
   }, [dispatch, getTopicCallback]);
 
-  if (!id) return null;
+  if (!topic_id) return null;
 
   return (
     <Page
@@ -217,7 +217,7 @@ export default function TopicPage() {
       EmptyComponent={
         <EmptyState
           title="There is no topic"
-          info={`There is not topic with id ${id}`}
+          info={`There is not topic with id ${topic_id}`}
         />
       }
       breadcrumb={
@@ -225,7 +225,7 @@ export default function TopicPage() {
           links={[
             { to: "/", title: "DCI" },
             { to: "/topics", title: "Topics" },
-            { to: `/topics/${id}/components`, title: id },
+            { to: `/topics/${topic_id}/components`, title: topic_id },
           ]}
         />
       }

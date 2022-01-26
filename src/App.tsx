@@ -43,65 +43,68 @@ export default function App() {
           </PrivateRoute>
         }
       />
-      <Route
-        path="/jobs"
-        element={
-          <PrivateRoute>
-            <Pages.JobsPage />
-          </PrivateRoute>
-        }
-      />
-      <Route
-        path="/jobs/:id"
-        element={
-          <PrivateRoute>
-            <Pages.JobPage />
-          </PrivateRoute>
-        }
-      >
+      <Route path="/jobs">
         <Route
           index
           element={
             <PrivateRoute>
-              <Pages.JobStatesPage />
+              <Pages.JobsPage />
             </PrivateRoute>
           }
         />
         <Route
-          path="jobStates"
+          path=":job_id"
           element={
             <PrivateRoute>
-              <Pages.JobStatesPage />
+              <Pages.JobPage />
             </PrivateRoute>
           }
-        />
-        <Route
-          path="tests"
-          element={
-            <PrivateRoute>
-              <Pages.JobTestsPage />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="files"
-          element={
-            <PrivateRoute>
-              <Pages.JobFilesPage />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="settings"
-          element={
-            <PrivateRoute>
-              <Pages.JobSettingsPage />
-            </PrivateRoute>
-          }
-        />
+        >
+          <Route
+            index
+            element={
+              <PrivateRoute>
+                <Pages.JobStatesPage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="jobStates"
+            element={
+              <PrivateRoute>
+                <Pages.JobStatesPage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="tests"
+            element={
+              <PrivateRoute>
+                <Pages.JobTestsPage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="files"
+            element={
+              <PrivateRoute>
+                <Pages.JobFilesPage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="settings"
+            element={
+              <PrivateRoute>
+                <Pages.JobSettingsPage />
+              </PrivateRoute>
+            }
+          />
+        </Route>
       </Route>
+
       <Route
-        path="/files/:id"
+        path="/files/:file_id"
         element={
           <PrivateRoute>
             <Pages.FilePage />
@@ -116,30 +119,34 @@ export default function App() {
           </PrivateRoute>
         }
       />
-      <Route
-        path="/topics"
-        element={
-          <PrivateRoute>
-            <Pages.TopicsPage />
-          </PrivateRoute>
-        }
-      />
-      <Route
-        path="/topics/:topic_id/components/:id"
-        element={
-          <PrivateRoute>
-            <Pages.ComponentPage />
-          </PrivateRoute>
-        }
-      />
-      <Route
-        path="/topics/:id/components"
-        element={
-          <PrivateRoute>
-            <Pages.TopicPage />
-          </PrivateRoute>
-        }
-      />
+
+      <Route path="/topics">
+        <Route
+          index
+          element={
+            <PrivateRoute>
+              <Pages.TopicsPage />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path=":topic_id/components/"
+          element={
+            <PrivateRoute>
+              <Pages.TopicPage />
+            </PrivateRoute>
+          }
+        >
+          <Route
+            path=":component_id"
+            element={
+              <PrivateRoute>
+                <Pages.ComponentPage />
+              </PrivateRoute>
+            }
+          />
+        </Route>
+      </Route>
       <Route
         path="/remotecis"
         element={
@@ -148,46 +155,52 @@ export default function App() {
           </PrivateRoute>
         }
       />
-      <Route
-        path="/feeders/create"
-        element={
-          <PrivateRoute>
-            <Pages.CreateFeederPage />
-          </PrivateRoute>
-        }
-      />
-      <Route
-        path="/feeders/:id"
-        element={
-          <PrivateRoute>
-            <Pages.EditFeederPage />
-          </PrivateRoute>
-        }
-      />
-      <Route
-        path="/feeders"
-        element={
-          <PrivateRoute>
-            <Pages.FeedersPage />
-          </PrivateRoute>
-        }
-      />
-      <Route
-        path="/teams"
-        element={
-          <PrivateRoute>
-            <Pages.TeamsPage />
-          </PrivateRoute>
-        }
-      />
-      <Route
-        path="/teams/:id"
-        element={
-          <PrivateRoute>
-            <Pages.TeamPage />
-          </PrivateRoute>
-        }
-      />
+      <Route path="/feeders">
+        <Route
+          index
+          element={
+            <PrivateRoute>
+              <Pages.FeedersPage />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="create"
+          element={
+            <PrivateRoute>
+              <Pages.CreateFeederPage />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path=":feeder_id"
+          element={
+            <PrivateRoute>
+              <Pages.EditFeederPage />
+            </PrivateRoute>
+          }
+        />
+      </Route>
+
+      <Route path="/teams">
+        <Route
+          index
+          element={
+            <PrivateRoute>
+              <Pages.TeamsPage />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path=":team_id"
+          element={
+            <PrivateRoute>
+              <Pages.TeamPage />
+            </PrivateRoute>
+          }
+        />
+      </Route>
+
       <Route
         path="/users"
         element={
@@ -197,7 +210,7 @@ export default function App() {
         }
       />
       <Route
-        path="/users/:id"
+        path="/users/:user_id"
         element={
           <PrivateRoute>
             <Pages.EditUserPage />

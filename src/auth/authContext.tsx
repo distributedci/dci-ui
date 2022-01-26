@@ -9,7 +9,7 @@ import { useSSO } from "./ssoContext";
 import * as authActions from "./authActions";
 import { AppDispatch } from "store";
 
-export interface AuthContextProps {
+interface AuthContextType {
   identity: ICurrentUser | null;
   refreshIdentity: () => Promise<ICurrentUser>;
   changeCurrentTeam: (
@@ -18,14 +18,13 @@ export interface AuthContextProps {
   ) => Promise<ICurrentUser>;
   logout: () => void;
 }
-
-const AuthContext = React.createContext({} as AuthContextProps);
+export const AuthContext = React.createContext<AuthContextType>(null!);
 
 type AuthProviderProps = {
   children: React.ReactElement;
 };
 
-function AuthProvider({ children }: AuthProviderProps) {
+export function AuthProvider({ children }: AuthProviderProps) {
   const [isLoading, setIsLoading] = useState(true);
   const { sso } = useSSO();
   const dispatch = useDispatch<AppDispatch>();
@@ -47,43 +46,39 @@ function AuthProvider({ children }: AuthProviderProps) {
     return <pages.NotAuthenticatedLoadingPage />;
   }
 
-  return (
-    <AuthContext.Provider
-      value={{
-        identity,
-        changeCurrentTeam: (team: ITeam, currentUser: ICurrentUser) => {
-          return dispatch(
-            authActions.changeCurrentTeam(team, currentUser)
-          ).then((identity) => {
-            setIdentity(identity);
-            return identity;
-          });
-        },
-        refreshIdentity: () => {
-          return dispatch(authActions.getCurrentUser()).then((identity) => {
-            setIdentity(identity);
-            return identity;
-          });
-        },
-        logout: () => {
-          try {
-            if (sso) {
-              sso.signoutRedirect();
-            }
-            setIdentity(null);
-            removeToken();
-            dispatch(deleteCurrentUser());
-          } catch (error) {
-            console.error(error);
-          }
-        },
-      }}
-    >
-      {children}
-    </AuthContext.Provider>
-  );
+  const value = {
+    identity,
+    changeCurrentTeam: (team: ITeam, currentUser: ICurrentUser) => {
+      return dispatch(authActions.changeCurrentTeam(team, currentUser)).then(
+        (identity) => {
+          setIdentity(identity);
+          return identity;
+        }
+      );
+    },
+    refreshIdentity: () => {
+      return dispatch(authActions.getCurrentUser()).then((identity) => {
+        setIdentity(identity);
+        return identity;
+      });
+    },
+    logout: () => {
+      try {
+        if (sso) {
+          sso.signoutRedirect();
+        }
+        setIdentity(null);
+        removeToken();
+        dispatch(deleteCurrentUser());
+      } catch (error) {
+        console.error(error);
+      }
+    },
+  };
+
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 
-const useAuth = () => React.useContext(AuthContext);
-
-export { AuthProvider, useAuth };
+export function useAuth() {
+  return React.useContext(AuthContext);
+}

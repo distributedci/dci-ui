@@ -147,23 +147,23 @@ function EmbedJob({ job }: IEmbedJobProps) {
 }
 
 export default function ComponentPage() {
-  const { topic_id, id } = useParams();
+  const { topic_id, component_id } = useParams();
   const [isFetching, setIsFetching] = useState(true);
   const [component, setComponent] = useState<IComponentWithJobs | null>(null);
 
   const getComponentCallback = useCallback(() => {
-    if (id) {
-      fetchComponent(id)
+    if (component_id) {
+      fetchComponent(component_id)
         .then((response) => setComponent(response.data.component))
         .finally(() => setIsFetching(false));
     }
-  }, [id, setIsFetching]);
+  }, [component_id, setIsFetching]);
 
   useEffect(() => {
     getComponentCallback();
   }, [getComponentCallback]);
 
-  if (!id || !topic_id) return null;
+  if (!component_id || !topic_id) return null;
 
   return (
     <Page
@@ -182,7 +182,7 @@ export default function ComponentPage() {
       EmptyComponent={
         <EmptyState
           title="There is no component"
-          info={`There is not component with id ${id}`}
+          info={`There is not component with id ${component_id}`}
         />
       }
       breadcrumb={
@@ -192,7 +192,10 @@ export default function ComponentPage() {
             { to: "/topics", title: "Topics" },
             { to: `/topics/${topic_id}/components`, title: topic_id },
             { to: `/topics/${topic_id}/components`, title: "Components" },
-            { to: `/topics/${topic_id}/components/${id}`, title: id },
+            {
+              to: `/topics/${topic_id}/components/${component_id}`,
+              title: component_id,
+            },
           ]}
         />
       }

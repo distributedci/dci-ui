@@ -53,7 +53,7 @@ export default function TeamPage() {
   const [team, setTeam] = useState<ITeam | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [teamUsers, setTeamUsers] = useState<IUser[]>([]);
-  const { id } = useParams();
+  const { team_id } = useParams();
 
   const _fetchTeam = useCallback(
     (id) => {
@@ -75,20 +75,20 @@ export default function TeamPage() {
   }, []);
 
   useEffect(() => {
-    if (id) {
-      _fetchTeam(id);
-      _fetchTeamUsers(id);
+    if (team_id) {
+      _fetchTeam(team_id);
+      _fetchTeamUsers(team_id);
     }
-  }, [id, _fetchTeam, _fetchTeamUsers]);
+  }, [team_id, _fetchTeam, _fetchTeamUsers]);
 
-  if (!id) return null;
+  if (!team_id) return null;
 
   const breadcrumb = (
     <Breadcrumb
       links={[
         { to: "/", title: "DCI" },
         { to: "/teams", title: "Teams" },
-        { to: `/teams/${id}`, title: id },
+        { to: `/teams/${team_id}`, title: team_id },
       ]}
     />
   );
@@ -263,7 +263,7 @@ export default function TeamPage() {
                           message={`Are you sure you want to remove user ${user.name} from team ${team.name}?`}
                           onOk={() => {
                             deleteUserFromTeam(user, team).then(() => {
-                              _fetchTeamUsers(id);
+                              _fetchTeamUsers(team_id);
                             });
                           }}
                         >

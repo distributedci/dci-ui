@@ -7,20 +7,20 @@ import pages from "pages";
 export default function FilePage() {
   const [isLoading, setIsLoading] = useState(true);
   const [fileContent, setFileContent] = useState<string | null>(null);
-  const { id } = useParams();
+  const { file_id } = useParams();
 
   useEffect(() => {
-    if (id) {
-      getFileContent({ id } as IFile)
+    if (file_id) {
+      getFileContent({ id: file_id } as IFile)
         .then((content) => {
           setFileContent(content);
         })
         .catch(console.error)
         .finally(() => setIsLoading(false));
     }
-  }, [id]);
+  }, [file_id]);
 
-  if (!id) return null;
+  if (!file_id) return null;
 
   if (isLoading) {
     return <pages.NotAuthenticatedLoadingPage />;

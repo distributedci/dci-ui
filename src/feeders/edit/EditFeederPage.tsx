@@ -16,25 +16,25 @@ export default function EditFeederPage() {
   const teams = useSelector(getTeams);
   const navigate = useNavigate();
   const [feeder, setFeeder] = useState<IFeeder | null>(null);
-  const { id } = useParams();
+  const { feeder_id } = useParams();
 
   useEffect(() => {
-    if (id) {
+    if (feeder_id) {
       dispatch(teamsActions.all());
-      dispatch(feedersActions.one(id)).then((response) => {
+      dispatch(feedersActions.one(feeder_id)).then((response) => {
         setFeeder(response.data.feeder);
       });
     }
-  }, [dispatch, id]);
+  }, [dispatch, feeder_id]);
 
-  if (!id) return null;
+  if (!feeder_id) return null;
 
   const breadcrumb = (
     <Breadcrumb
       links={[
         { to: "/", title: "DCI" },
         { to: "/feeders", title: "Feeders" },
-        { to: `/feeders/${id}`, title: id },
+        { to: `/feeders/${feeder_id}`, title: feeder_id },
       ]}
     />
   );

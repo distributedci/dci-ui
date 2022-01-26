@@ -44,7 +44,7 @@ export default function EditUserPage() {
   const dispatch = useDispatch<AppDispatch>();
   const [user, setUser] = useState<IUser | null>(null);
   const [userTeams, setUserTeams] = useState<ITeam[]>([]);
-  const { id } = useParams();
+  const { user_id } = useParams();
 
   const _fetchUser = useCallback(
     (id) => {
@@ -62,20 +62,20 @@ export default function EditUserPage() {
   }, []);
 
   useEffect(() => {
-    if (id) {
-      _fetchUser(id);
-      _fetchUserTeams(id);
+    if (user_id) {
+      _fetchUser(user_id);
+      _fetchUserTeams(user_id);
     }
-  }, [id, _fetchUser, _fetchUserTeams]);
+  }, [user_id, _fetchUser, _fetchUserTeams]);
 
-  if (!id) return null;
+  if (!user_id) return null;
 
   const breadcrumb = (
     <Breadcrumb
       links={[
         { to: "/", title: "DCI" },
         { to: "/users", title: "Users" },
-        { to: `/users/${id}`, title: id },
+        { to: `/users/${user_id}`, title: user_id },
       ]}
     />
   );
@@ -112,8 +112,8 @@ export default function EditUserPage() {
               <AddUserToTeamForm
                 onSubmit={(team: ITeam) => {
                   addUserToTeam(user.id, team).then(() => {
-                    _fetchUser(id);
-                    _fetchUserTeams(id);
+                    _fetchUser(user_id);
+                    _fetchUserTeams(user_id);
                   });
                 }}
               />
@@ -136,8 +136,8 @@ export default function EditUserPage() {
                           message={`Are you sure you want to remove user ${user.name} from team ${team.name}?`}
                           onOk={() => {
                             deleteUserFromTeam(user, team).then(() => {
-                              _fetchUser(id);
-                              _fetchUserTeams(id);
+                              _fetchUser(user_id);
+                              _fetchUserTeams(user_id);
                             });
                           }}
                         >
