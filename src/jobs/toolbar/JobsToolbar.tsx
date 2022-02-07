@@ -13,7 +13,12 @@ import {
   Button,
   ButtonVariant,
 } from "@patternfly/react-core";
-import { SyncAltIcon } from "@patternfly/react-icons";
+import {
+  ArrowsAltVIcon,
+  ListIcon,
+  SyncAltIcon,
+  TableIcon,
+} from "@patternfly/react-icons";
 import RemotecisFilter from "./RemotecisFilter";
 import ProductsFilter from "./ProductsFilter";
 import TopicsFilter from "./TopicsFilter";
@@ -42,6 +47,8 @@ type JobsToolbarProps = {
   setFilters: (filters: IJobFilters) => void;
   clearAllFilters: () => void;
   refresh: () => void;
+  tableViewActive: boolean;
+  setTableViewActive: (tableViewActive: boolean) => void;
 };
 
 export default function JobsToolbar({
@@ -49,6 +56,8 @@ export default function JobsToolbar({
   setFilters,
   clearAllFilters,
   refresh,
+  tableViewActive,
+  setTableViewActive,
 }: JobsToolbarProps) {
   const [isCategoryDropdownOpen, setIsCategoryDropdownOpen] = useState(false);
   const [currentCategory, setCurrentCategory] = useState<Category>(
@@ -154,15 +163,35 @@ export default function JobsToolbar({
             />
           </ToolbarItem>
         </ToolbarGroup>
-        <ToolbarGroup>
+        <ToolbarGroup variant="icon-button-group">
           <ToolbarItem>
             <Button
-              variant={ButtonVariant.control}
+              variant={ButtonVariant.plain}
               aria-label="refresh"
               type="button"
               onClick={refresh}
             >
               <SyncAltIcon />
+            </Button>
+          </ToolbarItem>
+          <ToolbarItem>
+            <Button
+              variant={ButtonVariant.plain}
+              aria-label="refresh"
+              type="button"
+              onClick={() => setTableViewActive(!tableViewActive)}
+            >
+              {tableViewActive ? (
+                <>
+                  <TableIcon />
+                  <ArrowsAltVIcon />
+                </>
+              ) : (
+                <>
+                  <ListIcon />
+                  <ArrowsAltVIcon />
+                </>
+              )}
             </Button>
           </ToolbarItem>
         </ToolbarGroup>

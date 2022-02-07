@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import jobsActions from "./jobsActions";
 import { getJobs, isFetchingJobs } from "./jobsSelectors";
 import JobsList from "./JobsList";
+import JobsTableList from "./JobsTableList";
 import JobsToolbar from "./toolbar/JobsToolbar";
 import {
   parseFiltersFromSearch,
@@ -30,6 +31,7 @@ export default function JobsPage() {
   const [filters, setFilters] = useState(
     parseFiltersFromSearch(location.search)
   );
+  const [tableViewActive, setTableViewActive] = useState(false);
   useEffect(() => {
     const newSearch = createSearchFromFilters(filters);
     navigate(`/jobs${newSearch}`);
@@ -60,6 +62,8 @@ export default function JobsPage() {
           setFilters={setFilters}
           clearAllFilters={() => setFilters(defaultFilters)}
           refresh={getJobsCallback}
+          tableViewActive={tableViewActive}
+          setTableViewActive={setTableViewActive}
         />
         {isFetching && (
           <PageSection
@@ -78,13 +82,24 @@ export default function JobsPage() {
             info="There is no job at the moment. Edit your filters to restart a search."
           />
         )}
-        <JobsList filters={filters} setFilters={setFilters} jobs={jobs} />
+        {tableViewActive ? (
+          <JobsTableList
+            filters={filters}
+            setFilters={setFilters}
+            jobs={jobs}
+          />
+        ) : (
+          <JobsList filters={filters} setFilters={setFilters} jobs={jobs} />
+        )}
+
         {jobs.length >= 20 && (
           <JobsToolbar
             filters={filters}
             setFilters={setFilters}
             clearAllFilters={() => setFilters(defaultFilters)}
             refresh={getJobsCallback}
+            tableViewActive={tableViewActive}
+            setTableViewActive={setTableViewActive}
           />
         )}
       </PageSection>
