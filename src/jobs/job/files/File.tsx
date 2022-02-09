@@ -38,7 +38,7 @@ export default function File({ file }: FileProps) {
       </td>
       <td>{humanFileSize(file.size)}</td>
       <td>{file.mime}</td>
-      <td>
+      <td className="text-center">
         <Button
           variant="primary"
           icon={isDownloading ? <RotatingSpinnerIcon /> : <FileDownloadIcon />}
