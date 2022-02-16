@@ -193,7 +193,7 @@ export default function TeamPage() {
                 <div>
                   <AddUserToTeamModal
                     team={team}
-                    onSubmit={(user) => {
+                    onUserSelected={(user) => {
                       const fullname = user.fullname;
                       addUserToTeam(user.id, team)
                         .then((response) => {
