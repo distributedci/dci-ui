@@ -570,6 +570,7 @@ export interface IComponentCoverageESData {
       tags: string[];
       team_id: string | null;
       topic_id: string;
+      type: string
     };
     _type: string;
   }[];
