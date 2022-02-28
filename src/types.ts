@@ -362,7 +362,12 @@ export interface IFileWithDuration extends IFile {
   duration: number;
 }
 
-export type IPipelineStatus = "success" | "failure";
+export type IPipelineStatus =
+  | "success"
+  | "info"
+  | "pending"
+  | "warning"
+  | "danger";
 
 export type IFileStatus =
   | "failed"
@@ -571,7 +576,7 @@ export interface IComponentCoverageESData {
       tags: string[];
       team_id: string | null;
       topic_id: string;
-      type: string
+      type: string;
     };
     _type: string;
   }[];

@@ -59,13 +59,25 @@ export function getJobStatesWithFiles(job: IJob): AxiosPromise<IGetJobStates> {
 
 function getPipelineStatus(status: IJobStatus): IPipelineStatus {
   switch (status) {
-    case "success":
-      return "success";
     case "failure":
     case "error":
-      return "failure";
+      return "danger";
     case "killed":
-      return "failure";
+      return "warning";
+    default:
+      return "success";
+  }
+}
+
+function getLatestPipelineStatus(status: IJobStatus): IPipelineStatus {
+  switch (status) {
+    case "running":
+      return "info"
+    case "failure":
+    case "error":
+      return "danger";
+    case "killed":
+      return "warning";
     default:
       return "success";
   }
@@ -74,11 +86,12 @@ function getPipelineStatus(status: IJobStatus): IPipelineStatus {
 export function addPipelineStatus(jobStates: IJobState[]) {
   return sortByOldestFirst(jobStates).map((jobState, i, arr) => {
     const isTheLastOne = arr.length - 1 === i;
+
     return {
       ...jobState,
       pipelineStatus: isTheLastOne
-        ? getPipelineStatus(jobState.status)
-        : getPipelineStatus(arr[i + 1].status),
+        ? getLatestPipelineStatus(jobState.status)
+        : getPipelineStatus(jobState.status),
     };
   });
 }
