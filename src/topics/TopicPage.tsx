@@ -233,7 +233,7 @@ export default function TopicPage() {
         <>
           <Card>
             <CardBody>
-              <Title headingLevel="h3" size="xl">
+              <Title headingLevel="h3" size="xl" className="p-md">
                 Topic information
               </Title>
               <Divider />
@@ -297,11 +297,11 @@ export default function TopicPage() {
           </Card>
           <Card className="mb-md">
             <CardBody>
-              <Title headingLevel="h3" size="xl">
+              <Title headingLevel="h3" size="xl" className="p-md">
                 Components
               </Title>
+              <ComponentsTable topic={topic} />
             </CardBody>
-            <ComponentsTable topic={topic} />
           </Card>
         </>
       )}
