@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import * as React from "react";
-import { UserManager } from "oidc-client";
+import { UserManager } from "oidc-client-ts";
 import { setJWT } from "services/localStorage";
 import NotAuthenticatedLoadingPage from "pages/NotAuthenticatedLoadingPage";
 
