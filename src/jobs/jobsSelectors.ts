@@ -1,16 +1,36 @@
 import { createSelector } from "reselect";
-import { sortBy } from "lodash";
 import { getTeamsById } from "teams/teamsSelectors";
 import { getRemotecisById } from "remotecis/remotecisSelectors";
 import { getTopicsById } from "topics/topicsSelectors";
 import { IEnhancedJob, IJobsById } from "types";
 import { RootState } from "store";
+import { sortByNewestFirst } from "services/sort";
 
 export const getJobsById = (state: RootState): IJobsById => state.jobs.byId;
 export const getJobsAllIds = (state: RootState): string[] => state.jobs.allIds;
 export const isFetchingJobs = (state: RootState): boolean =>
   state.jobs.isFetching;
 export const getNbOfJobs = (state: RootState): number => state.jobs.count;
+
+export function groupJobsByPipeline(jobs: IEnhancedJob[]) {
+  const jobsWithPipelinesPerIds: { [id: string]: IEnhancedJob[] } = {};
+
+  for (let i = 0; i < jobs.length; i++) {
+    const job = jobs[i];
+    const previous_job_id = job.previous_job_id;
+    const key = previous_job_id || job.id
+    const jobsWithPipelines = jobsWithPipelinesPerIds[key] || []
+    jobsWithPipelinesPerIds[key] = jobsWithPipelines
+
+    if(previous_job_id === null){
+      jobsWithPipelinesPerIds[job.id].unshift(job);
+    }else{
+      jobsWithPipelinesPerIds[key].push(job);
+    }
+  }
+  return Object.values(jobsWithPipelinesPerIds);
+}
+
 export const getJobs = createSelector(
   getRemotecisById,
   getTopicsById,
@@ -18,7 +38,7 @@ export const getJobs = createSelector(
   getJobsById,
   getJobsAllIds,
   (remotecis, topics, teams, jobs, jobsAllIds) =>
-    sortBy<IEnhancedJob>(
+    sortByNewestFirst(
       jobsAllIds.map((id) => {
         const job = jobs[id];
         return {
@@ -30,7 +50,6 @@ export const getJobs = createSelector(
           jobstates: [],
           files: [],
         };
-      }),
-      [(job) => new Date(job.created_at)]
-    ).reverse()
+      })
+    )
 );
