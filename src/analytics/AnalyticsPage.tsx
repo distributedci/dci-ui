@@ -11,6 +11,7 @@ import {
 import { Breadcrumb } from "ui";
 import { useNavigate } from "react-router-dom";
 import TasksPerJobHeaderImage from "./TasksDurationPerJob/tasks_per_job.png";
+import JunitComparisonHeaderImage from "./JunitComparison/junit_comparison.png";
 import ComponentCoverageImage from "./ComponentCoverage/component_coverage.png";
 import LatestJobsStatusHeaderImage from "./LatestJobStatus/latest_jos_status.png";
 import { useAuth } from "auth/authContext";
@@ -54,6 +55,28 @@ export default function AnalyticsPage() {
             </Card>
           </GalleryItem>
         )}
+        <GalleryItem>
+          <Card
+            className="pointer"
+            onClick={() => navigate("/analytics/junit_comparison")}
+          >
+            <CardHeader>
+              <CardHeaderMain>
+                <img
+                  src={JunitComparisonHeaderImage}
+                  alt="Junit comparison header"
+                  height={100}
+                  width="auto"
+                />
+              </CardHeaderMain>
+            </CardHeader>
+            <CardTitle>Junit comparison</CardTitle>
+            <CardBody>
+              Compare 2 topics togethers and see how your tests behave in term
+              of performance.
+            </CardBody>
+          </Card>
+        </GalleryItem>
         <GalleryItem>
           <Card
             className="pointer"
