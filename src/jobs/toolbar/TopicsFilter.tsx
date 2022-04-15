@@ -16,6 +16,7 @@ type TopicsFilterProps = {
   onSelect: (topic: ITopic) => void;
   onClear: () => void;
   showToolbarItem?: boolean;
+  placeholderText?: string;
 };
 
 export default function TopicsFilter({
@@ -23,6 +24,7 @@ export default function TopicsFilter({
   onSelect,
   onClear,
   showToolbarItem = true,
+  placeholderText = "Filter by topic",
 }: TopicsFilterProps) {
   const topics = useSelector(getActiveTopics);
   const topic = useSelector(getTopicById(topic_id));
@@ -40,7 +42,7 @@ export default function TopicsFilter({
     >
       <Select
         variant={SelectVariant.typeahead}
-        typeAheadAriaLabel="Filter by topic"
+        typeAheadAriaLabel={placeholderText}
         onToggle={setIsOpen}
         onSelect={(event, selection) => {
           setIsOpen(false);
@@ -51,7 +53,7 @@ export default function TopicsFilter({
         selections={topic === null ? "" : topic.name}
         isOpen={isOpen}
         aria-labelledby="select"
-        placeholderText="Filter by topic"
+        placeholderText={placeholderText}
         maxHeight="220px"
       >
         {topics
