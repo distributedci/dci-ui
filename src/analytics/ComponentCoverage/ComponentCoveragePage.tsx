@@ -11,6 +11,8 @@ import {
   DrawerContentBody,
   DrawerHead,
   DrawerPanelContent,
+  Label,
+  LabelGroup,
   Toolbar,
   ToolbarContent,
   ToolbarGroup,
@@ -336,6 +338,9 @@ export default function ComponentCoveragePage() {
                         <th role="columnheader" scope="col">
                           Component name
                         </th>
+                        <th role="columnheader" scope="col">
+                          Tags
+                        </th>
                         <th role="columnheader" scope="col"></th>
                         <th role="columnheader" scope="col">
                           Percentage of successful jobs{" "}
@@ -415,6 +420,20 @@ export default function ComponentCoveragePage() {
                               >
                                 {component.canonical_project_name}
                               </Link>
+                            </td>
+                            <td role="cell" data-label="Tags">
+                              <LabelGroup numLabels={10} isCompact>
+                                {component.tags.map((tag, index) => (
+                                  <Label
+                                    key={index}
+                                    color="blue"
+                                    className="pointer"
+                                    isCompact
+                                  >
+                                    {tag}
+                                  </Label>
+                                ))}
+                              </LabelGroup>
                             </td>
                             <td role="cell" data-label="Warning">
                               {component.nbOfJobs === 0 && (
