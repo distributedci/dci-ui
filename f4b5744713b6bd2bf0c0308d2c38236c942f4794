@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f74f693b_2eb9e9a3",
+        "filename": "src/analytics/ComponentCoverage/componentCoverage.test.ts",
+        "patchSetId": 1
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 29
+      },
+      "writtenOn": "2022-05-06T00:05:33Z",
+      "side": 1,
+      "message": "Iiuc the brackets in the query are not supported by Flask. Instead it should be\n\n?topic_id\u003dto1\u0026types\u003dtype_1\u0026types\u003dtype_2\n\nThis is what I tested locally.",
+      "revId": "f4b5744713b6bd2bf0c0308d2c38236c942f4794",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    }
+  ]
+}
