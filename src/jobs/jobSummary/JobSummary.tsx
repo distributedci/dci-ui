@@ -23,19 +23,19 @@ import { formatDate, fromNow, humanizeDuration } from "services/date";
 import { isEmpty } from "lodash";
 import { TextAreaEditableOnHover, CopyIconButton } from "ui";
 import { Markup } from "interweave";
-import { updateJobComment } from "./jobsActions";
+import { updateJobComment } from "jobs/jobsActions";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "store";
 import { sortByName } from "services/sort";
 import { getTopicIcon } from "ui/icons";
-import JobConfiguration from "./jobSummary/JobConfiguration";
+import JobConfiguration from "jobs/jobSummary/JobConfiguration";
 import {
   convertLinksToHtml,
   getBackground,
   getColor,
   getIcon,
-} from "./jobSummary/jobSummaryUtils";
-import { Regressions, Successfixes } from "./jobSummary/components";
+} from "jobs/jobSummary/jobSummaryUtils";
+import { Regressions, Successfixes } from "jobs/jobSummary/components";
 
 const Job = styled.div`
   background: ${(props: { status: string }) => getBackground(props.status)};

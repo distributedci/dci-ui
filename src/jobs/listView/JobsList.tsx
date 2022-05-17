@@ -1,7 +1,7 @@
 import { global_Color_light_200 } from "@patternfly/react-tokens";
 import styled from "styled-components";
 import { isEmpty } from "lodash";
-import JobSummary from "./JobSummary";
+import JobSummary from "jobs/jobSummary/JobSummary";
 import { IEnhancedJob, IJobFilters } from "types";
 
 const JobUl = styled.ul`

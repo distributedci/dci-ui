@@ -30,6 +30,7 @@
     "@types/yup": "^0.29.13",
     "axios": "^0.24.0",
     "chroma-js": "^2.4.2",
+    "downshift": "^6.1.7",
     "file-saver": "^2.0.5",
     "formik": "^2.2.9",
     "fuzzysort": "^1.1.4",

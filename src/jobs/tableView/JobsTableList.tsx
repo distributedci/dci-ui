@@ -11,14 +11,14 @@ import {
 } from "types";
 import { formatDate, fromNow, humanizeDuration } from "services/date";
 import { getTopicIcon } from "ui/icons";
-import { getBackground } from "./jobSummary/jobSummaryUtils";
-import tableViewColumns from "./tableView/tableViewColumns";
-import JobStatusLabel from "./JobStatusLabel";
+import { getBackground } from "jobs/jobSummary/jobSummaryUtils";
+import tableViewColumns from "./tableViewColumns";
+import JobStatusLabel from "jobs/JobStatusLabel";
 import { sortByName } from "services/sort";
 import { CopyIconButton } from "ui";
-import { groupJobsByPipeline } from "./jobsSelectors";
+import { groupJobsByPipeline } from "jobs/jobsSelectors";
 import { getPrincipalComponent } from "component/componentSelector";
-import { Regressions, Successfixes } from "./jobSummary/components";
+import { Regressions, Successfixes } from "jobs/jobSummary/components";
 
 interface JobTableSummaryProps {
   job: IEnhancedJob;
