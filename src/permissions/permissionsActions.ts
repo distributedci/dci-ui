@@ -46,14 +46,6 @@ export function getTopicsWithTeams(): AppThunk<Promise<ITopicWithTeams[]>> {
   };
 }
 
-export function getTeams(): AppThunk<Promise<ITeam[]>> {
-  return (dispatch) => {
-    return dispatch(teamsActions.all()).then((response) => {
-      return Promise.resolve(sortByName(response.data.teams));
-    });
-  };
-}
-
 function grantTeamPermission(
   resource_name: string,
   team: ITeam,
