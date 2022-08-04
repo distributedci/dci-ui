@@ -6,7 +6,8 @@ export type IResourceName =
   | "product"
   | "topic"
   | "feeder"
-  | "job";
+  | "job"
+  | "pipeline";
 
 export type IResourcesName =
   | IResourceName
@@ -17,7 +18,8 @@ export type IResourcesName =
   | "products"
   | "topics"
   | "feeders"
-  | "jobs";
+  | "jobs"
+  | "pipelines";
 
 export interface Resource {
   id: string;
@@ -605,3 +607,18 @@ const JobsTableListColumns = [
   "started",
 ] as const;
 export type JobsTableListColumn = typeof JobsTableListColumns[number];
+
+export interface IPipeline extends Resource {
+  team: ITeam;
+  state: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface IEnhancedPipeline extends IPipeline {
+  from_now: string | null;
+}
+
+export interface IPipelinesById {
+  [id: string]: IPipeline;
+}

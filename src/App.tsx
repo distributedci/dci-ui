@@ -41,6 +41,7 @@ import NotAuthenticatedLayout from "pages/NotAuthenticatedLayout";
 import { BackgroundImage } from "ui";
 import Alerts from "alerts/Alerts";
 import AuthenticatedLayout from "pages/AuthenticatedLayout";
+import PipelinesPage from "pipelines/PipelinesPage";
 
 export default function App() {
   return (
@@ -116,6 +117,9 @@ export default function App() {
             <Route path="permissions" element={<PermissionsPage />}>
               <Route path="products" element={<ProductsPermissionsPage />} />
               <Route path="topics" element={<TopicsPermissionsPage />} />
+            </Route>
+            <Route path="pipelines">
+              <Route index element={<PipelinesPage />} />
             </Route>
           </Route>
           <Route path="*" element={<Page404 />} />

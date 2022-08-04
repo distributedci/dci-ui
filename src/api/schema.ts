@@ -26,6 +26,8 @@ export function getSchema(resource: IResourcesName) {
     team: team,
   });
   const jobs = [job];
+  const pipeline = new schema.Entity("pipelines");
+  const pipelines = [pipeline];
   const schemas: {
     [schemaName in IResourcesName]: schema.Entity | schema.Entity[];
   } = {
@@ -45,6 +47,8 @@ export function getSchema(resource: IResourcesName) {
     feeders,
     job,
     jobs,
+    pipeline,
+    pipelines,
   };
   return schemas[resource];
 }

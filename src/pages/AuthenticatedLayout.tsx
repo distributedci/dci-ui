@@ -240,6 +240,7 @@ function Sidebar({ isNavOpen }: SidebarProps) {
     <Nav aria-label="Nav" theme="dark">
       <NavGroup title="DCI">
         <DCINavItem to="/analytics">Analytics</DCINavItem>
+        <DCINavItem to="/pipelines">Pipelines</DCINavItem>
         <DCINavItem to="/jobs">Jobs</DCINavItem>
         <DCINavItem to="/products">Products</DCINavItem>
         <DCINavItem to="/topics">Topics</DCINavItem>

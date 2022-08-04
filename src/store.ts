@@ -13,11 +13,13 @@ import feedersReducer from "./feeders/feedersReducer";
 import teamsReducer from "./teams/teamsReducer";
 import usersReducer from "./users/usersReducer";
 import jobsReducer from "./jobs/jobsReducer";
+import pipelinesReducer from "./pipelines/pipelinesReducer";
 
 export const rootReducer = combineReducers({
   alerts: alertsReducer,
   currentUser: currentUserReducer,
   jobs: jobsReducer,
+  pipelines: pipelinesReducer,
   products: productsReducer,
   topics: topicsReducer,
   feeders: feedersReducer,
