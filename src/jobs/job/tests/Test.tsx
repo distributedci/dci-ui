@@ -1,6 +1,6 @@
 import { Button, Label } from "@patternfly/react-core";
 import { useCallback, useState } from "react";
-import { IFile, ITest, ITestsCase } from "types";
+import { IFile, ITest, ITestSuite } from "types";
 import { isEmpty } from "lodash";
 import { humanizeDuration } from "services/date";
 import {
@@ -8,8 +8,13 @@ import {
   ExclamationTriangleIcon,
   ExclamationCircleIcon,
 } from "@patternfly/react-icons";
-import TestsCases from "./TestsCases";
-import { getTestsCases } from "./testsActions";
+import { getJunit } from "./testsActions";
+import TestSuites from "./TestSuites";
+import {
+  AccordionItem,
+  AccordionContent,
+  AccordionToggle,
+} from "@patternfly/react-core";
 
 interface TestProps {
   test: ITest;
@@ -18,116 +23,94 @@ interface TestProps {
 export default function Test({ test }: TestProps) {
   const [isLoadingTestsCases, setIsLoadingTestsCases] = useState(false);
   const [seeDetails, setSeeDetails] = useState(false);
-  const [testscases, setTestscases] = useState<ITestsCase[]>([]);
+  const [testsuites, setTestsuites] = useState<ITestSuite[]>([]);
 
   const loadTestCases = useCallback(() => {
-    setSeeDetails(true);
-    if (isEmpty(testscases)) {
+    if (isEmpty(testsuites)) {
       setIsLoadingTestsCases(true);
       const file = { id: test.file_id } as IFile;
-      getTestsCases(file)
+      getJunit(file)
         .then((r) => {
-          setTestscases(r.data.testscases);
+          setTestsuites(r.data.testsuites);
         })
         .finally(() => {
           setIsLoadingTestsCases(false);
         });
     }
-  }, [test.file_id, testscases]);
+  }, [test.file_id, testsuites]);
 
   return (
     <div>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          padding: 0,
-          paddingBottom: "1em",
-        }}
-      >
-        <div>
-          <span className="mr-lg">
-            {test.name || "Test"} ({humanizeDuration(test.time)})
-          </span>
-          <Label color="blue" className="mr-xs">
-            {test.total} tests
-          </Label>
-          {test.successfixes ? (
-            <Label icon={<CheckCircleIcon />} color="green" className="mr-xs">
-              {test.successfixes} fixes
+      <AccordionItem>
+        <AccordionToggle
+          id={test.name}
+          onClick={() => {
+            setSeeDetails(!seeDetails);
+            loadTestCases();
+          }}
+          isExpanded={seeDetails}
+        >
+          <div>
+            <span className="mr-lg">
+              {test.name || "Test"} ({humanizeDuration(test.time)})
+            </span>
+            <Label color="blue" className="mr-xs">
+              {test.total} tests
             </Label>
-          ) : null}
-          {test.success ? (
-            <Label icon={<CheckCircleIcon />} color="green" className="mr-xs">
-              {test.success} success
-            </Label>
-          ) : null}
-          {test.skips ? (
-            <Label
-              icon={<ExclamationTriangleIcon />}
-              color="orange"
-              className="mr-xs"
-            >
-              {test.skips} skipped
-            </Label>
-          ) : null}
-          {test.errors ? (
-            <Label
-              icon={<ExclamationCircleIcon />}
-              color="red"
-              className="mr-xs"
-            >
-              {test.errors} errors
-            </Label>
-          ) : null}
-          {test.failures ? (
-            <Label
-              icon={<ExclamationCircleIcon />}
-              color="red"
-              className="mr-xs"
-            >
-              {test.failures} failures
-            </Label>
-          ) : null}
-          {test.regressions ? (
-            <Label icon={<ExclamationCircleIcon />} color="red">
-              {test.regressions} regressions
-            </Label>
-          ) : null}
-        </div>
-        <div>
+            {test.successfixes ? (
+              <Label icon={<CheckCircleIcon />} color="green" className="mr-xs">
+                {test.successfixes} fixes
+              </Label>
+            ) : null}
+            {test.success ? (
+              <Label icon={<CheckCircleIcon />} color="green" className="mr-xs">
+                {test.success} success
+              </Label>
+            ) : null}
+            {test.skips ? (
+              <Label
+                icon={<ExclamationTriangleIcon />}
+                color="orange"
+                className="mr-xs"
+              >
+                {test.skips} skipped
+              </Label>
+            ) : null}
+            {test.errors ? (
+              <Label
+                icon={<ExclamationCircleIcon />}
+                color="red"
+                className="mr-xs"
+              >
+                {test.errors} errors
+              </Label>
+            ) : null}
+            {test.failures ? (
+              <Label
+                icon={<ExclamationCircleIcon />}
+                color="red"
+                className="mr-xs"
+              >
+                {test.failures} failures
+              </Label>
+            ) : null}
+            {test.regressions ? (
+              <Label icon={<ExclamationCircleIcon />} color="red">
+                {test.regressions} regressions
+              </Label>
+            ) : null}
+          </div>
+        </AccordionToggle>
+        <AccordionContent id="def-list-expand1" isHidden={!seeDetails}>
           {isLoadingTestsCases ? (
-            <Button isDisabled={isLoadingTestsCases}>Loading...</Button>
-          ) : seeDetails ? (
-            <Button onClick={() => setSeeDetails(false)}>Hide all tests</Button>
+            <span>Loading...</span>
+          ) : isEmpty(testsuites) ? (
+            <div>There are no test cases for this test</div>
           ) : (
-            <Button
-              isDisabled={isLoadingTestsCases}
-              onClick={() => {
-                loadTestCases();
-              }}
-            >
-              See all tests
-            </Button>
+            <TestSuites testsuites={testsuites} />
           )}
-        </div>
-      </div>
-      {seeDetails && (
-        <div style={{ paddingBottom: "2em" }}>
-          {isLoadingTestsCases ? (
-            <div>loading...</div>
-          ) : (
-            <div>
-              {isEmpty(testscases) ? (
-                <div>There are no test cases for this test</div>
-              ) : (
-                <TestsCases testscases={testscases} />
-              )}
-            </div>
-          )}
-        </div>
-      )}
+        </AccordionContent>
+      </AccordionItem>
     </div>
   );
 }

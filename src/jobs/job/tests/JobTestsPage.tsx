@@ -4,5 +4,13 @@ import { useJob } from "../jobContext";
 export default function JobTestsPage() {
   const { job } = useJob();
 
-  return <TestsList tests={job.tests} />;
+  return (
+    <div
+      style={{
+        margin: "0.5rem 0",
+      }}
+    >
+      <TestsList tests={job.tests} />
+    </div>
+  );
 }

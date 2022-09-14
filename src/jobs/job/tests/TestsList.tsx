@@ -1,7 +1,15 @@
 import { isEmpty } from "lodash";
 import { EmptyState } from "ui";
 import Test from "./Test";
-import { PageSection, PageSectionVariants } from "@patternfly/react-core";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionToggle,
+  PageSection,
+  PageSectionVariants,
+  Title,
+} from "@patternfly/react-core";
 import { ITest } from "types";
 
 interface TestsListProps {
@@ -15,9 +23,15 @@ export default function TestsList({ tests }: TestsListProps) {
     );
   return (
     <PageSection variant={PageSectionVariants.light}>
-      {tests.map((test, i) => (
-        <Test key={i} test={test} />
-      ))}
+      <Title headingLevel="h2" size="2xl" className="mb-md">
+        Tests
+      </Title>
+
+      <Accordion isBordered>
+        {tests.map((test, i) => (
+          <Test key={i} test={test} />
+        ))}
+      </Accordion>
     </PageSection>
   );
 }
