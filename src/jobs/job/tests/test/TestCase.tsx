@@ -12,7 +12,6 @@ import {
 import { useState } from "react";
 import {
   CaretDownIcon,
-  CaretLeftIcon,
   CaretRightIcon,
 } from "@patternfly/react-icons";
 import { ITestCase } from "types";

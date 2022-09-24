@@ -11,7 +11,6 @@ import {
   TabTitleText,
   TextContent,
 } from "@patternfly/react-core";
-import JobDetailsSummary from "./JobDetailsSummary";
 import { useState } from "react";
 
 export default function JobPageWithMenu() {
@@ -25,7 +24,7 @@ export default function JobPageWithMenu() {
     { title: "Settings", value: "settings" },
   ];
   const endpointIndex = endpoints.findIndex((e) =>
-    location.pathname.endsWith(e.value)
+    location.pathname.includes(`${job.id}/${e.value}`)
   );
   const [activeTabKey, setActiveTabKey] = useState<number>(
     endpointIndex === -1 ? 0 : endpointIndex
@@ -72,19 +71,6 @@ export default function JobPageWithMenu() {
         />
       }
     >
-      <JobDetailsSummary
-        key={job.id}
-        onTagClicked={(tag) => navigate(`/jobs?where=tags:${tag}`)}
-        onRemoteciClicked={(remoteci) =>
-          navigate(`/jobs?where=remoteci_id:${remoteci.id}`)
-        }
-        onTeamClicked={(team) => navigate(`/jobs?where=team_id:${team.id}`)}
-        onTopicClicked={(topic) => navigate(`/jobs?where=topic_id:${topic.id}`)}
-        onConfigurationClicked={(configuration) =>
-          navigate(`/jobs?where=configuration:${configuration}`)
-        }
-        job={job}
-      />
       <Outlet />
     </MainPage>
   );
