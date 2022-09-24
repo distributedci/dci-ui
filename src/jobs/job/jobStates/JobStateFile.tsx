@@ -2,7 +2,6 @@ import { useEffect, useState, useCallback, useRef } from "react";
 import {
   CaretDownIcon,
   CaretRightIcon,
-  LinkIcon,
 } from "@patternfly/react-icons";
 import { getFileContent } from "jobs/job/files/filesActions";
 import {
