@@ -14,6 +14,7 @@ import TasksPerJobHeaderImage from "./TasksDurationPerJob/tasks_per_job.png";
 import JunitComparisonHeaderImage from "./JunitComparison/junit_comparison.png";
 import ComponentCoverageImage from "./ComponentCoverage/component_coverage.png";
 import LatestJobsStatusHeaderImage from "./LatestJobStatus/latest_jos_status.png";
+import PipelinesImages from "./Pipelines/pipelines.png";
 
 export default function AnalyticsPage() {
   const navigate = useNavigate();
@@ -115,6 +116,25 @@ export default function AnalyticsPage() {
             <CardBody>
               See the latest jobs status per topic and per remoteci
             </CardBody>
+          </Card>
+        </GalleryItem>
+        <GalleryItem>
+          <Card
+            className="pointer"
+            onClick={() => navigate("/analytics/pipelines")}
+          >
+            <CardHeader>
+              <CardHeaderMain>
+                <img
+                  src={PipelinesImages}
+                  alt="Pipelines"
+                  height={100}
+                  width="auto"
+                />
+              </CardHeaderMain>
+            </CardHeader>
+            <CardTitle>Pipelines</CardTitle>
+            <CardBody>See the pipelines</CardBody>
           </Card>
         </GalleryItem>
       </Gallery>

@@ -1,37 +1,40 @@
 import { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { ITeam } from "types";
-import { getTeams, getTeamById, isFetchingTeams } from "teams/teamsSelectors";
-import teamsActions from "teams/teamsActions";
 import {
-  Select,
-  SelectOption,
-  SelectVariant,
   ToolbarFilter,
+  Select,
+  SelectVariant,
+  SelectOption,
+  ToolbarChip,
 } from "@patternfly/react-core";
+import { useDispatch, useSelector } from "react-redux";
+import { getTeams, isFetchingTeams } from "teams/teamsSelectors";
 import { AppDispatch } from "store";
 import { useDebouncedValue } from "hooks/useDebouncedValue";
+import teamsActions from "teams/teamsActions";
+import { ITeam } from "types";
 
 type TeamsFilterProps = {
-  team_id: string | null;
+  teamsIds: string[];
   onSelect: (team: ITeam) => void;
-  onClear: () => void;
+  onClear: (team: ITeam) => void;
+  onClearAll: () => void;
   showToolbarItem?: boolean;
   placeholderText?: string;
   categoryName?: string;
 };
 
 export default function TeamsFilter({
-  team_id,
+  teamsIds,
   onSelect,
   onClear,
+  onClearAll,
   showToolbarItem = true,
-  placeholderText = "Search by name",
-  categoryName = "Team",
+  placeholderText = "Search team by name",
+  categoryName = "Teams",
 }: TeamsFilterProps) {
   const [searchValue, setSearchValue] = useState("");
   const teams = useSelector(getTeams);
-  const team = useSelector(getTeamById(team_id));
+  const selectedTeams = teams.filter((t) => teamsIds.indexOf(t.id) !== -1);
   const [isOpen, setIsOpen] = useState(false);
   const dispatch = useDispatch<AppDispatch>();
   const isFetching = useSelector(isFetchingTeams);
@@ -44,15 +47,29 @@ export default function TeamsFilter({
     }
   }, [debouncedSearchValue, dispatch]);
 
+  useEffect(() => {
+    dispatch(teamsActions.all());
+  }, []);
+
   return (
     <ToolbarFilter
-      chips={team === null ? [] : [team.name]}
-      deleteChip={onClear}
+      chips={selectedTeams.map((t) => ({
+        key: t.id,
+        node: <>{t.name}</>,
+      }))}
+      deleteChip={(category, chip) => {
+        const teamToUnselect = selectedTeams.find(
+          (t) => t.id === (chip as ToolbarChip).key
+        );
+        if (teamToUnselect) {
+          onClear(teamToUnselect);
+        }
+      }}
       categoryName={categoryName}
       showToolbarItem={showToolbarItem}
     >
       <Select
-        variant={SelectVariant.typeahead}
+        variant={SelectVariant.typeaheadMulti}
         typeAheadAriaLabel={placeholderText}
         onToggle={setIsOpen}
         onSelect={(event, selection) => {
@@ -60,8 +77,8 @@ export default function TeamsFilter({
           const s = selection as ITeam;
           onSelect(s);
         }}
-        onClear={onClear}
-        selections={team === null ? "" : team.name}
+        onClear={onClearAll}
+        selections={selectedTeams.map((t) => t.name)}
         isOpen={isOpen}
         aria-labelledby="select"
         placeholderText={placeholderText}

@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
-  getProducts,
-  getProductById,
-  isFetchingProducts,
-} from "products/productsSelectors";
-import { IProduct } from "types";
-import productsActions from "products/productsActions";
+  getActiveTopics,
+  getTopicById,
+  isFetchingTopics,
+} from "topics/topicsSelectors";
+import { ITopic } from "types";
+import topicsActions from "topics/topicsActions";
 import {
   Select,
   SelectOption,
@@ -16,41 +16,41 @@ import {
 import { AppDispatch } from "store";
 import { useDebouncedValue } from "hooks/useDebouncedValue";
 
-type ProductsFilterProps = {
-  product_id: string | null;
-  onSelect: (product: IProduct) => void;
+type TopicFilterProps = {
+  topic_id: string | null;
+  onSelect: (topic: ITopic) => void;
   onClear: () => void;
   showToolbarItem?: boolean;
   placeholderText?: string;
   categoryName?: string;
 };
 
-export default function ProductsFilter({
-  product_id,
+export default function TopicFilter({
+  topic_id,
   onSelect,
   onClear,
   showToolbarItem = true,
   placeholderText = "Search by name",
-  categoryName = "Product",
-}: ProductsFilterProps) {
+  categoryName = "Topic",
+}: TopicFilterProps) {
   const [searchValue, setSearchValue] = useState("");
-  const products = useSelector(getProducts);
-  const product = useSelector(getProductById(product_id));
+  const topics = useSelector(getActiveTopics);
+  const topic = useSelector(getTopicById(topic_id));
   const [isOpen, setIsOpen] = useState(false);
   const dispatch = useDispatch<AppDispatch>();
-  const isFetching = useSelector(isFetchingProducts);
+  const isFetching = useSelector(isFetchingTopics);
 
   const debouncedSearchValue = useDebouncedValue(searchValue, 1000);
 
   useEffect(() => {
     if (debouncedSearchValue) {
-      dispatch(productsActions.all({ where: `name:${debouncedSearchValue}*` }));
+      dispatch(topicsActions.all({ where: `name:${debouncedSearchValue}*` }));
     }
   }, [debouncedSearchValue, dispatch]);
 
   return (
     <ToolbarFilter
-      chips={product === null ? [] : [product.name]}
+      chips={topic === null ? [] : [topic.name]}
       deleteChip={onClear}
       categoryName={categoryName}
       showToolbarItem={showToolbarItem}
@@ -61,11 +61,11 @@ export default function ProductsFilter({
         onToggle={setIsOpen}
         onSelect={(event, selection) => {
           setIsOpen(false);
-          const s = selection as IProduct;
+          const s = selection as ITopic;
           onSelect(s);
         }}
         onClear={onClear}
-        selections={product === null ? "" : product.name}
+        selections={topic === null ? "" : topic.name}
         isOpen={isOpen}
         aria-labelledby="select"
         placeholderText={placeholderText}
@@ -73,16 +73,16 @@ export default function ProductsFilter({
         onTypeaheadInputChanged={setSearchValue}
         noResultsFoundText={
           debouncedSearchValue === ""
-            ? "Search a product by name"
+            ? "Search a topic by name"
             : isFetching
             ? "Searching..."
-            : "No product matching this name"
+            : "No topic matching this name"
         }
       >
-        {products
-          .map((p) => ({ ...p, toString: () => p.name }))
-          .map((product) => (
-            <SelectOption key={product.id} value={product} />
+        {topics
+          .map((t) => ({ ...t, toString: () => t.name }))
+          .map((topic) => (
+            <SelectOption key={topic.id} value={topic} />
           ))}
       </Select>
     </ToolbarFilter>
