@@ -7,14 +7,17 @@ import "./index.css";
 import App from "./App";
 import { SSOProvider } from "auth/ssoContext";
 import { AuthProvider } from "auth/authContext";
+import { NewsProvider } from "news/NewsContext";
 
 ReactDOM.render(
   <Provider store={store}>
     <SSOProvider>
       <AuthProvider>
-        <BrowserRouter basename={process.env.PUBLIC_URL}>
-          <App />
-        </BrowserRouter>
+        <NewsProvider>
+          <BrowserRouter basename={process.env.PUBLIC_URL}>
+            <App />
+          </BrowserRouter>
+        </NewsProvider>
       </AuthProvider>
     </SSOProvider>
   </Provider>,

@@ -7,6 +7,7 @@ import {
   CardHeader,
   CardHeaderMain,
   CardTitle,
+  Badge,
 } from "@patternfly/react-core";
 import { Breadcrumb } from "ui";
 import { useNavigate } from "react-router-dom";
@@ -14,9 +15,12 @@ import TasksPerJobHeaderImage from "./TasksDurationPerJob/tasks_per_job.png";
 import JunitComparisonHeaderImage from "./JunitComparison/junit_comparison.png";
 import ComponentCoverageImage from "./ComponentCoverage/component_coverage.png";
 import LatestJobsStatusHeaderImage from "./LatestJobStatus/latest_jos_status.png";
+import PipelinesImages from "./Pipelines/pipelines.png";
+import { useNews } from "news/NewsContext";
 
 export default function AnalyticsPage() {
   const navigate = useNavigate();
+  const { seeNews, hasNotSeenNews } = useNews();
 
   return (
     <MainPage
@@ -29,6 +33,33 @@ export default function AnalyticsPage() {
       }
     >
       <Gallery hasGutter>
+        <GalleryItem>
+          <Card
+            className="pointer"
+            onClick={() => {
+              navigate("/analytics/pipelines");
+              seeNews("analytics/pipelines");
+            }}
+          >
+            <CardHeader>
+              <CardHeaderMain>
+                <img
+                  src={PipelinesImages}
+                  alt="Pipelines"
+                  height={100}
+                  width="auto"
+                />
+              </CardHeaderMain>
+            </CardHeader>
+            <CardTitle>
+              Pipelines
+              {hasNotSeenNews("analytics/pipelines") && (
+                <Badge className="ml-xs">new</Badge>
+              )}
+            </CardTitle>
+            <CardBody>View pipelines from the past few days</CardBody>
+          </Card>
+        </GalleryItem>
         <GalleryItem>
           <Card
             className="pointer"

@@ -29,6 +29,7 @@ import {
   MastheadBrand,
   MastheadContent,
   ToolbarContent,
+  Badge,
 } from "@patternfly/react-core";
 import Logo from "logo.min.svg";
 import {
@@ -38,6 +39,8 @@ import {
   UsersIcon,
 } from "@patternfly/react-icons";
 import { useAuth } from "auth/authContext";
+import useLocalStorage from "hooks/useLocalStorage";
+import { useNews } from "news/NewsContext";
 
 function MenuDropdown({
   title,
@@ -234,12 +237,18 @@ interface SidebarProps {
 
 function Sidebar({ isNavOpen }: SidebarProps) {
   const { identity } = useAuth();
+  const { hasNotSeenNews } = useNews();
   if (identity === null) return null;
   const identityTeams = values(identity.teams);
   const PageNav = (
     <Nav aria-label="Nav" theme="dark">
       <NavGroup title="DCI">
-        <DCINavItem to="/analytics">Analytics</DCINavItem>
+        <DCINavItem to="/analytics">
+          Analytics
+          {hasNotSeenNews("analytics/pipelines") && (
+            <Badge className="ml-xs">new</Badge>
+          )}
+        </DCINavItem>
         <DCINavItem to="/jobs">Jobs</DCINavItem>
         <DCINavItem to="/products">Products</DCINavItem>
         <DCINavItem to="/topics">Topics</DCINavItem>

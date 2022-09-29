@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
-  getActiveTopics,
-  getTopicById,
-  isFetchingTopics,
-} from "topics/topicsSelectors";
-import { ITopic } from "types";
-import topicsActions from "topics/topicsActions";
+  getRemotecis,
+  getRemoteciById,
+  isFetchingRemotecis,
+} from "remotecis/remotecisSelectors";
+import { IRemoteci } from "types";
+import remotecisActions from "remotecis/remotecisActions";
 import {
   Select,
   SelectOption,
@@ -16,41 +16,43 @@ import {
 import { AppDispatch } from "store";
 import { useDebouncedValue } from "hooks/useDebouncedValue";
 
-type TopicsFilterProps = {
-  topic_id: string | null;
-  onSelect: (topic: ITopic) => void;
+type RemoteciFilterProps = {
+  remoteci_id: string | null;
+  onSelect: (remoteci: IRemoteci) => void;
   onClear: () => void;
   showToolbarItem?: boolean;
   placeholderText?: string;
   categoryName?: string;
 };
 
-export default function TopicsFilter({
-  topic_id,
+export default function RemoteciFilter({
+  remoteci_id,
   onSelect,
   onClear,
   showToolbarItem = true,
-  placeholderText = "Search by name",
-  categoryName = "Topic",
-}: TopicsFilterProps) {
+  placeholderText = "Search a name",
+  categoryName = "Remoteci",
+}: RemoteciFilterProps) {
   const [searchValue, setSearchValue] = useState("");
-  const topics = useSelector(getActiveTopics);
-  const topic = useSelector(getTopicById(topic_id));
+  const remotecis = useSelector(getRemotecis);
+  const remoteci = useSelector(getRemoteciById(remoteci_id));
+  const isFetching = useSelector(isFetchingRemotecis);
   const [isOpen, setIsOpen] = useState(false);
   const dispatch = useDispatch<AppDispatch>();
-  const isFetching = useSelector(isFetchingTopics);
 
   const debouncedSearchValue = useDebouncedValue(searchValue, 1000);
 
   useEffect(() => {
     if (debouncedSearchValue) {
-      dispatch(topicsActions.all({ where: `name:${debouncedSearchValue}*` }));
+      dispatch(
+        remotecisActions.all({ where: `name:${debouncedSearchValue}*` })
+      );
     }
   }, [debouncedSearchValue, dispatch]);
 
   return (
     <ToolbarFilter
-      chips={topic === null ? [] : [topic.name]}
+      chips={remoteci === null ? [] : [remoteci.name]}
       deleteChip={onClear}
       categoryName={categoryName}
       showToolbarItem={showToolbarItem}
@@ -61,11 +63,11 @@ export default function TopicsFilter({
         onToggle={setIsOpen}
         onSelect={(event, selection) => {
           setIsOpen(false);
-          const s = selection as ITopic;
+          const s = selection as IRemoteci;
           onSelect(s);
         }}
         onClear={onClear}
-        selections={topic === null ? "" : topic.name}
+        selections={remoteci === null ? "" : remoteci.name}
         isOpen={isOpen}
         aria-labelledby="select"
         placeholderText={placeholderText}
@@ -73,16 +75,16 @@ export default function TopicsFilter({
         onTypeaheadInputChanged={setSearchValue}
         noResultsFoundText={
           debouncedSearchValue === ""
-            ? "Search a topic by name"
+            ? "Search a remoteci by name"
             : isFetching
             ? "Searching..."
-            : "No topic matching this name"
+            : "No remoteci matching this name"
         }
       >
-        {topics
-          .map((t) => ({ ...t, toString: () => t.name }))
-          .map((topic) => (
-            <SelectOption key={topic.id} value={topic} />
+        {remotecis
+          .map((p) => ({ ...p, toString: () => p.name }))
+          .map((remoteci) => (
+            <SelectOption key={remoteci.id} value={remoteci} />
           ))}
       </Select>
     </ToolbarFilter>
