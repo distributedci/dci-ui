@@ -21,13 +21,13 @@ import {
   Bar,
 } from "recharts";
 import http from "services/http";
-import TopicsFilter from "jobs/toolbar/TopicsFilter";
+import TopicFilter from "jobs/toolbar/TopicFilter";
 import qs from "qs";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { showAPIError } from "alerts/alertsActions";
-import RemotecisFilter from "jobs/toolbar/RemotecisFilter";
+import RemoteciFilter from "jobs/toolbar/RemoteciFilter";
 import { DateTime } from "luxon";
 import TestNameFilter from "./TestNameFilter";
 
@@ -209,7 +209,7 @@ export default function JunitComparisonPage() {
             <ToolbarContent>
               <ToolbarGroup>
                 <ToolbarItem>
-                  <TopicsFilter
+                  <TopicFilter
                     categoryName="Topic 1"
                     topic_id={values.topic_1_id}
                     onClear={() =>
@@ -232,7 +232,7 @@ export default function JunitComparisonPage() {
               </ToolbarGroup>
               <ToolbarGroup>
                 <ToolbarItem>
-                  <RemotecisFilter
+                  <RemoteciFilter
                     categoryName="Remoteci 1"
                     remoteci_id={values.remoteci_1_id}
                     onClear={() =>
@@ -253,7 +253,7 @@ export default function JunitComparisonPage() {
             <ToolbarContent>
               <ToolbarGroup>
                 <ToolbarItem>
-                  <TopicsFilter
+                  <TopicFilter
                     categoryName="Topic 2"
                     topic_id={values.topic_2_id}
                     onClear={() =>
@@ -276,7 +276,7 @@ export default function JunitComparisonPage() {
               </ToolbarGroup>
               <ToolbarGroup>
                 <ToolbarItem>
-                  <RemotecisFilter
+                  <RemoteciFilter
                     categoryName="Remoteci 2"
                     remoteci_id={values.remoteci_2_id}
                     onClear={() =>

@@ -1,12 +1,8 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  getRemotecis,
-  getRemoteciById,
-  isFetchingRemotecis,
-} from "remotecis/remotecisSelectors";
-import { IRemoteci } from "types";
-import remotecisActions from "remotecis/remotecisActions";
+import { ITeam } from "types";
+import { getTeams, getTeamById, isFetchingTeams } from "teams/teamsSelectors";
+import teamsActions from "teams/teamsActions";
 import {
   Select,
   SelectOption,
@@ -16,43 +12,41 @@ import {
 import { AppDispatch } from "store";
 import { useDebouncedValue } from "hooks/useDebouncedValue";
 
-type RemotecisFilterProps = {
-  remoteci_id: string | null;
-  onSelect: (remoteci: IRemoteci) => void;
+type TeamFilterProps = {
+  team_id: string | null;
+  onSelect: (team: ITeam) => void;
   onClear: () => void;
   showToolbarItem?: boolean;
   placeholderText?: string;
   categoryName?: string;
 };
 
-export default function RemotecisFilter({
-  remoteci_id,
+export default function TeamFilter({
+  team_id,
   onSelect,
   onClear,
   showToolbarItem = true,
-  placeholderText = "Search a name",
-  categoryName = "Remoteci",
-}: RemotecisFilterProps) {
+  placeholderText = "Search by name",
+  categoryName = "Team",
+}: TeamFilterProps) {
   const [searchValue, setSearchValue] = useState("");
-  const remotecis = useSelector(getRemotecis);
-  const remoteci = useSelector(getRemoteciById(remoteci_id));
-  const isFetching = useSelector(isFetchingRemotecis);
+  const teams = useSelector(getTeams);
+  const team = useSelector(getTeamById(team_id));
   const [isOpen, setIsOpen] = useState(false);
   const dispatch = useDispatch<AppDispatch>();
+  const isFetching = useSelector(isFetchingTeams);
 
   const debouncedSearchValue = useDebouncedValue(searchValue, 1000);
 
   useEffect(() => {
     if (debouncedSearchValue) {
-      dispatch(
-        remotecisActions.all({ where: `name:${debouncedSearchValue}*` })
-      );
+      dispatch(teamsActions.all({ where: `name:${debouncedSearchValue}*` }));
     }
   }, [debouncedSearchValue, dispatch]);
 
   return (
     <ToolbarFilter
-      chips={remoteci === null ? [] : [remoteci.name]}
+      chips={team === null ? [] : [team.name]}
       deleteChip={onClear}
       categoryName={categoryName}
       showToolbarItem={showToolbarItem}
@@ -63,11 +57,11 @@ export default function RemotecisFilter({
         onToggle={setIsOpen}
         onSelect={(event, selection) => {
           setIsOpen(false);
-          const s = selection as IRemoteci;
+          const s = selection as ITeam;
           onSelect(s);
         }}
         onClear={onClear}
-        selections={remoteci === null ? "" : remoteci.name}
+        selections={team === null ? "" : team.name}
         isOpen={isOpen}
         aria-labelledby="select"
         placeholderText={placeholderText}
@@ -75,16 +69,16 @@ export default function RemotecisFilter({
         onTypeaheadInputChanged={setSearchValue}
         noResultsFoundText={
           debouncedSearchValue === ""
-            ? "Search a remoteci by name"
+            ? "Search a team by name"
             : isFetching
             ? "Searching..."
-            : "No remoteci matching this name"
+            : "No team matching this name"
         }
       >
-        {remotecis
-          .map((p) => ({ ...p, toString: () => p.name }))
-          .map((remoteci) => (
-            <SelectOption key={remoteci.id} value={remoteci} />
+        {teams
+          .map((t) => ({ ...t, toString: () => t.name }))
+          .map((team) => (
+            <SelectOption key={team.id} value={team} />
           ))}
       </Select>
     </ToolbarFilter>
