@@ -70,7 +70,7 @@
   "scripts": {
     "prettier": "prettier --write src",
     "start": "PORT=8000 react-scripts start",
-    "build": "react-scripts build",
+    "build": "NODE_OPTIONS=\"--openssl-legacy-provider\" react-scripts build",
     "test": "npm run lint && LANG=en_US.UTF-8 TZ=UTC CI=true react-scripts test",
     "test:watch": "LANG=en_US.UTF-8 TZ=UTC react-scripts test",
     "eject": "react-scripts eject",
