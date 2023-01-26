@@ -52,6 +52,9 @@ export function TagsInput({
             setInputValue("");
           }
         }}
+        onBlur={() => {
+          console.log("toto");
+        }}
       >
         <ChipGroup>
           {tags.map((tag) => (
