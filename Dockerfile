@@ -8,6 +8,7 @@ ENV LANG en_US.UTF-8
 
 COPY package*.json .
 RUN npm install --silent
+RUN npx browserslist@latest --update-db
 COPY --chown=1001:1001 . ./
 
 EXPOSE 8000
