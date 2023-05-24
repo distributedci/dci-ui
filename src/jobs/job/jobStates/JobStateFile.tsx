@@ -105,7 +105,12 @@ export default function JobStateFile({
               ? "loading"
               : content === ""
               ? `no log for "${file.name}"`
-              : content}
+              : content.split("\\n").map((line, i) => (
+                  <span key={i}>
+                    {line}
+                    <br />
+                  </span>
+                ))}
           </JobStatePre>
         </FileContent>
       ) : null}
