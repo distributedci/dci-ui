@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "23601f8e_21f7e069",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 648
+      },
+      "writtenOn": "2023-05-24T17:06:32Z",
+      "side": 1,
+      "message": "nice! personally I\u0027d put the br tag after the closing span tag, but I don\u0027t know HTML so 😊",
+      "revId": "e0819236aff5580cf77b8f84a4bcf72fe0f2304f",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    }
+  ]
+}
