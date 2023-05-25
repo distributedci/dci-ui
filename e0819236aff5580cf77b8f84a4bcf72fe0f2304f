@@ -16,6 +16,23 @@
       "message": "nice! personally I\u0027d put the br tag after the closing span tag, but I don\u0027t know HTML so 😊",
       "revId": "e0819236aff5580cf77b8f84a4bcf72fe0f2304f",
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4f4fc173_8e576e37",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1440
+      },
+      "writtenOn": "2023-05-25T06:59:08Z",
+      "side": 1,
+      "message": "\u003cbr/\u003e elements are used in span or paragraphs\nbut you\u0027re right, no need to add extra element.\nI use the Fragment element instead.",
+      "revId": "e0819236aff5580cf77b8f84a4bcf72fe0f2304f",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     }
   ]
 }
