@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1464f0e0_b8cb8203",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1440
+      },
+      "writtenOn": "2023-06-12T08:13:16Z",
+      "side": 1,
+      "message": "The browserlist run should be run on dev files\nI updated recently the node modules.\nIt should be working now.\n\nThis patch can be abandonned",
+      "revId": "5e28a082ad238ecdcedf576165b8efd5bf7f78da",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    }
+  ]
+}
