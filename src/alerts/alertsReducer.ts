@@ -11,13 +11,14 @@ export default function reduce(
     case types.SHOW_ALERT:
       return {
         ...state,
-        [action.alert.id]: action.alert,
+        [action.alert.id]: {
+          ...action.alert,
+        },
       };
     case types.HIDE_ALERT:
-      delete state[action.alert.id];
-      return {
-        ...state,
-      };
+      const newState = { ...state };
+      delete newState[action.alert.id];
+      return newState;
     default:
       return state;
   }
