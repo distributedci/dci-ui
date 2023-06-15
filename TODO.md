@@ -5,3 +5,4 @@
   Needed to display Topic name instead of Topic Id in the component detail page src/component/ComponentPage.tsx
 - Replace sortedUniq from lodash with [...new Set(array)]
 - Replace query-string by qs
+- Replace axios-mock-adapter by msw

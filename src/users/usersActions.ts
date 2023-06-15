@@ -1,7 +1,7 @@
 import http from "services/http";
 import { createActions } from "api/apiActions";
 import { AxiosPromise } from "axios";
-import { ITeam, IUser } from "types";
+import { INewUser, ITeam, IUser } from "types";
 
 export default createActions("user");
 
@@ -11,6 +11,20 @@ interface IFetchUserTeams {
 
 export function fetchUserTeams(user: IUser): AxiosPromise<IFetchUserTeams> {
   return http.get(`/api/v1/users/${user.id}/teams`);
+}
+
+export function getOrCreateUser(email: string) {
+  return searchUserBy("email", email).then((response) => {
+    if (response.data.users.length > 0) {
+      return response.data.users[0];
+    } else {
+      return http({
+        method: "post",
+        url: `/api/v1/users`,
+        data: { email },
+      }).then((response) => response.data.user as IUser);
+    }
+  });
 }
 
 export function addUserToTeam(

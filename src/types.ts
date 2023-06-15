@@ -23,6 +23,7 @@ export interface Resource {
   id: string;
   etag: string;
   name: string;
+  state: state;
 }
 
 type data = {
@@ -32,7 +33,6 @@ type data = {
 export interface ITeam extends Resource {
   country: string | null;
   external: boolean;
-  state: state;
   created_at: string;
   updated_at: string;
   remotecis: IRemoteci[];
@@ -84,7 +84,6 @@ export interface IEnhancedProduct extends IProduct {
 
 export interface IRemoteci extends Resource {
   team_id: string;
-  state: string;
   data: data;
   public: boolean;
   cert_fp: string | null;
@@ -116,7 +115,6 @@ export interface IEnhancedRemoteci extends IRemoteci {
 export interface ITopic extends Resource {
   component_types: string[];
   data: data;
-  state: string;
   created_at: string;
   updated_at: string;
   export_control: boolean;
@@ -196,7 +194,6 @@ export interface IFeeder extends Resource {
   updated_at: string;
   api_secret: string;
   data: data;
-  state: string;
 }
 export interface IFeedersById {
   [id: string]: IFeeder;
@@ -263,7 +260,10 @@ export interface IIdentity {
   id: string;
   name: string;
   teams: {
-    [id: string]: ITeam;
+    [id: string]: {
+      id: string;
+      name: string;
+    };
   };
   timezone: string;
 }
@@ -467,7 +467,6 @@ export interface IJob extends Resource {
   remoteci: IRemoteci;
   remoteci_id: string;
   results: IResult[];
-  state: string;
   status: IJobStatus;
   status_reason: string | null;
   tags: string[] | null;
