@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "69b02d72_e02ac141",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 385
+      },
+      "writtenOn": "2023-08-04T12:35:24Z",
+      "side": 1,
+      "message": "Hi, we updated the container image: https://softwarefactory-project.io/r/c/config/+/28911 so the job dci-ui-test might be using newer software :)",
+      "revId": "8015709d4b21d09cb8ee2a217e0909ade0dab249",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    }
+  ]
+}
