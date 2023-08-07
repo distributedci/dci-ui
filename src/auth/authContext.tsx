@@ -22,7 +22,7 @@ interface AuthContextType {
   refreshIdentity: () => Promise<ICurrentUser>;
   changeCurrentTeam: (
     team: ITeam,
-    currentUser: ICurrentUser
+    currentUser: ICurrentUser,
   ) => Promise<ICurrentUser>;
   logout: () => void;
   openChangeTeamModal: () => void;
@@ -66,7 +66,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         (identity) => {
           setIdentity(identity);
           return identity;
-        }
+        },
       );
     },
     refreshIdentity: () => {
@@ -116,8 +116,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
                     setIsModalOpen(false);
                   }}
                   hasSelectableInput
-                  isSelectableRaised
-                  isDisabledRaised={team.id === identity.team?.id}
+                  isSelectable
+                  isDisabled
+                  tabIndex={0}
                 >
                   <CardBody>{team.name}</CardBody>
                 </Card>

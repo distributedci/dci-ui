@@ -21,14 +21,12 @@ import { getFileContent } from "jobs/job/files/filesActions";
 import { IEnhancedJob } from "types";
 import { humanizeDuration } from "services/date";
 import styled from "styled-components";
+import { ProgressStepper, ProgressStep, Button } from "@patternfly/react-core";
 import {
-  ProgressStepper,
-  ProgressStep,
   Dropdown,
   DropdownToggle,
   DropdownItem,
-  Button,
-} from "@patternfly/react-core";
+} from "@patternfly/react-core/deprecated";
 import {
   SortAmountDownIcon,
   SortAmountDownAltIcon,
@@ -60,7 +58,7 @@ function JobStateFilterButton({
       toggle={
         <DropdownToggle
           toggleIndicator={null}
-          onToggle={(isOpen: boolean) => setIsOpen(isOpen)}
+          onToggle={(_event, isOpen: boolean) => setIsOpen(isOpen)}
           aria-label="Applications"
           id="toggle-icon-only"
           style={{ color: global_palette_black_200.value }}
@@ -99,10 +97,10 @@ interface JobStatesListProps {
 export default function JobStatesList({ job }: JobStatesListProps) {
   const [searchParams, setSearchParams] = useSearchParams();
   const [sort, setSort] = useState<AnsibleTaskFilter>(
-    (searchParams.get("sort") as AnsibleTaskFilter) || "date"
+    (searchParams.get("sort") as AnsibleTaskFilter) || "date",
   );
   const [selectedTaskId, setSelectedTaskId] = useState<string | null>(
-    searchParams.get("task")
+    searchParams.get("task"),
   );
   const [seeRawLog, setSeeRawLog] = useState(false);
   const [loadingRawLog, setLoadingRawLog] = useState(false);
@@ -121,14 +119,14 @@ export default function JobStatesList({ job }: JobStatesListProps) {
   }, [searchParams, setSearchParams, selectedTaskId]);
 
   const rawLogFile = job.files.find(
-    (f) => f.name.toLowerCase() === "ansible.log"
+    (f) => f.name.toLowerCase() === "ansible.log",
   );
   if (isEmpty(job.jobstates)) {
     return <EmptyState title="No logs" info="There is no logs for this job" />;
   }
 
   const jobStates = addDuration(addPipelineStatus(job.jobstates)).filter(
-    (jobState) => jobState.files.length !== 0
+    (jobState) => jobState.files.length !== 0,
   );
 
   return (
@@ -172,7 +170,7 @@ export default function JobStatesList({ job }: JobStatesListProps) {
           {rawLogFile && (
             <RawLogButton
               variant="tertiary"
-              isSmall
+              size="sm"
               onClick={() => {
                 setLoadingRawLog(true);
                 getFileContent(rawLogFile)
@@ -206,7 +204,7 @@ export default function JobStatesList({ job }: JobStatesListProps) {
                   title={`${Math.round(jobstate.duration)} seconds`}
                 >
                   {`Job state ${jobstate.status} (~${humanizeDuration(
-                    jobstate.duration * 1000
+                    jobstate.duration * 1000,
                   )})`}
                 </JobStateName>
               </JobStateRow>
@@ -227,7 +225,7 @@ export default function JobStatesList({ job }: JobStatesListProps) {
             </div>
           ))
         ) : (
-          <div className="mt-md">
+          <div className="pf-v5-u-mt-md">
             {getLongerTaskFirst(jobStates).map((file, k) => (
               <JobStateFile
                 key={k}

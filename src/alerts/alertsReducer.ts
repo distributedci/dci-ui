@@ -5,7 +5,7 @@ const initialState: IAlertsState = {};
 
 export default function reduce(
   state = initialState,
-  action: types.IAlertsActionTypes
+  action: types.IAlertsActionTypes,
 ) {
   switch (action.type) {
     case types.SHOW_ALERT:
