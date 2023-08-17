@@ -6,6 +6,7 @@ import {
   global_BackgroundColor_200,
   global_Color_light_200,
   global_Color_400,
+  global_Color_light_100,
 } from "@patternfly/react-tokens";
 import {
   UsersIcon,
@@ -35,9 +36,11 @@ import {
   getIcon,
 } from "../jobUtils";
 import { ComponentsListInJobRow, TestLabels } from "jobs/components";
+import { useTheme } from "ui/Theme/themeContext";
 
-const Job = styled.div<{ status: string }>`
-  background: ${({ status }) => getBackground(status)};
+const Job = styled.div<{ status: string; isDark: boolean }>`
+  background: ${({ status, isDark }) =>
+    getBackground(status, isDark ? "#1f1d21" : global_Color_light_100.value)};
   min-height: 120px;
   width: 100%;
   padding: 0;
@@ -53,8 +56,8 @@ const Job = styled.div<{ status: string }>`
     "tests tests";
 
   &:focus-within {
-    background: ${({ status }) =>
-      getBackground(status, global_Color_light_200.value)};
+    background: ${({ status, isDark }) =>
+      getBackground(status, isDark ? "#1f1d21" : global_Color_light_200.value)};
   }
 
   @media (min-width: 992px) {
@@ -91,7 +94,6 @@ const JobTitle = styled.div`
 const TopicName = styled(Link)`
   font-size: 20px;
   font-weight: 700;
-  color: ${global_primary_color_200.value};
   text-decoration: none;
 `;
 
@@ -122,10 +124,11 @@ const JobTags = styled.div`
   padding-bottom: 0;
 `;
 
-const JobNav = styled.div`
+const JobNav = styled.div<{ isDark: boolean }>`
   grid-area: nav;
   display: none;
-  border-left: 1px dashed ${global_BackgroundColor_200.value};
+  border-left: 1px dashed
+    ${({ isDark }) => (isDark ? "#444548" : global_BackgroundColor_200.value)};
   @media (min-width: 992px) {
     display: flex;
     justify-content: center;
@@ -199,8 +202,9 @@ export default function JobsListRow({
   const [innerJob, setInnerJob] = useState<IEnhancedJob>(job);
   const dispatch = useDispatch<AppDispatch>();
   const TopicIcon = getTopicIcon(innerJob.topic?.name);
+  const { isDark } = useTheme();
   return (
-    <Job status={innerJob.status}>
+    <Job status={innerJob.status} isDark={isDark}>
       <JobIcon title={`job status ${innerJob.status}`}>
         <span style={{ color: getColor(innerJob.status), fontSize: "2em" }}>
           {getIcon(innerJob.status)}
@@ -339,7 +343,7 @@ export default function JobsListRow({
           </TextAreaEditableOnHover>
         </JobComment>
       </JobDate>
-      <JobNav>
+      <JobNav isDark={isDark}>
         <JobLink to={`/jobs/${innerJob.id}/jobStates`}>
           <CaretRightIcon />
         </JobLink>
