@@ -37,7 +37,6 @@ export default function AnalyticsPage() {
             }}
           >
             <CardHeader>
-              actions=
               {
                 <>
                   <img
@@ -59,7 +58,6 @@ export default function AnalyticsPage() {
             onClick={() => navigate("/analytics/component_coverage")}
           >
             <CardHeader>
-              actions=
               {
                 <>
                   <img
@@ -84,7 +82,6 @@ export default function AnalyticsPage() {
             onClick={() => navigate("/analytics/junit_comparison")}
           >
             <CardHeader>
-              actions=
               {
                 <>
                   <img
@@ -109,7 +106,6 @@ export default function AnalyticsPage() {
             onClick={() => navigate("/analytics/tasks_duration_per_job")}
           >
             <CardHeader>
-              actions=
               {
                 <>
                   <img
@@ -135,7 +131,6 @@ export default function AnalyticsPage() {
             onClick={() => navigate("/analytics/latest_jobs_status")}
           >
             <CardHeader>
-              actions=
               {
                 <>
                   <img
