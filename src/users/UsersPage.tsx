@@ -76,38 +76,43 @@ export default function UsersPage() {
       Breadcrumb={
         <Breadcrumb links={[{ to: "/", title: "DCI" }, { title: "Users" }]} />
       }
-    >
-      <Toolbar id="toolbar-users" collapseListedFiltersBreakpoint="xl">
-        <ToolbarContent>
-          <ToolbarGroup>
-            <ToolbarItem>
-              <EmailsFilter
-                search={filters.email || ""}
-                onSearch={(email) => {
-                  setFilters({ ...initialUserFilter, email });
-                }}
-              />
-            </ToolbarItem>
-          </ToolbarGroup>
-          <ToolbarGroup style={{ flex: "1" }}>
-            <ToolbarItem variant="pagination" align={{ default: "alignRight" }}>
-              {numOfUsers === 0 ? null : (
-                <Pagination
-                  perPage={filters.perPage}
-                  page={filters.page}
-                  itemCount={numOfUsers}
-                  onSetPage={(e, newPage) => {
-                    setFilters({ ...filters, page: newPage });
-                  }}
-                  onPerPageSelect={(e, newPerPage) => {
-                    setFilters({ ...filters, perPage: newPerPage });
+      Toolbar={
+        <Toolbar id="toolbar-users" collapseListedFiltersBreakpoint="xl">
+          <ToolbarContent>
+            <ToolbarGroup>
+              <ToolbarItem>
+                <EmailsFilter
+                  search={filters.email || ""}
+                  onSearch={(email) => {
+                    setFilters({ ...initialUserFilter, email });
                   }}
                 />
-              )}
-            </ToolbarItem>
-          </ToolbarGroup>
-        </ToolbarContent>
-      </Toolbar>
+              </ToolbarItem>
+            </ToolbarGroup>
+            <ToolbarGroup style={{ flex: "1" }}>
+              <ToolbarItem
+                variant="pagination"
+                align={{ default: "alignRight" }}
+              >
+                {numOfUsers === 0 ? null : (
+                  <Pagination
+                    perPage={filters.perPage}
+                    page={filters.page}
+                    itemCount={numOfUsers}
+                    onSetPage={(e, newPage) => {
+                      setFilters({ ...filters, page: newPage });
+                    }}
+                    onPerPageSelect={(e, newPerPage) => {
+                      setFilters({ ...filters, perPage: newPerPage });
+                    }}
+                  />
+                )}
+              </ToolbarItem>
+            </ToolbarGroup>
+          </ToolbarContent>
+        </Toolbar>
+      }
+    >
       {!isFetching && users.length === 0 ? (
         filters.email === "" ? (
           <EmptyState

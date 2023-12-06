@@ -739,3 +739,24 @@ export type RangeOptionValue =
   | "custom";
 
 export type colorTheme = "dark" | "light";
+
+interface BaseListResponse {
+  _meta: {
+    count: number;
+  };
+}
+
+export interface ComponentListResponse extends BaseListResponse {
+  components: IComponent[];
+}
+
+export interface Filters {
+  limit: number;
+  offset: number;
+  sort: string;
+  where: {
+    name: string | null;
+    display_name: string | null;
+    state: state;
+  };
+}
