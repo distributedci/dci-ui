@@ -45,8 +45,7 @@ export default function ComponentsPage() {
     navigate(`/components${newSearch}`, { replace: true });
   }, [navigate, filters]);
 
-  const { data, isLoading, isFetching, isError } =
-    useListComponentsQuery(filters);
+  const { data, isLoading } = useListComponentsQuery(filters);
   if (!data) return null;
   const count = data._meta.count;
   return (
@@ -62,7 +61,7 @@ export default function ComponentsPage() {
         />
       }
       Toolbar={
-        <Toolbar id="toolbar-users" collapseListedFiltersBreakpoint="xl">
+        <Toolbar id="toolbar-components" collapseListedFiltersBreakpoint="xl">
           <ToolbarContent>
             <ToolbarGroup>
               <ToolbarItem>

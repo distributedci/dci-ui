@@ -50,6 +50,7 @@ export interface INewTeam {
 export interface ITeamsById {
   [id: string]: ITeam;
 }
+
 export interface IEnhancedTeam extends ITeam {
   from_now: string | null;
 }
@@ -61,21 +62,10 @@ export interface IProduct extends Resource {
   updated_at: string;
 }
 
-export interface INewProduct {
-  name: string;
-  description: string;
-}
-
-export interface IEditProduct {
-  id: string;
-  etag: string;
-  name: string;
-  description: string;
-}
-
 export interface IProductsById {
   [id: string]: IProduct;
 }
+
 export interface IEnhancedProduct extends IProduct {
   from_now: string | null;
 }
@@ -93,6 +83,7 @@ export interface IRemoteci extends Resource {
 export interface IRemotecisById {
   [id: string]: IRemoteci;
 }
+
 export interface IEnhancedRemoteci extends IRemoteci {
   team: ITeam | null;
   from_now: string | null;

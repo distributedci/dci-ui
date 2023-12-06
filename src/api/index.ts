@@ -21,7 +21,7 @@ export const Api = createApi({
   endpoints: () => ({}),
 });
 
-type Resource = "Remoteci" | "Component";
+type Resource = "Remoteci" | "Product" | "Component";
 
 export const injectListEndpoint = <T extends { id: string }>(
   resourceName: Resource,

@@ -1,26 +1,26 @@
 import { renderWithProviders } from "utils/test-utils";
 import TeamCreationWizard from "./TeamCreationWizard";
-import { screen, waitFor } from "@testing-library/react";
+import { waitFor } from "@testing-library/react";
 
 test("team creation wizard", async () => {
-  const { user } = renderWithProviders(<TeamCreationWizard />);
+  const { user, findByRole, getByText, getByRole } = renderWithProviders(
+    <TeamCreationWizard />,
+  );
 
-  const onboardingANewTeamButton = await screen.findByRole("button", {
+  const onboardingANewTeamButton = await findByRole("button", {
     name: /Onboarding a new team/i,
   });
   user.click(onboardingANewTeamButton);
 
-  const nameTextbox = await screen.findByRole("textbox", { name: /Name/i });
+  const nameTextbox = await findByRole("textbox", { name: /Name/i });
   user.type(nameTextbox, "DCI team");
   await waitFor(() => expect(nameTextbox).toHaveValue("DCI team"));
 
-  const nextButton = await screen.findByRole("button", { name: /Next/i });
+  const nextButton = await findByRole("button", { name: /Next/i });
   await waitFor(() => expect(nextButton).not.toBeDisabled());
   user.click(nextButton);
-  await waitFor(() =>
-    expect(screen.getByText("Team members")).toBeInTheDocument(),
-  );
-  const teamMembersTextarea = await screen.findByRole("textbox", {
+  await waitFor(() => expect(getByText("Team members")).toBeInTheDocument());
+  const teamMembersTextarea = await findByRole("textbox", {
     name: /Team members/i,
   });
   user.type(teamMembersTextarea, "rh-login-1\nrh-login-2");
@@ -29,9 +29,9 @@ test("team creation wizard", async () => {
   );
   user.click(nextButton);
   await waitFor(() =>
-    expect(screen.getByText("Product permissions")).toBeInTheDocument(),
+    expect(getByText("Product permissions")).toBeInTheDocument(),
   );
-  const checkboxOpenShift = await screen.findByRole("checkbox", {
+  const checkboxOpenShift = await findByRole("checkbox", {
     name: /OpenShift/i,
   });
   user.click(checkboxOpenShift);
@@ -39,9 +39,9 @@ test("team creation wizard", async () => {
   user.click(nextButton);
 
   await waitFor(() => {
-    expect(screen.getByText("DCI team")).toBeInTheDocument();
-    expect(screen.getByText("rh-login-1")).toBeInTheDocument();
-    expect(screen.getByText("rh-login-2")).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "Create" })).toBeInTheDocument();
+    expect(getByText("DCI team")).toBeInTheDocument();
+    expect(getByText("rh-login-1")).toBeInTheDocument();
+    expect(getByText("rh-login-2")).toBeInTheDocument();
+    expect(getByRole("button", { name: "Create" })).toBeInTheDocument();
   });
 });

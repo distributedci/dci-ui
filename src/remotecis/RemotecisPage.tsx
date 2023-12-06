@@ -113,7 +113,7 @@ export default function RemotecisPage() {
         identity.team && (
           <CreateRemoteciModal
             teams={Object.values(identity.teams)}
-            onSubmit={(newRemoteci) => createRemoteci(newRemoteci)}
+            onSubmit={createRemoteci}
             isDisabled={isCreating}
           />
         )
