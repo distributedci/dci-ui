@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
 import * as React from "react";
 import { useDispatch } from "react-redux";
-import { deleteCurrentUser } from "currentUser/currentUserActions";
 import { removeToken, getToken } from "services/localStorage";
-import { ITeam, ICurrentUser } from "types";
+import { ITeam, ICurrentUser, IIdentityTeam } from "types";
 import { useSSO } from "./ssoContext";
-import * as authActions from "./authActions";
+import * as authApi from "./authApi";
 import { AppDispatch } from "store";
 import NotAuthenticatedLoadingPage from "pages/NotAuthenticatedLoadingPage";
 import {
@@ -18,12 +17,10 @@ import {
 import { showError } from "alerts/alertsActions";
 
 interface AuthContextType {
-  identity: ICurrentUser | null;
+  currentUser: ICurrentUser | null;
+  updateCurrentUser: (currentUser: ICurrentUser) => Promise<ICurrentUser>;
   refreshIdentity: () => Promise<ICurrentUser>;
-  changeCurrentTeam: (
-    team: ITeam,
-    currentUser: ICurrentUser,
-  ) => Promise<ICurrentUser>;
+  changeCurrentTeam: (currentUser: ICurrentUser, team: ITeam) => ICurrentUser;
   logout: () => void;
   openChangeTeamModal: () => void;
   closeChangeTeamModal: () => void;
@@ -40,15 +37,17 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const [isLoading, setIsLoading] = useState(true);
   const { sso } = useSSO();
   const dispatch = useDispatch<AppDispatch>();
-  const [identity, setIdentity] = useState<ICurrentUser | null>(null);
+  const [currentUser, setCurrentUser] = useState<ICurrentUser | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     const token = getToken();
     if (token) {
-      dispatch(authActions.getCurrentUser())
-        .then(setIdentity)
+      authApi
+        .getCurrentUser()
+        .then(setCurrentUser)
         .catch((error) => {
+          console.log(error);
           if (error.response.status === 400) {
             dispatch(
               showError(
@@ -68,19 +67,22 @@ export function AuthProvider({ children }: AuthProviderProps) {
   }
 
   const value = {
-    identity,
-    changeCurrentTeam: (team: ITeam, currentUser: ICurrentUser) => {
-      return dispatch(authActions.changeCurrentTeam(team, currentUser)).then(
-        (identity) => {
-          setIdentity(identity);
-          return identity;
-        },
-      );
+    currentUser,
+    changeCurrentTeam: (currentUser: ICurrentUser, team: IIdentityTeam) => {
+      const newCurrentUser = authApi.changeCurrentTeam(currentUser, team);
+      setCurrentUser(newCurrentUser);
+      return newCurrentUser;
+    },
+    updateCurrentUser: (currentUser: ICurrentUser) => {
+      return authApi.updateCurrentUser(currentUser).then((currentUser) => {
+        setCurrentUser(currentUser);
+        return currentUser;
+      });
     },
     refreshIdentity: () => {
-      return dispatch(authActions.getCurrentUser()).then((identity) => {
-        setIdentity(identity);
-        return identity;
+      return authApi.getCurrentUser().then((currentUser) => {
+        setCurrentUser(currentUser);
+        return currentUser;
       });
     },
     logout: () => {
@@ -89,35 +91,36 @@ export function AuthProvider({ children }: AuthProviderProps) {
         if (sso && token && token.type === "Bearer") {
           sso.signoutRedirect();
         }
-        setIdentity(null);
+        setCurrentUser(null);
         removeToken();
-        dispatch(deleteCurrentUser());
       } catch (error) {
         console.error(error);
       }
     },
     openChangeTeamModal: () => setIsModalOpen(true),
     closeChangeTeamModal: () => setIsModalOpen(false),
-    hasMultipleTeams: identity ? identity.teams.length > 1 : false,
-    hasAtLeastOneTeam: identity ? identity.teams.length > 0 : false,
+    hasMultipleTeams: currentUser ? currentUser.teams.length > 1 : false,
+    hasAtLeastOneTeam: currentUser ? currentUser.teams.length > 0 : false,
   };
 
   return (
     <AuthContext.Provider value={value}>
-      {identity && (
+      {currentUser && (
         <Modal
+          id="change-team-modal"
+          aria-label="Change team modal"
           variant={ModalVariant.small}
           title="Change team"
           isOpen={isModalOpen}
           onClose={() => setIsModalOpen(false)}
         >
           <Flex gap={{ default: "gapXl" }}>
-            {identity.teams.map((team) => (
+            {currentUser.teams.map((team) => (
               <FlexItem key={team.id}>
                 <Button
                   variant="tertiary"
                   onClick={() => {
-                    value.changeCurrentTeam(team, identity);
+                    value.changeCurrentTeam(currentUser, team);
                     setIsModalOpen(false);
                   }}
                 >
