@@ -1,15 +1,7 @@
-import Api from "../api";
-import type { ComponentListResponse, Filters } from "../types";
-import { createSearchFromFilters } from "api/filters";
+import { injectListEndpoint } from "../api";
+import type { IComponent } from "../types";
 
-export const componentsApi = Api.injectEndpoints({
-  endpoints: (builder) => ({
-    listComponents: builder.query<ComponentListResponse, Filters>({
-      query: (filters) => {
-        return `/components${createSearchFromFilters(filters)}`;
-      }
-    }),
-  }),
-});
+const resource = "Component";
 
-export const { useListComponentsQuery } = componentsApi;
+export const { useListComponentsQuery } =
+  injectListEndpoint<IComponent>(resource);

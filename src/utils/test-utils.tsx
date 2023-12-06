@@ -7,6 +7,8 @@ import type { PreloadedState } from "@reduxjs/toolkit";
 import type { AppStore, RootState } from "../store";
 import userEvent from "@testing-library/user-event";
 import { BrowserRouter } from "react-router-dom";
+import { AuthProvider } from "auth/authContext";
+import { setBasicToken } from "services/localStorage";
 
 interface ExtendedRenderOptions extends Omit<RenderOptions, "queries"> {
   preloadedState?: PreloadedState<RootState>;
@@ -22,11 +24,14 @@ export function renderWithProviders(
   }: ExtendedRenderOptions = {},
 ) {
   function Wrapper({ children }: PropsWithChildren<{}>): JSX.Element {
+    setBasicToken("dXNlcg==");
     return (
       <Provider store={store}>
-        <BrowserRouter basename={process.env.PUBLIC_URL}>
-          {children}
-        </BrowserRouter>
+        <AuthProvider>
+          <BrowserRouter basename={process.env.PUBLIC_URL}>
+            {children}
+          </BrowserRouter>
+        </AuthProvider>
       </Provider>
     );
   }

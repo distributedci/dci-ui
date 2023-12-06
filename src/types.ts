@@ -85,22 +85,9 @@ export interface IRemoteci extends Resource {
   state: string;
   data: data;
   public: boolean;
-  cert_fp: string | null;
   api_secret: string;
   created_at: string;
   updated_at: string;
-}
-
-export interface INewRemoteci {
-  name: string;
-  team_id: string;
-}
-
-export interface IEditRemoteci {
-  id: string;
-  etag: string;
-  name: string;
-  team_id: string;
 }
 
 export interface IRemotecisById {
@@ -750,6 +737,10 @@ export interface ComponentListResponse extends BaseListResponse {
   components: IComponent[];
 }
 
+export interface RemoteciListResponse extends BaseListResponse {
+  remotecis: IRemoteci[];
+}
+
 export interface Filters {
   limit: number;
   offset: number;
@@ -757,6 +748,7 @@ export interface Filters {
   where: {
     name: string | null;
     display_name: string | null;
+    team_id: string | null;
     state: state;
   };
 }

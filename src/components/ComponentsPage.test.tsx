@@ -55,10 +55,6 @@ test("Should display components in components page", async () => {
     ),
   );
   const { findByText } = renderWithProviders(<ComponentsPage />);
-  await findByText(
-    "RHEL-8.8.0-20230125.0",
-  );
-  await findByText(
-    "RHEL-9.2.0-20230125.12",
-  );
+  await findByText("RHEL-8.8.0-20230125.0");
+  await findByText("RHEL-9.2.0-20230125.12");
 });

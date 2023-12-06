@@ -3,19 +3,21 @@ import { FormikProps } from "formik";
 import { Button, Modal, ModalVariant } from "@patternfly/react-core";
 import useModal from "hooks/useModal";
 import RemoteciForm from "./RemoteciForm";
-import { INewRemoteci, ITeam } from "types";
+import { IRemoteci, ITeam } from "types";
 
 interface CreateRemoteciModalProps {
   teams: ITeam[];
-  onSubmit: (remoteci: INewRemoteci) => void;
+  onSubmit: (remoteci: Partial<IRemoteci>) => void;
+  [x: string]: any;
 }
 
 export default function CreateRemoteciModal({
   teams,
   onSubmit,
+  ...props
 }: CreateRemoteciModalProps) {
   const { isOpen, show, hide } = useModal(false);
-  const formRef = useRef<FormikProps<INewRemoteci>>(null);
+  const formRef = useRef<FormikProps<Partial<IRemoteci>>>(null);
   return (
     <>
       <Modal
@@ -46,7 +48,7 @@ export default function CreateRemoteciModal({
       >
         <RemoteciForm ref={formRef} teams={teams} onSubmit={onSubmit} />
       </Modal>
-      <Button variant="primary" onClick={show}>
+      <Button variant="primary" onClick={show} {...props}>
         Create a new remoteci
       </Button>
     </>

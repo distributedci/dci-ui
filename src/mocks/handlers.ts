@@ -59,8 +59,8 @@ export const handlers = [
         id: "a48ecab4-01d0-97d9-4f45-f7b938808e23",
         name: "u1",
         teams: {
-          t1: {
-            id: "t1",
+          "e5147a96-7c76-4415-b01e-edefba96a9c8": {
+            id: "e5147a96-7c76-4415-b01e-edefba96a9c8",
             name: "First Team",
           } as ITeam,
         },
