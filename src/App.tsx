@@ -36,6 +36,7 @@ import Alerts from "alerts/Alerts";
 import AuthenticatedLayout from "pages/AuthenticatedLayout";
 import JobTestPage from "jobs/job/tests/test/JobTestPage";
 import PipelinesPage from "analytics/Pipelines/PipelinesPage";
+import ComponentsPage from "components/ComponentsPage";
 
 export default function App() {
   return (
@@ -95,6 +96,7 @@ export default function App() {
                 element={<ComponentPage />}
               />
             </Route>
+            <Route path="components" element={<ComponentsPage />} />
             <Route path="remotecis" element={<RemotecisPage />} />
             <Route path="feeders">
               <Route index element={<FeedersPage />} />

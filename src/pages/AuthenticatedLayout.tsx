@@ -323,6 +323,7 @@ function Sidebar({ isNavOpen }: SidebarProps) {
         <DCINavItem to="/jobs">Jobs</DCINavItem>
         <DCINavItem to="/products">Products</DCINavItem>
         <DCINavItem to="/topics">Topics</DCINavItem>
+        <DCINavItem to="/components">Components</DCINavItem>
         {isEmpty(identityTeams) ? null : (
           <DCINavItem to="/remotecis">Remotecis</DCINavItem>
         )}

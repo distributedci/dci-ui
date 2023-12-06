@@ -14,6 +14,7 @@ import feedersReducer from "./feeders/feedersReducer";
 import teamsReducer from "./teams/teamsReducer";
 import usersReducer from "./users/usersReducer";
 import jobsReducer from "./jobs/jobsReducer";
+import Api from "api";
 
 export const rootReducer = combineReducers({
   alerts: alertsReducer,
@@ -25,6 +26,7 @@ export const rootReducer = combineReducers({
   remotecis: remotecisReducer,
   teams: teamsReducer,
   users: usersReducer,
+  [Api.reducerPath]: Api.reducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;
@@ -33,6 +35,8 @@ export function setupStore(preloadedState?: PreloadedState<RootState>) {
   return configureStore({
     reducer: rootReducer,
     preloadedState,
+    middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware().concat(Api.middleware),
   });
 }
 
