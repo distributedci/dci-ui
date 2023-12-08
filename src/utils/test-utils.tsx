@@ -1,5 +1,5 @@
 import React, { PropsWithChildren } from "react";
-import { render } from "@testing-library/react";
+import { render as renderTL } from "@testing-library/react";
 import { Provider } from "react-redux";
 import { setupStore } from "../store";
 import type { RenderOptions } from "@testing-library/react";
@@ -38,6 +38,13 @@ export function renderWithProviders(
   return {
     user: userEvent.setup(),
     store,
-    ...render(ui, { wrapper: Wrapper, ...renderOptions }),
+    ...renderTL(ui, { wrapper: Wrapper, ...renderOptions }),
+  };
+}
+
+export function render(ui: React.ReactElement) {
+  return {
+    user: userEvent.setup(),
+    ...renderTL(ui),
   };
 }

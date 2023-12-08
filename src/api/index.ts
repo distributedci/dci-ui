@@ -21,7 +21,7 @@ export const Api = createApi({
   endpoints: () => ({}),
 });
 
-type Resource = "Remoteci" | "Product" | "Component";
+type Resource = "Remoteci" | "Product" | "Topic" | "Component";
 
 export const injectListEndpoint = <T extends { id: string }>(
   resourceName: Resource,
@@ -36,9 +36,12 @@ export const injectListEndpoint = <T extends { id: string }>(
   };
   const entityApi = enhancedApi.injectEndpoints({
     endpoints: (builder) => ({
-      [`list${resourceName}s`]: builder.query<ListResponse<T>, Filters>({
+      [`list${resourceName}s`]: builder.query<ListResponse<T>, Filters | void>({
         query: (filters) => {
-          return `/${route}${createSearchFromFilters(filters)}`;
+          if (filters) {
+            return `/${route}${createSearchFromFilters(filters)}`;
+          }
+          return `/${route}`;
         },
         providesTags: (result) =>
           result
@@ -80,13 +83,19 @@ export const injectCreateEndpoint = <T extends { id: string }>(
 export const injectGetEndpoint = <T extends { id: string }>(
   resourceName: Resource,
 ) => {
-  const route = `${resourceName.toLowerCase()}s`;
+  const resourceNameLowercase = resourceName.toLowerCase();
+  const route = `${resourceNameLowercase}s`;
+  interface ApiGet<T> {
+    [resourceNameLowercase: string]: T;
+  }
   const enhancedApi = Api.enhanceEndpoints({ addTagTypes: [resourceName] });
   const entityApi = enhancedApi.injectEndpoints({
     endpoints: (builder) => ({
-      [`get${resourceName}`]: builder.query<T, string>({
+      [`get${resourceName}`]: builder.query<T, string | undefined>({
         query: (id) => `/${route}/${id}`,
         providesTags: (result, error, id) => [{ type: resourceName, id }],
+        transformResponse: (response: ApiGet<T>, meta, arg) =>
+          response[resourceNameLowercase],
       }),
     }),
   });

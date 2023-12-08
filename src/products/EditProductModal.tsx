@@ -23,6 +23,7 @@ export default function EditProductModal({
     <>
       <Modal
         id="edit_product_modal"
+        aria-label="Edit product modal"
         variant={ModalVariant.medium}
         title={`Edit ${product.name}`}
         isOpen={isOpen}

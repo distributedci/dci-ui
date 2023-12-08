@@ -1,7 +1,6 @@
 import {
   injectCreateEndpoint,
   injectDeleteEndpoint,
-  injectGetEndpoint,
   injectListEndpoint,
   injectUpdateEndpoint,
 } from "../api";
@@ -13,7 +12,6 @@ export const { useCreateRemoteciMutation } =
   injectCreateEndpoint<IRemoteci>(resource);
 export const { useDeleteRemoteciMutation } =
   injectDeleteEndpoint<IRemoteci>(resource);
-export const { useGetRemoteciQuery } = injectGetEndpoint<IRemoteci>(resource);
 export const { useListRemotecisQuery } =
   injectListEndpoint<IRemoteci>(resource);
 export const { useUpdateRemoteciMutation } =

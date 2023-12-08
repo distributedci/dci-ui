@@ -28,15 +28,23 @@ export function sortTopicPerProduct(
 }
 
 interface IProductWithTopics extends IProduct {
-  topics: IEnhancedTopic[];
+  topics: ITopic[];
 }
 
 export function groupTopicsPerProduct(
-  topics: IEnhancedTopic[],
+  topics: ITopic[],
+  products: IProduct[],
 ): IProductWithTopics[] {
+  const productById = products.reduce(
+    (acc, product) => {
+      acc[product.id] = product;
+      return acc;
+    },
+    {} as { [k: string]: IProduct },
+  );
   const topicsPerProduct = topics.reduce(
     (acc, topic) => {
-      const product = topic.product;
+      const product = productById[topic.product_id];
       if (!product) {
         return acc;
       }

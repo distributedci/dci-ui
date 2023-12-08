@@ -25,7 +25,7 @@ export interface Resource {
   name: string;
 }
 
-type data = {
+export type dataField = {
   [x: string]: any;
 };
 
@@ -73,7 +73,7 @@ export interface IEnhancedProduct extends IProduct {
 export interface IRemoteci extends Resource {
   team_id: string;
   state: string;
-  data: data;
+  data: dataField;
   public: boolean;
   api_secret: string;
   created_at: string;
@@ -91,42 +91,13 @@ export interface IEnhancedRemoteci extends IRemoteci {
 
 export interface ITopic extends Resource {
   component_types: string[];
-  data: data;
+  data: dataField;
   state: state;
   created_at: string;
   updated_at: string;
   export_control: boolean;
   product_id: string;
   next_topic_id: string | null;
-}
-
-export interface INewTopic {
-  name: string;
-  export_control: boolean;
-  state: string;
-  product_id: string | null;
-  component_types: string[];
-  data: data;
-}
-
-export interface IEditTopic {
-  id: string;
-  etag: string;
-  name: string;
-  export_control: boolean;
-  state: string;
-  product_id: string | null;
-  component_types: string[];
-  data: data;
-}
-
-export interface ITopicForm {
-  name: string;
-  export_control: boolean;
-  state: string;
-  product_id: string;
-  component_types: string;
-  data: string;
 }
 
 export interface ITopicsById {
@@ -172,7 +143,7 @@ export interface IFeeder extends Resource {
   created_at: string;
   updated_at: string;
   api_secret: string;
-  data: data;
+  data: dataField;
   state: string;
 }
 
@@ -484,7 +455,7 @@ export interface IComponent {
   display_name: string;
   version: string;
   uid: string;
-  data: data;
+  data: dataField;
   state: string;
   tags: string[];
   team_id: string | null;

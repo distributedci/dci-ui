@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import MainPage from "pages/MainPage";
 import {
@@ -20,9 +20,9 @@ import {
 import { TrashIcon } from "@patternfly/react-icons";
 import { getCurrentUser } from "currentUser/currentUserSelectors";
 import { Table, Thead, Tr, Th, Tbody, Td } from "@patternfly/react-table";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Filters } from "types";
-import { parseFiltersFromSearch } from "api/filters";
+import { createSearchFromFilters, parseFiltersFromSearch } from "api/filters";
 import {
   useCreateProductMutation,
   useDeleteProductMutation,
@@ -32,6 +32,7 @@ import {
 
 export default function ProductsPage() {
   const location = useLocation();
+  const navigate = useNavigate();
   const [filters, setFilters] = useState<Filters>(
     parseFiltersFromSearch(location.search),
   );
@@ -40,6 +41,11 @@ export default function ProductsPage() {
   const [createProduct, { isLoading: isCreating }] = useCreateProductMutation();
   const [updateProduct, { isLoading: isUpdating }] = useUpdateProductMutation();
   const [deleteProduct] = useDeleteProductMutation();
+
+  useEffect(() => {
+    const newSearch = createSearchFromFilters(filters);
+    navigate(`/products${newSearch}`, { replace: true });
+  }, [navigate, filters]);
 
   if (!data || currentUser === null) return null;
 

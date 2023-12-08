@@ -1,6 +1,6 @@
 import { renderWithProviders } from "utils/test-utils";
 import TeamCreationWizard from "./TeamCreationWizard";
-import { waitFor } from "@testing-library/react";
+import { act, waitFor } from "@testing-library/react";
 
 test("team creation wizard", async () => {
   const { user, findByRole, getByText, getByRole } = renderWithProviders(
@@ -13,7 +13,9 @@ test("team creation wizard", async () => {
   user.click(onboardingANewTeamButton);
 
   const nameTextbox = await findByRole("textbox", { name: /Name/i });
-  user.type(nameTextbox, "DCI team");
+  await act(async () => {
+    user.type(nameTextbox, "DCI team");
+  });
   await waitFor(() => expect(nameTextbox).toHaveValue("DCI team"));
 
   const nextButton = await findByRole("button", { name: /Next/i });

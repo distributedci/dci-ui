@@ -21,6 +21,7 @@ export default function CreateUserModal({
     <>
       <Modal
         id="create_user_modal"
+        aria-label="Create user modal"
         variant={ModalVariant.medium}
         title="Create a new user"
         isOpen={isOpen}

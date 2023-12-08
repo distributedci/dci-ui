@@ -43,21 +43,9 @@ import {
   UserIcon,
   UsersIcon,
 } from "@patternfly/react-icons";
-import {
-  global_palette_black_100,
-  global_palette_black_500,
-  global_palette_black_800,
-} from "@patternfly/react-tokens";
+import { global_palette_black_500 } from "@patternfly/react-tokens";
 import { useAuth } from "auth/authContext";
-import styled from "styled-components";
 import { useTheme } from "ui/Theme/themeContext";
-
-const ToolbarItemStyledLikeDropdown = styled(ToolbarItem)<{ isDark: boolean }>`
-  &:after {
-    background-color: ${({ isDark }) =>
-      isDark ? global_palette_black_800.value : global_palette_black_100.value};
-  }
-`;
 
 function UserDropdownMenuMobile() {
   const { logout } = useAuth();
@@ -241,19 +229,13 @@ function Header({ toggleSidebarVisibility }: HeaderProps) {
                     onChange={toggleColor}
                   />
                 </ToolbarItem>
-                <ToolbarItemStyledLikeDropdown
-                  isDark={isDark}
-                  variant="separator"
-                />
+                <ToolbarItem variant="separator" />
                 <ToolbarItem>
                   <DCIDocLinkIcon />
                 </ToolbarItem>
                 {hasAtLeastOneTeam && (
                   <>
-                    <ToolbarItemStyledLikeDropdown
-                      isDark={isDark}
-                      variant="separator"
-                    />
+                    <ToolbarItem variant="separator" />
                     <ToolbarItem>
                       <Button
                         variant="plain"

@@ -25,6 +25,7 @@ export default function EditRemoteciModal({
     <>
       <Modal
         id="edit_remoteci_modal"
+        aria-label="Edit remoteci modal"
         variant={ModalVariant.medium}
         title={`Edit ${remoteci.name}`}
         isOpen={isOpen}

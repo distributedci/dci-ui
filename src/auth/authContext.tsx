@@ -106,6 +106,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
     <AuthContext.Provider value={value}>
       {identity && (
         <Modal
+          id="change-team-modal"
+          aria-label="Change team modal"
           variant={ModalVariant.small}
           title="Change team"
           isOpen={isModalOpen}

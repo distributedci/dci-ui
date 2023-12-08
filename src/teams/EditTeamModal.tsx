@@ -23,6 +23,7 @@ export default function EditTeamModal({
     <>
       <Modal
         id="edit_team_modal"
+        aria-label="Edit team modal"
         variant={ModalVariant.medium}
         title={`Edit ${team.name}`}
         isOpen={isOpen}

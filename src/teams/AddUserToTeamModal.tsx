@@ -37,6 +37,7 @@ export default function AddUserToTeamModal({
     <>
       <Modal
         id="add_user_to_team_modal"
+        aria-label="Add user to team modal"
         variant={ModalVariant.medium}
         title={`Add a user to ${team.name} team`}
         isOpen={isOpen}

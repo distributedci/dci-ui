@@ -21,6 +21,7 @@ export default function CreateTeamModal({
     <>
       <Modal
         id="create_team_modal"
+        aria-label="Create team modal"
         variant={ModalVariant.medium}
         title="Create a new team"
         isOpen={isOpen}

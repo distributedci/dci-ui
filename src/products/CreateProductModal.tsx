@@ -20,6 +20,7 @@ export default function CreateProductModal({
     <>
       <Modal
         id="create_product_modal"
+        aria-label="Create product modal"
         variant={ModalVariant.medium}
         title="Create a new product"
         isOpen={isOpen}

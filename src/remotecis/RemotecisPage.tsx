@@ -82,13 +82,16 @@ export default function RemotecisPage() {
   }, [navigate, filters]);
 
   useEffect(() => {
-    if (identity && identity.team) {
-      setFilters({
-        ...filters,
-        where: { ...filters.where, team_id: identity.team.id },
-      });
-    }
-  }, [identity?.team]);
+    setFilters((f) => {
+      if (identity && identity.team) {
+        return {
+          ...f,
+          where: { ...f.where, team_id: identity.team.id },
+        };
+      }
+      return f;
+    });
+  }, [identity]);
 
   const { data, isLoading } = useListRemotecisQuery(filters, {
     skip: filters.where.team_id === null,

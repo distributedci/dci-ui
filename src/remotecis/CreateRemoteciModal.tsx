@@ -22,6 +22,7 @@ export default function CreateRemoteciModal({
     <>
       <Modal
         id="create_remoteci_modal"
+        aria-label="Create remoteci modal"
         variant={ModalVariant.medium}
         title="Create a new remoteci"
         isOpen={isOpen}
