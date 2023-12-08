@@ -7,6 +7,7 @@ export default function CheckboxGroup({
   ariaLabel,
   isChecked,
   onChange,
+  ...props
 }: {
   id: string;
   name: string;
@@ -14,6 +15,7 @@ export default function CheckboxGroup({
   ariaLabel?: string;
   isChecked: boolean;
   onChange: CheckboxProps["onChange"];
+  [k: string]: any;
 }) {
   return (
     <FormGroup fieldId={id}>
@@ -24,6 +26,7 @@ export default function CheckboxGroup({
         aria-label={ariaLabel || label}
         isChecked={isChecked}
         onChange={onChange}
+        {...props}
       />
     </FormGroup>
   );

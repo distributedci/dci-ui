@@ -50,6 +50,7 @@ describe("parseFiltersFromSearch", () => {
       state: "active",
       name: null,
       display_name: null,
+      email: null,
       team_id: null,
     });
   });
@@ -60,6 +61,7 @@ describe("parseFiltersFromSearch", () => {
       state: "inactive",
       name: "RHEL-8*",
       display_name: null,
+      email: null,
       team_id: null,
     });
   });
@@ -70,6 +72,7 @@ describe("parseFiltersFromSearch", () => {
         name: null,
         team_id: null,
         display_name: "RHEL-8*",
+        email: null,
       },
     );
   });
@@ -113,6 +116,7 @@ describe("createSearchFromFilters", () => {
         where: {
           name: null,
           display_name: null,
+          email: null,
           team_id: null,
           state: "active",
         },
@@ -131,10 +135,11 @@ describe("createSearchFromFilters", () => {
           display_name: "display_name2",
           team_id: "e5147a96-7c76-4415-b01e-edefba96a9c8",
           state: "active",
+          email: "test@example.org",
         },
       }),
     ).toEqual(
-      "?limit=200&offset=20&sort=-released_at&where=name:name1,display_name:display_name2,team_id:e5147a96-7c76-4415-b01e-edefba96a9c8,state:active",
+      "?limit=200&offset=20&sort=-released_at&where=name:name1,display_name:display_name2,team_id:e5147a96-7c76-4415-b01e-edefba96a9c8,state:active,email:test@example.org",
     );
   });
 });

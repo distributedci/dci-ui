@@ -1,22 +1,19 @@
-import { useRef } from "react";
 import * as React from "react";
-import { FormikProps } from "formik";
 import { Button, Modal, ModalVariant } from "@patternfly/react-core";
 import useModal from "hooks/useModal";
-import CreateUserForm from "./CreateUserForm";
-import { INewUser } from "types";
+import CreateUserForm from "./UserForm";
+import { IUser } from "types";
 
 interface CreateUserModalProps {
-  onSubmit: (user: INewUser) => void;
+  onSubmit: (user: Partial<IUser>) => void;
   children: (open: () => void) => React.ReactNode;
 }
 
 export default function CreateUserModal({
   onSubmit,
-  children,
+  children
 }: CreateUserModalProps) {
   const { isOpen, show, hide } = useModal(false);
-  const formRef = useRef<FormikProps<INewUser>>(null);
   return (
     <>
       <Modal
@@ -30,12 +27,8 @@ export default function CreateUserModal({
           <Button
             key="create"
             variant="primary"
-            onClick={() => {
-              hide();
-              if (formRef.current) {
-                formRef.current.handleSubmit();
-              }
-            }}
+            type="submit"
+            form="create-user-form"
           >
             Create
           </Button>,
@@ -44,7 +37,13 @@ export default function CreateUserModal({
           </Button>,
         ]}
       >
-        <CreateUserForm ref={formRef} onSubmit={onSubmit} />
+        <CreateUserForm
+          id="create-user-form"
+          onSubmit={(user) => {
+            hide();
+            onSubmit(user);
+          }}
+        />
       </Modal>
       {children(show)}
     </>

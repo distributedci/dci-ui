@@ -19,6 +19,7 @@ export default function TextAreaGroup({
   isRequired = false,
   hasError = false,
   errorMessage = "",
+  ...props
 }: {
   id: string;
   name: string;
@@ -30,6 +31,7 @@ export default function TextAreaGroup({
   isRequired?: boolean;
   hasError?: boolean;
   errorMessage?: string;
+  [k: string]: any;
 }) {
   return (
     <FormGroup label={label} isRequired={isRequired} fieldId={id}>
@@ -43,6 +45,7 @@ export default function TextAreaGroup({
         onBlur={onBlur}
         validated={hasError ? "error" : "default"}
         placeholder={placeholder}
+        {...props}
       />
       {hasError && (
         <FormHelperText>

@@ -21,6 +21,7 @@ export default function SelectGroup({
   isRequired = false,
   hasError = false,
   errorMessage = "",
+  ...props
 }: {
   id: string;
   name: string;
@@ -36,6 +37,7 @@ export default function SelectGroup({
   isRequired?: boolean;
   hasError?: boolean;
   errorMessage?: string;
+  [k: string]: any;
 }) {
   return (
     <FormGroup label={label} isRequired={isRequired} fieldId={id}>
@@ -46,6 +48,7 @@ export default function SelectGroup({
         value={value}
         onChange={onChange}
         onBlur={onBlur}
+        {...props}
       >
         {placeholderOption && (
           <FormSelectOption value="" label={placeholderOption} isPlaceholder />

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import {
   Button,
   ToolbarGroup,
@@ -9,60 +9,54 @@ import {
   Toolbar,
 } from "@patternfly/react-core";
 import { PlusCircleIcon, SearchIcon } from "@patternfly/react-icons";
-import usersActions from "./usersActions";
 import { EmptyState, Breadcrumb } from "ui";
-import { getUsers, getNbOfUsers, isFetchingUsers } from "./usersSelectors";
-import { getParamsFromFilters } from "jobs/toolbar/filters";
 import EmailsFilter from "./EmailsFilter";
 import { getCurrentUser } from "currentUser/currentUserSelectors";
-import { IUserFilters } from "types";
-import { AppDispatch } from "store";
-import CreateUserModal from "./create/CreateUserModal";
+import { Filters } from "types";
+import CreateUserModal from "./CreateUserModal";
 import UsersTable from "./UsersTable";
 import MainPage from "pages/MainPage";
-import { isEmpty } from "lodash";
-
-const initialUserFilter = {
-  page: 1,
-  perPage: 20,
-  email: null,
-  sort: "-created_at",
-};
+import {
+  createSearchFromFilters,
+  offsetAndLimitToPage,
+  pageAndLimitToOffset,
+  parseFiltersFromSearch,
+} from "api/filters";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useCreateUserMutation, useListUsersQuery } from "./usersApi";
 
 export default function UsersPage() {
   const currentUser = useSelector(getCurrentUser);
-  const users = useSelector(getUsers);
-  const numOfUsers = useSelector(getNbOfUsers);
-  const isFetching = useSelector(isFetchingUsers);
-  const [filters, setFilters] = useState<IUserFilters>({
-    ...initialUserFilter,
-  });
-  const dispatch = useDispatch<AppDispatch>();
-
+  const location = useLocation();
+  const navigate = useNavigate();
+  const [filters, setFilters] = useState<Filters>(
+    parseFiltersFromSearch(location.search),
+  );
   useEffect(() => {
-    const params = getParamsFromFilters(filters);
-    dispatch(usersActions.clear());
-    dispatch(usersActions.all(params));
-  }, [dispatch, filters]);
+    const newSearch = createSearchFromFilters(filters);
+    navigate(`/users${newSearch}`, { replace: true });
+  }, [navigate, filters]);
 
-  if (currentUser === null) return null;
+  const { data, isLoading } = useListUsersQuery(filters);
+  const [createUser, { isLoading: isCreating }] = useCreateUserMutation();
+
+  if (!data || currentUser === null) return null;
+  const count = data._meta.count;
 
   return (
     <MainPage
       title="Users"
       description="List of DCI users"
-      loading={isFetching && isEmpty(users)}
+      loading={isLoading}
       HeaderButton={
         currentUser.isSuperAdmin ? (
-          <CreateUserModal
-            onSubmit={(user) => {
-              dispatch(usersActions.create(user)).then(() =>
-                setFilters({ ...initialUserFilter }),
-              );
-            }}
-          >
+          <CreateUserModal onSubmit={createUser}>
             {(openModal) => (
-              <Button variant="primary" onClick={openModal}>
+              <Button
+                variant="primary"
+                onClick={openModal}
+                isDisabled={isCreating}
+              >
                 <PlusCircleIcon className="pf-v5-u-mr-xs" />
                 Create a new user
               </Button>
@@ -82,9 +76,12 @@ export default function UsersPage() {
             <ToolbarGroup>
               <ToolbarItem>
                 <EmailsFilter
-                  search={filters.email || ""}
+                  search={filters.where.email || ""}
                   onSearch={(email) => {
-                    setFilters({ ...initialUserFilter, email });
+                    setFilters({
+                      ...filters,
+                      where: { ...filters.where, email },
+                    });
                   }}
                 />
               </ToolbarItem>
@@ -94,16 +91,19 @@ export default function UsersPage() {
                 variant="pagination"
                 align={{ default: "alignRight" }}
               >
-                {numOfUsers === 0 ? null : (
+                {count === 0 ? null : (
                   <Pagination
-                    perPage={filters.perPage}
-                    page={filters.page}
-                    itemCount={numOfUsers}
+                    perPage={filters.limit}
+                    page={offsetAndLimitToPage(filters.limit, filters.offset)}
+                    itemCount={count}
                     onSetPage={(e, newPage) => {
-                      setFilters({ ...filters, page: newPage });
+                      setFilters({
+                        ...filters,
+                        offset: pageAndLimitToOffset(newPage, filters.limit),
+                      });
                     }}
                     onPerPageSelect={(e, newPerPage) => {
-                      setFilters({ ...filters, perPage: newPerPage });
+                      setFilters({ ...filters, limit: newPerPage });
                     }}
                   />
                 )}
@@ -113,8 +113,8 @@ export default function UsersPage() {
         </Toolbar>
       }
     >
-      {!isFetching && users.length === 0 ? (
-        filters.email === "" ? (
+      {!isLoading && data.users.length === 0 ? (
+        filters.where.email === "" ? (
           <EmptyState
             title="There is no users"
             info="Do you want to create one?"
@@ -123,23 +123,29 @@ export default function UsersPage() {
           <EmptyState
             icon={SearchIcon}
             title="There is no users"
-            info={`We found 0 results for ${filters.email} search.`}
+            info={`We found 0 results for ${filters.where.email} search.`}
             action={
-              filters.email?.endsWith("*") ? null : (
+              filters.where.email?.endsWith("*") ? null : (
                 <Button
                   variant="link"
                   onClick={() =>
-                    setFilters({ ...filters, email: `${filters.email}*` })
+                    setFilters({
+                      ...filters,
+                      where: {
+                        ...filters.where,
+                        email: `${filters.where.email}*`,
+                      },
+                    })
                   }
                 >
-                  Try {filters.email}* instead
+                  Try {filters.where.email}* instead
                 </Button>
               )
             }
           />
         )
       ) : (
-        <UsersTable users={users} />
+        <UsersTable users={data.users} />
       )}
     </MainPage>
   );

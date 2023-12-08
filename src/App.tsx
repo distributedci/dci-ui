@@ -16,7 +16,7 @@ import FeedersPage from "feeders/FeedersPage";
 import TeamsPage from "teams/TeamsPage";
 import TeamPage from "teams/TeamPage";
 import UsersPage from "users/UsersPage";
-import EditUserPage from "users/edit/EditUserPage";
+import UserPage from "users/UserPage";
 import CreateFeederPage from "feeders/create/CreateFeederPage";
 import EditFeederPage from "feeders/edit/EditFeederPage";
 import SettingsPage from "settings/SettingsPage";
@@ -109,7 +109,7 @@ export default function App() {
             </Route>
             <Route path="users">
               <Route index element={<UsersPage />} />
-              <Route path=":user_id" element={<EditUserPage />} />
+              <Route path=":user_id" element={<UserPage />} />
             </Route>
             <Route path="currentUser">
               <Route path="settings" element={<SettingsPage />} />

@@ -21,7 +21,7 @@ export const Api = createApi({
   endpoints: () => ({}),
 });
 
-type Resource = "Remoteci" | "Product" | "Topic" | "Component";
+type Resource = "Remoteci" | "Product" | "Topic" | "Component" | "User";
 
 export const injectListEndpoint = <T extends { id: string }>(
   resourceName: Resource,
@@ -147,9 +147,7 @@ export const injectDeleteEndpoint = <T extends { id: string; etag: string }>(
             method: "DELETE",
           };
         },
-        invalidatesTags: (result, error, { id }) => [
-          { type: resourceName, id },
-        ],
+        invalidatesTags: [{ type: resourceName, id: "LIST" }],
       }),
     }),
   });

@@ -15,10 +15,12 @@ export default function InputGroup({
   value,
   onChange,
   onBlur,
+  type = "text",
   placeholder = "",
   isRequired = false,
   hasError = false,
   errorMessage = "",
+  ...props
 }: {
   id: string;
   name: string;
@@ -26,16 +28,18 @@ export default function InputGroup({
   value: string;
   onChange: TextInputProps["onChange"];
   onBlur: TextInputProps["onBlur"];
+  type?: TextInputProps["type"];
   placeholder?: string;
   isRequired?: boolean;
   hasError?: boolean;
   errorMessage?: string;
+  [key: string]: any;
 }) {
   return (
     <FormGroup label={label} isRequired={isRequired} fieldId={id}>
       <TextInput
         isRequired={isRequired}
-        type="text"
+        type={type}
         id={id}
         name={name}
         value={value}
@@ -43,6 +47,7 @@ export default function InputGroup({
         onBlur={onBlur}
         validated={hasError ? "error" : "default"}
         placeholder={placeholder}
+        {...props}
       />
       {hasError && (
         <FormHelperText>

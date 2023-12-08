@@ -18,6 +18,7 @@ function _parseWhere(
         case "name":
         case "display_name":
         case "team_id":
+        case "email":
           acc[key] = value;
           break;
         case "state":
@@ -56,6 +57,7 @@ export function parseFiltersFromSearch(
       name: null,
       display_name: null,
       team_id: null,
+      email: null,
       state: "active" as state,
       ...filters.where,
     },
@@ -91,7 +93,7 @@ export function parseFiltersFromSearch(
 function _getWhereFromFilters(whereFilters: Filters["where"]) {
   let keyValues: string[] = [];
   Object.entries(whereFilters).forEach(([key, value]) => {
-    if (["name", "display_name", "team_id", "state"].includes(key) && value) {
+    if (["name", "display_name", "email", "team_id", "state"].includes(key) && value) {
       keyValues.push(`${key}:${value}`);
     }
   });

@@ -20,7 +20,7 @@ test("test edit topic form submit the correct values", async () => {
     { id: "p2", name: "product 2" },
   ] as IProduct[];
 
-  const { user, getByRole, getByTestId, getByPlaceholderText } = render(
+  const { user, getByRole, getByTestId } = render(
     <EditTopicModal
       products={products}
       topic={topic}

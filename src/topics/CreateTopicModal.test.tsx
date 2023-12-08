@@ -10,7 +10,7 @@ test("test create topic form submit the correct values", async () => {
     { id: "p2", name: "product 2" },
   ] as IProduct[];
 
-  const { user, getByRole, debug, getByTestId } = render(
+  const { user, getByRole, getByTestId } = render(
     <CreateTopicModal onSubmit={mockOnSubmit} products={products} />,
   );
 

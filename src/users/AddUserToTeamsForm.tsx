@@ -10,6 +10,7 @@ import teamsActions from "teams/teamsActions";
 
 interface AddUserToTeamFormProps {
   onSubmit: (team: ITeam) => void;
+  [key:string]: any
 }
 
 const AddUserToTeamSchema = Yup.object().shape({
@@ -18,6 +19,7 @@ const AddUserToTeamSchema = Yup.object().shape({
 
 export default function AddUserToTeamForm({
   onSubmit,
+  ...props
 }: AddUserToTeamFormProps) {
   const dispatch = useDispatch<AppDispatch>();
   const [teams, setTeams] = useState<ITeam[]>([]);
@@ -58,6 +60,7 @@ export default function AddUserToTeamForm({
                   variant="primary"
                   type="submit"
                   isDisabled={!(isValid && dirty)}
+                  {...props}
                 >
                   Add
                 </Button>

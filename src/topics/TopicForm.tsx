@@ -30,13 +30,6 @@ const TopicSchema = Yup.object().shape({
   data: Yup.string().test("isJSON", "Data should be a valid JSON", isValidJSON),
 });
 
-interface TopicFormProps {
-  id: string;
-  topic?: ITopic;
-  products: IProduct[];
-  onSubmit: (topic: ITopic | Partial<ITopic>) => void;
-}
-
 function fromTopicToTopicForm(topic: ITopic | undefined) {
   if (!topic) {
     return {
@@ -53,6 +46,13 @@ function fromTopicToTopicForm(topic: ITopic | undefined) {
     component_types: JSON.stringify(topic.component_types),
     data: JSON.stringify(topic.data),
   };
+}
+
+interface TopicFormProps {
+  id: string;
+  topic?: ITopic;
+  products: IProduct[];
+  onSubmit: (topic: ITopic | Partial<ITopic>) => void;
 }
 
 function TopicForm({ id, topic, products, onSubmit }: TopicFormProps) {

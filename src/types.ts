@@ -123,13 +123,6 @@ export interface IUser extends Resource {
   password: string;
 }
 
-export interface INewUser {
-  name: string;
-  fullname: string;
-  email: string;
-  password: string;
-}
-
 export interface IUsersById {
   [id: string]: IUser;
 }
@@ -711,6 +704,7 @@ export interface Filters {
     name: string | null;
     display_name: string | null;
     team_id: string | null;
+    email: string | null;
     state: state;
   };
 }
