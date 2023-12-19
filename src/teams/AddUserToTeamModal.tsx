@@ -7,7 +7,7 @@ import {
 } from "@patternfly/react-core";
 import { ITeam, IUser } from "types";
 import useModal from "hooks/useModal";
-import { searchUserBy } from "users/usersActions";
+import { searchUserBy } from "users/usersApi";
 import { Link } from "react-router-dom";
 import { Table, Thead, Tr, Th, Tbody, Td } from "@patternfly/react-table";
 

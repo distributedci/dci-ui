@@ -50,17 +50,21 @@ describe("parseFiltersFromSearch", () => {
       state: "active",
       name: null,
       display_name: null,
+      sso_username: null,
       email: null,
       team_id: null,
     });
   });
   test("parse where from search", () => {
     expect(
-      parseFiltersFromSearch("?where=name:RHEL-8*,state:inactive").where,
+      parseFiltersFromSearch(
+        "?where=name:RHEL-8*,state:inactive,sso_username:sso_username1",
+      ).where,
     ).toEqual({
       state: "inactive",
       name: "RHEL-8*",
       display_name: null,
+      sso_username: "sso_username1",
       email: null,
       team_id: null,
     });
@@ -73,6 +77,7 @@ describe("parseFiltersFromSearch", () => {
         team_id: null,
         display_name: "RHEL-8*",
         email: null,
+        sso_username: null,
       },
     );
   });
@@ -116,6 +121,7 @@ describe("createSearchFromFilters", () => {
         where: {
           name: null,
           display_name: null,
+          sso_username: null,
           email: null,
           team_id: null,
           state: "active",
@@ -123,7 +129,17 @@ describe("createSearchFromFilters", () => {
       }),
     ).toEqual("?limit=100&offset=0&sort=-created_at&where=state:active");
   });
-
+  test("create search from partial filters", () => {
+    expect(
+      createSearchFromFilters({
+        where: {
+          name: "name1",
+        },
+      }),
+    ).toEqual(
+      "?limit=20&offset=0&sort=-created_at&where=name:name1,state:active",
+    );
+  });
   test("create search from complex filters", () => {
     expect(
       createSearchFromFilters({
@@ -133,13 +149,14 @@ describe("createSearchFromFilters", () => {
         where: {
           name: "name1",
           display_name: "display_name2",
+          sso_username: "sso_username1",
           team_id: "e5147a96-7c76-4415-b01e-edefba96a9c8",
           state: "active",
           email: "test@example.org",
         },
       }),
     ).toEqual(
-      "?limit=200&offset=20&sort=-released_at&where=name:name1,display_name:display_name2,team_id:e5147a96-7c76-4415-b01e-edefba96a9c8,state:active,email:test@example.org",
+      "?limit=200&offset=20&sort=-released_at&where=name:name1,display_name:display_name2,sso_username:sso_username1,team_id:e5147a96-7c76-4415-b01e-edefba96a9c8,email:test@example.org,state:active",
     );
   });
 });

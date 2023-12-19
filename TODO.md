@@ -6,3 +6,6 @@
 - Use ui/form everywhere and remove ref in form (see src/topics/TopicForm.tsx with a better implementation)
 - improve src/users/UserPage.tsx in tablet
 - remove src/jobs/toolbar/filters.ts
+- useFormik in src/remotecis/RemoteciForm.tsx
+- update src/remotecis/CreateRemoteciModal.tsxs
+ - show error message globally https://redux-toolkit.js.org/rtk-query/usage/error-handling#handling-errors-at-a-macro-level

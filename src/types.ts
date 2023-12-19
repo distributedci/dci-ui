@@ -40,13 +40,6 @@ export interface ITeam extends Resource {
   topics: ITopic[];
 }
 
-export interface INewTeam {
-  name: string;
-  external: boolean;
-  has_pre_release_access: boolean;
-  state: string;
-}
-
 export interface ITeamsById {
   [id: string]: ITeam;
 }
@@ -702,9 +695,14 @@ export interface Filters {
   sort: string;
   where: {
     name: string | null;
+    sso_username: string | null;
     display_name: string | null;
     team_id: string | null;
     email: string | null;
     state: state;
   };
 }
+
+export type RecursivePartial<T> = {
+  [P in keyof T]?: RecursivePartial<T[P]>;
+};

@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { getToken } from "../services/localStorage";
-import { Filters } from "types";
+import { Filters, RecursivePartial } from "types";
 import { createSearchFromFilters } from "./filters";
 
 const baseUrl =
@@ -21,7 +21,13 @@ export const Api = createApi({
   endpoints: () => ({}),
 });
 
-type Resource = "Remoteci" | "Product" | "Topic" | "Component" | "User";
+type Resource =
+  | "Remoteci"
+  | "Product"
+  | "Topic"
+  | "Component"
+  | "Team"
+  | "User";
 
 export const injectListEndpoint = <T extends { id: string }>(
   resourceName: Resource,
@@ -36,7 +42,10 @@ export const injectListEndpoint = <T extends { id: string }>(
   };
   const entityApi = enhancedApi.injectEndpoints({
     endpoints: (builder) => ({
-      [`list${resourceName}s`]: builder.query<ListResponse<T>, Filters | void>({
+      [`list${resourceName}s`]: builder.query<
+        ListResponse<T>,
+        RecursivePartial<Filters> | void
+      >({
         query: (filters) => {
           if (filters) {
             return `/${route}${createSearchFromFilters(filters)}`;
@@ -61,8 +70,12 @@ export const injectListEndpoint = <T extends { id: string }>(
 export const injectCreateEndpoint = <T extends { id: string }>(
   resourceName: Resource,
 ) => {
-  const route = `${resourceName.toLowerCase()}s`;
+  const resourceNameLowercase = resourceName.toLowerCase();
+  const route = `${resourceNameLowercase}s`;
   const enhancedApi = Api.enhanceEndpoints({ addTagTypes: [resourceName] });
+  interface ApiGet<T> {
+    [resourceNameLowercase: string]: T;
+  }
   const entityApi = enhancedApi.injectEndpoints({
     endpoints: (builder) => ({
       [`create${resourceName}`]: builder.mutation<T, Partial<T>>({
@@ -74,6 +87,8 @@ export const injectCreateEndpoint = <T extends { id: string }>(
           };
         },
         invalidatesTags: [{ type: resourceName, id: "LIST" }],
+        transformResponse: (response: ApiGet<T>, meta, arg) =>
+          response[resourceNameLowercase],
       }),
     }),
   });

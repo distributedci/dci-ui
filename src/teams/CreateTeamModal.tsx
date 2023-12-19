@@ -1,13 +1,11 @@
-import { useRef } from "react";
 import * as React from "react";
-import { FormikProps } from "formik";
 import { Button, Modal, ModalVariant } from "@patternfly/react-core";
 import useModal from "hooks/useModal";
 import TeamForm from "./TeamForm";
-import { INewTeam } from "types";
+import { ITeam } from "types";
 
 interface CreateTeamModalProps {
-  onSubmit: (team: INewTeam) => void;
+  onSubmit: (team: Partial<ITeam>) => void;
   children: (open: () => void) => React.ReactNode;
 }
 
@@ -16,7 +14,6 @@ export default function CreateTeamModal({
   children,
 }: CreateTeamModalProps) {
   const { isOpen, show, hide } = useModal(false);
-  const formRef = useRef<FormikProps<INewTeam>>(null);
   return (
     <>
       <Modal
@@ -30,12 +27,8 @@ export default function CreateTeamModal({
           <Button
             key="create"
             variant="primary"
-            onClick={() => {
-              hide();
-              if (formRef.current) {
-                formRef.current.handleSubmit();
-              }
-            }}
+            type="submit"
+            form="create-team-form"
           >
             Create
           </Button>,
@@ -44,7 +37,13 @@ export default function CreateTeamModal({
           </Button>,
         ]}
       >
-        <TeamForm ref={formRef} onSubmit={onSubmit} />
+        <TeamForm
+          id="create-team-form"
+          onSubmit={(user) => {
+            hide();
+            onSubmit(user);
+          }}
+        />
       </Modal>
       {children(show)}
     </>

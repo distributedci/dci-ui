@@ -1,3 +1,5 @@
+import { AxiosPromise } from "axios";
+import http from "services/http";
 import {
   injectCreateEndpoint,
   injectDeleteEndpoint,
@@ -58,3 +60,35 @@ export const {
     }),
   }),
 });
+
+export function fetchUserTeams(user: IUser): AxiosPromise<{
+  teams: ITeam[];
+}> {
+  return http.get(`/api/v1/users/${user.id}/teams`);
+}
+
+export function getOrCreateUser(user: Partial<IUser>) {
+  return searchUserBy("sso_username", user.sso_username || "").then(
+    (response) => {
+      console.log(response);
+      if (response.data.users.length > 0) {
+        return response.data.users[0];
+      } else {
+        return http({
+          method: "post",
+          url: `/api/v1/users`,
+          data: user,
+        }).then((response) => response.data.user as IUser);
+      }
+    },
+  );
+}
+
+export function searchUserBy(
+  key: "email" | "name" | "sso_username",
+  value: string,
+): AxiosPromise<{
+  users: IUser[];
+}> {
+  return http.get(`/api/v1/users/?where=${key}:${value}`);
+}

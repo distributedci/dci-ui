@@ -1,5 +1,5 @@
 import qs from "qs";
-import { state, Filters } from "types";
+import { state, Filters, RecursivePartial } from "types";
 
 function _parseWhere(
   where: string | string[] | qs.ParsedQs | qs.ParsedQs[] | undefined,
@@ -19,6 +19,7 @@ function _parseWhere(
         case "display_name":
         case "team_id":
         case "email":
+        case "sso_username":
           acc[key] = value;
           break;
         case "state":
@@ -44,11 +45,8 @@ export function pageAndLimitToOffset(page: number, limit: number) {
   return offset > 0 ? offset : 0;
 }
 
-export function parseFiltersFromSearch(
-  search: string,
-  filters: Partial<Filters> = {},
-): Filters {
-  const defaultFilters: Filters = {
+function _getDefaultFilters(filters: RecursivePartial<Filters>): Filters {
+  return {
     limit: 20,
     offset: 0,
     sort: "-created_at",
@@ -56,12 +54,20 @@ export function parseFiltersFromSearch(
     where: {
       name: null,
       display_name: null,
+      sso_username: null,
       team_id: null,
       email: null,
       state: "active" as state,
       ...filters.where,
     },
   };
+}
+
+export function parseFiltersFromSearch(
+  search: string,
+  filters: Partial<Filters> = {},
+): Filters {
+  const defaultFilters = _getDefaultFilters(filters);
   const {
     limit: limitParam,
     offset: offsetParam,
@@ -93,14 +99,27 @@ export function parseFiltersFromSearch(
 function _getWhereFromFilters(whereFilters: Filters["where"]) {
   let keyValues: string[] = [];
   Object.entries(whereFilters).forEach(([key, value]) => {
-    if (["name", "display_name", "email", "team_id", "state"].includes(key) && value) {
+    if (
+      [
+        "name",
+        "display_name",
+        "email",
+        "sso_username",
+        "team_id",
+        "state",
+      ].includes(key) &&
+      value
+    ) {
       keyValues.push(`${key}:${value}`);
     }
   });
   return keyValues.join(",");
 }
 
-export function createSearchFromFilters(filters: Filters): string {
+export function createSearchFromFilters(
+  partialFilters: RecursivePartial<Filters>,
+): string {
+  const filters = _getDefaultFilters(partialFilters);
   let search = `?limit=${filters.limit}&offset=${filters.offset}&sort=${filters.sort}`;
   const where = _getWhereFromFilters(filters.where);
   if (where) {

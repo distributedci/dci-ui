@@ -1,19 +1,8 @@
 import axios from "axios";
 import axiosMockAdapter from "axios-mock-adapter";
-import {
-  fetchUserTeams,
-  addUserToTeam,
-  deleteUserFromTeam,
-} from "./usersActions";
+import { addUserToTeam, deleteUserFromTeam } from "./usersActions";
 
 const axiosMock = new axiosMockAdapter(axios);
-
-test("fetchUserTeams", () => {
-  axiosMock
-    .onGet("https://api.distributed-ci.io/api/v1/users/abc/teams")
-    .reply(200);
-  return fetchUserTeams({ id: "abc" });
-});
 
 test("addUserToTeam", () => {
   axiosMock

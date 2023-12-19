@@ -11,7 +11,7 @@ interface CreateUserModalProps {
 
 export default function CreateUserModal({
   onSubmit,
-  children
+  children,
 }: CreateUserModalProps) {
   const { isOpen, show, hide } = useModal(false);
   return (

@@ -10,7 +10,7 @@ import teamsActions from "teams/teamsActions";
 
 interface AddUserToTeamFormProps {
   onSubmit: (team: ITeam) => void;
-  [key:string]: any
+  [key: string]: any;
 }
 
 const AddUserToTeamSchema = Yup.object().shape({
