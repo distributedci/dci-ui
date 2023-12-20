@@ -92,3 +92,17 @@ export function searchUserBy(
 }> {
   return http.get(`/api/v1/users/?where=${key}:${value}`);
 }
+
+export function addUserToTeam(
+  user_id: string,
+  team: ITeam,
+): AxiosPromise<void> {
+  return http.post(`/api/v1/teams/${team.id}/users/${user_id}`, {});
+}
+
+export function deleteUserFromTeam(
+  user: IUser,
+  team: ITeam,
+): AxiosPromise<void> {
+  return http.delete(`/api/v1/teams/${team.id}/users/${user.id}`);
+}
