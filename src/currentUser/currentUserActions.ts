@@ -1,7 +1,7 @@
 import http from "services/http";
 import * as types from "./currentUserActionsTypes";
 import { showAPIError, showSuccess } from "alerts/alertsActions";
-import { ICurrentUser, IRemoteci, ITopic, IUser } from "types";
+import { ICurrentUser, IUser } from "types";
 import { AppThunk } from "store";
 import { AxiosPromise } from "axios";
 
@@ -45,63 +45,4 @@ export function deleteCurrentUser() {
   return {
     type: types.DELETE_CURRENT_USER,
   };
-}
-
-interface IGetSubscribedRemotecis {
-  remotecis: IRemoteci[];
-}
-
-export function getSubscribedRemotecis(
-  identity: ICurrentUser,
-): AxiosPromise<IGetSubscribedRemotecis> {
-  return http({
-    method: "get",
-    url: `/api/v1/users/${identity.id}/remotecis`,
-  });
-}
-
-export function subscribeToARemoteci(
-  remoteci: IRemoteci,
-  currentUser: ICurrentUser,
-): AxiosPromise<void> {
-  return http({
-    method: "post",
-    url: `/api/v1/remotecis/${remoteci.id}/users`,
-    data: currentUser,
-  });
-}
-
-export function unsubscribeFromARemoteci(
-  remoteci: IRemoteci,
-  currentUser: ICurrentUser,
-): AxiosPromise<void> {
-  return http({
-    method: "delete",
-    url: `/api/v1/remotecis/${remoteci.id}/users/${currentUser.id}`,
-  });
-}
-
-interface IGetSubscribedTopics {
-  topics: ITopic[];
-}
-
-export function getSubscribedTopics(): AxiosPromise<IGetSubscribedTopics> {
-  return http({
-    method: "get",
-    url: `/api/v1/topics/notifications`,
-  });
-}
-
-export function subscribeToATopic(topicId: string): AxiosPromise<void> {
-  return http({
-    method: "post",
-    url: `/api/v1/topics/${topicId}/notifications`,
-  });
-}
-
-export function unsubscribeFromATopic(topicId: string): AxiosPromise<void> {
-  return http({
-    method: "delete",
-    url: `/api/v1/topics/${topicId}/notifications`,
-  });
 }
