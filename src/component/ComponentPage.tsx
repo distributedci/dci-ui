@@ -40,8 +40,8 @@ import { getTopicById } from "topics/topicsSelectors";
 import topicsActions from "topics/topicsActions";
 import { AppDispatch } from "store";
 import { getTopicIcon } from "ui/icons";
-import { getTeamById } from "teams/teamsSelectors";
-import teamsActions from "teams/teamsActions";
+import { skipToken } from "@reduxjs/toolkit/query";
+import { useGetTeamQuery } from "teams/teamsApi";
 
 interface IEmbedJobProps {
   job: IJob;
@@ -111,17 +111,12 @@ function TopicLink({ topic_id }: { topic_id: string }) {
 }
 
 function ComponentDetails({ component }: { component: IComponentWithJobs }) {
-  const dispatch = useDispatch<AppDispatch>();
   const [seeData, setSeeData] = useState(false);
-  const team = useSelector(getTeamById(component.team_id));
+  const { data: team } = useGetTeamQuery(
+    component.team_id ? component.team_id : skipToken,
+  );
   const { identity } = useAuth();
   const componentData = JSON.stringify(component.data, null, 2);
-
-  useEffect(() => {
-    if (component.team_id) {
-      dispatch(teamsActions.one(component.team_id));
-    }
-  }, [component.team_id, dispatch]);
 
   return (
     <div>
@@ -200,7 +195,7 @@ function ComponentDetails({ component }: { component: IComponentWithJobs }) {
           )
         }
       />
-      {team !== null && (
+      {team !== undefined && (
         <>
           <Divider />
           <CardLine

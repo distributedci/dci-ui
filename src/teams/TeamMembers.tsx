@@ -13,7 +13,7 @@ import { ConfirmDeleteModal, CopyButton } from "ui";
 import { AppDispatch } from "store";
 import { ITeam, IUser } from "types";
 import { Link } from "react-router-dom";
-import { addUserToTeam, deleteUserFromTeam } from "users/usersActions";
+import { addUserToTeam, deleteUserFromTeam } from "users/usersApi";
 import AddUserToTeamModal from "./AddUserToTeamModal";
 import { sortByName } from "services/sort";
 import { showError, showSuccess } from "alerts/alertsActions";

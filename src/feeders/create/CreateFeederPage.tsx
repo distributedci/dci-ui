@@ -1,28 +1,25 @@
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Grid, GridItem, Card, CardBody } from "@patternfly/react-core";
 import MainPage from "pages/MainPage";
 import feedersActions from "../feedersActions";
 import CreateFeederForm from "./CreateFeederForm";
 import { AppDispatch } from "store";
 import { useNavigate } from "react-router-dom";
-import teamsActions from "teams/teamsActions";
-import { getTeams } from "teams/teamsSelectors";
 import { Breadcrumb } from "ui";
+import { useListTeamsQuery } from "teams/teamsApi";
 
 export default function CreateFeederPage() {
   const dispatch = useDispatch<AppDispatch>();
-  const teams = useSelector(getTeams);
+  const { data, isLoading } = useListTeamsQuery();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    dispatch(teamsActions.all());
-  }, [dispatch]);
+  if (!data) return null;
 
   return (
     <MainPage
       title="Create a feeder"
       description=""
+      isLoading={isLoading}
       Breadcrumb={
         <Breadcrumb
           links={[{ to: "/", title: "DCI" }, { title: "Create a feeder" }]}
@@ -34,7 +31,7 @@ export default function CreateFeederPage() {
           <Card>
             <CardBody>
               <CreateFeederForm
-                teams={teams}
+                teams={data.teams}
                 onSubmit={(feeder) => {
                   dispatch(feedersActions.create(feeder)).then(() =>
                     navigate("/feeders"),
