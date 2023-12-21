@@ -412,11 +412,11 @@ export default function ComponentPage() {
                   <Divider /> There is no job attached to this component
                 </div>
               ) : (
-                sortByNewestFirst(component.jobs).map((j) => (
-                  <div>
+                sortByNewestFirst(component.jobs).map((job, index) => (
+                  <div key={index}>
                     <Divider />
                     <div className="pf-v5-u-p-md">
-                      <EmbedJob job={j} />
+                      <EmbedJob job={job} />
                     </div>
                   </div>
                 ))

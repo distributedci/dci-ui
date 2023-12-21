@@ -28,9 +28,7 @@ export function TeamSelect({
   const [searchValue, setSearchValue] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const debouncedSearchValue = useDebouncedValue(searchValue, 1000);
-  const { data, isLoading } = useListTeamsQuery({
-    where: { name: debouncedSearchValue },
-  });
+  const { data, isLoading } = useListTeamsQuery({ name: debouncedSearchValue });
   const { data: team } = useGetTeamQuery(teamId ? teamId : skipToken);
 
   if (!data) return null;

@@ -31,7 +31,7 @@ export default function NewFailedJobSubscriptionPanel({
   );
 
   const { data: remotecisData } = useListRemotecisQuery({
-    where: { team_id: currentUser.team?.id },
+    team_id: currentUser.team?.id,
   });
 
   const { data: subscribedRemotecisData } =

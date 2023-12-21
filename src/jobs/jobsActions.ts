@@ -2,7 +2,7 @@ import { showError } from "alerts/alertsActions";
 import { createActions } from "api/apiActions";
 import http from "services/http";
 import { AppThunk } from "store";
-import { IEnhancedJob, IJob } from "types";
+import { IJob } from "types";
 
 export default createActions("job");
 
@@ -13,9 +13,7 @@ export function getJobSilently(jobId: string): Promise<IJob> {
   }).then((response) => response.data.job);
 }
 
-export function updateJobComment(
-  job: IEnhancedJob,
-): AppThunk<Promise<IEnhancedJob>> {
+export function updateJobComment(job: IJob): AppThunk<Promise<IJob>> {
   return (dispatch) => {
     return http({
       method: "put",

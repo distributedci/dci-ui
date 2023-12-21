@@ -66,12 +66,12 @@ export default function ComponentsPage() {
             <ToolbarGroup>
               <ToolbarItem>
                 <InputFilter
-                  search={filters.where.display_name || ""}
+                  search={filters.display_name || ""}
                   placeholder="Search a component"
                   onSearch={(display_name) => {
                     setFilters({
                       ...filters,
-                      where: { ...filters.where, display_name },
+                      display_name,
                     });
                   }}
                 />

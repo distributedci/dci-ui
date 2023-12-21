@@ -76,11 +76,11 @@ export default function UsersPage() {
             <ToolbarGroup>
               <ToolbarItem>
                 <EmailsFilter
-                  search={filters.where.email || ""}
+                  search={filters.email || ""}
                   onSearch={(email) => {
                     setFilters({
                       ...filters,
-                      where: { ...filters.where, email },
+                      email,
                     });
                   }}
                 />
@@ -114,7 +114,7 @@ export default function UsersPage() {
       }
     >
       {!isLoading && data.users.length === 0 ? (
-        filters.where.email === "" ? (
+        filters.email === "" ? (
           <EmptyState
             title="There is no users"
             info="Do you want to create one?"
@@ -123,22 +123,19 @@ export default function UsersPage() {
           <EmptyState
             icon={SearchIcon}
             title="There is no users"
-            info={`We found 0 results for ${filters.where.email} search.`}
+            info={`We found 0 results for ${filters.email} search.`}
             action={
-              filters.where.email?.endsWith("*") ? null : (
+              filters.email?.endsWith("*") ? null : (
                 <Button
                   variant="link"
                   onClick={() =>
                     setFilters({
                       ...filters,
-                      where: {
-                        ...filters.where,
-                        email: `${filters.where.email}*`,
-                      },
+                      email: `${filters.email}*`,
                     })
                   }
                 >
-                  Try {filters.where.email}* instead
+                  Try {filters.email}* instead
                 </Button>
               )
             }

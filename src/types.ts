@@ -693,16 +693,33 @@ export interface Filters {
   limit: number;
   offset: number;
   sort: string;
-  where: {
-    name: string | null;
-    sso_username: string | null;
-    display_name: string | null;
-    team_id: string | null;
-    email: string | null;
-    state: state;
-  };
+  query: string | null;
+  name: string | null;
+  sso_username: string | null;
+  display_name: string | null;
+  team_id: string | null;
+  email: string | null;
+  remoteci_id: string | null;
+  product_id: string | null;
+  topic_id: string | null;
+  tags: string[] | undefined;
+  configuration: string | null;
+  status: string | null;
+  state: state;
 }
 
-export type RecursivePartial<T> = {
-  [P in keyof T]?: RecursivePartial<T[P]>;
-};
+export type WhereFilters = Pick<
+  Filters,
+  | "name"
+  | "display_name"
+  | "team_id"
+  | "email"
+  | "sso_username"
+  | "remoteci_id"
+  | "product_id"
+  | "topic_id"
+  | "configuration"
+  | "status"
+  | "tags"
+  | "state"
+>;

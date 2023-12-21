@@ -2,7 +2,7 @@ import { createSelector } from "reselect";
 import { getTeamsById } from "teams/teamsSelectors";
 import { getRemotecisById } from "remotecis/remotecisSelectors";
 import { getTopicsById } from "topics/topicsSelectors";
-import { IEnhancedJob, IJobsById } from "types";
+import { IJob, IJobsById } from "types";
 import { RootState } from "store";
 import { sortByNewestFirst } from "services/sort";
 
@@ -12,8 +12,8 @@ export const isFetchingJobs = (state: RootState): boolean =>
   state.jobs.isFetching;
 export const getNbOfJobs = (state: RootState): number => state.jobs.count;
 
-export function groupJobsByPipeline(jobs: IEnhancedJob[]) {
-  const jobsWithPipelinesPerIds: { [id: string]: IEnhancedJob[] } = {};
+export function groupJobsByPipeline(jobs: IJob[]) {
+  const jobsWithPipelinesPerIds: { [id: string]: IJob[] } = {};
 
   for (let i = 0; i < jobs.length; i++) {
     const job = jobs[i];
@@ -25,7 +25,7 @@ export function groupJobsByPipeline(jobs: IEnhancedJob[]) {
     if (previous_job_id === null) {
       jobsWithPipelinesPerIds[key].unshift(job);
     } else {
-      let childrenJobs: IEnhancedJob[] = [];
+      let childrenJobs: IJob[] = [];
       if (jobId in jobsWithPipelinesPerIds) {
         childrenJobs = jobsWithPipelinesPerIds[jobId];
         delete jobsWithPipelinesPerIds[jobId];

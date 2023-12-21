@@ -32,9 +32,7 @@ export default function TeamsFilter({
 
   const [searchValue, setSearchValue] = useState("");
   const debouncedSearchValue = useDebouncedValue(searchValue, 1000);
-  const { data, isLoading } = useListTeamsQuery({
-    where: { name: debouncedSearchValue },
-  });
+  const { data, isLoading } = useListTeamsQuery({ name: debouncedSearchValue });
 
   if (!data) return null;
 

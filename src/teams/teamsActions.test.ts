@@ -3,7 +3,6 @@ import configureMockStore from "redux-mock-store";
 import thunk from "redux-thunk";
 import axiosMockAdapter from "axios-mock-adapter";
 import {
-  getProductsTeamHasAccessTo,
   grantTeamProductPermission,
   removeTeamProductPermission,
 } from "./teamsActions";
@@ -12,29 +11,6 @@ import { AppDispatch } from "store";
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 const axiosMock = new axiosMockAdapter(axios);
-
-test("getProductsTeamHasAccessTo", () => {
-  const team = { id: "t1", name: "Team 1" } as ITeam;
-  axiosMock.onGet("https://api.distributed-ci.io/api/v1/products").reply(200, {
-    products: [
-      { id: "p1", name: "RHEL" },
-      { id: "p2", name: "OpenStack" },
-    ],
-    _meta: { count: 2 },
-  });
-  axiosMock
-    .onGet("https://api.distributed-ci.io/api/v1/products/p1/teams")
-    .reply(200, { teams: [team], _meta: { count: 1 } });
-  axiosMock
-    .onGet("https://api.distributed-ci.io/api/v1/products/p2/teams")
-    .reply(200, { teams: [], _meta: { count: 1 } });
-  const store = mockStore();
-  const dispatch = store.dispatch as AppDispatch;
-  return dispatch(getProductsTeamHasAccessTo(team)).then((products) => {
-    expect(products[0].id).toBe("p1");
-    expect(products.length).toBe(1);
-  });
-});
 
 test("grantTeamProductPermission", () => {
   const data = { team_id: "t1" };

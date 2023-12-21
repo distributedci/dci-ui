@@ -80,12 +80,12 @@ export default function ProductsPage() {
             <ToolbarGroup>
               <ToolbarItem>
                 <InputFilter
-                  search={filters.where.name || ""}
+                  search={filters.name || ""}
                   placeholder="Search a product"
                   onSearch={(name) => {
                     setFilters({
                       ...filters,
-                      where: { ...filters.where, name },
+                      name,
                     });
                   }}
                 />

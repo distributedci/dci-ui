@@ -86,7 +86,7 @@ export default function RemotecisPage() {
       if (identity && identity.team) {
         return {
           ...f,
-          where: { ...f.where, team_id: identity.team.id },
+          team_id: identity.team.id,
         };
       }
       return f;
@@ -94,7 +94,7 @@ export default function RemotecisPage() {
   }, [identity]);
 
   const { data, isLoading } = useListRemotecisQuery(filters, {
-    skip: filters.where.team_id === null,
+    skip: filters.team_id === null,
   });
   const [createRemoteci, { isLoading: isCreating }] =
     useCreateRemoteciMutation();
@@ -142,12 +142,12 @@ export default function RemotecisPage() {
             <ToolbarGroup>
               <ToolbarItem>
                 <InputFilter
-                  search={filters.where.name || ""}
+                  search={filters.name || ""}
                   placeholder="Search a remoteci"
                   onSearch={(name) => {
                     setFilters({
                       ...filters,
-                      where: { ...filters.where, name },
+                      name,
                     });
                   }}
                 />

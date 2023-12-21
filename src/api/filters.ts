@@ -1,17 +1,21 @@
 import qs from "qs";
-import { state, Filters, RecursivePartial } from "types";
+import { state, Filters, WhereFilters } from "types";
+
+function _extractWhereFilter(filters: Filters): WhereFilters {
+  const { limit, offset, sort, query, ...whereFilters } = filters;
+  return whereFilters;
+}
 
 function _parseWhere(
   where: string | string[] | qs.ParsedQs | qs.ParsedQs[] | undefined,
-  defaultWhere: Filters["where"],
-) {
+  _defaultFilters: Filters,
+): WhereFilters {
+  const defaultWhereFilters = _extractWhereFilter(_defaultFilters);
   if (typeof where !== "string" || where === undefined) {
-    return {
-      ...defaultWhere,
-    };
+    return { ...defaultWhereFilters };
   }
   return where.split(",").reduce(
-    (acc: Filters["where"], filter: string) => {
+    (acc: WhereFilters, filter: string) => {
       const [key, ...rest] = filter.split(":");
       const value = rest.join(":");
       switch (key) {
@@ -20,7 +24,15 @@ function _parseWhere(
         case "team_id":
         case "email":
         case "sso_username":
+        case "remoteci_id":
+        case "product_id":
+        case "topic_id":
+        case "configuration":
+        case "status":
           acc[key] = value;
+          break;
+        case "tags":
+          acc.tags?.push(value);
           break;
         case "state":
           acc[key] = (value as state) || "active";
@@ -30,9 +42,7 @@ function _parseWhere(
       }
       return acc;
     },
-    {
-      ...defaultWhere,
-    },
+    { ...defaultWhereFilters },
   );
 }
 
@@ -45,58 +55,76 @@ export function pageAndLimitToOffset(page: number, limit: number) {
   return offset > 0 ? offset : 0;
 }
 
-function _getDefaultFilters(filters: RecursivePartial<Filters>): Filters {
+export function getDefaultFilters(): Filters {
   return {
     limit: 20,
     offset: 0,
     sort: "-created_at",
-    ...filters,
-    where: {
-      name: null,
-      display_name: null,
-      sso_username: null,
-      team_id: null,
-      email: null,
-      state: "active" as state,
-      ...filters.where,
-    },
+    query: null,
+    name: null,
+    display_name: null,
+    sso_username: null,
+    team_id: null,
+    email: null,
+    remoteci_id: null,
+    product_id: null,
+    topic_id: null,
+    tags: [],
+    configuration: null,
+    status: null,
+    state: "active" as state,
   };
 }
 
 export function parseFiltersFromSearch(
   search: string,
-  filters: Partial<Filters> = {},
+  initialFilters: Partial<Filters> = {},
 ): Filters {
-  const defaultFilters = _getDefaultFilters(filters);
+  const defaultWithInitialFilters: Filters = {
+    ...getDefaultFilters(),
+    ...initialFilters,
+  };
   const {
     limit: limitParam,
     offset: offsetParam,
     page: pageString,
     perPage: perPageString,
-    sort,
+    sort: sortString,
+    query: queryString,
     where: whereString,
   } = qs.parse(search.replace(/^\?/, ""));
   const limit =
     limitParam === undefined
       ? perPageString === undefined
-        ? defaultFilters.limit
+        ? defaultWithInitialFilters.limit
         : parseInt(perPageString as string, 10)
       : parseInt(limitParam as string, 10);
   const offset =
     offsetParam === undefined
       ? pageString === undefined
-        ? defaultFilters.offset
+        ? defaultWithInitialFilters.offset
         : pageAndLimitToOffset(parseInt(pageString as string, 10), limit)
       : parseInt(offsetParam as string, 10);
+  const whereFilters = _parseWhere(whereString, defaultWithInitialFilters);
+  const sort =
+    sortString === undefined
+      ? defaultWithInitialFilters.sort
+      : (sortString as string);
+  const query =
+    queryString === undefined
+      ? defaultWithInitialFilters.query
+      : (queryString as string);
   return {
     limit,
     offset,
-    sort: sort === undefined ? defaultFilters.sort : (sort as string),
-    where: _parseWhere(whereString, defaultFilters.where),
+    sort,
+    query,
+    ...whereFilters,
   };
 }
 
-function _getWhereFromFilters(whereFilters: Filters["where"]) {
+function _getWhereFromFilters(filters: Filters) {
+  const whereFilters = _extractWhereFilter(filters);
   let keyValues: string[] = [];
   Object.entries(whereFilters).forEach(([key, value]) => {
     if (
@@ -107,23 +135,41 @@ function _getWhereFromFilters(whereFilters: Filters["where"]) {
         "sso_username",
         "team_id",
         "state",
+        "remoteci_id",
+        "product_id",
+        "topic_id",
+        "configuration",
+        "status",
       ].includes(key) &&
       value
     ) {
       keyValues.push(`${key}:${value}`);
+    }
+    if (key === "tags" && value) {
+      const tags = value as string[];
+      keyValues = keyValues.concat(
+        [...new Set(tags)].map((t: string) => `tags:${t}`),
+      );
     }
   });
   return keyValues.join(",");
 }
 
 export function createSearchFromFilters(
-  partialFilters: RecursivePartial<Filters>,
+  partialFilters: Partial<Filters>,
 ): string {
-  const filters = _getDefaultFilters(partialFilters);
+  const filters = {
+    ...getDefaultFilters(),
+    ...partialFilters,
+  };
   let search = `?limit=${filters.limit}&offset=${filters.offset}&sort=${filters.sort}`;
-  const where = _getWhereFromFilters(filters.where);
-  if (where) {
-    search += `&where=${where}`;
+  const where = _getWhereFromFilters(filters);
+  if ("query" in filters && filters.query) {
+    search += `&query=${filters.query}`;
+  } else {
+    if (where) {
+      search += `&where=${where}`;
+    }
   }
   return search;
 }

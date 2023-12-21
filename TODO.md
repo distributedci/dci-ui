@@ -8,4 +8,5 @@
 - remove src/jobs/toolbar/filters.ts
 - useFormik in src/remotecis/RemoteciForm.tsx
 - update src/remotecis/CreateRemoteciModal.tsxs
- - show error message globally https://redux-toolkit.js.org/rtk-query/usage/error-handling#handling-errors-at-a-macro-level
+- show error message globally https://redux-toolkit.js.org/rtk-query/usage/error-handling#handling-errors-at-a-macro-level
+- transform all it('') in tests to test('')

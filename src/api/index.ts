@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { getToken } from "../services/localStorage";
-import { Filters, RecursivePartial } from "types";
+import { Filters } from "types";
 import { createSearchFromFilters } from "./filters";
 
 const baseUrl =
@@ -22,6 +22,7 @@ export const Api = createApi({
 });
 
 type Resource =
+  | "Job"
   | "Remoteci"
   | "Product"
   | "Topic"
@@ -44,7 +45,7 @@ export const injectListEndpoint = <T extends { id: string }>(
     endpoints: (builder) => ({
       [`list${resourceName}s`]: builder.query<
         ListResponse<T>,
-        RecursivePartial<Filters> | void
+        Partial<Filters> | void
       >({
         query: (filters) => {
           if (filters) {

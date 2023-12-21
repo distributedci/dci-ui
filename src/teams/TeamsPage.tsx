@@ -108,12 +108,12 @@ export default function TeamsPage() {
             <ToolbarGroup>
               <ToolbarItem>
                 <InputFilter
-                  search={filters.where.name || ""}
+                  search={filters.name || ""}
                   placeholder="Search a team"
                   onSearch={(name) => {
                     setFilters({
                       ...filters,
-                      where: { ...filters.where, name },
+                      name,
                     });
                   }}
                 />
