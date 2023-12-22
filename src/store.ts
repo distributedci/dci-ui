@@ -10,7 +10,6 @@ import currentUserReducer from "./currentUser/currentUserReducer";
 import productsReducer from "./products/productsReducer";
 import topicsReducer from "./topics/topicsReducer";
 import remotecisReducer from "./remotecis/remotecisReducer";
-import feedersReducer from "./feeders/feedersReducer";
 import teamsReducer from "./teams/teamsReducer";
 import jobsReducer from "./jobs/jobsReducer";
 import Api from "api";
@@ -21,7 +20,6 @@ export const rootReducer = combineReducers({
   jobs: jobsReducer,
   products: productsReducer,
   topics: topicsReducer,
-  feeders: feedersReducer,
   remotecis: remotecisReducer,
   teams: teamsReducer,
   [Api.reducerPath]: Api.reducer,

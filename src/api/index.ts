@@ -28,7 +28,8 @@ type Resource =
   | "Topic"
   | "Component"
   | "Team"
-  | "User";
+  | "User"
+  | "Feeder";
 
 export const injectListEndpoint = <T extends { id: string }>(
   resourceName: Resource,

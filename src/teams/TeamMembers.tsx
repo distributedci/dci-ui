@@ -7,7 +7,7 @@ import {
   CardTitle,
   Skeleton,
 } from "@patternfly/react-core";
-import { fetchUsersForTeam } from "./teamsActions";
+import { fetchUsersForTeam } from "./teamsApi";
 import { MinusCircleIcon, PlusCircleIcon } from "@patternfly/react-icons";
 import { ConfirmDeleteModal, CopyButton } from "ui";
 import { AppDispatch } from "store";

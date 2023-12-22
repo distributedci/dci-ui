@@ -1,12 +1,9 @@
-import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
 import { Button, Flex, FlexItem } from "@patternfly/react-core";
 import { SelectWithTypeahead } from "ui/formik";
 import * as Yup from "yup";
 import { ITeam } from "types";
-import { AppDispatch } from "store";
 import { Formik, Form } from "formik";
-import teamsActions from "teams/teamsActions";
+import { useListTeamsQuery } from "teams/teamsApi";
 
 interface AddUserToTeamFormProps {
   onSubmit: (team: ITeam) => void;
@@ -21,21 +18,16 @@ export default function AddUserToTeamForm({
   onSubmit,
   ...props
 }: AddUserToTeamFormProps) {
-  const dispatch = useDispatch<AppDispatch>();
-  const [teams, setTeams] = useState<ITeam[]>([]);
+  const { data } = useListTeamsQuery();
 
-  useEffect(() => {
-    dispatch(teamsActions.all()).then((response) => {
-      setTeams(response.data.teams);
-    });
-  }, [dispatch]);
+  if (!data) return null;
 
   return (
     <Formik
       initialValues={{ team_id: "" }}
       validationSchema={AddUserToTeamSchema}
       onSubmit={(v) => {
-        const selectedTeam = teams.find((t) => t.id === v.team_id);
+        const selectedTeam = data.teams.find((t) => t.id === v.team_id);
         if (selectedTeam) {
           onSubmit(selectedTeam);
         }
@@ -51,7 +43,10 @@ export default function AddUserToTeamForm({
                   id="add_user_to_team_formadd_user_to_team_form__team_id"
                   name="team_id"
                   option={""}
-                  options={teams.map((t) => ({ label: t.name, value: t.id }))}
+                  options={data.teams.map((t) => ({
+                    label: t.name,
+                    value: t.id,
+                  }))}
                 />
               </FlexItem>
               <FlexItem>team</FlexItem>

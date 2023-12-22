@@ -7,7 +7,7 @@ import {
   injectGetEndpoint,
   Api,
 } from "../api";
-import type { IProduct, ITeam } from "../types";
+import type { IProduct, ITeam, IUser } from "../types";
 import { AxiosPromise } from "axios";
 
 const resource = "Team";
@@ -115,4 +115,10 @@ export function removeRemoteTeamPermissionForTheTeam(
     url: `/api/v1/teams/${team.id}/permissions/components`,
     data: { teams_ids: [remoteTeam.id] },
   });
+}
+
+export function fetchUsersForTeam(team: ITeam): Promise<IUser[]> {
+  return http
+    .get(`/api/v1/teams/${team.id}/users`)
+    .then((response) => response.data.users);
 }
