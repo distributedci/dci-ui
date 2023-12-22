@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from "react";
-import { fetchComponents } from "./topicsActions";
+import { fetchComponents } from "./topicsApi";
 import {
   Card,
   CardBody,

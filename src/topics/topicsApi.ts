@@ -1,3 +1,4 @@
+import http from "services/http";
 import {
   injectCreateEndpoint,
   injectGetEndpoint,
@@ -5,7 +6,7 @@ import {
   injectUpdateEndpoint,
   Api,
 } from "../api";
-import type { ITopic } from "../types";
+import type { IComponent, ITopic } from "../types";
 
 const resource = "Topic";
 
@@ -58,3 +59,20 @@ export const {
     }),
   }),
 });
+
+interface IFetchComponents {
+  data: {
+    components: IComponent[];
+    _meta: { count: number };
+  };
+}
+
+export function fetchComponents(
+  topic_id: string,
+  search: string,
+): Promise<IFetchComponents> {
+  return http({
+    method: "get",
+    url: `/api/v1/topics/${topic_id}/components${search}`,
+  });
+}

@@ -1,5 +1,5 @@
-import { IEnhancedJob } from "types";
-import { groupJobsByPipeline } from "./jobsSelectors";
+import { IJob } from "types";
+import { groupJobsByPipeline } from "./pipelineJobs";
 
 test("groupJobByPipeline", () => {
   const jobs = [
@@ -28,7 +28,7 @@ test("groupJobByPipeline", () => {
       previous_job_id: null,
       created_at: "2018-06-14T15:30:10.139451",
     },
-  ] as unknown as IEnhancedJob[];
+  ] as unknown as IJob[];
   const expectedJobs = [
     [
       {
@@ -61,7 +61,7 @@ test("groupJobByPipeline", () => {
         created_at: "2018-06-14T15:30:30.139451",
       },
     ],
-  ] as unknown as IEnhancedJob[][];
+  ] as unknown as IJob[][];
   expect(groupJobsByPipeline(jobs)).toEqual(expectedJobs);
 });
 
@@ -77,7 +77,7 @@ test("groupJobByPipeline no pipeline", () => {
       previous_job_id: null,
       created_at: "2018-06-14T15:30:10.139451",
     },
-  ] as unknown as IEnhancedJob[];
+  ] as unknown as IJob[];
   const expectedJobs = [
     [
       {
@@ -93,7 +93,7 @@ test("groupJobByPipeline no pipeline", () => {
         created_at: "2018-06-14T15:30:10.139451",
       },
     ],
-  ] as unknown as IEnhancedJob[][];
+  ] as unknown as IJob[][];
   expect(groupJobsByPipeline(jobs)).toEqual(expectedJobs);
 });
 
@@ -124,7 +124,7 @@ test("groupJobByPipeline with jobs sequence", () => {
       previous_job_id: null,
       created_at: "2018-06-14T15:30:10.139451",
     },
-  ] as unknown as IEnhancedJob[];
+  ] as unknown as IJob[];
   const expectedJobs = [
     [
       {

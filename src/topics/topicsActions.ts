@@ -1,6 +1,5 @@
-import http from "services/http";
 import { createActions } from "api/apiActions";
-import { IComponent, IEnhancedTopic, IProduct, ITopic } from "types";
+import { IEnhancedTopic, IProduct, ITopic } from "types";
 import { padStart } from "lodash";
 
 export default createActions("topic");
@@ -62,21 +61,4 @@ export function groupTopicsPerProduct(
     {} as { [productName: string]: IProductWithTopics },
   );
   return Object.values(topicsPerProduct);
-}
-
-interface IFetchComponents {
-  data: {
-    components: IComponent[];
-    _meta: { count: number };
-  };
-}
-
-export function fetchComponents(
-  topic_id: string,
-  search: string,
-): Promise<IFetchComponents> {
-  return http({
-    method: "get",
-    url: `/api/v1/topics/${topic_id}/components${search}`,
-  });
 }

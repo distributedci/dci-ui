@@ -1,6 +1,6 @@
 import { IJob, Filters, JobsTableListColumn } from "types";
 import { Table, Thead, Tr, Th, Tbody } from "@patternfly/react-table";
-import { groupJobsByPipeline } from "../jobsSelectors";
+import { groupJobsByPipeline } from "./pipelineJobs";
 import JobsTableListRow from "./JobsTableListRow";
 import { tableViewColumnLabels } from "jobs/toolbar/TableViewColumnsFilter";
 

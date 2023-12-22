@@ -35,13 +35,10 @@ import LastComponentsJobsBarChart from "analytics/ComponentCoverage/LastComponen
 import { global_palette_black_500 } from "@patternfly/react-tokens";
 import { DateTime } from "luxon";
 import { useAuth } from "auth/authContext";
-import { useDispatch, useSelector } from "react-redux";
-import { getTopicById } from "topics/topicsSelectors";
-import topicsActions from "topics/topicsActions";
-import { AppDispatch } from "store";
 import { getTopicIcon } from "ui/icons";
 import { skipToken } from "@reduxjs/toolkit/query";
 import { useGetTeamQuery } from "teams/teamsApi";
+import { useGetTopicQuery } from "topics/topicsApi";
 
 interface IEmbedJobProps {
   job: IJob;
@@ -90,17 +87,14 @@ function EmbedJob({ job }: IEmbedJobProps) {
 }
 
 function TopicLink({ topic_id }: { topic_id: string }) {
-  const topic = useSelector(getTopicById(topic_id));
+  const { data: topic, isLoading } = useGetTopicQuery(topic_id);
 
-  const dispatch = useDispatch<AppDispatch>();
-
-  useEffect(() => {
-    dispatch(topicsActions.one(topic_id));
-  }, [dispatch, topic_id]);
-
-  if (topic === null) {
+  if (isLoading) {
     return <Skeleton screenreaderText="Loading topic name" />;
   }
+
+  if (!topic) return null;
+
   const TopicIcon = getTopicIcon(topic.name);
   return (
     <Link to={`/topics/${topic.id}/components`}>

@@ -7,21 +7,11 @@ import {
 } from "@reduxjs/toolkit";
 import alertsReducer from "./alerts/alertsReducer";
 import currentUserReducer from "./currentUser/currentUserReducer";
-import productsReducer from "./products/productsReducer";
-import topicsReducer from "./topics/topicsReducer";
-import remotecisReducer from "./remotecis/remotecisReducer";
-import teamsReducer from "./teams/teamsReducer";
-import jobsReducer from "./jobs/jobsReducer";
 import Api from "api";
 
 export const rootReducer = combineReducers({
   alerts: alertsReducer,
   currentUser: currentUserReducer,
-  jobs: jobsReducer,
-  products: productsReducer,
-  topics: topicsReducer,
-  remotecis: remotecisReducer,
-  teams: teamsReducer,
   [Api.reducerPath]: Api.reducer,
 });
 
