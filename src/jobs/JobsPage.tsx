@@ -27,7 +27,7 @@ import {
 import { useListJobsQuery } from "./jobsApi";
 
 export default function JobsPage() {
-  const { identity } = useAuth();
+  const { currentUser } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
   const [filters, setFilters] = useState<Filters>(
@@ -40,9 +40,11 @@ export default function JobsPage() {
   }, [navigate, filters]);
 
   const filtersWithTeamId =
-    identity === null || identity.hasReadOnlyRole || filters.team_id !== null
+    currentUser === null ||
+    currentUser.hasReadOnlyRole ||
+    filters.team_id !== null
       ? { ...filters }
-      : { ...filters, team_id: identity.team?.id };
+      : { ...filters, team_id: currentUser.team?.id };
   const { data, isLoading, refetch } = useListJobsQuery(filtersWithTeamId);
   // const [trigger] = useListJobsLazyQuery()
 
@@ -60,7 +62,7 @@ export default function JobsPage() {
   );
   useTitle("DCI > Jobs");
 
-  if (!data || identity === null) return null;
+  if (!data || currentUser === null) return null;
 
   const count = data._meta.count;
 

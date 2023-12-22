@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import {
   Button,
   ToolbarGroup,
@@ -11,7 +10,6 @@ import {
 import { PlusCircleIcon, SearchIcon } from "@patternfly/react-icons";
 import { EmptyState, Breadcrumb } from "ui";
 import EmailsFilter from "./EmailsFilter";
-import { getCurrentUser } from "currentUser/currentUserSelectors";
 import { Filters } from "types";
 import CreateUserModal from "./CreateUserModal";
 import UsersTable from "./UsersTable";
@@ -24,9 +22,10 @@ import {
 } from "api/filters";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useCreateUserMutation, useListUsersQuery } from "./usersApi";
+import { useAuth } from "auth/authContext";
 
 export default function UsersPage() {
-  const currentUser = useSelector(getCurrentUser);
+  const { currentUser } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
   const [filters, setFilters] = useState<Filters>(

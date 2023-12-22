@@ -28,7 +28,7 @@ import { useCreateTeamMutation, useListTeamsQuery } from "./teamsApi";
 import { fromNow } from "services/date";
 
 export default function TeamsPage() {
-  const { identity } = useAuth();
+  const { currentUser } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
   const [filters, setFilters] = useState<Filters>(
@@ -43,7 +43,7 @@ export default function TeamsPage() {
   const { data, isLoading } = useListTeamsQuery(filters);
   const [createTeam, { isLoading: isCreating }] = useCreateTeamMutation();
 
-  if (!data || identity === null) return null;
+  if (!data || currentUser === null) return null;
 
   const count = data._meta.count;
 
@@ -60,7 +60,7 @@ export default function TeamsPage() {
       loading={isLoading}
       empty={data.teams.length === 0}
       HeaderButton={
-        identity.hasEPMRole ? (
+        currentUser.hasEPMRole ? (
           <Flex>
             <Flex>
               <FlexItem>

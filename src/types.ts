@@ -192,6 +192,12 @@ export type PatternflyFilters = {
   perPage: number;
 };
 
+export interface IIdentityTeam {
+  has_pre_release_access: boolean;
+  id: string;
+  name: string;
+}
+
 export interface IIdentity {
   email: string | null;
   etag: string;
@@ -199,7 +205,7 @@ export interface IIdentity {
   id: string;
   name: string;
   teams: {
-    [id: string]: ITeam; // todo(gvincent): it's not ITeam, it's {id, name} object
+    [id: string]: IIdentityTeam;
   };
   timezone: string;
 }
@@ -210,8 +216,8 @@ export interface ICurrentUser {
   fullname: string;
   id: string;
   name: string;
-  teams: ITeam[];
-  team: ITeam | null;
+  teams: IIdentityTeam[];
+  team: IIdentityTeam | null;
   timezone: string;
   isSuperAdmin: boolean;
   hasEPMRole: boolean;

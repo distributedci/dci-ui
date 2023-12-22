@@ -60,6 +60,7 @@ export const handlers = [
         name: "u1",
         teams: {
           "e5147a96-7c76-4415-b01e-edefba96a9c8": {
+            has_pre_release_access: false,
             id: "e5147a96-7c76-4415-b01e-edefba96a9c8",
             name: "First Team",
           } as ITeam,

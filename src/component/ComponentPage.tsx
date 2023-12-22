@@ -109,7 +109,7 @@ function ComponentDetails({ component }: { component: IComponentWithJobs }) {
   const { data: team } = useGetTeamQuery(
     component.team_id ? component.team_id : skipToken,
   );
-  const { identity } = useAuth();
+  const { currentUser } = useAuth();
   const componentData = JSON.stringify(component.data, null, 2);
 
   return (
@@ -148,7 +148,7 @@ function ComponentDetails({ component }: { component: IComponentWithJobs }) {
         value={<TopicLink topic_id={component.topic_id} />}
       />
       <Divider />
-      {identity?.hasReadOnlyRole && component.url !== "" && (
+      {currentUser?.hasReadOnlyRole && component.url !== "" && (
         <>
           <CardLine
             className="pf-v5-u-p-md"

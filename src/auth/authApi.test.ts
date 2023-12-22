@@ -1,15 +1,15 @@
 import { ITeam } from "types";
-import { buildIdentity } from "./authActions";
+import { buildCurrentUser } from "./authApi";
 
-test("buildIdentity without a default team return the first team", () => {
+test("buildCurrentUser without a default team return the first team", () => {
   expect(
-    buildIdentity(
+    buildCurrentUser(
       {
         email: "test@example.org",
         etag: "e1",
-        fullname: "Identity Test",
+        fullname: "Current User",
         id: "i1",
-        name: "identity-test",
+        name: "currentUser",
         teams: {
           t1: {
             id: "t1",
@@ -25,9 +25,9 @@ test("buildIdentity without a default team return the first team", () => {
   ).toEqual({
     email: "test@example.org",
     etag: "e1",
-    fullname: "Identity Test",
+    fullname: "Current User",
     id: "i1",
-    name: "identity-test",
+    name: "currentUser",
     teams: [{ id: "t1" }, { id: "t2" }],
     timezone: "UTC-04",
     team: { id: "t1" },
@@ -38,15 +38,15 @@ test("buildIdentity without a default team return the first team", () => {
   });
 });
 
-test("buildIdentity with a default team return this team", () => {
+test("buildCurrentUser with a default team return this team", () => {
   expect(
-    buildIdentity(
+    buildCurrentUser(
       {
         email: "test@example.org",
         etag: "e1",
-        fullname: "Identity Test",
+        fullname: "Current User",
         id: "i1",
-        name: "identity-test",
+        name: "currentUser",
         teams: {
           t1: {
             id: "t1",
@@ -64,9 +64,9 @@ test("buildIdentity with a default team return this team", () => {
   ).toEqual({
     email: "test@example.org",
     etag: "e1",
-    fullname: "Identity Test",
+    fullname: "Current User",
     id: "i1",
-    name: "identity-test",
+    name: "currentUser",
     teams: [{ id: "t1" }, { id: "t2" }],
     timezone: "UTC-04",
     team: { id: "t2" },
@@ -77,15 +77,15 @@ test("buildIdentity with a default team return this team", () => {
   });
 });
 
-test("buildIdentity remove an old team the user doesn't have access to anymore", () => {
+test("buildCurrentUser remove an old team the user doesn't have access to anymore", () => {
   expect(
-    buildIdentity(
+    buildCurrentUser(
       {
         email: "test@example.org",
         etag: "e1",
-        fullname: "Identity Test",
+        fullname: "Current User",
         id: "i1",
-        name: "identity-test",
+        name: "currentUser",
         teams: {
           t1: {
             id: "t1",
@@ -103,9 +103,9 @@ test("buildIdentity remove an old team the user doesn't have access to anymore",
   ).toEqual({
     email: "test@example.org",
     etag: "e1",
-    fullname: "Identity Test",
+    fullname: "Current User",
     id: "i1",
-    name: "identity-test",
+    name: "currentUser",
     teams: [{ id: "t1" }, { id: "t2" }],
     timezone: "UTC-04",
     team: { id: "t1" },

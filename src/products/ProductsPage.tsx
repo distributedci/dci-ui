@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import MainPage from "pages/MainPage";
 import {
   CopyButton,
@@ -18,7 +17,6 @@ import {
   ToolbarItem,
 } from "@patternfly/react-core";
 import { TrashIcon } from "@patternfly/react-icons";
-import { getCurrentUser } from "currentUser/currentUserSelectors";
 import { Table, Thead, Tr, Th, Tbody, Td } from "@patternfly/react-table";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Filters } from "types";
@@ -29,6 +27,7 @@ import {
   useListProductsQuery,
   useUpdateProductMutation,
 } from "./productsApi";
+import { useAuth } from "auth/authContext";
 
 export default function ProductsPage() {
   const location = useLocation();
@@ -36,7 +35,7 @@ export default function ProductsPage() {
   const [filters, setFilters] = useState<Filters>(
     parseFiltersFromSearch(location.search),
   );
-  const currentUser = useSelector(getCurrentUser);
+  const { currentUser } = useAuth();
   const { data, isLoading } = useListProductsQuery(filters);
   const [createProduct, { isLoading: isCreating }] = useCreateProductMutation();
   const [updateProduct, { isLoading: isUpdating }] = useUpdateProductMutation();

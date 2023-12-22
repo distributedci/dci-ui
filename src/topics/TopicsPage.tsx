@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import MainPage from "pages/MainPage";
 import {
   Card,
@@ -11,7 +10,6 @@ import {
 } from "@patternfly/react-core";
 import { EmptyState, Breadcrumb } from "ui";
 import styled from "styled-components";
-import { getCurrentUser } from "currentUser/currentUserSelectors";
 import { useLocation, useNavigate } from "react-router-dom";
 import { groupTopicsPerProduct, sortTopicWithSemver } from "./topicsActions";
 import CreateTopicModal from "./CreateTopicModal";
@@ -20,6 +18,7 @@ import { Filters } from "types";
 import { createSearchFromFilters, parseFiltersFromSearch } from "api/filters";
 import { useCreateTopicMutation, useListTopicsQuery } from "./topicsApi";
 import { useListProductsQuery } from "products/productsApi";
+import { useAuth } from "auth/authContext";
 
 export const ProductTitle = styled.h3`
   display: flex;
@@ -48,7 +47,7 @@ export default function TopicsPage() {
     const newSearch = createSearchFromFilters(filters);
     navigate(`/topics${newSearch}`, { replace: true });
   }, [navigate, filters]);
-  const currentUser = useSelector(getCurrentUser);
+  const { currentUser } = useAuth();
   const { data, isLoading } = useListTopicsQuery(filters);
   const { data: dataProducts, isLoading: isLoadingProducts } =
     useListProductsQuery();

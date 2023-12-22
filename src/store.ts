@@ -6,12 +6,10 @@ import {
   PreloadedState,
 } from "@reduxjs/toolkit";
 import alertsReducer from "./alerts/alertsReducer";
-import currentUserReducer from "./currentUser/currentUserReducer";
 import Api from "api";
 
 export const rootReducer = combineReducers({
   alerts: alertsReducer,
-  currentUser: currentUserReducer,
   [Api.reducerPath]: Api.reducer,
 });
 

@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useSelector } from "react-redux";
 import { isEmpty } from "lodash";
 import {
   Card,
@@ -15,7 +14,6 @@ import {
 import { Breadcrumb, CopyButton, EmptyState, StateLabel } from "ui";
 import { ITopic } from "types";
 import { useParams } from "react-router-dom";
-import { getCurrentUser } from "currentUser/currentUserSelectors";
 import CardLine from "ui/CardLine";
 import { useGetTopicQuery, useUpdateTopicMutation } from "./topicsApi";
 import { skipToken } from "@reduxjs/toolkit/query";
@@ -24,6 +22,7 @@ import EditTopicModal from "./EditTopicModal";
 import { useListProductsQuery } from "products/productsApi";
 import ComponentsTableWithToolbar from "./ComponentsTableWithToolbar";
 import { fromNow } from "services/date";
+import { useAuth } from "auth/authContext";
 
 function TopicDetails({ topic }: { topic: ITopic }) {
   const [seeData, setSeeData] = useState(false);
@@ -120,7 +119,7 @@ function TopicDetails({ topic }: { topic: ITopic }) {
 }
 
 export default function TopicPage() {
-  const currentUser = useSelector(getCurrentUser);
+  const { currentUser } = useAuth();
   const { topic_id } = useParams();
 
   const [updateTopic, { isLoading: isUpdating }] = useUpdateTopicMutation();

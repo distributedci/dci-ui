@@ -21,7 +21,7 @@ import { TrashIcon, UserSecretIcon } from "@patternfly/react-icons";
 import CreateRemoteciModal from "./CreateRemoteciModal";
 import EditRemoteciModal from "./EditRemoteciModal";
 import { useAuth } from "auth/authContext";
-import { Filters } from "types";
+import { Filters, ITeam } from "types";
 import {
   Table,
   Thead,
@@ -47,7 +47,7 @@ import {
 import { fromNow } from "services/date";
 
 export default function RemotecisPage() {
-  const { identity } = useAuth();
+  const { currentUser } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
   const [filters, setFilters] = useState<Filters>(
@@ -83,15 +83,15 @@ export default function RemotecisPage() {
 
   useEffect(() => {
     setFilters((f) => {
-      if (identity && identity.team) {
+      if (currentUser && currentUser.team) {
         return {
           ...f,
-          team_id: identity.team.id,
+          team_id: currentUser.team.id,
         };
       }
       return f;
     });
-  }, [identity]);
+  }, [currentUser]);
 
   const { data, isLoading } = useListRemotecisQuery(filters, {
     skip: filters.team_id === null,
@@ -102,7 +102,7 @@ export default function RemotecisPage() {
     useUpdateRemoteciMutation();
   const [deleteRemoteci] = useDeleteRemoteciMutation();
 
-  if (!data || identity === null) return null;
+  if (!data || currentUser === null) return null;
 
   const count = data._meta.count;
 
@@ -113,9 +113,9 @@ export default function RemotecisPage() {
       loading={isLoading}
       empty={data.remotecis.length === 0}
       HeaderButton={
-        identity.team && (
+        currentUser.team && (
           <CreateRemoteciModal
-            teams={Object.values(identity.teams)}
+            teams={Object.values(currentUser.teams) as ITeam[]}
             onSubmit={createRemoteci}
             isDisabled={isCreating}
           />
@@ -125,8 +125,8 @@ export default function RemotecisPage() {
         <EmptyState
           title="There is no remotecis"
           info={
-            identity.team
-              ? `There is no remotecis in ${identity.team.name} team. Do you want to create one?`
+            currentUser.team
+              ? `There is no remotecis in ${currentUser.team.name} team. Do you want to create one?`
               : "Apparently you are not on any team. Contact your EPM or DCI team if you think this is an error."
           }
         />
@@ -225,7 +225,7 @@ export default function RemotecisPage() {
                 <EditRemoteciModal
                   className="pf-v5-u-mr-xs"
                   remoteci={remoteci}
-                  teams={Object.values(identity.teams)}
+                  teams={Object.values(currentUser.teams) as ITeam[]}
                   onSubmit={updateRemoteci}
                   isDisabled={isUpdating}
                 />

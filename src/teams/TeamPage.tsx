@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import {
   Grid,
   GridItem,
@@ -21,7 +20,6 @@ import { IProduct, ITeam } from "types";
 import { useParams, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { global_danger_color_100 } from "@patternfly/react-tokens";
-import { getCurrentUser } from "currentUser/currentUserSelectors";
 import EditTeamModal from "./EditTeamModal";
 import CardLine from "ui/CardLine";
 import MainPage from "pages/MainPage";
@@ -40,6 +38,7 @@ import {
 } from "./teamsApi";
 import { skipToken } from "@reduxjs/toolkit/query";
 import { useListProductsQuery } from "products/productsApi";
+import { useAuth } from "auth/authContext";
 
 const DangerZone = styled.div`
   border: 1px solid ${global_danger_color_100.value};
@@ -150,7 +149,7 @@ function ProductsTeamHasAccessTo({ team }: { team: ITeam }) {
 }
 
 export default function TeamPage() {
-  const currentUser = useSelector(getCurrentUser);
+  const { currentUser } = useAuth();
   const navigate = useNavigate();
   const { team_id } = useParams();
   const { data: team, isLoading } = useGetTeamQuery(

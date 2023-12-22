@@ -1,11 +1,9 @@
 import http from "services/http";
-import { ICurrentUser, IIdentity, ITeam } from "types";
+import { ICurrentUser, IIdentity, IIdentityTeam } from "types";
 import { values } from "lodash";
-import { setIdentity } from "currentUser/currentUserActions";
-import { AppThunk } from "store";
 import { readValue, saveValue } from "services/localStorage";
 
-function buildShortcut(team: ITeam | null) {
+function buildShortcut(team: IIdentityTeam | null) {
   if (team === null) {
     return {
       isSuperAdmin: false,
@@ -28,48 +26,51 @@ function buildShortcut(team: ITeam | null) {
   };
 }
 
-export function buildIdentity(
-  identity: IIdentity,
-  defaultTeam: ITeam | null,
+export function buildCurrentUser(
+  currentUser: IIdentity,
+  defaultTeam: IIdentityTeam | null,
 ): ICurrentUser {
-  const teams = values(identity.teams).filter((team) => team.id !== null);
+  const teams = values(currentUser.teams).filter((team) => team.id !== null);
   const firstTeam = teams.length === 0 ? null : teams[0];
   const team =
-    defaultTeam === null || !(defaultTeam.id in identity.teams)
+    defaultTeam === null || !(defaultTeam.id in currentUser.teams)
       ? firstTeam
       : defaultTeam;
   return {
-    ...identity,
+    ...currentUser,
     teams,
     team,
     ...buildShortcut(team),
   };
 }
 
-export function getCurrentUser(): AppThunk<Promise<ICurrentUser>> {
+export function getCurrentUser(): Promise<ICurrentUser> {
   // gvincent todo: should be returned by the backend
-  const defaultTeam = readValue<ITeam | null>("defaultTeam", null);
-  return (dispatch) => {
-    return http.get(`/api/v1/identity`).then((response) => {
-      const identity = buildIdentity(response.data.identity, defaultTeam);
-      dispatch(setIdentity(identity));
-      return identity;
-    });
-  };
+  const defaultTeam = readValue<IIdentityTeam | null>("defaultTeam", null);
+  return http.get(`/api/v1/identity`).then((response) => {
+    return buildCurrentUser(response.data.identity, defaultTeam);
+  });
+}
+
+export function updateCurrentUser(
+  currentUser: ICurrentUser,
+): Promise<ICurrentUser> {
+  return http({
+    method: "put",
+    url: "/api/v1/identity",
+    data: currentUser,
+    headers: { "If-Match": currentUser.etag },
+  }).then((response) => response.data.identity);
 }
 
 export function changeCurrentTeam(
-  team: ITeam,
   currentUser: ICurrentUser,
-): AppThunk<Promise<ICurrentUser>> {
+  team: IIdentityTeam,
+): ICurrentUser {
   saveValue("defaultTeam", team);
-  return (dispatch) => {
-    const identity = {
-      ...currentUser,
-      team,
-      ...buildShortcut(team),
-    };
-    dispatch(setIdentity(identity));
-    return Promise.resolve(identity);
+  return {
+    ...currentUser,
+    team,
+    ...buildShortcut(team),
   };
 }
