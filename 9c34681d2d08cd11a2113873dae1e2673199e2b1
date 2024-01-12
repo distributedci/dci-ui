@@ -33,6 +33,23 @@
       "message": "recheck",
       "revId": "9c34681d2d08cd11a2113873dae1e2673199e2b1",
       "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "43d398df_ea8cf7a3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 385
+      },
+      "writtenOn": "2024-01-12T09:55:27Z",
+      "side": 1,
+      "message": "According to previous job logs: https://softwarefactory-project.io/logs/78/30478/4/gate/dci-ui-test/c8908db/job-output.txt - that was running on K1S02, which was disabled. Checking why other k1s are not taking that job.",
+      "revId": "9c34681d2d08cd11a2113873dae1e2673199e2b1",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0"
     }
   ]
 }
