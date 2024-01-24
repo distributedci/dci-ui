@@ -1,6 +1,7 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import "ui/styles";
 import JobsPage from "jobs/JobsPage";
+import JobsPage2 from "jobs2/JobsPage";
 import JobPage from "jobs/job/JobPage";
 import JobStatesPage from "jobs/job/jobStates/JobStatesPage";
 import JobTestsPage from "jobs/job/tests/JobTestsPage";
@@ -85,6 +86,9 @@ export default function App() {
                 <Route path="files" element={<JobFilesPage />} />
                 <Route path="settings" element={<JobSettingsPage />} />
               </Route>
+            </Route>
+            <Route path="jobs2">
+              <Route index element={<JobsPage2 />} />
             </Route>
             <Route path="files/:file_id" element={<FilePage />} />
             <Route path="products" element={<ProductsPage />} />
