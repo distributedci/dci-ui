@@ -52,7 +52,6 @@ function Tests({ jobId, tests }: TestsProps) {
   if (tests.length === 0) {
     return <div>no tests</div>;
   }
-  console.log(tests);
   return (
     <div>
       {sortByOldestFirst(tests).map((test, i) => (
