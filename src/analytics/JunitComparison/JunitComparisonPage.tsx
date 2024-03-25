@@ -35,7 +35,7 @@ import { TopicSelect } from "jobs/toolbar/TopicFilter";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { showAPIError, showError } from "alerts/alertsActions";
-import { RemoteciSelect } from "jobs/toolbar/RemoteciFilter";
+import { RemoteciSelect } from "jobs/toolbar/RemoteciToolbarFilter";
 import { DateTime } from "luxon";
 import { round } from "lodash";
 import {
@@ -136,12 +136,11 @@ function JunitComparisonForm({
               </FormGroup>
               <FormGroup label="Remoteci" isRequired fieldId="remoteci1">
                 <RemoteciSelect
-                  remoteciId={remoteciId1}
-                  onClear={() => setRemoteciId1(null)}
-                  onSelect={(remoteciId) => {
-                    setRemoteciId1(remoteciId);
+                  id={remoteciId1}
+                  onSelect={(remoteci) => {
+                    setRemoteciId1(remoteci.id);
                     if (remoteciId2 === null) {
-                      setRemoteciId2(remoteciId);
+                      setRemoteciId2(remoteci.id);
                     }
                   }}
                 />
@@ -253,12 +252,11 @@ function JunitComparisonForm({
               </FormGroup>
               <FormGroup label="Remoteci" isRequired fieldId="remoteci1">
                 <RemoteciSelect
-                  remoteciId={remoteciId2}
-                  onClear={() => setRemoteciId2(null)}
-                  onSelect={(remoteciId) => {
-                    setRemoteciId2(remoteciId);
+                  id={remoteciId2}
+                  onSelect={(remoteci) => {
+                    setRemoteciId2(remoteci.id);
                     if (remoteciId1 === null) {
-                      setRemoteciId1(remoteciId);
+                      setRemoteciId1(remoteci.id);
                     }
                   }}
                 />

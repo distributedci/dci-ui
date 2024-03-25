@@ -21,7 +21,7 @@ import {
   SyncAltIcon,
   TableIcon,
 } from "@patternfly/react-icons";
-import RemoteciFilter from "./RemoteciFilter";
+import RemoteciToolbarFilter from "./RemoteciToolbarFilter";
 import ProductFilter from "./ProductFilter";
 import TopicFilter from "./TopicFilter";
 import TeamFilter from "./TeamFilter";
@@ -129,14 +129,15 @@ export default function JobsToolbar({
                   setFilters({ ...filters, team_id: team.id })
                 }
               />
-              <RemoteciFilter
-                showToolbarItem={currentCategory === "Remoteci"}
-                remoteciId={filters.remoteci_id}
-                onClear={() => setFilters({ ...filters, remoteci_id: null })}
-                onSelect={(remoteciId) =>
-                  setFilters({ ...filters, remoteci_id: remoteciId })
-                }
-              />
+              {currentCategory === "Remoteci" && (
+                <RemoteciToolbarFilter
+                  id={filters.remoteci_id}
+                  onClear={() => setFilters({ ...filters, remoteci_id: null })}
+                  onSelect={(remoteci) =>
+                    setFilters({ ...filters, remoteci_id: remoteci.id })
+                  }
+                />
+              )}
               <ProductFilter
                 showToolbarItem={currentCategory === "Product"}
                 product_id={filters.product_id}
