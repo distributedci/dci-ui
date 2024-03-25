@@ -736,3 +736,10 @@ export type WhereFilters = Pick<
   | "state"
   | "type"
 >;
+
+export interface SelectProps {
+  id: string | null;
+  onSelect: (remoteci: IRemoteci) => void;
+  onClear: () => void;
+  placeholder?: string;
+}
