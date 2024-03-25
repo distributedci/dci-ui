@@ -12,7 +12,7 @@ import {
   ToolbarItem,
 } from "@patternfly/react-core";
 import TopicFilter from "jobs/toolbar/TopicFilter";
-import RemoteciFilter from "jobs/toolbar/RemoteciFilter";
+import RemoteciFilter from "jobs/toolbar/RemoteciToolbarFilter";
 import { useEffect, useState } from "react";
 import { IDataFromES, IGraphData, IRefArea } from "types";
 import http from "services/http";
@@ -244,9 +244,10 @@ export default function TasksDurationPerJobPage() {
                 </ToolbarItem>
                 <ToolbarItem>
                   <RemoteciFilter
-                    remoteciId={remoteciId}
+                    id={remoteciId}
+                    onSelect={(r) => setRemoteciId(r.id)}
                     onClear={() => setRemoteciId(null)}
-                    onSelect={setRemoteciId}
+                    placeholder="Search by remoteci"
                   />
                 </ToolbarItem>
               </ToolbarGroup>
