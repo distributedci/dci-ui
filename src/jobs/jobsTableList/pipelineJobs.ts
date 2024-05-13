@@ -1,3 +1,4 @@
+import { sortByNewestFirst } from "services/sort";
 import { JobNode, IJob } from "types";
 
 export function groupJobsByPipeline(jobs: IJob[]): JobNode[] {
@@ -20,5 +21,5 @@ export function groupJobsByPipeline(jobs: IJob[]): JobNode[] {
     }
   }
 
-  return jobNodes;
+  return sortByNewestFirst(jobNodes);
 }
