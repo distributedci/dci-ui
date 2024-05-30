@@ -1,9 +1,6 @@
 import {
   ToolbarItem,
-  TextInput,
   Button,
-  ToolbarFilter,
-  Form,
   ButtonVariant,
   ToolbarGroup,
   Modal,
@@ -15,6 +12,7 @@ import {
 } from "@patternfly/react-core";
 import { QuestionCircleIcon } from "@patternfly/react-icons";
 import { useState } from "react";
+import JobSearchAutoComplete from "./DSL/JobSearchAutoComplete";
 
 export default function QLToolbar({
   query,
@@ -27,51 +25,49 @@ export default function QLToolbar({
   onClear: () => void;
   showToolbarItem?: boolean;
 }) {
-  const [value, setValue] = useState(query || "");
   const [showHelperModal, setShowHelperModal] = useState(false);
-  const formId = "query-language-form";
   return (
     <>
       <Modal
         id="advanced-search-modal"
         aria-label="Advanced search modal"
         variant={ModalVariant.medium}
-        title="Advanced searching"
+        title="Advanced search"
         isOpen={showHelperModal}
         onClose={() => setShowHelperModal(false)}
       >
         <TextContent>
           <Text component={TextVariants.p}>
             The advanced search allows you to build structured queries using the
-            DCI Query Language to search for jobs. You can specify criteria that
-            cannot be defined in the basic search.
+            DCI DSL to search for jobs. You can specify criteria that cannot be
+            defined in the basic search.
           </Text>
           <Text component={TextVariants.h3}>Constructing queries</Text>
           <Text component={TextVariants.h4}>Example 1</Text>
           <Text component={TextVariants.p}>
             Find all job with name
             <span className="pf-v5-u-background-color-200 pf-v5-u-px-xs pf-v5-u-mx-xs">
-              job-name
+              foo
             </span>
           </Text>
-          <CodeBlock>eq(name,job-name)</CodeBlock>
+          <CodeBlock>name=foo</CodeBlock>
           <Text component={TextVariants.h4}>Example 2</Text>
           <Text component={TextVariants.p}>
             Find all job with name
             <span className="pf-v5-u-background-color-200 pf-v5-u-px-xs pf-v5-u-mx-xs">
-              job-name
+              bar
             </span>
             and status
             <span className="pf-v5-u-background-color-success pf-v5-u-px-xs pf-v5-u-mx-xs">
               success
             </span>
           </Text>
-          <CodeBlock>and( eq(name,job-name), eq(status,success))</CodeBlock>
+          <CodeBlock>name=bar and status=success</CodeBlock>
           <Text component={TextVariants.h4}>Example 3</Text>
           <Text component={TextVariants.p}>
             Find all job with name
             <span className="pf-v5-u-background-color-200 pf-v5-u-px-xs pf-v5-u-mx-xs">
-              job-name
+              baz
             </span>
             and status
             <span className="pf-v5-u-background-color-danger pf-v5-u-px-xs pf-v5-u-mx-xs">
@@ -82,42 +78,15 @@ export default function QLToolbar({
               error
             </span>
           </Text>
-          <CodeBlock>
-            and( eq(name,job-name), or( eq(status,failure), eq(status,error) ) )
-          </CodeBlock>
+          <CodeBlock>name=baz and (status=failure or status=error)</CodeBlock>
         </TextContent>
       </Modal>
-      <ToolbarItem>
-        <ToolbarFilter
-          chips={query === null ? [] : [query]}
-          deleteChip={() => {
-            setValue("");
-            onClear();
-          }}
-          categoryName="Query"
-          showToolbarItem={showToolbarItem}
-        >
-          <Form
-            id={formId}
-            onSubmit={(e) => {
-              e.preventDefault();
-              onSearch(value);
-            }}
-          >
-            <TextInput
-              value={value}
-              type="text"
-              onChange={(_event, value) => setValue(value)}
-              placeholder="Query language search"
-              aria-label="query language search input"
-              style={{ minWidth: "380px" }}
-            />
-          </Form>
-        </ToolbarFilter>
+      <ToolbarItem widths={{ default: "calc(100% - 1000px)" }}>
+        <JobSearchAutoComplete />
       </ToolbarItem>
       <ToolbarGroup variant="icon-button-group">
         <ToolbarItem>
-          <Button variant="secondary" type="submit" form={formId}>
+          <Button variant="secondary" type="button">
             Search
           </Button>
         </ToolbarItem>
