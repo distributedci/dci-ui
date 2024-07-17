@@ -1,4 +1,4 @@
-FROM registry.access.redhat.com/ubi8/nodejs-18-minimal
+FROM registry.access.redhat.com/ubi8/nodejs-20-minimal
 
 LABEL name="DCI UI"
 LABEL version="0.2.0"
@@ -7,7 +7,8 @@ LABEL maintainer="DCI Team <distributed-ci@redhat.com>"
 ENV LANG en_US.UTF-8
 
 COPY package*.json .
-RUN npm install --silent
+RUN npm install -g npm@latest
+RUN npm install && npm cache clean --force
 COPY --chown=1001:1001 . ./
 
 EXPOSE 8000
