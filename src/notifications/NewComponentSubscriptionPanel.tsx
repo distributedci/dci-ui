@@ -6,6 +6,7 @@ import {
   useSubscribeToATopicMutation,
   useUnsubscribeFromATopicMutation,
 } from "topics/topicsApi";
+import { SearchInput } from "@patternfly/react-core";
 import {
   DualListSelector,
   DualListSelectorControl,
@@ -13,8 +14,7 @@ import {
   DualListSelectorList,
   DualListSelectorListItem,
   DualListSelectorPane,
-  SearchInput,
-} from "@patternfly/react-core";
+} from "@patternfly/react-core/deprecated";
 import { useState } from "react";
 import { AngleLeftIcon, AngleRightIcon } from "@patternfly/react-icons";
 import { ITopic } from "types";

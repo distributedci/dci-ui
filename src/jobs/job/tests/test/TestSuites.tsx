@@ -7,9 +7,8 @@ import {
   Flex,
   FlexItem,
   SearchInput,
-  Text,
-  TextContent,
-  TextVariants,
+  Content,
+  ContentVariants,
 } from "@patternfly/react-core";
 import { IGetJunitTestSuites, ITestCaseActionType } from "types";
 import { Table, Thead, Tr, Th } from "@patternfly/react-table";
@@ -18,18 +17,18 @@ import { InfoCircleIcon } from "@patternfly/react-icons";
 import { Link, useSearchParams } from "react-router-dom";
 import { useState } from "react";
 import {
-  c_label_m_red_BackgroundColor,
-  c_label_m_red__content_before_BorderColor,
-  c_label_m_red__content_Color,
-  c_label_m_blue_BackgroundColor,
-  c_label_m_blue__content_before_BorderColor,
-  c_label_m_blue__content_Color,
-  c_label_m_green_BackgroundColor,
-  c_label_m_green__content_before_BorderColor,
-  c_label_m_green__content_Color,
-  c_label_m_orange_BackgroundColor,
-  c_label_m_orange__content_before_BorderColor,
-  c_label_m_orange__content_Color,
+  t_global_color_nonstatus_green_default,
+  t_global_color_nonstatus_orange_default,
+  t_global_color_nonstatus_red_default,
+  t_global_color_nonstatus_blue_default,
+  t_global_text_color_nonstatus_on_blue_default,
+  t_global_border_color_nonstatus_blue_default,
+  t_global_text_color_nonstatus_on_green_default,
+  t_global_text_color_nonstatus_on_orange_default,
+  t_global_text_color_nonstatus_on_red_default,
+  t_global_border_color_nonstatus_green_default,
+  t_global_border_color_nonstatus_red_default,
+  t_global_border_color_nonstatus_orange_default,
 } from "@patternfly/react-tokens";
 
 interface TestsCasesProps {
@@ -56,29 +55,29 @@ function SummaryItem({
 }) {
   const colors = {
     blue: {
-      backgroundColor: c_label_m_blue_BackgroundColor.value,
-      borderColor: c_label_m_blue__content_before_BorderColor.value,
-      color: c_label_m_blue__content_Color.value,
+      backgroundColor: t_global_color_nonstatus_blue_default.var,
+      borderColor: t_global_border_color_nonstatus_blue_default.var,
+      color: t_global_text_color_nonstatus_on_blue_default.var,
     },
     green: {
-      backgroundColor: c_label_m_green_BackgroundColor.value,
-      borderColor: c_label_m_green__content_before_BorderColor.value,
-      color: c_label_m_green__content_Color.value,
+      backgroundColor: t_global_color_nonstatus_green_default.var,
+      borderColor: t_global_border_color_nonstatus_green_default.var,
+      color: t_global_text_color_nonstatus_on_green_default.var,
     },
     red: {
-      backgroundColor: c_label_m_red_BackgroundColor.value,
-      borderColor: c_label_m_red__content_before_BorderColor.value,
-      color: c_label_m_red__content_Color.value,
+      backgroundColor: t_global_color_nonstatus_red_default.var,
+      borderColor: t_global_border_color_nonstatus_red_default.var,
+      color: t_global_text_color_nonstatus_on_red_default.var,
     },
     orange: {
-      backgroundColor: c_label_m_orange_BackgroundColor.value,
-      borderColor: c_label_m_orange__content_before_BorderColor.value,
-      color: c_label_m_orange__content_Color.value,
+      backgroundColor: t_global_color_nonstatus_orange_default.var,
+      borderColor: t_global_border_color_nonstatus_orange_default.var,
+      color: t_global_text_color_nonstatus_on_orange_default.var,
     },
   };
   return (
     <div
-      className="text-center pf-v5-u-p-md"
+      className="text-center pf-v6-u-p-md"
       style={{
         ...colors[color],
         borderWidth: 1,
@@ -105,10 +104,10 @@ export default function TestSuites({ junit }: TestsCasesProps) {
     <div>
       {junit.testsuites.map((testsuite, i) => (
         <div key={i}>
-          <TextContent>
-            <Text component={TextVariants.h3}>Summary</Text>
+          <div>
+            <Content component={ContentVariants.h3}>Summary</Content>
             {junit.previous_job !== null && (
-              <Text component={TextVariants.p}>
+              <Content component={ContentVariants.p}>
                 This{" "}
                 <Link to={`/jobs/${junit.job.id}/jobStates`}>
                   job ({junit.job.name})
@@ -118,12 +117,12 @@ export default function TestSuites({ junit }: TestsCasesProps) {
                   previous job ({junit.previous_job.name})
                 </Link>
                 .
-              </Text>
+              </Content>
             )}
-          </TextContent>
+          </div>
           <Flex
             columnGap={{ default: "columnGap2xl" }}
-            className="pf-v5-u-my-md"
+            className="pf-v6-u-my-md"
           >
             <FlexItem>
               <SummaryItem
@@ -157,11 +156,9 @@ export default function TestSuites({ junit }: TestsCasesProps) {
               />
             </FlexItem>
           </Flex>
-          <TextContent className="pf-v5-u-my-md">
-            <Text component={TextVariants.h3}>
-              {testsuite.name || `test suite ${i + 1}`}
-            </Text>
-          </TextContent>
+          <Content className="pf-v6-u-my-md" component={ContentVariants.h3}>
+            {testsuite.name || `test suite ${i + 1}`}
+          </Content>
           <Flex>
             <FlexItem>
               <SearchInput
@@ -188,8 +185,8 @@ export default function TestSuites({ junit }: TestsCasesProps) {
             {testsuite.testcases.length === 0 ? (
               <Banner
                 screenReaderText="No test case banner"
-                variant="blue"
-                className="pf-v5-u-mt-sm"
+                color="blue"
+                className="pf-v6-u-mt-sm"
               >
                 <Flex spaceItems={{ default: "spaceItemsSm" }}>
                   <FlexItem>
@@ -209,46 +206,46 @@ export default function TestSuites({ junit }: TestsCasesProps) {
                       modifier="fitContent"
                       info={{
                         popover: (
-                          <TextContent>
-                            <Text component={TextVariants.p}>
+                          <div>
+                            <Content component={ContentVariants.p}>
                               The result of a test case is compared with its
                               previous result in the previous test. A test case
                               can have 5 states.
-                            </Text>
-                            <Text component={TextVariants.p}>
+                            </Content>
+                            <Content component={ContentVariants.p}>
                               If state is empty, the test has the same state as
                               before
-                            </Text>
+                            </Content>
                             <TestCaseState
                               state="REMOVED"
-                              className="pf-v5-u-mb-xs"
+                              className="pf-v6-u-mb-xs"
                             />
-                            <Text component={TextVariants.p}>
+                            <Content component={ContentVariants.p}>
                               The test was present in the previous job and it
                               was deleted in this job.
-                            </Text>
+                            </Content>
                             <TestCaseState
                               state="ADDED"
-                              className="pf-v5-u-mb-xs"
+                              className="pf-v6-u-mb-xs"
                             />
-                            <Text component={TextVariants.p}>
+                            <Content component={ContentVariants.p}>
                               The test is not present in the previous job.
-                            </Text>
+                            </Content>
                             <TestCaseState
                               state="RECOVERED"
-                              className="pf-v5-u-mb-xs"
+                              className="pf-v6-u-mb-xs"
                             />
-                            <Text component={TextVariants.p}>
+                            <Content component={ContentVariants.p}>
                               The test is successful now, congratulation
-                            </Text>
+                            </Content>
                             <TestCaseState
                               state="REGRESSED"
-                              className="pf-v5-u-mb-xs"
+                              className="pf-v6-u-mb-xs"
                             />
-                            <Text component={TextVariants.p}>
+                            <Content component={ContentVariants.p}>
                               The test is no longer successful
-                            </Text>
-                          </TextContent>
+                            </Content>
+                          </div>
                         ),
                       }}
                     >
