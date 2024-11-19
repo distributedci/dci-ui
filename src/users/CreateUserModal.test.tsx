@@ -1,6 +1,6 @@
 import { act } from "react";
 import { waitFor } from "@testing-library/react";
-import { render } from "utils/test-utils";
+import { render } from "__tests__/utils";
 import CreateUserModal from "./CreateUserModal";
 import { vi } from "vitest";
 
