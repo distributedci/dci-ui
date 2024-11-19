@@ -1,17 +1,17 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { getToken } from "../services/localStorage";
+import { getToken } from "services/localStorage";
 import { Filters } from "types";
-import { createSearchFromFilters } from "./filters";
+import { createSearchFromFilters } from "services/filters";
 
 const baseUrl =
   process.env.REACT_APP_BACKEND_HOST || "https://api.distributed-ci.io";
 
-export const Api = createApi({
+export const api = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: `${baseUrl}/api/v1`,
     prepareHeaders: (headers) => {
       const token = getToken();
-      if (token) {
+      if (token && !headers.has("authorization")) {
         headers.set("authorization", `${token.type} ${token.value}`);
       }
       headers.set("Content-Type", "application/json");
@@ -35,7 +35,7 @@ export const injectListEndpoint = <T extends { id: string }>(
   resourceName: Resource,
 ) => {
   const route = `${resourceName.toLowerCase()}s`;
-  const enhancedApi = Api.enhanceEndpoints({ addTagTypes: [resourceName] });
+  const enhancedApi = api.enhanceEndpoints({ addTagTypes: [resourceName] });
   interface Api<T> {
     [route: string]: T[];
   }
@@ -74,7 +74,7 @@ export const injectCreateEndpoint = <T extends { id: string }>(
 ) => {
   const resourceNameLowercase = resourceName.toLowerCase();
   const route = `${resourceNameLowercase}s`;
-  const enhancedApi = Api.enhanceEndpoints({ addTagTypes: [resourceName] });
+  const enhancedApi = api.enhanceEndpoints({ addTagTypes: [resourceName] });
   interface ApiGet<T> {
     [resourceNameLowercase: string]: T;
   }
@@ -105,7 +105,7 @@ export const injectGetEndpoint = <T extends { id: string }>(
   interface ApiGet<T> {
     [resourceNameLowercase: string]: T;
   }
-  const enhancedApi = Api.enhanceEndpoints({ addTagTypes: [resourceName] });
+  const enhancedApi = api.enhanceEndpoints({ addTagTypes: [resourceName] });
   const entityApi = enhancedApi.injectEndpoints({
     endpoints: (builder) => ({
       [`get${resourceName}`]: builder.query<T, string | null>({
@@ -124,7 +124,7 @@ export const injectUpdateEndpoint = <T extends { id: string; etag: string }>(
   resourceName: Resource,
 ) => {
   const route = `${resourceName.toLowerCase()}s`;
-  const enhancedApi = Api.enhanceEndpoints({ addTagTypes: [resourceName] });
+  const enhancedApi = api.enhanceEndpoints({ addTagTypes: [resourceName] });
   const entityApi = enhancedApi.injectEndpoints({
     endpoints: (builder) => ({
       [`update${resourceName}`]: builder.mutation<T, Partial<T>>({
@@ -150,7 +150,7 @@ export const injectDeleteEndpoint = <T extends { id: string; etag: string }>(
   resourceName: Resource,
 ) => {
   const route = `${resourceName.toLowerCase()}s`;
-  const enhancedApi = Api.enhanceEndpoints({ addTagTypes: [resourceName] });
+  const enhancedApi = api.enhanceEndpoints({ addTagTypes: [resourceName] });
   const entityApi = enhancedApi.injectEndpoints({
     endpoints: (builder) => ({
       [`delete${resourceName}`]: builder.mutation<
@@ -172,4 +172,4 @@ export const injectDeleteEndpoint = <T extends { id: string; etag: string }>(
   return entityApi;
 };
 
-export default Api;
+export default api;
