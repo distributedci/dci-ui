@@ -5,8 +5,7 @@ import {
   Card,
   CardBody,
   Button,
-  TextContent,
-  Text,
+  Content,
   CardTitle,
   Divider,
   Label,
@@ -19,7 +18,9 @@ import { ConfirmDeleteModal, Breadcrumb } from "ui";
 import { IProduct, ITeam } from "types";
 import { useParams, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { global_danger_color_100 } from "@patternfly/react-tokens";
+import {
+  t_temp_dev_tbd as global_danger_color_100 /* CODEMODS: you should update this color token */,
+} from "@patternfly/react-tokens";
 import EditTeamModal from "./EditTeamModal";
 import CardLine from "ui/CardLine";
 import MainPage from "pages/MainPage";
@@ -38,7 +39,7 @@ import {
 } from "./teamsApi";
 import { skipToken } from "@reduxjs/toolkit/query";
 import { useListProductsQuery } from "products/productsApi";
-import { useAuth } from "auth/authContext";
+import { useAuth } from "auth/authSelectors";
 
 const DangerZone = styled.div`
   border: 1px solid ${global_danger_color_100.value};
@@ -82,7 +83,7 @@ function ProductsTeamHasAccessTo({ team }: { team: ITeam }) {
             type="button"
             aria-label="More info on product access"
             onClick={(e) => e.preventDefault()}
-            className="pf-v5-c-form__group-label-help pf-v5-u-ml-sm"
+            className="pf-v6-c-form__group-label-help pf-v6-u-ml-sm"
           >
             <HelpIcon />
           </button>
@@ -93,7 +94,7 @@ function ProductsTeamHasAccessTo({ team }: { team: ITeam }) {
           <Skeleton screenreaderText="Loading products the team has access to" />
         ) : (
           <Table
-            className="pf-v5-c-table pf-m-compact pf-m-grid-md"
+            className="pf-v6-c-table pf-m-compact pf-m-grid-md"
             style={{ maxWidth: 400 }}
           >
             <Thead>
@@ -108,10 +109,10 @@ function ProductsTeamHasAccessTo({ team }: { team: ITeam }) {
                 return (
                   <Tr key={product.id}>
                     <Td>
-                      <ProductIcon className="pf-v5-u-mr-xs" />
+                      <ProductIcon className="pf-v6-u-mr-xs" />
                       {product.name}
                     </Td>
-                    <Td className="pf-v5-c-table__action">
+                    <Td className="pf-v6-c-table__action">
                       <Switch
                         id={`product-${product.id}-team-${team.id}-access`}
                         aria-label={`team ${team.name} has access to ${product.name}`}
@@ -171,7 +172,7 @@ export default function TeamPage() {
   );
 
   if (team === null) {
-    return <LoadingPage title="Team" description="Details page" />;
+    return <LoadingPage />;
   }
 
   return (
@@ -184,8 +185,12 @@ export default function TeamPage() {
         currentUser?.isSuperAdmin && team ? (
           <EditTeamModal team={team} onSubmit={updateTeam}>
             {(openModal) => (
-              <Button type="button" onClick={openModal} isDisabled={isUpdating}>
-                <EditAltIcon className="pf-v5-u-mr-xs" />
+              <Button
+                icon={<EditAltIcon className="pf-v6-u-mr-xs" />}
+                type="button"
+                onClick={openModal}
+                isDisabled={isUpdating}
+              >
                 {`edit ${team.name} team`}
               </Button>
             )}
@@ -198,21 +203,21 @@ export default function TeamPage() {
           <Card>
             <CardTitle>Team information</CardTitle>
             <CardBody>
-              <CardLine className="pf-v5-u-p-md" field="ID" value={team.id} />
+              <CardLine className="pf-v6-u-p-md" field="ID" value={team.id} />
               <Divider />
               <CardLine
-                className="pf-v5-u-p-md"
+                className="pf-v6-u-p-md"
                 field="Name"
                 value={team.name}
               />
               <Divider />
               <CardLine
-                className="pf-v5-u-p-md"
+                className="pf-v6-u-p-md"
                 field="State"
                 value={team.state}
               />
               <CardLine
-                className="pf-v5-u-p-md"
+                className="pf-v6-u-p-md"
                 field="Partner"
                 value={
                   team.external ? (
@@ -223,7 +228,7 @@ export default function TeamPage() {
                 }
               />
               <CardLine
-                className="pf-v5-u-p-md"
+                className="pf-v6-u-p-md"
                 field="Has access to pre release content"
                 value={
                   team.has_pre_release_access ? (
@@ -235,20 +240,20 @@ export default function TeamPage() {
               />
             </CardBody>
           </Card>
-          <TeamMembers team={team} className="pf-v5-u-mt-lg" />
-          <Card className="pf-v5-u-mt-lg">
+          <TeamMembers team={team} className="pf-v6-u-mt-lg" />
+          <Card className="pf-v6-u-mt-lg">
             <CardTitle>Danger Zone</CardTitle>
             <CardBody>
               <DangerZone>
                 <DangerZoneRow>
                   <div>
-                    <TextContent>
-                      <Text component="h2">{`Delete ${team.name} team`}</Text>
-                      <Text component="p">
+                    <Content>
+                      <Content component="h2">{`Delete ${team.name} team`}</Content>
+                      <Content component="p">
                         Once you delete a team, there is no going back. Please
                         be certain.
-                      </Text>
-                    </TextContent>
+                      </Content>
+                    </Content>
                   </div>
                   <div>
                     <ConfirmDeleteModal
@@ -259,8 +264,12 @@ export default function TeamPage() {
                       }
                     >
                       {(openModal) => (
-                        <Button variant="danger" size="sm" onClick={openModal}>
-                          <TrashAltIcon className="pf-v5-u-mr-sm" />
+                        <Button
+                          icon={<TrashAltIcon className="pf-v6-u-mr-sm" />}
+                          variant="danger"
+                          size="sm"
+                          onClick={openModal}
+                        >
                           Delete this team
                         </Button>
                       )}
@@ -273,7 +282,7 @@ export default function TeamPage() {
         </GridItem>
         <GridItem span={6}>
           <ProductsTeamHasAccessTo team={team} />
-          <TeamComponentsPermissions className="pf-v5-u-mt-lg" team={team} />
+          <TeamComponentsPermissions className="pf-v6-u-mt-lg" team={team} />
         </GridItem>
       </Grid>
     </MainPage>

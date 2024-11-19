@@ -82,7 +82,7 @@ export default function JobStateFile({
           )}
         </IconContainer>
         <FileName>{title}</FileName>
-        <LabelBox className="pf-v5-u-mr-md">
+        <LabelBox className="pf-v6-u-mr-md">
           {seeTimestamp && <Timetamp>{file.created_at}</Timetamp>}
           <Label>{fileDuration}</Label>
         </LabelBox>

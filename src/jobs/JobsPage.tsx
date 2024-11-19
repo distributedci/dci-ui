@@ -10,12 +10,11 @@ import {
   PageSectionVariants,
   Pagination,
   PaginationVariant,
-  Text,
-  TextContent,
+  Content,
 } from "@patternfly/react-core";
 import { Filters, JobsTableListColumn } from "types";
 import useLocalStorage from "hooks/useLocalStorage";
-import { useAuth } from "auth/authContext";
+import { useAuth } from "auth/authSelectors";
 import { useTitle } from "hooks/useTitle";
 import {
   createSearchFromFilters,
@@ -76,15 +75,15 @@ export default function JobsPage() {
 
   return (
     <div ref={jobsPageDivRef}>
-      <section className="pf-v5-c-page__main-breadcrumb">
+      <section className="pf-v6-c-page__main-breadcrumb">
         <Breadcrumb links={[{ to: "/", title: "DCI" }, { title: "Jobs" }]} />
       </section>
-      <PageSection variant={PageSectionVariants.light}>
-        <TextContent>
-          <Text component="h1">Jobs</Text>
-        </TextContent>
+      <PageSection hasBodyWrapper={false}>
+        <Content>
+          <Content component="h1">Jobs</Content>
+        </Content>
       </PageSection>
-      <PageSection variant={PageSectionVariants.default}>
+      <PageSection hasBodyWrapper={false} variant={PageSectionVariants.default}>
         <JobsToolbar
           jobsCount={count}
           filters={filters}
@@ -98,6 +97,7 @@ export default function JobsPage() {
         />
         {isLoading && (
           <PageSection
+            hasBodyWrapper={false}
             variant={PageSectionVariants.default}
             style={{ height: "80vh" }}
             isFilled={true}
@@ -129,9 +129,9 @@ export default function JobsPage() {
           />
         )}
         {count > 0 && (
-          <div className="pf-v5-u-background-color-100">
+          <div className="pf-v6-u-background-color-100">
             <Pagination
-              className="pf-v5-u-px-md"
+              className="pf-v6-u-px-md"
               perPage={filters.limit}
               page={offsetAndLimitToPage(filters.offset, filters.limit)}
               itemCount={count}

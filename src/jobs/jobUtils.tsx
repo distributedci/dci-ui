@@ -1,9 +1,9 @@
 import {
-  global_danger_color_100,
-  global_success_color_100,
-  global_active_color_100,
-  global_warning_color_100,
-  global_Color_light_100,
+  t_temp_dev_tbd as global_danger_color_100 /* CODEMODS: you should update this color token */,
+  t_temp_dev_tbd as global_success_color_100 /* CODEMODS: you should update this color token */,
+  t_temp_dev_tbd as global_active_color_100 /* CODEMODS: you should update this color token */,
+  t_temp_dev_tbd as global_warning_color_100 /* CODEMODS: you should update this color token */,
+  t_temp_dev_tbd as global_Color_light_100 /* CODEMODS: you should update this color token */,
 } from "@patternfly/react-tokens";
 import {
   CheckCircleIcon,

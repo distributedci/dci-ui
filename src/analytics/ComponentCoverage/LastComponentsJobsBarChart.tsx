@@ -1,6 +1,6 @@
 import {
-  global_danger_color_100,
-  global_palette_green_500,
+  t_temp_dev_tbd as global_danger_color_100 /* CODEMODS: you should update this color token */,
+  t_temp_dev_tbd as global_palette_green_500 /* CODEMODS: you should update this color token */,
 } from "@patternfly/react-tokens";
 import { IComponentCoverage } from "types";
 import { Bar, BarChart, XAxis, Tooltip } from "recharts";

@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import copyToClipboard from "../services/copyToClipboard";
 import { CopyIcon, ClipboardCheckIcon } from "@patternfly/react-icons";
-import { global_success_color_100 } from "@patternfly/react-tokens";
+import {
+  t_temp_dev_tbd as global_success_color_100 /* CODEMODS: you should update this color token */,
+} from "@patternfly/react-tokens";
 
 interface CopyIconButtonProps {
   text: string;

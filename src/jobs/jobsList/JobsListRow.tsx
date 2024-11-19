@@ -1,10 +1,10 @@
 import { Label, LabelGroup } from "@patternfly/react-core";
 import { Link } from "react-router-dom";
 import {
-  global_BackgroundColor_200,
-  global_Color_light_200,
-  global_Color_400,
-  global_Color_light_100,
+  t_temp_dev_tbd as global_BackgroundColor_200 /* CODEMODS: you should update this color token */,
+  t_temp_dev_tbd as global_Color_light_200 /* CODEMODS: you should update this color token */,
+  t_temp_dev_tbd as global_Color_400 /* CODEMODS: you should update this color token */,
+  t_temp_dev_tbd as global_Color_light_100 /* CODEMODS: you should update this color token */,
 } from "@patternfly/react-tokens";
 import {
   UsersIcon,
@@ -159,7 +159,7 @@ const JobTests = styled.div`
     flex-direction: row;
   }
 
-  .pf-v5-c-label-group__label {
+  .pf-v6-c-label-group__label {
     max-width: 200px;
   }
 `;
@@ -209,15 +209,15 @@ export default function JobsListRow({
         <TopicName tabIndex={-1} to={`/jobs/${job.id}/jobStates`}>
           {job.name || job.topic?.name}
         </TopicName>
-        <JobId className="pf-v5-u-mt-xs">
+        <JobId className="pf-v6-u-mt-xs">
           <CopyIconButton
             text={job.id}
             textOnSuccess="copied"
-            className="pf-v5-u-mr-xs pointer"
+            className="pf-v6-u-mr-xs pointer"
           />
           {job.id}
         </JobId>
-        <div className="pf-v5-u-mt-xs">
+        <div className="pf-v6-u-mt-xs">
           <span
             role="button"
             tabIndex={0}
@@ -225,11 +225,11 @@ export default function JobsListRow({
             onClick={() => onTeamClicked && onTeamClicked(job.team)}
             onKeyDown={() => onTeamClicked && onTeamClicked(job.team)}
           >
-            <UsersIcon className="pf-v5-u-mr-xs" />
+            <UsersIcon className="pf-v6-u-mr-xs" />
             {job.team?.name}
           </span>
         </div>
-        <div className="pf-v5-u-mt-xs">
+        <div className="pf-v6-u-mt-xs">
           <span
             role="button"
             tabIndex={0}
@@ -239,11 +239,11 @@ export default function JobsListRow({
               onRemoteciClicked && onRemoteciClicked(job.remoteci)
             }
           >
-            <ServerIcon className="pf-v5-u-mr-xs" />
+            <ServerIcon className="pf-v6-u-mr-xs" />
             {job.remoteci?.name}
           </span>
         </div>
-        <div className="pf-v5-u-mt-xs">
+        <div className="pf-v6-u-mt-xs">
           <span
             role="button"
             tabIndex={0}
@@ -251,7 +251,7 @@ export default function JobsListRow({
             onClick={() => onTopicClicked && onTopicClicked(job.topic)}
             onKeyDown={() => onTopicClicked && onTopicClicked(job.topic)}
           >
-            <TopicIcon className="pf-v5-u-mr-xs" />
+            <TopicIcon className="pf-v6-u-mr-xs" />
             {job.topic?.name}
           </span>
         </div>
@@ -284,40 +284,40 @@ export default function JobsListRow({
       <JobDate>
         <div>
           <span title={`Created at ${job.created_at}`}>
-            <CalendarAltIcon className="pf-v5-u-mr-xs" />
+            <CalendarAltIcon className="pf-v6-u-mr-xs" />
             {formatDate(job.created_at)}
           </span>
         </div>
-        <div className="pf-v5-u-mt-xs">
+        <div className="pf-v6-u-mt-xs">
           {job.status === "new" ||
           job.status === "pre-run" ||
           job.status === "running" ? (
             <span title={`Job duration in seconds ${job.duration}`}>
-              <ClockIcon className="pf-v5-u-mr-xs" />
+              <ClockIcon className="pf-v6-u-mr-xs" />
               Started {startedSince}
             </span>
           ) : (
             <span title={`Job duration in seconds ${job.duration}`}>
-              <ClockIcon className="pf-v5-u-mr-xs" />
+              <ClockIcon className="pf-v6-u-mr-xs" />
               Ran for {jobDuration}
             </span>
           )}
         </div>
         {job.url !== null && (
-          <div className="pf-v5-u-mt-xs">
-            <LinkIcon className="pf-v5-u-mr-xs" />
+          <div className="pf-v6-u-mt-xs">
+            <LinkIcon className="pf-v6-u-mr-xs" />
             <a href={job.url}>{job.url}</a>
           </div>
         )}
-        <div className="pf-v5-u-mt-xs">
+        <div className="pf-v6-u-mt-xs">
           <span style={{ color: getColor(job.status) }}>
-            <InfoCircleIcon className="pf-v5-u-mr-xs" />
+            <InfoCircleIcon className="pf-v6-u-mr-xs" />
             {`${job.status} ${
               job.status_reason !== null ? job.status_reason : ""
             }`}
           </span>
         </div>
-        <JobComment className="pf-v5-u-mt-xs">
+        <JobComment className="pf-v6-u-mt-xs">
           <TextAreaEditableOnHover
             text={job.comment || ""}
             onSubmit={(comment) => {
@@ -346,7 +346,7 @@ export default function JobsListRow({
               categoryName={result.name}
               numLabels={5}
               key={i}
-              className="pf-v5-u-mr-xs"
+              className="pf-v6-u-mr-xs"
             >
               <TestLabels
                 success={result.success}

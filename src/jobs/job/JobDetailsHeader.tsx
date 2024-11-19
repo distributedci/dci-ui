@@ -6,7 +6,6 @@ import {
   DescriptionListTerm,
   Label,
   PageSection,
-  PageSectionVariants,
 } from "@patternfly/react-core";
 import { Link, useNavigate } from "react-router-dom";
 import {
@@ -134,7 +133,7 @@ export function Components({ components }: ComponentsProps) {
   return (
     <div>
       {sortedComponents.map((component) => (
-        <Component key={component.id} className="pf-v5-u-mt-xs">
+        <Component key={component.id} className="pf-v6-u-mt-xs">
           <Link to={`/topics/${component.topic_id}/components/${component.id}`}>
             {component.display_name}
           </Link>
@@ -184,11 +183,12 @@ function JobName({ jobId }: { jobId: string }) {
   if (!job) return <span>{jobId}</span>;
   return (
     <Button
+      icon={<ExternalLinkAltIcon style={{ fontSize: "0.7rem" }} />}
       variant="link"
       onClick={() => window.open(`/jobs/${job.id}/jobStates`, "_blank")}
       isInline
     >
-      {job.name} <ExternalLinkAltIcon style={{ fontSize: "0.7rem" }} />
+      {job.name}
     </Button>
   );
 }
@@ -204,7 +204,7 @@ export default function JobDetailsHeader({ job }: JobDetailsHeaderProps) {
   const TopicIcon = getTopicIcon(job.topic?.name);
   const navigate = useNavigate();
   return (
-    <PageSection variant={PageSectionVariants.light}>
+    <PageSection hasBodyWrapper={false}>
       <DescriptionList
         isFillColumns
         columnModifier={{ default: "2Col", lg: "3Col" }}
@@ -259,7 +259,7 @@ export default function JobDetailsHeader({ job }: JobDetailsHeaderProps) {
                 </span>
               </div>
               {job.status_reason && (
-                <div className="pf-v5-u-mt-sm">
+                <div className="pf-v6-u-mt-sm">
                   <span
                     style={{
                       color: getColor(job.status),
@@ -341,7 +341,7 @@ export default function JobDetailsHeader({ job }: JobDetailsHeaderProps) {
                   <Label
                     key={index}
                     color="blue"
-                    className="pointer pf-v5-u-mr-xs pf-v5-u-mb-xs"
+                    className="pointer pf-v6-u-mr-xs pf-v6-u-mb-xs"
                     onClick={() => {
                       navigate(`/jobs?where=tags:${tag}`);
                     }}
@@ -369,7 +369,7 @@ export default function JobDetailsHeader({ job }: JobDetailsHeaderProps) {
                 <Label
                   key={index}
                   color="blue"
-                  className="pf-v5-u-mr-xs pf-v5-u-mb-xs"
+                  className="pf-v6-u-mr-xs pf-v6-u-mb-xs"
                   style={{ maxWidth: "100%" }}
                 >
                   <small

@@ -7,7 +7,9 @@ import { IStat } from "types";
 import { getStat } from "./latestJobStatusActions";
 import { EmptyState, Breadcrumb } from "ui";
 import { fromNow } from "services/date";
-import { global_palette_black_500 } from "@patternfly/react-tokens";
+import {
+  t_temp_dev_tbd as global_palette_black_500 /* CODEMODS: you should update this color token */,
+} from "@patternfly/react-tokens";
 import { LinkIcon } from "@patternfly/react-icons";
 import {
   Table,
@@ -60,7 +62,7 @@ function ListOfJobsCard({ stat }: ListOfJobsCardProps) {
     <Card>
       <CardBody>
         <Table
-          className="pf-v5-c-table pf-m-grid-md"
+          className="pf-v6-c-table pf-m-grid-md"
           role="grid"
           aria-label="Latest Latest Jobs Status"
           id="latest-jobs-per-remoteci-table"

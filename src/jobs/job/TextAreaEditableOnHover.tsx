@@ -5,7 +5,9 @@ import { TimesIcon, CheckIcon } from "@patternfly/react-icons";
 import * as Yup from "yup";
 import { Form, Formik, Field } from "formik";
 import styled from "styled-components";
-import { global_palette_black_700 } from "@patternfly/react-tokens";
+import {
+  t_temp_dev_tbd as global_palette_black_700 /* CODEMODS: you should update this color token */,
+} from "@patternfly/react-tokens";
 
 interface TextAreaEditableOnHoverProps {
   text: string;
@@ -72,24 +74,22 @@ export default function TextAreaEditableOnHover({
               }}
             >
               <Button
+                icon={<CheckIcon />}
                 variant="control"
                 type="submit"
                 isInline
                 size="sm"
                 isDisabled={!(isValid && dirty)}
-              >
-                <CheckIcon />
-              </Button>
+              ></Button>
               <Button
+                icon={<TimesIcon />}
                 variant="control"
                 type="button"
                 isInline
                 size="sm"
                 onClick={() => setEditModeOne(false)}
-                className="pf-v5-u-ml-xs"
-              >
-                <TimesIcon />
-              </Button>
+                className="pf-v6-u-ml-xs"
+              ></Button>
             </div>
           </div>
         </Form>

@@ -16,15 +16,14 @@ import {
   Tooltip,
   CardHeader,
   Truncate,
-  EmptyStateHeader,
 } from "@patternfly/react-core";
 import { BlinkLogo, Breadcrumb } from "ui";
 import MainPage from "pages/MainPage";
 import {
-  global_palette_black_400,
-  global_palette_green_50,
-  global_palette_red_100,
-  global_palette_red_50,
+  t_temp_dev_tbd as global_palette_black_400 /* CODEMODS: you should update this color token */,
+  t_temp_dev_tbd as global_palette_green_50 /* CODEMODS: you should update this color token */,
+  t_temp_dev_tbd as global_palette_red_100 /* CODEMODS: you should update this color token */,
+  t_temp_dev_tbd as global_palette_red_50 /* CODEMODS: you should update this color token */,
 } from "@patternfly/react-tokens";
 import { DateTime } from "luxon";
 import {
@@ -88,7 +87,7 @@ function PipelineJobInfo({ job, index }: { job: PipelineJob; index: number }) {
             style={{
               color,
             }}
-            className="pf-v5-u-mr-xs"
+            className="pf-v6-u-mr-xs"
           >
             {getIcon(job.status)}
           </span>
@@ -130,7 +129,7 @@ function PipelineJobInfo({ job, index }: { job: PipelineJob; index: number }) {
           isCompact
           color="green"
           title={`${job?.tests?.success || 0} tests in success`}
-          className="pf-v5-u-mr-xs"
+          className="pf-v6-u-mr-xs"
         >
           {job?.tests?.success || 0}
         </Label>
@@ -138,7 +137,7 @@ function PipelineJobInfo({ job, index }: { job: PipelineJob; index: number }) {
           isCompact
           color="orange"
           title={`${job?.tests?.skips || 0} skipped tests`}
-          className="pf-v5-u-mr-xs"
+          className="pf-v6-u-mr-xs"
         >
           {job?.tests?.skips || 0}
         </Label>
@@ -182,7 +181,7 @@ function PipelineCard({
 }) {
   const [seeJobComponents, setSeeJobComponents] = useState(false);
   return (
-    <Card className="pf-v5-u-mt-xs">
+    <Card className="pf-v6-u-mt-xs">
       <CardHeader
         actions={{
           actions: (
@@ -206,7 +205,7 @@ function PipelineCard({
         </CardTitle>
       </CardHeader>
       <CardBody style={{ overflow: "auto" }}>
-        <Table className="pf-v5-c-table pf-m-compact pf-m-grid-md">
+        <Table className="pf-v6-c-table pf-m-compact pf-m-grid-md">
           <Thead>
             <Tr>
               <Th>pipeline</Th>
@@ -276,11 +275,11 @@ function PipelineCard({
 function PipelinesTable({ pipelines }: { pipelines: IPipelines }) {
   if (pipelines.days.length === 0) {
     return (
-      <EmptyState variant={EmptyStateVariant.xs}>
-        <EmptyStateHeader
-          titleText="No pipeline between these dates"
-          headingLevel="h4"
-        />
+      <EmptyState
+        headingLevel="h4"
+        titleText="No pipeline between these dates"
+        variant={EmptyStateVariant.xs}
+      >
         <EmptyStateBody>
           change your search parameters and try again
         </EmptyStateBody>
@@ -492,11 +491,11 @@ export default function PipelinesPage() {
       ) : pipelines === null ? (
         <Card>
           <CardBody>
-            <EmptyState variant={EmptyStateVariant.xs}>
-              <EmptyStateHeader
-                titleText="Display pipeline jobs"
-                headingLevel="h4"
-              />
+            <EmptyState
+              headingLevel="h4"
+              titleText="Display pipeline jobs"
+              variant={EmptyStateVariant.xs}
+            >
               <EmptyStateBody>
                 You can fill in the filters to view your team's pipelines.
               </EmptyStateBody>

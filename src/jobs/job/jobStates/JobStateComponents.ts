@@ -1,16 +1,16 @@
 import styled, { css } from "styled-components";
 import {
-  global_warning_color_100,
-  global_info_color_100,
-  global_BackgroundColor_dark_200,
-  global_BackgroundColor_dark_400,
-  global_danger_color_100,
-  global_palette_purple_200,
-  global_palette_black_200,
-  global_palette_black_300,
-  global_palette_black_500,
-  global_palette_black_600,
-  global_palette_black_800,
+  t_temp_dev_tbd as global_warning_color_100 /* CODEMODS: you should update this color token */,
+  t_temp_dev_tbd as global_info_color_100 /* CODEMODS: you should update this color token */,
+  t_temp_dev_tbd as global_BackgroundColor_dark_200 /* CODEMODS: you should update this color token */,
+  t_temp_dev_tbd as global_BackgroundColor_dark_400 /* CODEMODS: you should update this color token */,
+  t_temp_dev_tbd as global_danger_color_100 /* CODEMODS: you should update this color token */,
+  t_temp_dev_tbd as global_palette_purple_200 /* CODEMODS: you should update this color token */,
+  t_temp_dev_tbd as global_palette_black_200 /* CODEMODS: you should update this color token */,
+  t_temp_dev_tbd as global_palette_black_300 /* CODEMODS: you should update this color token */,
+  t_temp_dev_tbd as global_palette_black_500 /* CODEMODS: you should update this color token */,
+  t_temp_dev_tbd as global_palette_black_600 /* CODEMODS: you should update this color token */,
+  t_temp_dev_tbd as global_palette_black_800 /* CODEMODS: you should update this color token */,
 } from "@patternfly/react-tokens";
 import { IFileStatus } from "types";
 

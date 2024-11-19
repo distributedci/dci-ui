@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { Button, Modal } from "@patternfly/react-core";
+import { Button } from "@patternfly/react-core";
+import { Modal } from "@patternfly/react-core/deprecated";
 import copyToClipboard from "../services/copyToClipboard";
 import { IFeeder, IRemoteci } from "types";
 
@@ -93,7 +94,7 @@ export function SeeAuthentificationFileModal({
           </Button>,
         ]}
       >
-        <div className="pf-v5-u-mb-md">
+        <div className="pf-v6-u-mb-md">
           <pre>{getContent(resource.id, role, api_secret, type)}</pre>
         </div>
       </Modal>

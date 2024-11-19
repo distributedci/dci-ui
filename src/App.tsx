@@ -24,6 +24,7 @@ import NotificationsPage from "notifications/NotificationsPage";
 import LoginPage from "auth/LoginPage";
 import LoginCallbackPage from "auth/LoginCallbackPage";
 import SilentRedirectPage from "auth/SilentRedirectPage";
+import AdminLoginPage from "auth/AdminLoginPage";
 import Page404 from "pages/Page404";
 import TasksDurationPerJobPage from "analytics/TasksDurationPerJob/TasksDurationPerJobPage";
 import AnalyticsPage from "analytics/AnalyticsPage";
@@ -31,7 +32,6 @@ import LatestJobStatusPage from "analytics/LatestJobStatus/LatestJobStatusPage";
 import LatestJobStatusDetailsPage from "analytics/LatestJobStatus/LatestJobStatusDetailsPage";
 import ComponentCoveragePage from "analytics/ComponentCoverage/ComponentCoveragePage";
 import JunitComparisonPage from "analytics/JunitComparison/JunitComparisonPage";
-import NotAuthenticatedLayout from "pages/NotAuthenticatedLayout";
 import Alerts from "alerts/Alerts";
 import AuthenticatedLayout from "pages/AuthenticatedLayout";
 import JobTestPage from "jobs/job/tests/test/JobTestPage";
@@ -46,10 +46,11 @@ export default function App() {
       <Routes>
         <Route path="/">
           <Route index element={<Navigate replace to="jobs" />} />
-          <Route element={<NotAuthenticatedLayout />}>
+          <Route>
             <Route path="login" element={<LoginPage />} />
             <Route path="login_callback" element={<LoginCallbackPage />} />
             <Route path="silent_redirect" element={<SilentRedirectPage />} />
+            <Route path="dci-admin" element={<AdminLoginPage />} />
           </Route>
           <Route element={<AuthenticatedLayout />}>
             <Route path="analytics">

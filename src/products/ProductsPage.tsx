@@ -27,7 +27,7 @@ import {
   useListProductsQuery,
   useUpdateProductMutation,
 } from "./productsApi";
-import { useAuth } from "auth/authContext";
+import { useAuth } from "auth/authSelectors";
 
 export default function ProductsPage() {
   const location = useLocation();
@@ -117,7 +117,7 @@ export default function ProductsPage() {
                 {currentUser.isSuperAdmin ? (
                   <>
                     <EditProductModal
-                      className="pf-v5-u-mr-xs"
+                      className="pf-v6-u-mr-xs"
                       onSubmit={updateProduct}
                       product={product}
                       isDisabled={isUpdating}
@@ -128,9 +128,11 @@ export default function ProductsPage() {
                       onOk={() => deleteProduct(product)}
                     >
                       {(openModal) => (
-                        <Button variant="danger" onClick={openModal}>
-                          <TrashIcon />
-                        </Button>
+                        <Button
+                          icon={<TrashIcon />}
+                          variant="danger"
+                          onClick={openModal}
+                        ></Button>
                       )}
                     </ConfirmDeleteModal>
                   </>

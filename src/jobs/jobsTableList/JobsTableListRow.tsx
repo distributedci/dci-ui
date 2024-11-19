@@ -63,7 +63,7 @@ export default function JobTableSummary({
         <CopyIconButton
           text={job.id}
           textOnSuccess="copied"
-          className="pf-v5-u-mr-xs pointer"
+          className="pf-v6-u-mr-xs pointer"
         />
         {job.id}
       </span>
@@ -81,7 +81,7 @@ export default function JobTableSummary({
           {pipeline.name}
         </Label>
         <Link
-          className="pf-v5-u-ml-xs"
+          className="pf-v6-u-ml-xs"
           to={{
             pathname: "/analytics/pipelines",
             search: createSearchParams({
@@ -142,7 +142,7 @@ export default function JobTableSummary({
         <Link
           to={`/topics/${principalComponent.topic_id}/components/${principalComponent.id}`}
         >
-          <TopicIcon className="pf-v5-u-mr-xs" />
+          <TopicIcon className="pf-v6-u-mr-xs" />
           {principalComponent.display_name}
         </Link>
       ),

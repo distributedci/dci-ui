@@ -11,7 +11,9 @@ import {
 } from "@patternfly/react-core";
 import { BlinkLogo, Breadcrumb } from "ui";
 import MainPage from "pages/MainPage";
-import { global_palette_red_100 } from "@patternfly/react-tokens";
+import {
+  t_temp_dev_tbd as global_palette_red_100 /* CODEMODS: you should update this color token */,
+} from "@patternfly/react-tokens";
 import { formatDate, getRangeDates } from "services/date";
 import { useCallback, useEffect, useState } from "react";
 import { RangeOptionValue } from "types";
@@ -276,7 +278,7 @@ export default function KeyValuesPage() {
         </CardBody>
       </Card>
       {isLoading ? (
-        <Card className="pf-v5-u-mt-xs">
+        <Card className="pf-v6-u-mt-xs">
           <CardBody>
             <Bullseye>
               <BlinkLogo />
@@ -292,7 +294,7 @@ export default function KeyValuesPage() {
                   selectedKeys.length === 0 || selectedKeys.indexOf(key) !== -1,
               )
               .map(([key, keyValue]) => (
-                <Card className="pf-v5-u-mt-xs">
+                <Card className="pf-v6-u-mt-xs">
                   <CardHeader>{key}</CardHeader>
                   <CardBody>
                     {graphType.value === "scatter" && (
@@ -379,7 +381,7 @@ export default function KeyValuesPage() {
                 </Card>
               ))}
           {keyValues !== null && Object.keys(keyValues).length === 0 && (
-            <Card className="pf-v5-u-mt-xs">
+            <Card className="pf-v6-u-mt-xs">
               <CardBody>
                 There is no key values corresponding to this query: {query}
               </CardBody>

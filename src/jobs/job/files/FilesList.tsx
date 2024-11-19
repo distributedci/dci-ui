@@ -98,7 +98,7 @@ export default function FilesList({ job }: FilesListProps) {
                     .catch(console.error)
                     .finally(() => setIsDownloading(false));
                 }}
-                className="pf-v5-u-mr-xs"
+                className="pf-v6-u-mr-xs"
                 isDisabled={isDownloading}
               >
                 {textSearch === ""
@@ -119,7 +119,7 @@ export default function FilesList({ job }: FilesListProps) {
             info="There are no files attached to this search. Change your search."
           />
         ) : (
-          <Table className="pf-v5-c-table pf-m-compact pf-m-grid-md">
+          <Table className="pf-v6-c-table pf-m-compact pf-m-grid-md">
             <Thead>
               <Tr>
                 <Th>Filename</Th>

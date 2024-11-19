@@ -19,11 +19,11 @@ import {
   ToolbarItem,
 } from "@patternfly/react-core";
 import {
-  global_danger_color_100,
-  global_palette_green_100,
-  global_palette_green_500,
-  global_palette_red_100,
-  global_palette_red_50,
+  t_temp_dev_tbd as global_danger_color_100 /* CODEMODS: you should update this color token */,
+  t_temp_dev_tbd as global_palette_green_100 /* CODEMODS: you should update this color token */,
+  t_temp_dev_tbd as global_palette_green_500 /* CODEMODS: you should update this color token */,
+  t_temp_dev_tbd as global_palette_red_100 /* CODEMODS: you should update this color token */,
+  t_temp_dev_tbd as global_palette_red_50 /* CODEMODS: you should update this color token */,
 } from "@patternfly/react-tokens";
 import { BlinkLogo, Breadcrumb, EmptyState } from "ui";
 import { IComponentCoverageESData, ITopic, IComponentCoverage } from "types";
@@ -334,7 +334,7 @@ export default function ComponentCoveragePage() {
               >
                 <DrawerContentBody>
                   <Table
-                    className="pf-v5-c-table pf-m-compact pf-m-grid-md"
+                    className="pf-v6-c-table pf-m-compact pf-m-grid-md"
                     role="grid"
                     aria-label="component coverage"
                   >
@@ -398,7 +398,7 @@ export default function ComponentCoveragePage() {
                                     color: global_palette_red_100.value,
                                   }}
                                 >
-                                  <WarningTriangleIcon className="pf-v5-u-mr-xs" />
+                                  <WarningTriangleIcon className="pf-v6-u-mr-xs" />
                                   not tested
                                 </span>
                               )}
@@ -422,7 +422,7 @@ export default function ComponentCoveragePage() {
                                     width: "200px",
                                     display: "block",
                                   }}
-                                  className="pf-v5-u-mr-md"
+                                  className="pf-v6-u-mr-md"
                                 >
                                   <div
                                     style={{
@@ -442,7 +442,7 @@ export default function ComponentCoveragePage() {
                                     width: "35px",
                                     textAlign: "right",
                                   }}
-                                  className="pf-v5-u-mr-md"
+                                  className="pf-v6-u-mr-md"
                                 >
                                   {percentageSuccess}%
                                 </span>

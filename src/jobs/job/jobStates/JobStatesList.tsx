@@ -35,8 +35,8 @@ import {
   CheckIcon,
 } from "@patternfly/react-icons";
 import {
-  global_Color_light_100,
-  global_palette_black_500,
+  t_temp_dev_tbd as global_Color_light_100 /* CODEMODS: you should update this color token */,
+  t_temp_dev_tbd as global_palette_black_500 /* CODEMODS: you should update this color token */,
 } from "@patternfly/react-tokens";
 import { useTheme } from "ui/Theme/themeContext";
 
@@ -117,7 +117,7 @@ function JobSettingsDropdown({
             seeRawLog ? (
               <CheckIcon />
             ) : (
-              <span className="pf-v5-c-dropdown__menu-item-icon"></span>
+              <span className="pf-v6-c-dropdown__menu-item-icon"></span>
             )
           }
         >
@@ -135,7 +135,7 @@ function JobSettingsDropdown({
         seeTimestamp ? (
           <CheckIcon />
         ) : (
-          <span className="pf-v5-c-dropdown__menu-item-icon"></span>
+          <span className="pf-v6-c-dropdown__menu-item-icon"></span>
         )
       }
     >
@@ -307,7 +307,7 @@ export default function JobStatesList({ job }: JobStatesListProps) {
             </div>
           ))
         ) : (
-          <div className="pf-v5-u-mt-md">
+          <div className="pf-v6-u-mt-md">
             {getLongerTaskFirst(jobStates).map((file, k) => (
               <JobStateFile
                 key={k}

@@ -37,7 +37,7 @@ export default function JobsTableList({
   return (
     <TableWithTrStyled
       isDark={isDark}
-      className="pf-v5-c-table pf-m-compact pf-m-grid-md"
+      className="pf-v6-c-table pf-m-compact pf-m-grid-md"
     >
       <Thead>
         <Tr>

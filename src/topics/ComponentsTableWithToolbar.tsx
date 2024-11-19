@@ -40,7 +40,7 @@ export default function ComponentsTableWithToolbar({
     : DefaultComponentsTable;
 
   return (
-    <Card className="pf-v5-u-mt-md">
+    <Card className="pf-v6-u-mt-md">
       <CardTitle>Components</CardTitle>
       <CardBody>
         <ComponentsToolbar filters={filters} setFilters={setFilters} />

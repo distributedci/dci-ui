@@ -1,7 +1,7 @@
 import {
-  global_Color_light_200,
-  global_palette_red_50,
-  global_danger_color_200,
+  t_temp_dev_tbd as global_Color_light_200 /* CODEMODS: you should update this color token */,
+  t_temp_dev_tbd as global_palette_red_50 /* CODEMODS: you should update this color token */,
+  t_temp_dev_tbd as global_danger_color_200 /* CODEMODS: you should update this color token */,
 } from "@patternfly/react-tokens";
 import styled from "styled-components";
 import { isEmpty } from "lodash";
@@ -54,12 +54,12 @@ export default function JobsList({
           padding: "1em",
         }}
       >
-        <WarningTriangleIcon className="pf-v5-u-mr-xs" />
+        <WarningTriangleIcon className="pf-v6-u-mr-xs" />
         Deprecation warning: This representation of the jobs list is deprecated
         and will be removed soon. To use the new view{" "}
         <Button
           size="sm"
-          className="pf-v5-u-ml-xs"
+          className="pf-v6-u-ml-xs"
           type="button"
           onClick={() => setTableViewActive(true)}
         >

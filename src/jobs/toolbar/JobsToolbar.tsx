@@ -215,36 +215,36 @@ export default function JobsToolbar({
             <ToolbarItem variant="separator" />
           </>
         )}
-        <ToolbarGroup variant="icon-button-group">
+        <ToolbarGroup variant="action-group-plain">
           <ToolbarItem>
             <Button
+              icon={<SyncAltIcon />}
               variant={ButtonVariant.plain}
               aria-label="refresh"
               type="button"
               onClick={refresh}
-            >
-              <SyncAltIcon />
-            </Button>
+            />
           </ToolbarItem>
           <ToolbarItem>
             <Button
+              icon={
+                tableViewActive ? (
+                  <>
+                    <TableIcon />
+                    <ArrowsAltVIcon />
+                  </>
+                ) : (
+                  <>
+                    <ListIcon />
+                    <ArrowsAltVIcon />
+                  </>
+                )
+              }
               variant={ButtonVariant.plain}
               aria-label={tableViewActive ? "Table view" : "List view"}
               type="button"
               onClick={() => setTableViewActive(!tableViewActive)}
-            >
-              {tableViewActive ? (
-                <>
-                  <TableIcon />
-                  <ArrowsAltVIcon />
-                </>
-              ) : (
-                <>
-                  <ListIcon />
-                  <ArrowsAltVIcon />
-                </>
-              )}
-            </Button>
+            />
           </ToolbarItem>
         </ToolbarGroup>
         {tableViewActive && (
@@ -256,7 +256,7 @@ export default function JobsToolbar({
           </ToolbarItem>
         )}
         <ToolbarGroup style={{ flex: "1" }}>
-          <ToolbarItem variant="pagination" align={{ default: "alignRight" }}>
+          <ToolbarItem variant="pagination" align={{ default: "alignEnd" }}>
             {jobsCount === 0 ? null : (
               <Pagination
                 perPage={filters.limit}

@@ -1,12 +1,8 @@
-import {
-  Button,
-  PageSection,
-  PageSectionVariants,
-  Text,
-  TextContent,
-} from "@patternfly/react-core";
+import { Button, PageSection, Content } from "@patternfly/react-core";
 import styled from "styled-components";
-import { global_danger_color_100 } from "@patternfly/react-tokens";
+import {
+  t_temp_dev_tbd as global_danger_color_100 /* CODEMODS: you should update this color token */,
+} from "@patternfly/react-tokens";
 import { ConfirmDeleteModal } from "ui";
 import { useNavigate } from "react-router-dom";
 import { useJob } from "../jobContext";
@@ -30,17 +26,17 @@ export default function JobSettingsPage() {
   const { job } = useJob();
 
   return (
-    <PageSection variant={PageSectionVariants.light}>
-      <DangerZone className="pf-v5-u-mt-md">
+    <PageSection hasBodyWrapper={false}>
+      <DangerZone className="pf-v6-u-mt-md">
         <DangerZoneRow>
           <div>
-            <TextContent>
-              <Text component="h2">Delete this job</Text>
-              <Text component="p">
+            <Content>
+              <Content component="h2">Delete this job</Content>
+              <Content component="p">
                 Once you delete a job, there is no going back. Please be
                 certain.
-              </Text>
-            </TextContent>
+              </Content>
+            </Content>
           </div>
           <div>
             <ConfirmDeleteModal

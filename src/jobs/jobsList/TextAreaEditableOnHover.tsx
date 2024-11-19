@@ -74,19 +74,17 @@ export default function TextAreaEditableOnHover({
             </div>
             <div style={{ flex: "none" }}>
               <Button
+                icon={<CheckIcon />}
                 variant="link"
                 type="submit"
                 isDisabled={!(isValid && dirty)}
-              >
-                <CheckIcon />
-              </Button>
+              ></Button>
               <Button
+                icon={<TimesIcon />}
                 variant="plain"
                 type="button"
                 onClick={() => setEditModeOne(false)}
-              >
-                <TimesIcon />
-              </Button>
+              />
             </div>
           </InlineForm>
         </Form>
@@ -102,8 +100,8 @@ export default function TextAreaEditableOnHover({
         onClick={() => setEditModeOne(true)}
         onKeyDown={() => setEditModeOne(true)}
       >
-        <CommentIcon className="pf-v5-u-mr-xs comment-icon" />
-        <PencilAltIcon className="pf-v5-u-mr-xs pencil-icon" />
+        <CommentIcon className="pf-v6-u-mr-xs comment-icon" />
+        <PencilAltIcon className="pf-v6-u-mr-xs pencil-icon" />
       </div>
       <div style={{ flex: "1" }}>{children}</div>
     </TextAreaEditable>

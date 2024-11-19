@@ -1,6 +1,6 @@
 import {
-  global_danger_color_100,
-  global_success_color_100,
+  t_temp_dev_tbd as global_danger_color_100 /* CODEMODS: you should update this color token */,
+  t_temp_dev_tbd as global_success_color_100 /* CODEMODS: you should update this color token */,
 } from "@patternfly/react-tokens";
 import { IStat } from "types";
 import { PieChart, Pie, Cell, Tooltip, Label } from "recharts";

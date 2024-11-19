@@ -28,7 +28,7 @@ export default function File({ file }: FileProps) {
         {isText ? (
           <SeeFileContentModal file={file}>
             {(show) => (
-              <Button variant="link" className="pf-v5-u-p-0" onClick={show}>
+              <Button variant="link" className="pf-v6-u-p-0" onClick={show}>
                 {file.name}
               </Button>
             )}
@@ -55,7 +55,7 @@ export default function File({ file }: FileProps) {
               .catch(console.error)
               .finally(() => setIsDownloading(false));
           }}
-          className="pf-v5-u-mr-xs"
+          className="pf-v6-u-mr-xs"
           isDisabled={isDownloading}
         >
           download
@@ -63,7 +63,7 @@ export default function File({ file }: FileProps) {
         <Button
           variant="secondary"
           icon={<ExternalLinkAltIcon />}
-          className="pf-v5-u-mr-xs"
+          className="pf-v6-u-mr-xs"
           iconPosition="right"
           onClick={() => {
             navigate(`/files/${file.id}`);
