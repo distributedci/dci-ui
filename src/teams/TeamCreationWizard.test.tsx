@@ -1,4 +1,4 @@
-import { renderWithProviders } from "utils/test-utils";
+import { renderWithProviders } from "__tests__/utils";
 import TeamCreationWizard from "./TeamCreationWizard";
 import { waitFor } from "@testing-library/react";
 

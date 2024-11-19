@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { ICurrentUser, IRemoteci } from "types";
 import "@patternfly/patternfly/components/DualListSelector/dual-list-selector.css";
+import { SearchInput } from "@patternfly/react-core";
 import {
   DualListSelector,
   DualListSelectorControl,
@@ -8,8 +9,7 @@ import {
   DualListSelectorList,
   DualListSelectorListItem,
   DualListSelectorPane,
-  SearchInput,
-} from "@patternfly/react-core";
+} from "@patternfly/react-core/deprecated";
 import { AngleLeftIcon, AngleRightIcon } from "@patternfly/react-icons";
 import {
   useListRemotecisQuery,
