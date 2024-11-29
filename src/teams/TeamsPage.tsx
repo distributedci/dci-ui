@@ -4,8 +4,6 @@ import CreateTeamModal from "./CreateTeamModal";
 import {
   Button,
   Content,
-  Flex,
-  FlexItem,
   Label,
   PageSection,
   Pagination,
@@ -15,7 +13,6 @@ import {
   ToolbarItem,
 } from "@patternfly/react-core";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import TeamCreationWizard from "./TeamCreationWizard";
 import { Table, Thead, Tr, Th, Tbody, Td } from "@patternfly/react-table";
 import { useAuth } from "auth/authSelectors";
 import { Filters } from "types";
@@ -72,35 +69,26 @@ export default function TeamsPage() {
       </Content>
       {currentUser.hasEPMRole && (
         <div className="pf-v6-u-mb-md">
-          <Flex>
-            <Flex>
-              <FlexItem>
-                <CreateTeamModal
-                  onSubmit={async (team) => {
-                    try {
-                      const newTeam = await createTeam(team).unwrap();
-                      navigate(`/teams/${newTeam.id}`);
-                    } catch (error) {
-                      console.error("rejected", error);
-                    }
-                  }}
-                >
-                  {(openModal) => (
-                    <Button
-                      variant="primary"
-                      onClick={openModal}
-                      isDisabled={isCreating}
-                    >
-                      Create a new team
-                    </Button>
-                  )}
-                </CreateTeamModal>
-              </FlexItem>
-              <FlexItem>
-                <TeamCreationWizard />
-              </FlexItem>
-            </Flex>
-          </Flex>
+          <CreateTeamModal
+            onSubmit={async (team) => {
+              try {
+                const newTeam = await createTeam(team).unwrap();
+                navigate(`/teams/${newTeam.id}`);
+              } catch (error) {
+                console.error("rejected", error);
+              }
+            }}
+          >
+            {(openModal) => (
+              <Button
+                variant="primary"
+                onClick={openModal}
+                isDisabled={isCreating}
+              >
+                Create a new team
+              </Button>
+            )}
+          </CreateTeamModal>
         </div>
       )}
       <Toolbar id="toolbar-teams" collapseListedFiltersBreakpoint="xl">

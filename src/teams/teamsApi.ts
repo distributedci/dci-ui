@@ -18,26 +18,6 @@ export const { useDeleteTeamMutation } = injectDeleteEndpoint<ITeam>(resource);
 export const { useListTeamsQuery } = injectListEndpoint<ITeam>(resource);
 export const { useUpdateTeamMutation } = injectUpdateEndpoint<ITeam>(resource);
 
-export function searchTeam(name: string): AxiosPromise<{
-  teams: ITeam[];
-}> {
-  return http.get(`/api/v1/teams/?where=name:${name}`);
-}
-
-export function getOrCreateTeam(team: Partial<ITeam>) {
-  return searchTeam(team.name || "").then((response) => {
-    if (response.data.teams.length > 0) {
-      return response.data.teams[0];
-    } else {
-      return http({
-        method: "post",
-        url: `/api/v1/teams`,
-        data: team,
-      }).then((response) => response.data.team as ITeam);
-    }
-  });
-}
-
 export const { useAddProductToTeamMutation, useRemoveProductFromTeamMutation } =
   api
     .enhanceEndpoints({
@@ -117,10 +97,4 @@ export function removeRemoteTeamPermissionForTheTeam(
     url: `/api/v1/teams/${team.id}/permissions/components`,
     data: { teams_ids: [remoteTeam.id] },
   });
-}
-
-export function fetchUsersForTeam(team: ITeam): Promise<IUser[]> {
-  return http
-    .get(`/api/v1/teams/${team.id}/users`)
-    .then((response) => response.data.users);
 }
