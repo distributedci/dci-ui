@@ -60,16 +60,14 @@ function ListOfJobsCard({ stat }: ListOfJobsCardProps) {
     <Card>
       <CardBody>
         <Table
-          className="pf-v6-c-table pf-m-grid-md"
-          role="grid"
-          aria-label="Latest Latest Jobs Status"
           id="latest-jobs-per-remoteci-table"
+          aria-label="Latest Latest Jobs Status"
         >
           <Caption>
             Latest Latest Jobs Status using {stat.topic.name} topic
           </Caption>
           <Thead>
-            <Tr role="row">
+            <Tr>
               <Th role="columnheader" scope="col">
                 Team
               </Th>
@@ -89,7 +87,7 @@ function ListOfJobsCard({ stat }: ListOfJobsCardProps) {
           </Thead>
           <Tbody>
             {stat.jobs.map((job, i) => (
-              <Tr key={i} role="row">
+              <Tr key={i}>
                 <Td role="cell" data-label="Team name">
                   {job.team_name}
                 </Td>

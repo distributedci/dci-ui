@@ -113,7 +113,7 @@ export default function FilesList({ job }: FilesListProps) {
             info="There are no files attached to this search. Change your search."
           />
         ) : (
-          <Table variant="compact" className="pf-v6-c-tablepf-m-grid-md">
+          <Table>
             <Thead>
               <Tr>
                 <Th>Filename</Th>

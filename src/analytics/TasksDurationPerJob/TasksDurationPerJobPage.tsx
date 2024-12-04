@@ -287,14 +287,9 @@ export default function TasksDurationPerJobPage() {
               <Graph data={filteredData} />
             </div>
             <div className="pf-v6-u-p-xl">
-              <Table
-                variant="compact"
-                className="pf-v6-c-tablepf-m-grid-md"
-                role="grid"
-                aria-label="Job Legend"
-              >
+              <Table aria-label="Job Legend">
                 <Thead>
-                  <Tr role="row">
+                  <Tr>
                     <Th role="columnheader" scope="col">
                       id
                     </Th>
@@ -314,7 +309,7 @@ export default function TasksDurationPerJobPage() {
                 </Thead>
                 <Tbody>
                   {filteredData.map((d, i) => (
-                    <Tr key={i} role="row">
+                    <Tr key={i}>
                       <Td
                         role="cell"
                         data-label="Job id"
