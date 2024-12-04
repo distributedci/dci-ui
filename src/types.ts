@@ -19,11 +19,19 @@ export interface ITeam extends Resource {
   topics: ITopic[];
 }
 
+export interface IGetTeams extends BaseListResponse {
+  teams: ITeam[];
+}
+
 export interface IProduct extends Resource {
   label: string;
   description: string;
   created_at: string;
   updated_at: string;
+}
+
+export interface IGetProducts extends BaseListResponse {
+  products: IProduct[];
 }
 
 export interface IRemoteci extends Resource {

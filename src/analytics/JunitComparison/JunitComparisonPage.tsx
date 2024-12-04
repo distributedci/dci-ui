@@ -31,10 +31,8 @@ import {
   Line,
   LineChart,
 } from "recharts";
-import http from "services/http";
 import TopicSelect from "jobs/toolbar/TopicSelect";
 import { useState } from "react";
-import { showAPIError, showError } from "alerts/alertsSlice";
 import RemoteciSelect from "jobs/toolbar/RemoteciSelect";
 import { DateTime } from "luxon";
 import { round } from "lodash";
@@ -50,26 +48,13 @@ import {
 } from "@patternfly/react-tokens";
 import ListInputWithChip from "ui/form/ListInputWithChip";
 import { useSearchParams } from "react-router-dom";
-import { useAppDispatch } from "store";
 import { Table, Thead, Tr, Th, Tbody, Td } from "@patternfly/react-table";
-
-type JunitComputationMode = "mean" | "median";
-
-interface JunitComparisonPayload {
-  topic_1_id: string | null;
-  topic_1_start_date: string | null;
-  topic_1_end_date: string | null;
-  remoteci_1_id: string | null;
-  topic_1_baseline_computation: JunitComputationMode;
-  tags_1: string[];
-  topic_2_id: string | null;
-  topic_2_start_date: string | null;
-  topic_2_end_date: string | null;
-  remoteci_2_id: string | null;
-  topic_2_baseline_computation: JunitComputationMode;
-  tags_2: string[];
-  test_name: string | null;
-}
+import { useLazyGetJunitQuery } from "./junitComparisonApi";
+import type {
+  JunitComparisonPayload,
+  JunitComputationMode,
+  JunitData,
+} from "./junitComparisonApi";
 
 function JunitComparisonForm({
   isLoading,
@@ -154,7 +139,7 @@ function JunitComparisonForm({
                       value={topic1StartDate || ""}
                       placeholder="Jobs after"
                       onChange={(e, value) => setTopic1StartDate(value)}
-                      style={{ width: "100%" }}
+                      appendTo={() => document.body}
                     />
                   </FormGroup>
                 </GridItem>
@@ -165,7 +150,7 @@ function JunitComparisonForm({
                       value={topic1EndDate || ""}
                       placeholder="Jobs before"
                       onChange={(e, value) => setTopic1EndDate(value)}
-                      style={{ width: "100%" }}
+                      appendTo={() => document.body}
                     />
                   </FormGroup>
                 </GridItem>
@@ -275,7 +260,7 @@ function JunitComparisonForm({
                       value={topic2StartDate || ""}
                       placeholder="Jobs after"
                       onChange={(e, value) => setTopic2StartDate(value)}
-                      style={{ width: "100%" }}
+                      appendTo={() => document.body}
                     />
                   </FormGroup>
                 </GridItem>
@@ -286,7 +271,7 @@ function JunitComparisonForm({
                       value={topic2EndDate || ""}
                       placeholder="Jobs before"
                       onChange={(e, value) => setTopic2EndDate(value)}
-                      style={{ width: "100%" }}
+                      appendTo={() => document.body}
                     />
                   </FormGroup>
                 </GridItem>
@@ -399,34 +384,11 @@ function JunitComparisonForm({
   );
 }
 
-interface JunitBarChartData {
-  details: { testcase: string; value: number }[];
-  intervals: number[];
-  values: number[];
-  len_jobs_topic_1: number;
-  len_jobs_topic_2: number;
-}
-
-interface TrendPercentageData {
-  job_ids: string[];
-  values: number[];
-}
-
-interface JunitData {
-  bar_chart: JunitBarChartData;
-  trend_percentage: TrendPercentageData;
-  details: { testcase: string; value: number }[];
-  intervals: number[];
-  values: number[];
-  len_jobs_topic_1: number;
-  len_jobs_topic_2: number;
-}
-
 function JunitBarChart({
   data,
   rangeSelected,
 }: {
-  data: JunitBarChartData;
+  data: JunitData["bar_chart"];
   rangeSelected: (
     lowerBoundary: null | number,
     upperBoundary: null | number,
@@ -553,7 +515,7 @@ function JunitBarChart({
   );
 }
 
-function TrendChart({ data }: { data: TrendPercentageData }) {
+export function TrendChart({ data }: { data: JunitData["trend_percentage"] }) {
   return (
     <Card>
       <CardTitle>
@@ -602,7 +564,7 @@ function TestListDetails({
   upperBoundary,
   resetRange,
 }: {
-  data: JunitBarChartData;
+  data: JunitData["bar_chart"];
   lowerBoundary: number | null;
   upperBoundary: number | null;
   resetRange: () => void;
@@ -628,14 +590,9 @@ function TestListDetails({
         </div>
       </CardTitle>
       <CardBody>
-        <Table
-          variant="compact"
-          className="pf-v6-c-table"
-          role="grid"
-          aria-label="junit testcase details"
-        >
+        <Table aria-label="junit testcase details">
           <Thead>
-            <Tr role="row">
+            <Tr>
               <Th role="columnheader" scope="col">
                 Testcase name
               </Th>
@@ -680,10 +637,7 @@ export default function JunitComparisonPage() {
   const [testUpperBoundary, setTestUpperBoundary] = useState<number | null>(
     null,
   );
-  const [isLoading, setIsLoading] = useState(false);
-  const [data, setData] = useState<JunitData | null>(null);
-
-  const dispatch = useAppDispatch();
+  const [getJunitComparison, { data, isLoading }] = useLazyGetJunitQuery();
 
   return (
     <PageSection>
@@ -700,24 +654,7 @@ export default function JunitComparisonPage() {
           <JunitComparisonForm
             isLoading={isLoading}
             onSubmit={(values) => {
-              setData(null);
-              setIsLoading(true);
-              http
-                .post("/api/v1/analytics/junit_comparison", values)
-                .then((response) => {
-                  if (typeof response.data === "object") {
-                    setData(response.data as JunitData);
-                  } else {
-                    dispatch(
-                      showError("JSON returned by the API is not valid"),
-                    );
-                  }
-                })
-                .catch((error) => {
-                  dispatch(showAPIError(error));
-                  return error;
-                })
-                .then(() => setIsLoading(false));
+              getJunitComparison(values);
             }}
           />
         </CardBody>
