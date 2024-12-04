@@ -274,7 +274,7 @@ export default function ComponentCoveragePage() {
                   <DrawerPanelContent widths={{ default: "width_66" }}>
                     <DrawerHead>
                       <div ref={drawerRef}>
-                        <Table variant="compact" aria-label="jobs list">
+                        <Table aria-label="jobs list">
                           <Caption>
                             {componentDetails && (
                               <span>
@@ -288,7 +288,7 @@ export default function ComponentCoveragePage() {
                             )}
                           </Caption>
                           <Thead>
-                            <Tr role="row">
+                            <Tr>
                               <Th role="columnheader" scope="col">
                                 Name
                               </Th>
@@ -304,7 +304,7 @@ export default function ComponentCoveragePage() {
                             {componentDetails &&
                               sortByNewestFirst(componentDetails.jobs).map(
                                 (job, i) => (
-                                  <Tr key={i} role="row">
+                                  <Tr key={i}>
                                     <Td role="cell" data-label="Component name">
                                       <Link to={`/jobs/${job.id}`}>
                                         {job.name}
@@ -332,14 +332,9 @@ export default function ComponentCoveragePage() {
                 }
               >
                 <DrawerContentBody>
-                  <Table
-                    variant="compact"
-                    className="pf-v6-c-table pf-m-grid-md"
-                    role="grid"
-                    aria-label="component coverage"
-                  >
+                  <Table aria-label="component coverage">
                     <Thead>
-                      <Tr role="row">
+                      <Tr>
                         <Th role="columnheader" scope="col">
                           Component name
                         </Th>
@@ -374,7 +369,7 @@ export default function ComponentCoveragePage() {
                                   component.nbOfJobs,
                               );
                         return (
-                          <Tr key={i} role="row">
+                          <Tr key={i}>
                             <Td role="cell" data-label="Component name">
                               <Link
                                 to={`/topics/${component.topic_id}/components/${component.id}`}
