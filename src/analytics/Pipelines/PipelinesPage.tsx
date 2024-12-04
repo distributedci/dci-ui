@@ -187,7 +187,7 @@ function PipelineCard({
         </CardTitle>
       </CardHeader>
       <CardBody style={{ overflow: "auto" }}>
-        <Table variant="compact" className="pf-v6-c-table pf-m-grid-md">
+        <Table>
           <Thead>
             <Tr>
               <Th>pipeline</Th>

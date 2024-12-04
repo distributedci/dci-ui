@@ -119,11 +119,11 @@ export default function TeamComponentsPermissions({
                   The {team.name} team has access to the following team
                   components:
                 </Content>
-                <Table variant="compact" className="pf-v6-c-tablepf-m-grid-md">
+                <Table>
                   <Thead>
                     <Tr>
                       <Th>Team name</Th>
-                      <Th />
+                      <Th screenReaderText="Actions" />
                     </Tr>
                   </Thead>
                   <Tbody>
@@ -134,7 +134,7 @@ export default function TeamComponentsPermissions({
                             {remoteTeam.name}
                           </Link>
                         </Td>
-                        <Td className="pf-v6-c-table__action">
+                        <Td isActionCell>
                           <ConfirmDeleteModal
                             title={`Remove ${remoteTeam.name} access to ${team.name}`}
                             message={`Are you sure you want to remove user ${remoteTeam.name} access? ${team.name} will not be able to see ${remoteTeam.name} component.`}

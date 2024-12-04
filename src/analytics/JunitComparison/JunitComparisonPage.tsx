@@ -628,14 +628,9 @@ function TestListDetails({
         </div>
       </CardTitle>
       <CardBody>
-        <Table
-          variant="compact"
-          className="pf-v6-c-table"
-          role="grid"
-          aria-label="junit testcase details"
-        >
+        <Table aria-label="junit testcase details">
           <Thead>
-            <Tr role="row">
+            <Tr>
               <Th role="columnheader" scope="col">
                 Testcase name
               </Th>

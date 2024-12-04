@@ -21,7 +21,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { t_global_color_status_danger_default } from "@patternfly/react-tokens";
 import EditTeamModal from "./EditTeamModal";
 import CardLine from "ui/CardLine";
-import { Table, Thead, Tr, Th, Tbody, Td } from "@patternfly/react-table";
+import { Table, Tr, Tbody, Td } from "@patternfly/react-table";
 import { getProductIcon } from "ui/icons";
 import TeamMembers from "./TeamMembers";
 import TeamComponentsPermissions from "./TeamComponentsPermissions";
@@ -77,13 +77,7 @@ function ProductsTeamHasAccessTo({ team }: { team: ITeam }) {
         {isLoading ? (
           <Skeleton screenreaderText="Loading products the team has access to" />
         ) : (
-          <Table variant="compact" borders={false}>
-            <Thead>
-              <Tr>
-                <Th />
-                <Th />
-              </Tr>
-            </Thead>
+          <Table borders={false}>
             <Tbody>
               {data.products.length === 0 && (
                 <Tr>
@@ -101,7 +95,7 @@ function ProductsTeamHasAccessTo({ team }: { team: ITeam }) {
                       <ProductIcon className="pf-v6-u-mr-xs" />
                       {product.name}
                     </Td>
-                    <Td className="pf-v6-c-table__action">
+                    <Td isActionCell>
                       <Switch
                         id={`product-${product.id}-team-${team.id}-access`}
                         aria-label={`team ${team.name} has access to ${product.name}`}
