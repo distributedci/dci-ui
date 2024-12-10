@@ -31,14 +31,12 @@ import {
   ToggleGroup,
   ToggleGroupItem,
   Brand,
-} from "@patternfly/react-core";
-import {
   Dropdown,
-  DropdownItem,
-  DropdownList,
-  Divider,
   MenuToggle,
   MenuToggleElement,
+  DropdownList,
+  DropdownItem,
+  Divider,
 } from "@patternfly/react-core";
 import Logo from "logo.black.svg";
 import LogoWhite from "logo.white.svg";
