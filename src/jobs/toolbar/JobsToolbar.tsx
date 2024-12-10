@@ -8,11 +8,9 @@ import {
   Pagination,
   Button,
   ButtonVariant,
-} from "@patternfly/react-core";
-import {
-  Dropdown,
-  DropdownItem,
   DropdownList,
+  DropdownItem,
+  Dropdown,
   MenuToggle,
   MenuToggleElement,
 } from "@patternfly/react-core";
