@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
-import { Button } from "@patternfly/react-core";
-import { Modal } from "@patternfly/react-core/deprecated";
+import { Button, ModalHeader } from "@patternfly/react-core";
 import copyToClipboard from "services/copyToClipboard";
 import { IFeeder, IRemoteci } from "types";
 
@@ -58,7 +57,6 @@ export function SeeAuthentificationFileModal({
       <Modal
         id="dci-credential-modal"
         aria-label="DCI credential modal"
-        title={`DCI credentials for ${resource.name}`}
         isOpen={show}
         onClose={() => setShow(false)}
         variant="large"
@@ -94,6 +92,7 @@ export function SeeAuthentificationFileModal({
           </Button>,
         ]}
       >
+        <ModalHeader title={`DCI credentials for ${resource.name}`} />
         <div className="pf-v6-u-mb-md">
           <pre>{getContent(resource.id, role, api_secret, type)}</pre>
         </div>

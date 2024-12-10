@@ -1,5 +1,10 @@
-import { Button } from "@patternfly/react-core";
-import { Modal, ModalVariant } from "@patternfly/react-core/deprecated";
+import {
+  Button,
+  Modal,
+  ModalFooter,
+  ModalHeader,
+  ModalVariant,
+} from "@patternfly/react-core";
 import useModal from "hooks/useModal";
 import TopicForm from "./TopicForm";
 import { ITopic, IProduct } from "types";
@@ -25,23 +30,10 @@ export default function EditTopicModal({
         id="edit-topic-modal"
         aria-label="Edit topic modal"
         variant={ModalVariant.medium}
-        title={`Edit topic ${topic.name}`}
         isOpen={isOpen}
         onClose={hide}
-        actions={[
-          <Button
-            key="edit"
-            variant="primary"
-            type="submit"
-            form="edit-topic-form"
-          >
-            Edit
-          </Button>,
-          <Button key="cancel" variant="link" onClick={hide}>
-            Cancel
-          </Button>,
-        ]}
       >
+        <ModalHeader title={`Edit topic ${topic.name}`} />
         <TopicForm
           id="edit-topic-form"
           products={products}
@@ -51,6 +43,19 @@ export default function EditTopicModal({
             onSubmit(topic);
           }}
         />
+        <ModalFooter>
+          <Button
+            key="edit"
+            variant="primary"
+            type="submit"
+            form="edit-topic-form"
+          >
+            Edit
+          </Button>
+          <Button key="cancel" variant="link" onClick={hide}>
+            Cancel
+          </Button>
+        </ModalFooter>
       </Modal>
       <Button
         icon={<EditAltIcon aria-hidden="true" className="pf-v6-u-mr-xs" />}
