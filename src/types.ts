@@ -469,50 +469,6 @@ export interface IComponentCoverage {
   tags: string[];
 }
 
-export interface IPipelines {
-  components_headers: string[];
-  days: {
-    date: string;
-    pipelines: {
-      name: string;
-      created_at: string;
-      jobs: {
-        client_version: string;
-        comment: string | null;
-        configuration: string;
-        created_at: string;
-        duration: number;
-        etag: string;
-        id: string;
-        name: string;
-        pipeline: { [k: string]: any };
-        pipeline_id: string;
-        previous_job_id: string | null;
-        product_id: string;
-        remoteci_id: string;
-        state: string;
-        status: IJobStatus;
-        status_reason: string | null;
-        tags: string[];
-        team_id: string;
-        topic_id: string;
-        update_previous_job_id: string | null;
-        updated_at: string;
-        url: string | null;
-        user_agent: string;
-        tests: {
-          errors: number;
-          failures: number;
-          success: number;
-          skips: number;
-          total: number;
-        };
-        components: (IComponent | null)[];
-      }[];
-    }[];
-  }[];
-}
-
 export type RangeOptionValue =
   | "previousWeek"
   | "previousMonth"

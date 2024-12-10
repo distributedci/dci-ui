@@ -9,41 +9,36 @@ import {
   Label,
   ProgressStep,
   ProgressStepper,
-  Toolbar,
-  ToolbarContent,
-  ToolbarItem,
   Tooltip,
   CardHeader,
   Truncate,
-  ToolbarGroup,
   PageSection,
   Content,
+  Skeleton,
+  Modal,
+  ModalHeader,
+  ModalBody,
 } from "@patternfly/react-core";
 import { Breadcrumb } from "ui";
-import {
-  t_global_border_color_default,
-  t_global_color_nonstatus_green_100,
-  t_global_text_color_required,
-  t_global_color_nonstatus_red_100,
-} from "@patternfly/react-tokens";
+import { t_global_border_color_default } from "@patternfly/react-tokens";
 import { DateTime } from "luxon";
-import {
-  formatDate,
-  getRangeDates,
-  humanizeDurationShort,
-} from "services/date";
-import { Fragment, useEffect, useState } from "react";
-import TeamsToolbarFilter from "jobs/toolbar/TeamsToolbarFilter";
-import ListToolbarFilter from "jobs/toolbar/ListToolbarFilter";
-import { Link, useSearchParams } from "react-router-dom";
-import { IJobStatus, IPipelines, RangeOptionValue } from "types";
-import RangeToolbarFilter from "ui/form/RangeToolbarFilter";
+import { formatDate, humanizeDurationShort } from "services/date";
+import { Fragment, useState } from "react";
+import { Link } from "react-router-dom";
+import { IJobStatus } from "types";
 import { ComponentsList } from "jobs/components";
 import { notEmpty } from "services/utils";
 import { Table, Thead, Tr, Th, Tbody, Td } from "@patternfly/react-table";
 import { JobStatusLabel } from "jobs/components";
-import LoadingPageSection from "ui/LoadingPageSection";
-import { useLazyGetPipelineStatusQuery } from "./pipelinesApi";
+import {
+  extractPipelinesFromAnalyticsJobs,
+  IAnalyticsJob,
+  IPipelineDay,
+  IPipelineJob,
+  useLazyGetAnalyticJobsQuery,
+} from "./pipelinesApi";
+import useModal from "hooks/useModal";
+import QueryToolbar from "analytics/toolbar/QueryToolbar";
 
 function jobStatusToVariant(status: IJobStatus) {
   switch (status) {
@@ -63,9 +58,86 @@ function jobStatusToVariant(status: IJobStatus) {
   }
 }
 
-type PipelineJob = IPipelines["days"][0]["pipelines"][0]["jobs"][0];
+function humanizeJobDuration(duration: number) {
+  return humanizeDurationShort(duration * 1000, {
+    delimiter: " ",
+    round: true,
+    largest: 2,
+  });
+}
 
-function PipelineJobInfo({ job, index }: { job: PipelineJob; index: number }) {
+function JobComment({
+  comment,
+  status_reason,
+}: {
+  comment: string | null;
+  status_reason: string | null;
+}) {
+  if (!comment) {
+    return null;
+  }
+  if (!status_reason) {
+    <span
+      style={{
+        textDecorationLine: "underline",
+        textDecorationStyle: "dashed",
+        textDecorationColor: "#000",
+      }}
+    >
+      {comment}
+    </span>;
+  }
+  return (
+    <Tooltip content={<div>{status_reason}</div>}>
+      <span
+        style={{
+          textDecorationLine: "underline",
+          textDecorationStyle: "dashed",
+          textDecorationColor: "#000",
+        }}
+      >
+        {comment}
+      </span>
+    </Tooltip>
+  );
+}
+
+function JobResults({ results }: { results: IAnalyticsJob["results"] }) {
+  if (!results) {
+    return null;
+  }
+  return (
+    <span>
+      <Label
+        isCompact
+        color="green"
+        title={`${results.success || 0} tests in success`}
+        className="pf-v6-u-mr-xs"
+      >
+        {results.success || 0}
+      </Label>
+      <Label
+        isCompact
+        color="orange"
+        title={`${results.skips || 0} skipped tests`}
+        className="pf-v6-u-mr-xs"
+      >
+        {results.skips || 0}
+      </Label>
+      <Label
+        isCompact
+        color="red"
+        title={`${
+          (results.failures || 0) + (results.errors || 0)
+        } errors and failures tests`}
+      >
+        {(results.failures || 0) + (results.errors || 0)}
+      </Label>
+    </span>
+  );
+}
+
+function PipelineJobInfo({ job, index }: { job: IPipelineJob; index: number }) {
   return (
     <>
       <Td
@@ -93,48 +165,14 @@ function PipelineJobInfo({ job, index }: { job: PipelineJob; index: number }) {
           textAlign: "center",
         }}
       >
-        <Tooltip content={<div>{job.status_reason}</div>}>
-          <span
-            style={{
-              textDecorationLine: "underline",
-              textDecorationStyle: "dashed",
-              textDecorationColor: "#000",
-            }}
-          >
-            {job.comment || ""}
-          </span>
-        </Tooltip>
+        <JobComment comment={job.comment} status_reason={job.status_reason} />
       </Td>
       <Td
         style={{
           whiteSpace: "nowrap",
         }}
       >
-        <Label
-          isCompact
-          color="green"
-          title={`${job?.tests?.success || 0} tests in success`}
-          className="pf-v6-u-mr-xs"
-        >
-          {job?.tests?.success || 0}
-        </Label>
-        <Label
-          isCompact
-          color="orange"
-          title={`${job?.tests?.skips || 0} skipped tests`}
-          className="pf-v6-u-mr-xs"
-        >
-          {job?.tests?.skips || 0}
-        </Label>
-        <Label
-          isCompact
-          color="red"
-          title={`${
-            (job?.tests?.failures || 0) + (job?.tests?.errors || 0)
-          } errors and failures tests`}
-        >
-          {(job?.tests?.failures || 0) + (job?.tests?.errors || 0)}
-        </Label>
+        <JobResults results={job.results} />
       </Td>
       <Td
         style={{
@@ -143,11 +181,7 @@ function PipelineJobInfo({ job, index }: { job: PipelineJob; index: number }) {
           borderRight: `1px solid ${t_global_border_color_default.var}`,
         }}
       >
-        {humanizeDurationShort(job.duration * 1000, {
-          delimiter: " ",
-          round: true,
-          largest: 2,
-        })}
+        {humanizeJobDuration(job.duration)}
       </Td>
     </>
   );
@@ -155,14 +189,14 @@ function PipelineJobInfo({ job, index }: { job: PipelineJob; index: number }) {
 
 function PipelineCard({
   pipelineDay,
+  ...props
 }: {
-  pipelineDay: IPipelines["days"][0] & {
-    datetime: DateTime;
-  };
+  pipelineDay: IPipelineDay;
+  [k: string]: any;
 }) {
   const [seeJobComponents, setSeeJobComponents] = useState(false);
   return (
-    <Card className="pf-v6-u-mt-md">
+    <Card {...props}>
       <CardHeader
         actions={{
           actions: (
@@ -233,10 +267,6 @@ function PipelineCard({
                         style={{
                           borderLeft: `1px solid ${t_global_border_color_default.value}`,
                           whiteSpace: "nowrap",
-                          backgroundColor:
-                            job.status === "success"
-                              ? t_global_color_nonstatus_green_100.var
-                              : t_global_color_nonstatus_red_100.value,
                         }}
                         colSpan={4}
                       >
@@ -256,8 +286,8 @@ function PipelineCard({
   );
 }
 
-function PipelinesTable({ pipelines }: { pipelines: IPipelines }) {
-  if (pipelines.days.length === 0) {
+function PipelinesTable({ pipelinesDays }: { pipelinesDays: IPipelineDay[] }) {
+  if (pipelinesDays.length === 0) {
     return (
       <EmptyState
         headingLevel="h4"
@@ -273,129 +303,101 @@ function PipelinesTable({ pipelines }: { pipelines: IPipelines }) {
 
   return (
     <div>
-      {pipelines.days
-        .map((d) => ({ ...d, datetime: DateTime.fromISO(d.date) }))
-        .sort((day1, day2) => {
-          const epoch1 = day1.datetime.toMillis();
-          const epoch2 = day2.datetime.toMillis();
-          return epoch1 < epoch2 ? 1 : epoch1 > epoch2 ? -1 : 0;
-        })
-        .map((day, index) => (
-          <PipelineCard key={index} pipelineDay={day} />
-        ))}
+      {pipelinesDays.map((day, index) => (
+        <PipelineCard key={index} pipelineDay={day} className="pf-v6-u-mt-md" />
+      ))}
     </div>
   );
 }
 
-function Pipelines({
-  teamsIds,
-  before,
-  after,
-  pipelinesNames,
+function AnalyticsJobTable({
+  jobs,
+  ...props
 }: {
-  teamsIds: string[];
-  before: string;
-  after: string;
-  pipelinesNames: string[];
+  jobs: IAnalyticsJob[];
+  [k: string]: any;
 }) {
-  const [getPipelineStatus, { data: pipelines, isLoading }] =
-    useLazyGetPipelineStatusQuery();
+  return (
+    <Card {...props}>
+      <CardBody>
+        <Table variant="compact">
+          <Thead>
+            <Tr>
+              <Th>Status</Th>
+              <Th>Name</Th>
+              <Th>Team</Th>
+              <Th>Pipeline</Th>
+              <Th>Tests</Th>
+              <Th>Comment</Th>
+              <Th>Duration</Th>
+              <Th>Created</Th>
+            </Tr>
+          </Thead>
+          <Tbody>
+            {jobs.map((job) => (
+              <Tr key={job.id}>
+                <Td>
+                  <JobStatusLabel status={job.status} />
+                </Td>
+                <Td>
+                  <Link to={`/jobs/${job.id}/jobStates`}>{job.name}</Link>
+                </Td>
+                <Td>
+                  <Link to={`/teams/${job.team.id}`}>{job.team.name}</Link>
+                </Td>
+                <Td>{job.pipeline.name}</Td>
+                <Td>
+                  <JobResults results={job.results} />
+                </Td>
+                <Td>
+                  <JobComment
+                    comment={job.comment}
+                    status_reason={job.status_reason}
+                  />
+                </Td>
+                <Td>{humanizeJobDuration(job.duration)}</Td>
+                <Td>{job.created_at}</Td>
+              </Tr>
+            ))}
+          </Tbody>
+        </Table>
+      </CardBody>
+    </Card>
+  );
+}
 
-  useEffect(() => {
-    getPipelineStatus({
-      start_date: after,
-      end_date: before,
-      teams_ids: teamsIds,
-      pipelines_names: pipelinesNames,
-    });
-  }, [after, before, teamsIds, pipelinesNames, getPipelineStatus]);
+function AnalyticsJobsModal({
+  jobs,
+  ...props
+}: {
+  jobs: IAnalyticsJob[];
+  [k: string]: any;
+}) {
+  const { isOpen, show, hide } = useModal(false);
 
-  if (isLoading) {
-    return <LoadingPageSection />;
-  }
-
-  if (!pipelines) {
-    return (
-      <EmptyState
-        headingLevel="h4"
-        titleText="Display pipeline jobs"
-        variant={EmptyStateVariant.xs}
+  return (
+    <>
+      <Button variant="link" onClick={show} {...props}>
+        See jobs
+      </Button>
+      <Modal
+        id="jobs-list-modal"
+        aria-label="Analytics jobs list"
+        isOpen={isOpen}
+        onClose={hide}
+        width="80%"
       >
-        <EmptyStateBody>
-          You can fill in the filters to view your team's pipelines.
-        </EmptyStateBody>
-      </EmptyState>
-    );
-  }
-
-  return <PipelinesTable pipelines={pipelines} />;
+        <ModalHeader title="Jobs list" />
+        <ModalBody>
+          <AnalyticsJobTable jobs={jobs} />
+        </ModalBody>
+      </Modal>
+    </>
+  );
 }
 
 export default function PipelinesPage() {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const [pipelinesNames, setPipelinesNames] = useState<string[]>(
-    searchParams.get("pipelines_names")?.split(",") || [],
-  );
-  const [teamsIds, setTeamsIds] = useState<string[]>(
-    searchParams.get("teams_ids")?.split(",") || [],
-  );
-  const defaultRangeValue: RangeOptionValue = "last7Days";
-  const [range, setRange] = useState<RangeOptionValue>(
-    (searchParams.get("range") as RangeOptionValue) || defaultRangeValue,
-  );
-  const dates = getRangeDates(range);
-  const [after, setAfter] = useState(
-    searchParams.get("start_date") || dates.after,
-  );
-  const [before, setBefore] = useState(
-    searchParams.get("end_date") || dates.before,
-  );
-
-  useEffect(() => {
-    if (teamsIds.length > 0) {
-      searchParams.set("teams_ids", teamsIds.join(","));
-    } else {
-      searchParams.delete("teams_ids");
-    }
-    setSearchParams(searchParams);
-  }, [teamsIds, searchParams, setSearchParams]);
-
-  useEffect(() => {
-    if (pipelinesNames.length > 0) {
-      searchParams.set("pipelines_names", pipelinesNames.join(","));
-    } else {
-      searchParams.delete("pipelines_names");
-    }
-    setSearchParams(searchParams);
-  }, [pipelinesNames, searchParams, setSearchParams]);
-
-  useEffect(() => {
-    if (before === "" || range !== "custom") {
-      searchParams.delete("end_date");
-    } else {
-      searchParams.set("end_date", before);
-    }
-    setSearchParams(searchParams);
-  }, [before, range, searchParams, setSearchParams]);
-
-  useEffect(() => {
-    if (after === "" || range !== "custom") {
-      searchParams.delete("start_date");
-    } else {
-      searchParams.set("start_date", after);
-    }
-    setSearchParams(searchParams);
-  }, [after, range, searchParams, setSearchParams]);
-
-  useEffect(() => {
-    if (range !== "custom") {
-      const dates = getRangeDates(range);
-      setAfter(dates.after);
-      setBefore(dates.before);
-    }
-    searchParams.set("range", range);
-    setSearchParams(searchParams);
-  }, [range, searchParams, setSearchParams]);
+  const [getAnalyticJobs, { data, isLoading }] = useLazyGetAnalyticJobsQuery();
 
   return (
     <PageSection>
@@ -409,85 +411,36 @@ export default function PipelinesPage() {
       <Content component="h1">Pipelines</Content>
       <Card>
         <CardBody>
-          <Toolbar
-            id="toolbar-select-jobs"
-            clearAllFilters={() => {
-              setTeamsIds([]);
-              setPipelinesNames([]);
-              setRange(defaultRangeValue);
+          <QueryToolbar
+            onSearch={({ query, after, before }) => {
+              getAnalyticJobs({ query, after, before });
             }}
-            collapseListedFiltersBreakpoint="xl"
-          >
-            <ToolbarContent>
-              <ToolbarGroup>
-                <ToolbarItem variant="label" id="team-label-toolbar">
-                  Teams
-                  <span style={{ color: t_global_text_color_required.var }}>
-                    *
-                  </span>
-                </ToolbarItem>
-                <ToolbarItem>
-                  <TeamsToolbarFilter
-                    ids={teamsIds}
-                    onClear={(teamId) =>
-                      setTeamsIds((oldTeamsIds) =>
-                        oldTeamsIds.filter((t) => t !== teamId),
-                      )
-                    }
-                    onSelect={(team) =>
-                      setTeamsIds((oldTeamsIds) => [...oldTeamsIds, team.id])
-                    }
-                  />
-                </ToolbarItem>
-                <ToolbarItem>
-                  <ListToolbarFilter
-                    items={pipelinesNames}
-                    categoryName="Pipelines names"
-                    placeholderText="Pipelines names"
-                    onSubmit={setPipelinesNames}
-                  />
-                </ToolbarItem>
-                <ToolbarItem variant="label" id="range-label-toolbar">
-                  Range
-                </ToolbarItem>
-                <ToolbarItem>
-                  <RangeToolbarFilter
-                    range={range}
-                    onChange={(range, after, before) => {
-                      if (range === "custom") {
-                        setAfter(after);
-                        setBefore(before);
-                      }
-                      setRange(range);
-                    }}
-                    after={after}
-                    before={before}
-                    ranges={[
-                      defaultRangeValue,
-                      "previousWeek",
-                      "currentWeek",
-                      "yesterday",
-                      "today",
-                      "custom",
-                    ]}
-                  />
-                </ToolbarItem>
-              </ToolbarGroup>
-            </ToolbarContent>
-          </Toolbar>
+          />
+          {isLoading && (
+            <Skeleton
+              style={{ width: 69.45, height: 35 }}
+              className="pf-v6-u-mt-md"
+              screenreaderText="Loading jobs"
+            />
+          )}
+          {data && (
+            <AnalyticsJobsModal
+              jobs={data.hits.hits.map((h) => h._source)}
+              className="pf-v6-u-mt-md"
+            />
+          )}
         </CardBody>
       </Card>
-      {teamsIds.length > 0 && (
-        <Card className="pf-v6-u-mt-md">
-          <CardBody>
-            <Pipelines
-              teamsIds={teamsIds}
-              pipelinesNames={pipelinesNames}
-              before={before}
-              after={after}
-            />
-          </CardBody>
-        </Card>
+      {isLoading && (
+        <Skeleton
+          className="pf-v6-u-mt-md"
+          screenreaderText="Loading pipelines"
+        />
+      )}
+      {data && (
+        <PipelinesTable
+          pipelinesDays={extractPipelinesFromAnalyticsJobs(data)}
+        />
       )}
     </PageSection>
   );
