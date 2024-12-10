@@ -8,12 +8,10 @@ import {
   Pagination,
   Button,
   ButtonVariant,
-} from "@patternfly/react-core";
-import {
-  Dropdown,
-  DropdownItem,
-  DropdownList,
   MenuToggle,
+  DropdownList,
+  DropdownItem,
+  Dropdown,
   MenuToggleElement,
 } from "@patternfly/react-core";
 import { SyncAltIcon } from "@patternfly/react-icons";
