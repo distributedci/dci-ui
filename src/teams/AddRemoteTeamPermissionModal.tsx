@@ -1,8 +1,13 @@
 import { useState } from "react";
-import { Modal, ModalVariant } from "@patternfly/react-core/deprecated";
 import { ITeam } from "types";
 import useModal from "hooks/useModal";
 import TeamSelect from "jobs/toolbar/TeamSelect";
+import {
+  Modal,
+  ModalBody,
+  ModalHeader,
+  ModalVariant,
+} from "@patternfly/react-core";
 
 interface AddRemoteTeamPermissionModalProps {
   team: ITeam;
@@ -28,21 +33,25 @@ export default function AddRemoteTeamPermissionModal({
         id="add_remote_team_permission_modal"
         aria-label="Add remote team permission modal"
         variant={ModalVariant.medium}
-        title={`Select the teams for which the ${team.name} team can see the components`}
         isOpen={isOpen}
         onClose={() => {
           onClear();
           hide();
         }}
       >
-        <TeamSelect
-          id={teamId}
-          onClear={() => onClear()}
-          onSelect={(team) => {
-            hide();
-            onTeamSelected(team);
-          }}
+        <ModalHeader
+          title={`Select the teams for which the ${team.name} team can see the components`}
         />
+        <ModalBody>
+          <TeamSelect
+            id={teamId}
+            onClear={() => onClear()}
+            onSelect={(team) => {
+              hide();
+              onTeamSelected(team);
+            }}
+          />
+        </ModalBody>
       </Modal>
       {children(show)}
     </>
