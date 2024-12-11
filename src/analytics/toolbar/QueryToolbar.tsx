@@ -41,7 +41,7 @@ export default function QueryToolbar({
 
   return (
     <>
-      <Toolbar id="toolbar-pipelines" style={{ paddingBlockEnd: 0 }}>
+      <Toolbar id="toolbar-pipelines">
         <form
           id="toolbar-pipelines"
           onSubmit={(e) => {
@@ -57,7 +57,7 @@ export default function QueryToolbar({
           }}
         >
           <ToolbarContent>
-            <ToolbarItem style={{ minWidth: 480 }}>
+            <ToolbarItem style={{ flex: 1 }}>
               <TextInput
                 aria-label="input pipeline query"
                 onChange={(_event, value) => setQuery(value)}

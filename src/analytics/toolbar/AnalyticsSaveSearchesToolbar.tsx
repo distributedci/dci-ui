@@ -16,17 +16,16 @@ import {
   ToolbarContent,
   ToolbarItem,
   ActionGroup,
-  Truncate,
   Label,
   LabelGroup,
+  Tooltip,
 } from "@patternfly/react-core";
 
 import { AnalyticsToolbarFilters } from "types";
 import useModal from "hooks/useModal";
 import { useState } from "react";
 import useLocalStorage from "hooks/useLocalStorage";
-import { Table, Tbody, Td, Th, Thead, Tr } from "@patternfly/react-table";
-import { rangeLabels } from "ui/form/RangeSelect";
+import { SearchIcon } from "@patternfly/react-icons";
 
 function LoadAnalyticSearchModal({
   searches,
@@ -39,89 +38,22 @@ function LoadAnalyticSearchModal({
   onDelete: (searchName: string) => void;
   [k: string]: any;
 }) {
-  const { isOpen, show, hide } = useModal(false);
-
   return (
-    <>
-      <Button variant="link" onClick={show} {...props}>
-        Load a search
-      </Button>
-      <Modal
-        id="load-analytic-searches-modal"
-        aria-label="Analytics load filter modal"
-        isOpen={isOpen}
-        onClose={hide}
-        variant={ModalVariant.large}
-      >
-        <ModalHeader title="Load a filter" />
-        <ModalBody>
-          <Table borders={false}>
-            <Thead>
-              <Tr>
-                <Th>name</Th>
-                <Th>query</Th>
-                <Th>range</Th>
-                <Th>after</Th>
-                <Th>before</Th>
-                <Th screenReaderText="Load button" />
-                <Th screenReaderText="Delete button" />
-              </Tr>
-            </Thead>
-            <Tbody>
-              {Object.keys(searches).map((searchName) => {
-                const search = searches[searchName];
-                return (
-                  <Tr key={searchName}>
-                    <Td>
-                      <Label
-                        color="green"
-                        onClick={() => {
-                          onLoad(searchName);
-                          hide();
-                        }}
-                      >
-                        {searchName}
-                      </Label>
-                    </Td>
-                    <Td style={{ maxWidth: 100 }}>
-                      <Truncate
-                        content={search.query}
-                        tooltipPosition={"bottom"}
-                      />
-                    </Td>
-                    <Td>{rangeLabels[search.range]}</Td>
-                    <Td>{search.range === "custom" && search.after}</Td>
-                    <Td>{search.range === "custom" && search.before}</Td>
-                    <Td isActionCell>
-                      <Button
-                        variant="link"
-                        onClick={() => {
-                          onLoad(searchName);
-                          hide();
-                        }}
-                      >
-                        Load
-                      </Button>
-                    </Td>
-                    <Td isActionCell>
-                      <Button
-                        variant="link"
-                        onClick={() => {
-                          onDelete(searchName);
-                        }}
-                        isDanger
-                      >
-                        Delete
-                      </Button>
-                    </Td>
-                  </Tr>
-                );
-              })}
-            </Tbody>
-          </Table>
-        </ModalBody>
-      </Modal>
-    </>
+    <LabelGroup {...props}>
+      {Object.keys(searches).map((searchName) => (
+        <Tooltip content={searches[searchName].query}>
+          <Label
+            color="green"
+            icon={<SearchIcon />}
+            title={searches[searchName].query}
+            onClick={() => onLoad(searchName)}
+            onClose={() => onDelete(searchName)}
+          >
+            {searchName}
+          </Label>
+        </Tooltip>
+      ))}
+    </LabelGroup>
   );
 }
 
@@ -141,7 +73,7 @@ function SaveAnalyticSearch({
 
   return (
     <>
-      <Button variant="link" onClick={show} {...props}>
+      <Button variant="link" size="sm" onClick={show} {...props}>
         Save this search
       </Button>
       <Modal
