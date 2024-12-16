@@ -1,4 +1,4 @@
-import { IProduct, SelectProps } from "types";
+import { IProduct, IToolbarFilterProps } from "types";
 import { ToolbarFilter } from "@patternfly/react-core";
 import ProductSelect from "./ProductSelect";
 
@@ -7,7 +7,7 @@ export default function ProductToolbarFilter({
   onSelect,
   onClear,
   showToolbarItem = true,
-}: SelectProps<IProduct>) {
+}: IToolbarFilterProps<IProduct>) {
   return (
     <ToolbarFilter
       labels={id ? [id] : []}
