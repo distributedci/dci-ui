@@ -8,10 +8,10 @@ import {
   Toolbar,
   PageSection,
   Content,
+  SearchInput,
 } from "@patternfly/react-core";
 import { PlusCircleIcon, SearchIcon } from "@patternfly/react-icons";
 import { EmptyState, Breadcrumb } from "ui";
-import EmailsFilter from "./EmailsFilter";
 import { Filters } from "types";
 import CreateUserModal from "./CreateUserModal";
 import UsersTable from "./UsersTable";
@@ -33,6 +33,8 @@ export default function UsersPage() {
   const [filters, setFilters] = useState<Filters>(
     parseFiltersFromSearch(location.search),
   );
+  const [inputSearch, setInputSearch] = useState<string>("");
+
   useEffect(() => {
     const newSearch = createSearchFromFilters(filters);
     navigate(`/users${newSearch}`, { replace: true });
@@ -80,13 +82,22 @@ export default function UsersPage() {
         <ToolbarContent>
           <ToolbarGroup>
             <ToolbarItem>
-              <EmailsFilter
-                search={filters.email || ""}
-                onSearch={(email) => {
-                  setFilters({
-                    ...filters,
-                    email,
-                  });
+              <SearchInput
+                placeholder="Search by email"
+                value={inputSearch}
+                onChange={(e, search) => setInputSearch(search)}
+                onSearch={(e, email) => {
+                  if (email.trim().endsWith("*")) {
+                    setFilters({
+                      ...filters,
+                      email,
+                    });
+                  } else {
+                    setFilters({
+                      ...filters,
+                      email: `${email}*`,
+                    });
+                  }
                 }}
               />
             </ToolbarItem>

@@ -1,12 +1,12 @@
 import { useListProductsQuery } from "products/productsApi";
 import Select from "ui/form/Select";
-import { SelectProps, IProduct } from "types";
+import { IToolbarFilterProps, IProduct } from "types";
 
 export default function ProductSelect({
   id,
   onSelect,
   onClear,
-}: SelectProps<IProduct>) {
+}: IToolbarFilterProps<IProduct>) {
   const { data, isFetching } = useListProductsQuery();
   const products = data?.products || [];
   const product = products.find((p) => p.id === id) || null;

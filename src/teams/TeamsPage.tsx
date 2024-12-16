@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { EmptyState, Breadcrumb, CopyButton, InputFilter } from "ui";
+import { EmptyState, Breadcrumb, CopyButton } from "ui";
 import CreateTeamModal from "./CreateTeamModal";
 import {
   Button,
@@ -7,6 +7,7 @@ import {
   Label,
   PageSection,
   Pagination,
+  SearchInput,
   Toolbar,
   ToolbarContent,
   ToolbarGroup,
@@ -33,6 +34,7 @@ export default function TeamsPage() {
   const [filters, setFilters] = useState<Filters>(
     parseFiltersFromSearch(location.search),
   );
+  const [inputSearch, setInputSearch] = useState<string>("");
 
   useEffect(() => {
     const newSearch = createSearchFromFilters(filters);
@@ -95,14 +97,22 @@ export default function TeamsPage() {
         <ToolbarContent>
           <ToolbarGroup>
             <ToolbarItem>
-              <InputFilter
-                search={filters.name || ""}
+              <SearchInput
                 placeholder="Search a team"
-                onSearch={(name) => {
-                  setFilters({
-                    ...filters,
-                    name,
-                  });
+                value={inputSearch}
+                onChange={(e, search) => setInputSearch(search)}
+                onSearch={(e, name) => {
+                  if (name.trim().endsWith("*")) {
+                    setFilters({
+                      ...filters,
+                      name,
+                    });
+                  } else {
+                    setFilters({
+                      ...filters,
+                      name: `${name}*`,
+                    });
+                  }
                 }}
               />
             </ToolbarItem>
