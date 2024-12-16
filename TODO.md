@@ -9,3 +9,4 @@
 - ITest and IResult seems similar, investigate to see if we can use only one
 - logging page in dark mode
 - /files/:id/junit backend should return name of the file (update src/jobs/job/tests/test/JobTestPage.tsx) > Test suites for {file_id}
+- login error on the basic login page is not working

@@ -7,35 +7,35 @@ import {
   ModalVariant,
 } from "@patternfly/react-core";
 import useModal from "hooks/useModal";
-import RemoteciForm from "./RemoteciForm";
-import { IRemoteci } from "types";
+import FeederForm from "./FeederForm";
+import { IFeeder } from "types";
 
-interface CreateRemoteciModalProps {
-  onSubmit: (remoteci: Partial<IRemoteci>) => void;
+interface CreateFeederModalProps {
+  onSubmit: (feeder: Partial<IFeeder>) => void;
   [x: string]: any;
 }
 
-export default function CreateRemoteciModal({
+export default function CreateFeederModal({
   onSubmit,
   ...props
-}: CreateRemoteciModalProps) {
+}: CreateFeederModalProps) {
   const { isOpen, show, hide } = useModal(false);
   return (
     <>
       <Modal
-        id="create_remoteci_modal"
-        aria-label="Create remoteci modal"
+        id="create_feeder_modal"
+        aria-label="Create feeder modal"
         variant={ModalVariant.medium}
         isOpen={isOpen}
         onClose={hide}
       >
-        <ModalHeader title="Create a new remoteci" />
+        <ModalHeader title="Create a new feeder" />
         <ModalBody>
-          <RemoteciForm
-            id="create-remoteci-form"
-            onSubmit={(remoteci) => {
+          <FeederForm
+            id="create-feeder-form"
+            onSubmit={(feeder) => {
               hide();
-              onSubmit(remoteci);
+              onSubmit(feeder);
             }}
           />
         </ModalBody>
@@ -44,7 +44,7 @@ export default function CreateRemoteciModal({
             key="create"
             variant="primary"
             type="submit"
-            form="create-remoteci-form"
+            form="create-feeder-form"
           >
             Create
           </Button>
@@ -53,9 +53,8 @@ export default function CreateRemoteciModal({
           </Button>
         </ModalFooter>
       </Modal>
-
       <Button variant="primary" onClick={show} {...props}>
-        Create a new remoteci
+        Create a new feeder
       </Button>
     </>
   );

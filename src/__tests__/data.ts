@@ -157,6 +157,8 @@ export const remotecis: IRemoteci[] = [
   },
 ];
 
+export const remoteci = { ...remotecis[0] };
+
 export const feeder: IFeeder = {
   id: "f1",
   name: "feeder",
