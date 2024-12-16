@@ -1,33 +1,33 @@
+import { Form, FormGroup } from "@patternfly/react-core";
 import * as Yup from "yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Form, FormGroup } from "@patternfly/react-core";
 import TeamSelect from "teams/form/TeamSelect";
-import TextInputFormGroup from "ui/form/TextInputFormGroup";
+import { IFeeder } from "types";
 import FormErrorMessage from "ui/form/FormErrorMessage";
-import { IRemoteci } from "types";
+import TextInputFormGroup from "ui/form/TextInputFormGroup";
 
-const RemoteciSchema = Yup.object().shape({
+const FeederSchema = Yup.object().shape({
   name: Yup.string()
-    .required("Remoteci name is required")
-    .min(2, "Remoteci name is too short!"),
+    .required("Feeder name is required")
+    .min(2, "Feeder name is too short!"),
   team_id: Yup.string().nullable().required("Team is required"),
 });
 
-export default function RemoteciForm({
+export default function FeederForm({
   id,
-  remoteci,
+  feeder,
   onSubmit,
   ...props
 }: {
   id: string;
-  remoteci?: IRemoteci;
+  feeder?: IFeeder;
   onSubmit: (values: { name: string; team_id: string }) => void;
   [key: string]: any;
 }) {
   const methods = useForm({
-    resolver: yupResolver(RemoteciSchema),
-    defaultValues: remoteci || { name: "", team_id: "" },
+    resolver: yupResolver(FeederSchema),
+    defaultValues: feeder || { name: "", team_id: "" },
   });
   const teamIdError = methods.formState.errors.team_id;
   return (
@@ -35,14 +35,14 @@ export default function RemoteciForm({
       <Form id={id} onSubmit={methods.handleSubmit(onSubmit)} {...props}>
         <TextInputFormGroup
           label="Name"
-          id="remoteci_form__name"
+          id="feeder_form__name"
           name="name"
           isRequired
         />
-        <FormGroup label="Team" isRequired fieldId="remoteci_form__team_id">
+        <FormGroup label="Team" isRequired fieldId="feeder_form__team_id">
           <TeamSelect
-            id="remoteci_form__team_id"
-            value={remoteci ? remoteci.team_id : undefined}
+            id="feeder_form__team_id"
+            value={feeder ? feeder.team_id : undefined}
             placeholder="Select a team"
             hasError={teamIdError !== undefined}
             onSelect={(item) => {

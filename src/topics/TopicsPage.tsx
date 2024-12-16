@@ -27,8 +27,12 @@ function TopicsList() {
     return <LoadingPageSection />;
   }
 
-  if (!data || !dataProducts) {
+  if (!data || data.topics.length === 0) {
     return <EmptyState title="There is no topics" />;
+  }
+
+  if (!dataProducts || dataProducts.products.length === 0) {
+    return <EmptyState title="There is no products" />;
   }
 
   const topicsPerProduct = groupTopicsPerProduct(

@@ -141,7 +141,7 @@ export default function TopicPage() {
     );
   }
 
-  if (!dataProducts) {
+  if (!dataProducts || dataProducts.products.length === 0) {
     return <EmptyState title="There is no products" />;
   }
 

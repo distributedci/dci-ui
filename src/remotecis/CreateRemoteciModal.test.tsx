@@ -7,7 +7,7 @@ test("test create remoteci form submit the correct values", async () => {
   const mockOnSubmit = vi.fn();
 
   const { baseElement, getByRole, getByTestId, getByPlaceholderText } = render(
-    <CreateRemoteciModal onSubmit={mockOnSubmit} teams={teams} />,
+    <CreateRemoteciModal onSubmit={mockOnSubmit} />,
   );
 
   const showModal = getByRole("button", { name: /Create a new remoteci/i });
