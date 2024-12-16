@@ -1,8 +1,8 @@
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { IUser } from "types";
-import { InputGroup } from "ui/form";
 import { Form } from "@patternfly/react-core";
+import InputGroup from "ui/form/InputGroup";
 
 const CreateUserSchema = Yup.object().shape({
   name: Yup.string()
