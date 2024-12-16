@@ -1,8 +1,10 @@
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { ITeam } from "types";
-import { CheckboxGroup, InputGroup, SelectGroup } from "ui/form";
 import { Form } from "@patternfly/react-core";
+import InputGroup from "ui/form/InputGroup";
+import SelectGroup from "ui/form/SelectGroup";
+import CheckboxGroup from "ui/form/CheckboxGroup";
 
 const TeamSchema = Yup.object().shape({
   name: Yup.string()

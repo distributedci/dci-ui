@@ -15,10 +15,9 @@ import {
   MenuToggleElement,
 } from "@patternfly/react-core";
 import { SyncAltIcon } from "@patternfly/react-icons";
-import RemoteciToolbarFilter from "./RemoteciToolbarFilter";
 import ProductToolbarFilter from "./ProductToolbarFilter";
-import TopicToolbarFilter from "./TopicToolbarFilter";
-import TeamToolbarFilter from "./TeamToolbarFilter";
+import TopicToolbarFilter from "topics/form/TopicToolbarFilter";
+import TeamToolbarFilter from "teams/form/TeamToolbarFilter";
 import StatusToolbarFilter from "./StatusToolbarFilter";
 import ListToolbarFilter from "./ListToolbarFilter";
 import TextInputToolbarFilter from "./TextInputToolbarFilter";
@@ -27,6 +26,7 @@ import QLToolbar from "./QLToolbar";
 import TableViewColumnsSelect from "./TableViewColumnsSelect";
 import { offsetAndLimitToPage, pageAndLimitToOffset } from "services/filters";
 import { isUUID } from "services/utils";
+import RemoteciToolbarFilter from "remotecis/form/RemoteciToolbarFilter";
 
 const Categories = [
   "Remoteci",
