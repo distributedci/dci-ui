@@ -67,7 +67,7 @@ export default function JobsPage() {
     return <LoadingPageSection />;
   }
 
-  if (!data) {
+  if (!data || data.jobs.length === 0) {
     return <EmptyState title="No job" info="There is no job at the moment." />;
   }
 
