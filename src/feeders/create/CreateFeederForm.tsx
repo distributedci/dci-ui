@@ -1,14 +1,8 @@
-import { Button } from "@patternfly/react-core";
-import { Input } from "ui/formik";
+import { Button, Form, FormGroup, TextInput } from "@patternfly/react-core";
 import * as Yup from "yup";
-import { Form, Formik } from "formik";
-import { SelectWithTypeahead } from "ui/formik";
-import { ITeam } from "types";
-
-interface INewFeeder {
-  name: string;
-  team_id: string;
-}
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import TeamSelect from "teams/form/TeamSelect";
 
 const CreateFeederSchema = Yup.object().shape({
   name: Yup.string()
@@ -18,44 +12,49 @@ const CreateFeederSchema = Yup.object().shape({
 });
 
 interface CreateFeederFormProps {
-  teams: ITeam[];
-  onSubmit: (feeder: INewFeeder) => void;
+  onSubmit: (values: { name: string; team_id: string }) => void;
 }
 
-export default function CreateFeederForm({
-  teams,
-  onSubmit,
-}: CreateFeederFormProps) {
+export default function CreateFeederForm({ onSubmit }: CreateFeederFormProps) {
+  const {
+    register,
+    formState: { isDirty, isValid },
+    handleSubmit,
+    setValue,
+  } = useForm({
+    resolver: yupResolver(CreateFeederSchema),
+    defaultValues: { name: "", team_id: "" },
+  });
+
   return (
-    <Formik
-      initialValues={{ name: "", team_id: "" }}
-      validationSchema={CreateFeederSchema}
-      onSubmit={onSubmit}
-    >
-      {({ isValid, dirty }) => (
-        <Form id="create_feeder_form" className="pf-v6-c-form">
-          <Input
-            id="create_feeder_form__name"
-            data-testid="create_feeder_form__name"
-            label="Name"
-            name="name"
-            isRequired
-          />
-          <SelectWithTypeahead
-            id="create_feeder_form__team_id"
-            placeholder="Select a team"
-            name="team_id"
-            options={teams.map((t) => ({ label: t.name, value: t.id }))}
-          />
-          <Button
-            variant="primary"
-            type="submit"
-            isDisabled={!(isValid && dirty)}
-          >
-            Create a feeder
-          </Button>
-        </Form>
-      )}
-    </Formik>
+    <Form id="create_feeder_form" onSubmit={handleSubmit(onSubmit)}>
+      <FormGroup label="Name" isRequired fieldId="create_feeder_form__name">
+        <TextInput
+          id="create_feeder_form__name"
+          placeholder="Feeder name"
+          isRequired
+          {...register("name")}
+        />
+      </FormGroup>
+      <FormGroup label="Team" isRequired fieldId="create_feeder_form__team_id">
+        <TeamSelect
+          id="create_feeder_form__team_id"
+          name="team_id"
+          placeholder="Select a team"
+          onSelect={(item) => {
+            if (item) {
+              setValue("team_id", item.id, { shouldValidate: true });
+            }
+          }}
+        />
+      </FormGroup>
+      <Button
+        variant="primary"
+        type="submit"
+        isDisabled={!(isValid && isDirty)}
+      >
+        Create a feeder
+      </Button>
+    </Form>
   );
 }

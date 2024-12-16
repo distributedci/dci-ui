@@ -8,23 +8,12 @@ import {
 } from "@patternfly/react-core";
 import CreateFeederForm from "./CreateFeederForm";
 import { useNavigate } from "react-router";
-import { Breadcrumb, EmptyState } from "ui";
-import { useListTeamsQuery } from "teams/teamsApi";
+import { Breadcrumb } from "ui";
 import { useCreateFeederMutation } from "feeders/feedersApi";
-import LoadingPageSection from "ui/LoadingPageSection";
 
 export default function CreateFeederPage() {
   const [createFeeder] = useCreateFeederMutation();
-  const { data: dataTeams, isLoading: isLoadingTeams } = useListTeamsQuery();
   const navigate = useNavigate();
-
-  if (isLoadingTeams) {
-    return <LoadingPageSection />;
-  }
-
-  if (!dataTeams) {
-    return <EmptyState title="There is no teams" />;
-  }
 
   return (
     <PageSection>
@@ -41,7 +30,6 @@ export default function CreateFeederPage() {
           <Card>
             <CardBody>
               <CreateFeederForm
-                teams={dataTeams.teams}
                 onSubmit={(feeder) => {
                   createFeeder(feeder).then(() => navigate("/feeders"));
                 }}
