@@ -32,7 +32,7 @@ function ProductsTable() {
     return <LoadingPageSection />;
   }
 
-  if (!data) {
+  if (!data || data.products.length === 0) {
     return <EmptyState title="There is no products" />;
   }
 

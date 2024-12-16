@@ -544,7 +544,7 @@ export type WhereFilters = Pick<
   | "type"
 >;
 
-export interface SelectProps<T> {
+export interface IToolbarFilterProps<T> {
   id: string | null;
   onSelect: (item: T) => void;
   onClear: () => void;
