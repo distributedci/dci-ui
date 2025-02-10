@@ -25,7 +25,7 @@ import {
   IGetAnalyticsJobsResponse,
   IJobStatus,
 } from "types";
-import { ComponentsList } from "jobs/components";
+import { ComponentsList, TestLabels } from "jobs/components";
 import { notEmpty } from "services/utils";
 import { Table, Thead, Tr, Th, Tbody, Td } from "@patternfly/react-table";
 import { JobStatusLabel } from "jobs/components";
@@ -42,13 +42,10 @@ import {
   InProgressIcon,
   ResourcesFullIcon,
 } from "@patternfly/react-icons";
-import {
-  humanizeJobDuration,
-  JobComment,
-  JobResults,
-} from "analytics/jobs/JobComponents";
+import { humanizeJobDuration } from "jobs/components/duration";
 import AnalyticsToolbar from "analytics/toolbar/AnalyticsToolbar";
 import { useLazyGetAnalyticJobsQuery } from "analytics/analyticsApi";
+import JobComment from "jobs/components/JobComment";
 
 function jobStatusToVariant(status: IJobStatus) {
   switch (status) {
@@ -123,7 +120,7 @@ function PipelineJobInfo({ job, index }: { job: IPipelineJob; index: number }) {
           whiteSpace: "nowrap",
         }}
       >
-        <JobResults results={job.results} />
+        <TestLabels {...job.results} />
       </Td>
       <Td
         style={{
