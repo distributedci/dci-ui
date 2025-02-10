@@ -9,8 +9,8 @@ import {
   ExclamationCircleIcon,
   ExclamationTriangleIcon,
 } from "@patternfly/react-icons";
-import humanizeDuration from "humanize-duration";
 import { sumTests } from "jobs/components/TestsLabels";
+import { humanizeDuration } from "services/date";
 
 export default function JobTestsPage() {
   const { job } = useJob();
@@ -129,7 +129,7 @@ export default function JobTestsPage() {
                 <Td
                   role="cell"
                   data-label="Test humanized duration"
-                  title={`${test.time}`}
+                  title={`${test.time} seconds`}
                   style={{ whiteSpace: "nowrap" }}
                 >
                   {humanizeDuration(test.time)}
