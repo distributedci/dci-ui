@@ -10,7 +10,7 @@ import {
   RangeOptionValue,
   IPipeline,
 } from "types";
-import { formatDate, fromNow, humanizeDuration } from "services/date";
+import { formatDate, fromNow } from "services/date";
 import TopicIcon from "topics/TopicIcon";
 import { getBackgroundColor } from "jobs/jobUtils";
 import {
@@ -27,6 +27,8 @@ import {
   t_global_border_color_200,
   t_global_border_color_300,
 } from "@patternfly/react-tokens";
+import { humanizeJobDuration } from "jobs/components/duration";
+import JobKeysValues from "jobs/components/JobKeysValues";
 
 interface JobTableSummaryProps {
   job: JobNode;
@@ -53,7 +55,7 @@ export default function JobTableSummary({
   onStatusClicked,
   columns,
 }: JobTableSummaryProps) {
-  const jobDuration = humanizeDuration(job.duration * 1000);
+  const jobDuration = humanizeJobDuration(job.duration);
   const principalComponent = getPrincipalComponent(job.components);
   const config = job.configuration;
   const pipeline = job.pipeline;
@@ -176,16 +178,7 @@ export default function JobTableSummary({
           ))}
         </LabelGroup>
       ),
-    keysValues:
-      job.keys_values?.length === 0 ? null : (
-        <LabelGroup numLabels={10} isCompact>
-          {job.keys_values?.map((kv, index) => (
-            <Label key={index} color="blue" isCompact>
-              {kv.key}:{kv.value}
-            </Label>
-          ))}
-        </LabelGroup>
-      ),
+    keysValues: <JobKeysValues keys_values={job.keys_values} />,
     created_at: (
       <span title={`Created at ${job.created_at}`}>
         {formatDate(job.created_at)}

@@ -23,7 +23,7 @@ import {
   CodeBranchIcon,
 } from "@patternfly/react-icons";
 import { IEnhancedJob, IResult, IPipeline } from "types";
-import { formatDate, fromNow, humanizeDuration } from "services/date";
+import { formatDate, fromNow } from "services/date";
 import { isEmpty } from "lodash";
 import TextAreaEditableOnHover from "../TextAreaEditableOnHover";
 import { Markup } from "interweave";
@@ -32,8 +32,9 @@ import { convertLinksToHtml, getLabelColor } from "jobs/jobUtils";
 import { JobStatusLabel, TestLabels } from "jobs/components";
 import { useGetJobQuery, useUpdateJobMutation } from "jobs/jobsApi";
 import { sumTests } from "jobs/components/TestsLabels";
-import { ComponentsList } from "../../components/ComponentsList";
+import { ComponentsList } from "jobs/components/ComponentsList";
 import TopicIcon from "topics/TopicIcon";
+import { humanizeJobDuration } from "jobs/components/duration";
 
 interface TestsProps {
   jobId: string;
@@ -165,7 +166,7 @@ export default function JobDetailsHeader({
   ...props
 }: JobDetailsHeaderProps) {
   const [updateJob, { isLoading }] = useUpdateJobMutation();
-  const jobDuration = humanizeDuration(job.duration * 1000);
+  const jobDuration = humanizeJobDuration(job.duration);
   const startedSince = fromNow(job.created_at);
   const navigate = useNavigate();
   return (

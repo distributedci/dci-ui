@@ -28,7 +28,6 @@ import { useParams, Link } from "react-router";
 import { CalendarAltIcon, ClockIcon } from "@patternfly/react-icons";
 import { fromNow, formatDate } from "services/date";
 import { sortByNewestFirst } from "services/sort";
-import { humanizeDuration } from "services/date";
 import { StatHeaderCard } from "analytics/LatestJobStatus/LatestJobStatusDetailsPage";
 import { getPercentageOfSuccessfulJobs } from "./stats";
 import { JobStatusLabel } from "jobs/components";
@@ -42,6 +41,7 @@ import { useGetTopicQuery } from "topics/topicsApi";
 import LoadingPageSection from "ui/LoadingPageSection";
 import { useGetComponentQuery } from "components/componentsApi";
 import TopicIcon from "topics/TopicIcon";
+import { humanizeJobDuration } from "jobs/components/duration";
 
 interface IComponentJobProps {
   job: IJob;
@@ -75,7 +75,7 @@ function ComponentJob({ job }: IComponentJobProps) {
         <GridItem span={2}>
           <span title={`Duration in seconds ${job.duration}`}>
             <ClockIcon className="pf-v6-u-mr-xs" />
-            {humanizeDuration(job.duration * 1000)}
+            {humanizeJobDuration(job.duration)}
           </span>
         </GridItem>
         <GridItem span={2}>
