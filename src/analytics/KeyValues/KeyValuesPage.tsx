@@ -38,11 +38,11 @@ import {
   IGraphKeysValues,
   IJob,
 } from "types";
-import KeyValuesAddGraphModal, {
-  IKeyValueGraph,
-} from "./KeyValuesAddGraphModal";
+import KeyValuesAddGraphModal from "./KeyValuesAddGraphModal";
 import { createSearchFromGraphs, parseGraphsFromSearch } from "./filters";
 import { useNavigate, useSearchParams } from "react-router";
+import { IKeyValueGraph } from "./keyValuesTypes";
+import KeyValuesEditGraphModal from "./KeyValuesEditGraphModal";
 
 const CustomTooltip = ({ active, payload }: any) => {
   if (active && payload && payload.length) {
@@ -87,10 +87,12 @@ const tickFormatter = (timestamp: number) =>
 function KeyValueGraph({
   graph,
   data,
+  onEdit,
   onDelete,
 }: {
   graph: IKeyValueGraph;
   data: IGraphKeysValues;
+  onEdit: (newGraph: IKeyValueGraph) => void;
   onDelete: () => void;
 }) {
   const keys = graph.keys.map((k) => k.key);
@@ -109,12 +111,18 @@ function KeyValueGraph({
     <Card className="pf-v6-u-mt-md">
       <CardHeader>
         Graph {keys.join(" ")}
+        <KeyValuesEditGraphModal
+          keys={data.keys}
+          graph={graph}
+          className="pf-v6-u-ml-md"
+          onSubmit={onEdit}
+        />
         <Button
           onClick={() => {
             onDelete();
           }}
           variant="plain"
-          className="pf-v6-u-ml-md"
+          className="pf-v6-u-ml-xs"
         >
           <TrashAltIcon />
         </Button>
@@ -244,6 +252,13 @@ function KeyValuesGraphs({
           key={index}
           graph={graph}
           data={data}
+          onEdit={(newGraph) =>
+            setGraphs((oldGraphs) =>
+              oldGraphs.map((g, i) =>
+                index === i ? { ...newGraph } : { ...g },
+              ),
+            )
+          }
           onDelete={() =>
             setGraphs((oldGraphs) => oldGraphs.filter((g, i) => index !== i))
           }

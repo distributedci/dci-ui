@@ -6,26 +6,29 @@ import {
   ModalHeader,
   ModalVariant,
 } from "@patternfly/react-core";
-import { PlusIcon } from "@patternfly/react-icons";
+import { PenIcon } from "@patternfly/react-icons";
 
 import useModal from "hooks/useModal";
 import KeyValuesChartForm from "./KeyValuesChartForm";
 import { IKeyValueGraph } from "./keyValuesTypes";
 
-export default function KeyValuesAddGraphModal({
+export default function KeyValuesEditGraphModal({
   keys,
   onSubmit,
+  graph,
   ...props
 }: {
   keys: string[];
+  graph: IKeyValueGraph;
   onSubmit: (data: IKeyValueGraph) => void;
   [key: string]: any;
 }) {
   const { isOpen, show, hide } = useModal(false);
+console.log(graph)
   return (
     <>
       <Modal
-        id="add-new-graph"
+        id="edit-new-graph"
         aria-label="Add new key value graph"
         variant={ModalVariant.medium}
         isOpen={isOpen}
@@ -34,8 +37,9 @@ export default function KeyValuesAddGraphModal({
         <ModalHeader title="Add a graph" />
         <ModalBody>
           <KeyValuesChartForm
-            id="add-key-value-graph"
+            id="edit-key-value-graph"
             keys={keys}
+            defaultValues={graph}
             onSubmit={(values) => {
               hide();
               onSubmit(values);
@@ -44,13 +48,12 @@ export default function KeyValuesAddGraphModal({
         </ModalBody>
         <ModalFooter>
           <Button
-            icon={<PlusIcon aria-hidden="true" />}
             key="create"
             variant="primary"
             type="submit"
-            form="add-key-value-graph"
+            form="edit-key-value-graph"
           >
-            Add new graph
+            Edit
           </Button>
           <Button key="cancel" variant="link" onClick={hide}>
             Cancel
@@ -58,12 +61,11 @@ export default function KeyValuesAddGraphModal({
         </ModalFooter>
       </Modal>
       <Button
-        icon={<PlusIcon aria-hidden="true" />}
-        variant="control"
+        icon={<PenIcon aria-hidden="true" />}
         onClick={show}
+        variant="plain"
         {...props}
       >
-        Add new graph
       </Button>
     </>
   );

@@ -1,4 +1,4 @@
-import { IKeyValueGraph } from "./KeyValuesAddGraphModal";
+import { IKeyValueGraph } from "./keyValuesTypes";
 
 export function parseGraphsFromSearch(
   searchGraphs: string | null,
