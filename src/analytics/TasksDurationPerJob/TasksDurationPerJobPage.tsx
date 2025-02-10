@@ -25,7 +25,7 @@ import {
   ResponsiveContainer,
   ReferenceArea,
 } from "recharts";
-import { formatDate, humanizeDuration } from "services/date";
+import { formatDate } from "services/date";
 import { getDomain } from "./tasksDurationPerJob";
 import { Link, useSearchParams } from "react-router";
 import { LinkIcon } from "@patternfly/react-icons";
@@ -33,6 +33,7 @@ import { DateTime } from "luxon";
 import { Table, Thead, Tr, Th, Tbody, Td } from "@patternfly/react-table";
 import { useLazyGetTasksDurationCumulatedQuery } from "./tasksDurationPerJobApi";
 import RemoteciToolbarFilter from "remotecis/form/RemoteciToolbarFilter";
+import { humanizeDuration } from "services/date";
 
 const CustomTooltip = ({ active, payload }: any) => {
   if (active && payload && payload.length) {
@@ -52,7 +53,7 @@ const CustomTooltip = ({ active, payload }: any) => {
                 p.payload.name
               }`}</p>
               <p style={{ color: p.stroke }}>{`${humanizeDuration(
-                p.value * 1000,
+                p.value,
               )} (${p.value}s)`}</p>
             </div>
           ))}

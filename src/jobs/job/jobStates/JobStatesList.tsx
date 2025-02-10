@@ -8,7 +8,6 @@ import { useSearchParams } from "react-router";
 import JobStateRow from "./JobStateFile";
 import { EmptyState } from "ui";
 import { IEnhancedJob, IJobStateWithDuration } from "types";
-import { humanizeDuration } from "services/date";
 import {
   Button,
   Card,
@@ -26,11 +25,12 @@ import {
 } from "@patternfly/react-icons";
 import JobStateStepper from "./JobStateStepper";
 import FileContent from "../files/FileContent";
+import { humanizeDuration } from "services/date";
 
 function JobStateName(jobstate: IJobStateWithDuration) {
   let jobStateName = `Job state ${jobstate.status}`;
   if (jobstate.duration > 0) {
-    jobStateName += ` (${humanizeDuration(jobstate.duration * 1000)})`;
+    jobStateName += ` (${humanizeDuration(jobstate.duration)})`;
   }
 
   return (
