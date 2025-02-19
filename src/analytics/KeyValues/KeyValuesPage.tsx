@@ -116,7 +116,7 @@ function KeyValueGraph({
       <CardHeader>
         {graph.name}
         <KeyValuesEditGraphModal
-          keys={data.keys}
+          data={data}
           graph={graph}
           className="pf-v6-u-ml-md"
           onSubmit={onEdit}
@@ -304,7 +304,7 @@ function KeyValuesGraphs({
   return (
     <div {...props}>
       <KeyValuesAddGraphModal
-        keys={data.keys}
+        data={data}
         onSubmit={(newGraph) => {
           setGraphs((oldGraphs) => [newGraph, ...oldGraphs]);
         }}
