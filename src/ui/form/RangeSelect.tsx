@@ -7,7 +7,6 @@ import {
 } from "@patternfly/react-core";
 import { RangeOptionValue } from "types";
 import { getRangeDates } from "services/date";
-import { useEffect } from "react";
 
 export const rangeLabels: { [k in RangeOptionValue]: string } = {
   previousWeek: "Previous week",
@@ -44,13 +43,6 @@ export default function RangeSelect({
   onChange: (range: RangeOptionValue, after: string, before: string) => void;
 }) {
   const showDatePicker = range === "custom";
-
-  useEffect(() => {
-    if (range !== "custom") {
-      const dates = getRangeDates(range, now);
-      onChange(range, dates.after, dates.before);
-    }
-  }, [onChange, range, now]);
 
   return (
     <Flex columnGap={{ default: "columnGapXs" }}>
