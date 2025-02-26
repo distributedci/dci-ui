@@ -1,18 +1,18 @@
 import { Tooltip, Label } from "@patternfly/react-core";
 import { createSearchParams, useLocation, useNavigate } from "react-router";
-import useLocalStorage from "hooks/useLocalStorage";
-import { AnalyticsToolbarSearch } from "types";
+import { AnalyticsSearches } from "types";
 
 export default function QueryToolbarSavedSearches({
+  searches,
+  setSearches,
   ...props
 }: {
+  searches: AnalyticsSearches;
+  setSearches: (newSearches: AnalyticsSearches) => void;
   [key: string]: any;
 }) {
   const location = useLocation();
   const navigate = useNavigate();
-  const [searches, setSearches] = useLocalStorage<
-    Record<string, AnalyticsToolbarSearch>
-  >("userAnalyticsFilters", {});
 
   const searchKeys = Object.keys(searches);
   return (
