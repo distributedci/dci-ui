@@ -7,7 +7,6 @@ import {
   Outlet,
   Navigate,
 } from "react-router";
-import { values } from "lodash";
 import {
   Nav,
   NavGroup,
@@ -369,7 +368,7 @@ interface SidebarProps {
 function Sidebar({ isNavOpen }: SidebarProps) {
   const { currentUser } = useAuth();
   if (currentUser === null) return null;
-  const currentUserTeams = values(currentUser.teams);
+  const currentUserTeams = Object.values(currentUser.teams);
   const PageNav = (
     <Nav aria-label="Nav">
       <NavGroup title="DCI">
