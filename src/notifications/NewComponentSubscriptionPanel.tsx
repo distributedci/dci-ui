@@ -1,4 +1,4 @@
-import { sortTopicWithSemver } from "topics/topicsActions";
+import { sortTopicWithSemver } from "services/sort";
 import {
   useListSubscribedTopicsQuery,
   useListTopicsQuery,

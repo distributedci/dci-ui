@@ -9,7 +9,8 @@ import {
 } from "@patternfly/react-core";
 import { EmptyState, Breadcrumb } from "ui";
 import { useNavigate } from "react-router";
-import { groupTopicsPerProduct, sortTopicWithSemver } from "./topicsActions";
+import { groupTopicsPerProduct } from "./topicsActions";
+import { sortTopicWithSemver } from "services/sort";
 import CreateTopicModal from "./CreateTopicModal";
 import { useCreateTopicMutation, useListTopicsQuery } from "./topicsApi";
 import { useListProductsQuery } from "products/productsApi";
@@ -36,14 +37,13 @@ function TopicsList() {
     return <EmptyState title="There is no products" />;
   }
 
-  const topicsPerProduct = groupTopicsPerProduct(
-    data.topics,
-    dataProducts.products,
+  const topicsPerProduct = sortByName(
+    groupTopicsPerProduct(data.topics, dataProducts.products),
   );
 
   return (
     <div>
-      {topicsPerProduct.sort(sortByName).map((product) => (
+      {topicsPerProduct.map((product) => (
         <div key={product.id} className="pf-v6-u-mb-xl">
           <Content component={ContentVariants.h2}>
             <ProductIcon name={product.name} className="pf-v6-u-mr-sm" />
