@@ -1,0 +1,8 @@
+Workflow+1: Guillaume Vincent <gvincent@redhat.com>
+Verified+2: Zuul CI <zuul@softwarefactory-project.io>
+Code-Review+2: Guillaume Vincent <gvincent@redhat.com>
+Submitted-by: Zuul CI <zuul@softwarefactory-project.io>
+Submitted-at: Wed, 16 Apr 2025 08:03:11 +0000
+Reviewed-on: https://softwarefactory-project.io/r/c/dci-ui/+/33562
+Project: dci-ui
+Branch: refs/heads/master
