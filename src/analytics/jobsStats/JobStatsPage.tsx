@@ -20,6 +20,9 @@ import {
   IGroupByKey,
   groupByKeys,
   groupByKeysWithLabel,
+  ISliceByKey,
+  sliceByKeys,
+  sliceByKeysWithLabel,
 } from "./jobStats";
 import JobStatChart from "./JobStatChart";
 import useLocalStorage from "hooks/useLocalStorage";
@@ -38,16 +41,20 @@ function JobStatsGraphs({
     "jobStatsGroupByKey",
     "topic",
   );
+  const [sliceByKey, setSliceByKey] = useLocalStorage<ISliceByKey>(
+    "jobStatsSliceByKey",
+    "status",
+  );
   const jobStats = useMemo(
-    () => getJobStats(data, groupByKey),
-    [data, groupByKey],
+    () => getJobStats(data, groupByKey, sliceByKey),
+    [data, groupByKey, sliceByKey],
   );
   return (
     <div {...props}>
       <Card className="pf-v6-u-mt-md">
         <CardBody>
           <div className="flex items-center justify-between">
-            <Form>
+            <Form className="flex items-center space-x-4">
               <FormGroup label="Group by">
                 <Select
                   onSelect={(selection) => {
@@ -62,6 +69,23 @@ function JobStatsGraphs({
                   items={groupByKeys.map((key) => ({
                     value: key,
                     label: groupByKeysWithLabel[key],
+                  }))}
+                />
+              </FormGroup>
+              <FormGroup label="Slice by">
+                <Select
+                  onSelect={(selection) => {
+                    if (selection) {
+                      setSliceByKey(selection.value);
+                    }
+                  }}
+                  item={{
+                    value: sliceByKey,
+                    label: sliceByKeysWithLabel[sliceByKey],
+                  }}
+                  items={sliceByKeys.map((key) => ({
+                    value: key,
+                    label: sliceByKeysWithLabel[key],
                   }))}
                 />
               </FormGroup>

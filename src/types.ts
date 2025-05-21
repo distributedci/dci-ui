@@ -606,6 +606,10 @@ export const groupByKeys = [
   "remoteci",
   "team",
   "configuration",
+  "comment",
+  "url",
+  "status",
+  "status_reason",
 ] as const;
 
 export type IGroupByKey = (typeof groupByKeys)[number];
@@ -618,4 +622,8 @@ export const groupByKeysWithLabel: Record<IGroupByKey, string> = {
   team: "Team name",
   remoteci: "Remoteci name",
   configuration: "Configuration",
+  comment: "Comments",
+  url: "URL",
+  status: "Status",
+  status_reason: "Status reason",
 };

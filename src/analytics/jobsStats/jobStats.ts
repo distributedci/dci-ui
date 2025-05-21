@@ -14,6 +14,10 @@ export const groupByKeys = [
   "remoteci",
   "team",
   "configuration",
+  "comment",
+  "url",
+  "status",
+  "status_reason",
 ] as const;
 export type IGroupByKey = (typeof groupByKeys)[number];
 export const groupByKeysWithLabel: Record<IGroupByKey, string> = {
@@ -24,16 +28,29 @@ export const groupByKeysWithLabel: Record<IGroupByKey, string> = {
   team: "Team name",
   remoteci: "Remoteci name",
   configuration: "Configuration",
+  comment: "Comments",
+  url: "URL",
+  status: "Status",
+  status_reason: "Status reason",
 };
 
-export type IJobStat = Record<
-  IFinalJobStatus,
-  {
-    color: string;
-    total: number;
-    label: string;
-  }
->;
+// Keys for slicing data inside each group (pie chart slices)
+export type ISliceByKey = "status" | IGroupByKey;
+export const sliceByKeys: ISliceByKey[] = ["status", ...groupByKeys];
+export const sliceByKeysWithLabel: Record<ISliceByKey, string> = {
+  ...groupByKeysWithLabel,
+  status: "Status",
+};
+
+// Generic statistic entry for a slice
+export interface IStat {
+  color: string;
+  total: number;
+  label: string;
+}
+
+// For backward compatibility, alias IJobStat for status-only stats
+export type IJobStat = Record<IFinalJobStatus, IStat>;
 
 function getJobKey(job: IAnalyticsJob, groupByKey: IGroupByKey) {
   let key: string | null = null;
@@ -62,59 +79,132 @@ function getJobKey(job: IAnalyticsJob, groupByKey: IGroupByKey) {
     case "configuration":
       key = job.configuration;
       break;
+    case "comment":
+      key = job.comment;
+      break;
     default:
-      const exhaustiveCheck: never = groupByKey;
-      throw new Error(`Unhandled groupByKey: ${exhaustiveCheck}`);
+      const value = (job as any)[groupByKey];
+      if (value == null) {
+        key = null;
+      } else if (
+        typeof value === "string" ||
+        typeof value === "number" ||
+        typeof value === "boolean"
+      ) {
+        key = value.toString();
+      } else {
+        key = JSON.stringify(value);
+      }
+      break;
   }
   return key;
 }
 
+/**
+ * Compute statistics for jobs, grouping them by groupByKey and slicing each group
+ * by sliceByKey. By default, sliceByKey is 'status', preserving the original behavior.
+ */
 export function getJobStats(
   data: IAnalyticsJob[],
   groupByKey: IGroupByKey,
-): Record<string, IJobStat> {
-  const emptyJobStat = {} as Record<string, IJobStat>;
-  try {
-    if (data.length === 0) {
-      return emptyJobStat;
-    }
-    return data.reduce(
-      (acc, job) => {
-        const jobStatus = job.status;
-        if (!(FinalJobStatuses as readonly string[]).includes(jobStatus))
-          return acc;
-        const key = getJobKey(job, groupByKey);
-        if (key === null || key === "") return acc;
-        const finalJobStatus = jobStatus as IFinalJobStatus;
-        const stat = acc[key] || {
-          success: {
-            color: t_global_color_status_success_default.var,
-            total: 0,
-            label: "Successful jobs",
-          },
-          failure: {
-            color: t_global_color_status_danger_default.var,
-            total: 0,
-            label: "Failed jobs",
-          },
-          error: {
-            color: t_global_color_status_danger_default.var,
-            total: 0,
-            label: "Errored jobs",
-          },
-          killed: {
-            color: t_global_color_status_warning_default.var,
-            total: 0,
-            label: "Killed jobs",
-          },
-        };
-        stat[finalJobStatus].total += 1;
-        acc[key] = stat;
-        return acc;
-      },
-      {} as Record<string, IJobStat>,
-    );
-  } catch (error) {
-    return emptyJobStat;
+  sliceByKey: ISliceByKey = "status",
+): Record<string, Record<string, IStat>> {
+  const emptyStats: Record<string, Record<string, IStat>> = {};
+  if (data.length === 0) {
+    return emptyStats;
   }
+
+  // Mapping for status colors and labels
+  const statusColorsMap: Record<IFinalJobStatus, string> = {
+    success: t_global_color_status_success_default.var,
+    failure: t_global_color_status_danger_default.var,
+    error: t_global_color_status_danger_default.var,
+    killed: t_global_color_status_warning_default.var,
+  };
+  const statusLabelsMap: Record<IFinalJobStatus, string> = {
+    success: "Successful jobs",
+    failure: "Failed jobs",
+    error: "Errored jobs",
+    killed: "Killed jobs",
+  };
+
+  // Default color palette for non-status slices
+  const chartColors = [
+    "#1f77b4",
+    "#ff7f0e",
+    "#2ca02c",
+    "#d62728",
+    "#9467bd",
+    "#8c564b",
+    "#e377c2",
+    "#7f7f7f",
+    "#bcbd22",
+    "#17becf",
+  ];
+  const sliceColorMap: Record<string, string> = {};
+  let nextColor = 0;
+
+  const result: Record<string, Record<string, IStat>> = {};
+  for (const job of data) {
+    const groupKeyValue = getJobKey(job, groupByKey);
+    if (!groupKeyValue) {
+      continue;
+    }
+
+    // Determine slice value and skip invalid entries
+    let sliceValue: string | null = null;
+    if (sliceByKey === "status") {
+      const jobStatus = job.status;
+      if (!(FinalJobStatuses as readonly string[]).includes(jobStatus)) {
+        continue;
+      }
+      sliceValue = jobStatus as IFinalJobStatus;
+    } else {
+      sliceValue = getJobKey(job, sliceByKey);
+    }
+    if (!sliceValue) {
+      continue;
+    }
+
+    // Initialize group bucket, pre-populating all statuses for sliceByKey === 'status'
+    if (!result[groupKeyValue]) {
+      if (sliceByKey === "status") {
+        const initial: Record<string, IStat> = {};
+        FinalJobStatuses.forEach((status) => {
+          initial[status] = {
+            color: statusColorsMap[status],
+            total: 0,
+            label: statusLabelsMap[status],
+          };
+        });
+        result[groupKeyValue] = initial;
+      } else {
+        result[groupKeyValue] = {};
+      }
+    }
+    const groupStats = result[groupKeyValue];
+
+    // Assign a color to this slice if not already done
+    if (!sliceColorMap[sliceValue]) {
+      sliceColorMap[sliceValue] =
+        sliceByKey === "status"
+          ? statusColorsMap[sliceValue as IFinalJobStatus]
+          : chartColors[nextColor++ % chartColors.length];
+    }
+
+    // Initialize slice entry if missing
+    if (!groupStats[sliceValue]) {
+      groupStats[sliceValue] = {
+        color: sliceColorMap[sliceValue],
+        total: 0,
+        label:
+          sliceByKey === "status"
+            ? statusLabelsMap[sliceValue as IFinalJobStatus]
+            : sliceValue,
+      };
+    }
+    groupStats[sliceValue].total += 1;
+  }
+
+  return result;
 }
