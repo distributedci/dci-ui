@@ -10,6 +10,17 @@ type ListToolbarFilterProps = {
   onSubmit: (items: string[]) => void;
 };
 
+/**
+ * Remove a specified chip from a list of items, ensuring unique items first.
+ * @param items - original list of items (may contain duplicates)
+ * @param chip - item to remove
+ * @returns new list without the removed chip
+ */
+export function deleteListItem(items: string[], chip: string): string[] {
+  const uniqItems = [...new Set(items)];
+  return uniqItems.filter((f) => f !== chip);
+}
+
 export default function ListToolbarFilter({
   showToolbarItem = true,
   items,
@@ -21,11 +32,7 @@ export default function ListToolbarFilter({
   return (
     <ToolbarFilter
       labels={uniqItems}
-      deleteLabel={(key, value) => {
-        if (key) {
-          onSubmit(uniqItems?.filter((f) => f !== value));
-        }
-      }}
+      deleteLabel={(_category, chip) => onSubmit(deleteListItem(items, chip))}
       categoryName={categoryName}
       showToolbarItem={showToolbarItem}
     >
