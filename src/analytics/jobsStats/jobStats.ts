@@ -14,6 +14,7 @@ export const groupByKeys = [
   "remoteci",
   "team",
   "configuration",
+  "comment",
 ] as const;
 export type IGroupByKey = (typeof groupByKeys)[number];
 export const groupByKeysWithLabel: Record<IGroupByKey, string> = {
@@ -24,6 +25,7 @@ export const groupByKeysWithLabel: Record<IGroupByKey, string> = {
   team: "Team name",
   remoteci: "Remoteci name",
   configuration: "Configuration",
+  comment: "Comments",
 };
 
 export type IJobStat = Record<
@@ -61,6 +63,9 @@ function getJobKey(job: IAnalyticsJob, groupByKey: IGroupByKey) {
       break;
     case "configuration":
       key = job.configuration;
+      break;
+    case "comment":
+      key = job.comment;
       break;
     default:
       const exhaustiveCheck: never = groupByKey;
