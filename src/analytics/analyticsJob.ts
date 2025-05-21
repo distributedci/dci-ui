@@ -29,8 +29,19 @@ export function getJobKey(job: IAnalyticsJob, groupByKey: IGroupByKey) {
       key = job.configuration;
       break;
     default:
-      const exhaustiveCheck: never = groupByKey;
-      throw new Error(`Unhandled groupByKey: ${exhaustiveCheck}`);
+      const value = (job as any)[groupByKey];
+      if (value == null) {
+        key = null;
+      } else if (
+        typeof value === "string" ||
+        typeof value === "number" ||
+        typeof value === "boolean"
+      ) {
+        key = value.toString();
+      } else {
+        key = JSON.stringify(value);
+      }
+      break;
   }
   return key;
 }
