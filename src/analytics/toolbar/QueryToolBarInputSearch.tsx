@@ -6,12 +6,17 @@ import {
   Popper,
   SearchInput,
 } from "@patternfly/react-core";
+import { useLazyGetSuggestionsQuery } from "analytics/analyticsApi";
 import {
   applyCompletion,
   Completion,
+  CompletionValues,
+  extractAutocompleteInfo,
   getCompletions,
 } from "analytics/autocompletion/autocompletion";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { JobStatuses } from "types";
+import { useDebounce } from "use-debounce";
 
 export interface QueryToolBarInputSearchProps
   extends Omit<React.HTMLProps<HTMLInputElement>, "onChange"> {
@@ -28,9 +33,18 @@ export default function QueryToolBarInputSearch({
   const [cursor, setCursor] = useState(0);
   const [focusedIndex, setFocusedIndex] = useState<number | null>(null);
   const [completions, setCompletions] = useState<Completion[]>([]);
+  const [debouncedValue] = useDebounce(value, 1000);
+  const [suggestions, setSuggestions] = useState<CompletionValues>({
+    status: [...JobStatuses],
+  });
+  const [apiSearch, setApiSearch] = useState<{
+    field: string;
+    value: string;
+  } | null>(null);
   const isAutocompleteOpen = completions.length > 0;
   const searchInputRef = useRef<HTMLInputElement | null>(null);
   const autocompleteRef = useRef<HTMLDivElement | null>(null);
+  const [getApiSuggestions] = useLazyGetSuggestionsQuery();
 
   const _applyCompletion = useCallback(
     (value: string, cursor: number, completion: Completion | undefined) => {
@@ -56,10 +70,29 @@ export default function QueryToolBarInputSearch({
   };
 
   useEffect(() => {
-    if (value) {
-      setCompletions(getCompletions(value, cursor));
+    if (debouncedValue) {
+      setCompletions(getCompletions(debouncedValue, cursor, suggestions));
     }
-  }, [value, cursor]);
+  }, [debouncedValue, cursor, suggestions]);
+
+  useEffect(() => {
+    if (debouncedValue) {
+      setApiSearch(extractAutocompleteInfo(debouncedValue, cursor));
+    }
+  }, [debouncedValue, cursor]);
+
+  useEffect(() => {
+    if (apiSearch) {
+      console.log('getApiSuggestions')
+      getApiSuggestions(apiSearch.field).then((response) => {
+        console.log('getApiSuggestions response')
+        setSuggestions((prev) => ({
+          ...prev,
+          [apiSearch.field]: response.data,
+        }));
+      });
+    }
+  }, [apiSearch, getApiSuggestions]);
 
   useEffect(() => {
     if (completions.length === 0) {
@@ -94,7 +127,7 @@ export default function QueryToolBarInputSearch({
         } else {
           event.preventDefault();
           const completion = completions[focusedIndex];
-          _applyCompletion(value, cursor, completion);
+          _applyCompletion(debouncedValue, cursor, completion);
         }
       }
     };
@@ -113,7 +146,7 @@ export default function QueryToolBarInputSearch({
     focusedIndex,
     _applyCompletion,
     onSubmit,
-    value,
+    debouncedValue,
     cursor,
     completions,
   ]);
@@ -162,7 +195,7 @@ export default function QueryToolBarInputSearch({
             const completion = completions.find(
               (c) => c.value === completionValue,
             );
-            _applyCompletion(value, cursor, completion);
+            _applyCompletion(debouncedValue, cursor, completion);
             searchInputRef?.current?.focus();
           }}
         >
