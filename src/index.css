@@ -1,3 +1,7 @@
+:root {
+  --pf-t--global--text--color--placeholder: var(--pf-t--color--gray--40);
+}
+
 #root {
   height: 100%;
 }
