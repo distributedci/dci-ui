@@ -1,5 +1,5 @@
 import { Bullseye } from "@patternfly/react-core";
-import { BlinkLogo } from "ui";
+import { BlinkLogo } from "../ui";
 
 export default function NotAuthenticatedLoadingPage() {
   return (

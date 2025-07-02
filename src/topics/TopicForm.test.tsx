@@ -1,11 +1,11 @@
 import { waitFor } from "@testing-library/react";
-import { renderWithProviders } from "__tests__/renders";
+import { renderWithProviders } from "../__tests__/renders";
 import TopicForm from "./TopicForm";
 import { vi } from "vitest";
-import { topic, products } from "__tests__/data";
-import { server } from "__tests__/node";
+import { topic, products } from "../__tests__/data";
+import { server } from "../__tests__/node";
 import { http, HttpResponse } from "msw";
-import { IGetProducts } from "types";
+import type { IGetProducts } from "../types";
 import { Button } from "@patternfly/react-core";
 
 test("test create TopicForm submit the correct values", async () => {

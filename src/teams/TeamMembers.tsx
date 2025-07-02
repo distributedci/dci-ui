@@ -6,19 +6,19 @@ import {
   Skeleton,
 } from "@patternfly/react-core";
 import { MinusCircleIcon, PlusCircleIcon } from "@patternfly/react-icons";
-import { ConfirmDeleteModal, CopyButton } from "ui";
-import { ITeam } from "types";
+import { ConfirmDeleteModal, CopyButton } from "../ui";
+import type { ITeam } from "../types";
 import { Link } from "react-router";
 import {
   useAddUserToTeamMutation,
   useListTeamsUserQuery,
   useRemoveUserFromTeamMutation,
-} from "users/usersApi";
+} from "../users/usersApi";
 import AddUserToTeamModal from "./AddUserToTeamModal";
-import { sortByName } from "services/sort";
-import { showError, showSuccess } from "alerts/alertsSlice";
+import { sortByName } from "../services/sort";
+import { showError, showSuccess } from "../alerts/alertsSlice";
 import { Table, Thead, Tr, Th, Tbody, Td } from "@patternfly/react-table";
-import { useAppDispatch } from "store";
+import { useAppDispatch } from "../store";
 import { skipToken } from "@reduxjs/toolkit/query";
 
 export default function TeamMembers({

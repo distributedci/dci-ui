@@ -1,8 +1,8 @@
 import { waitFor } from "@testing-library/react";
-import { render } from "__tests__/renders";
+import { render } from "../../__tests__/renders";
 import { vi } from "vitest";
 import TypeaheadSelect from "./TypeaheadSelect";
-import { teams } from "__tests__/data";
+import { teams } from "../../__tests__/data";
 
 test("test TypeaheadSelect select an option with the menu", async () => {
   const mockOnSelect = vi.fn();

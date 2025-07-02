@@ -1,11 +1,11 @@
 import * as Yup from "yup";
-import { ITeam } from "types";
+import type { ITeam } from "../types";
 import { Form } from "@patternfly/react-core";
 import { FormProvider, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import TextInputFormGroup from "ui/form/TextInputFormGroup";
-import SelectFormGroup from "ui/form/SelectFormGroup";
-import CheckboxFormGroup from "ui/form/CheckboxFormGroup";
+import TextInputFormGroup from "../ui/form/TextInputFormGroup";
+import SelectFormGroup from "../ui/form/SelectFormGroup";
+import CheckboxFormGroup from "../ui/form/CheckboxFormGroup";
 
 const TeamSchema = Yup.object().shape({
   name: Yup.string()

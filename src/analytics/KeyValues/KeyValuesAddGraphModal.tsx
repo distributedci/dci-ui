@@ -8,9 +8,9 @@ import {
 } from "@patternfly/react-core";
 import { PlusIcon } from "@patternfly/react-icons";
 
-import useModal from "hooks/useModal";
+import useModal from "../../hooks/useModal";
 import KeyValuesChartForm from "./KeyValuesChartForm";
-import { IKeyValueGraph } from "./keyValuesTypes";
+import type { IKeyValueGraph } from "./keyValuesTypes";
 
 export default function KeyValuesAddGraphModal({
   keys,

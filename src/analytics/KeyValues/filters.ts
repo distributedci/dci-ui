@@ -1,4 +1,4 @@
-import { IKeyValueGraph, IKeyValueGraphV1 } from "./keyValuesTypes";
+import type { IKeyValueGraph, IKeyValueGraphV1 } from "./keyValuesTypes";
 
 function convertGraphTov2Graph(
   graphs: (IKeyValueGraph | IKeyValueGraphV1)[],

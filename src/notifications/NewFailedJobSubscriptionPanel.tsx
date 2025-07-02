@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ICurrentUser, IRemoteci } from "types";
+import type { ICurrentUser, IRemoteci } from "../types";
 import {
   DualListSelector,
   DualListSelectorControl,
@@ -15,7 +15,7 @@ import {
   useListSubscribedRemotecisQuery,
   useSubscribeToARemoteciMutation,
   useUnsubscribeFromARemoteciMutation,
-} from "remotecis/remotecisApi";
+} from "../remotecis/remotecisApi";
 
 export default function NewFailedJobSubscriptionPanel({
   currentUser,

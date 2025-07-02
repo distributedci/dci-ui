@@ -1,5 +1,5 @@
-import { getJobStats, IGroupByKey, ISliceByKey } from "./jobStats";
-import { analyticsOneJob, analyticsTwoJobs } from "analytics/analyticsTestData";
+import { getJobStats, type IGroupByKey, type ISliceByKey } from "./jobStats";
+import { analyticsOneJob, analyticsTwoJobs } from "../analyticsTestData";
 
 describe("getJobStats with sliceByKey 'tags'", () => {
   const groupByKey: IGroupByKey = "topic";

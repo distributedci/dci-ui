@@ -1,5 +1,5 @@
-import { getPrincipalComponent } from "topics/component/componentSelector";
-import { IAnalyticsJob, IGroupByKey } from "types";
+import { getPrincipalComponent } from "../topics/component/componentSelector";
+import type { IAnalyticsJob, IGroupByKey } from "../types";
 
 export function getJobKey<T extends IAnalyticsJob>(
   job: T,

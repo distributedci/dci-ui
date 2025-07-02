@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import copyToClipboard from "services/copyToClipboard";
+import copyToClipboard from "../services/copyToClipboard";
 import { CopyIcon, ClipboardCheckIcon } from "@patternfly/react-icons";
 import { t_global_color_nonstatus_green_200 } from "@patternfly/react-tokens";
 
