@@ -25,7 +25,7 @@ import {
   chart_color_red_orange_300,
 } from "@patternfly/react-tokens";
 import { Breadcrumb } from "ui";
-import {
+import type {
   IAnalyticsJob,
   IComponentCoverage,
   IGenericAnalyticsData,
