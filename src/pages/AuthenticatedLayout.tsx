@@ -35,23 +35,24 @@ import {
   DropdownList,
   Divider,
   MenuToggle,
-  MenuToggleElement,
+  type MenuToggleElement,
 } from "@patternfly/react-core";
-import Logo from "logo.black.svg";
-import LogoWhite from "logo.white.svg";
+import Logo from "../logo.black.svg";
+import LogoWhite from "../logo.white.svg";
 import {
   BarsIcon,
   ExternalLinkAltIcon,
   QuestionCircleIcon,
   UserIcon,
 } from "@patternfly/react-icons";
-import { useTheme } from "ui/Theme/themeContext";
+import { useTheme } from "../ui/Theme/themeContext";
 import NotAuthenticatedLoadingPage from "./NotAuthenticatedLoadingPage";
-import { loggedOut } from "auth/authSlice";
-import { useAppDispatch } from "store";
-import { useAuth } from "auth/authSelectors";
-import { changeCurrentTeam, useGetCurrentUserQuery } from "auth/authApi";
-import { ProfilePageUrl } from "auth/sso";
+import { loggedOut } from "../auth/authSlice";
+import { useAppDispatch } from "../store";
+import { useAuth } from "../auth/authSelectors";
+import { useGetCurrentUserQuery } from "../auth/authApi";
+import { ProfilePageUrl } from "../auth/sso";
+import { changeCurrentTeam } from "../teams/teamLocalStorage";
 
 function UserDropdownMenuMobile() {
   const dispatch = useAppDispatch();

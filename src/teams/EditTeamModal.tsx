@@ -7,9 +7,9 @@ import {
   ModalHeader,
   ModalVariant,
 } from "@patternfly/react-core";
-import useModal from "hooks/useModal";
+import useModal from "../hooks/useModal";
 import TeamForm from "./TeamForm";
-import { ITeam } from "types";
+import type { ITeam } from "../types";
 
 interface EditTeamModalProps {
   team: ITeam;

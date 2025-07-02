@@ -6,8 +6,8 @@ import {
   EyeIcon,
   ExternalLinkAltIcon,
 } from "@patternfly/react-icons";
-import { RotatingSpinnerIcon } from "ui";
-import { IFile } from "types";
+import { RotatingSpinnerIcon } from "../../../ui";
+import type { IFile } from "../../../types";
 import { useNavigate } from "react-router";
 import SeeFileContentModal from "./SeeFileContentModal";
 import { Tr, Td } from "@patternfly/react-table";

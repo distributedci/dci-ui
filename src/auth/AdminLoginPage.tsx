@@ -1,6 +1,6 @@
-import Logo from "logo.black.svg";
+import Logo from "../logo.black.svg";
 import LoginForm from "./LoginForm";
-import { BackgroundImage } from "ui";
+import { BackgroundImage } from "../ui";
 import { LoginPage } from "@patternfly/react-core";
 
 export default function AdminLoginPage() {

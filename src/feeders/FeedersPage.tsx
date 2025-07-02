@@ -1,4 +1,4 @@
-import { CopyButton, EmptyState, ConfirmDeleteModal, Breadcrumb } from "ui";
+import { CopyButton, EmptyState, ConfirmDeleteModal, Breadcrumb } from "../ui";
 import { TrashIcon } from "@patternfly/react-icons";
 import {
   Button,
@@ -8,7 +8,7 @@ import {
   PageSection,
 } from "@patternfly/react-core";
 import { Link } from "react-router";
-import { SeeAuthentificationFileModal } from "ui/Credentials";
+import { SeeAuthentificationFileModal } from "../ui/Credentials";
 import { Table, Thead, Tr, Th, Tbody, Td } from "@patternfly/react-table";
 import {
   useCreateFeederMutation,
@@ -16,8 +16,8 @@ import {
   useListFeedersQuery,
   useUpdateFeederMutation,
 } from "./feedersApi";
-import { fromNow } from "services/date";
-import LoadingPageSection from "ui/LoadingPageSection";
+import { fromNow } from "../services/date";
+import LoadingPageSection from "../ui/LoadingPageSection";
 import CreateFeederModal from "./CreateFeederModal";
 import EditFeederModal from "./EditFeederModal";
 

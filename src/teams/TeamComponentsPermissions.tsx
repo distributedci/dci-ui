@@ -11,13 +11,13 @@ import {
   Content,
 } from "@patternfly/react-core";
 import { MinusCircleIcon, PlusCircleIcon } from "@patternfly/react-icons";
-import { ConfirmDeleteModal } from "ui";
-import { useAppDispatch } from "store";
-import { ITeam } from "types";
+import { ConfirmDeleteModal } from "../ui";
+import { useAppDispatch } from "../store";
+import type { ITeam } from "../types";
 import { Link } from "react-router";
 import AddRemoteTeamPermissionModal from "./AddRemoteTeamPermissionModal";
-import { sortByName } from "services/sort";
-import { showError, showSuccess } from "alerts/alertsSlice";
+import { sortByName } from "../services/sort";
+import { showError, showSuccess } from "../alerts/alertsSlice";
 import { Table, Thead, Tr, Th, Tbody, Td } from "@patternfly/react-table";
 import {
   useAddTeamPermissionForTeamMutation,

@@ -5,12 +5,12 @@ import {
   LoginFooterItem,
   LoginPage,
 } from "@patternfly/react-core";
-import Logo from "logo.black.svg";
-import { BackgroundImage } from "ui";
+import Logo from "../logo.black.svg";
+import { BackgroundImage } from "../ui";
 import { manager, SSOUrl } from "./sso";
 import { useLocation } from "react-router";
-import { useAppDispatch } from "store";
-import { showError } from "alerts/alertsSlice";
+import { useAppDispatch } from "../store";
+import { showError } from "../alerts/alertsSlice";
 
 export default function DCILoginPage() {
   const location = useLocation();

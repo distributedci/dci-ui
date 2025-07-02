@@ -1,14 +1,14 @@
 import * as Yup from "yup";
-import { ITopic } from "types";
+import type { ITopic } from "../types";
 import { Form, FormGroup } from "@patternfly/react-core";
 import { FormProvider, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import TextInputFormGroup from "ui/form/TextInputFormGroup";
-import CheckboxFormGroup from "ui/form/CheckboxFormGroup";
-import FormErrorMessage from "ui/form/FormErrorMessage";
-import ProductSelect from "products/form/ProductSelect";
-import SelectFormGroup from "ui/form/SelectFormGroup";
-import TextAreaFormGroup from "ui/form/TextAreaFormGroup";
+import TextInputFormGroup from "../ui/form/TextInputFormGroup";
+import CheckboxFormGroup from "../ui/form/CheckboxFormGroup";
+import FormErrorMessage from "../ui/form/FormErrorMessage";
+import ProductSelect from "../products/form/ProductSelect";
+import SelectFormGroup from "../ui/form/SelectFormGroup";
+import TextAreaFormGroup from "../ui/form/TextAreaFormGroup";
 
 function isValidJSON(value: string | null | undefined) {
   try {

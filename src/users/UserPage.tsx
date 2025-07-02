@@ -10,7 +10,7 @@ import {
 } from "@patternfly/react-core";
 import UserForm from "./UserForm";
 import { TrashAltIcon } from "@patternfly/react-icons";
-import { ConfirmDeleteModal, Breadcrumb, EmptyState } from "ui";
+import { ConfirmDeleteModal, Breadcrumb, EmptyState } from "../ui";
 import { useParams, useNavigate } from "react-router";
 import { t_global_color_status_danger_default } from "@patternfly/react-tokens";
 import {
@@ -19,7 +19,7 @@ import {
   useUpdateUserMutation,
 } from "./usersApi";
 import { skipToken } from "@reduxjs/toolkit/query";
-import LoadingPageSection from "ui/LoadingPageSection";
+import LoadingPageSection from "../ui/LoadingPageSection";
 import { UserTeamsTable } from "./UserTeamsTable";
 
 export default function UserPage() {

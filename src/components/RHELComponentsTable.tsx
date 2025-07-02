@@ -1,10 +1,10 @@
 import { Table, Thead, Tr, Th, Tbody, Td } from "@patternfly/react-table";
-import { CopyButton, StateLabel } from "ui";
+import { CopyButton, StateLabel } from "../ui";
 import { Link } from "react-router";
 import { Label } from "@patternfly/react-core";
-import { formatDate } from "services/date";
+import { formatDate } from "../services/date";
 import { DateTime } from "luxon";
-import { Filters, IComponent } from "types";
+import type { Filters, IComponent } from "../types";
 
 export function findChannelInTags(tags: string[] | undefined | null) {
   if (!tags) {

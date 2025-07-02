@@ -2,8 +2,8 @@ import { extractKeys, extractKeysValues } from "./keyValues";
 import {
   analyticsOneKeysValuesJob,
   analyticsTwoKeysValuesJobs,
-} from "analytics/analyticsTestData";
-import { IKeyValueGraph } from "./keyValuesTypes";
+} from "../analyticsTestData";
+import type { IKeyValueGraph } from "./keyValuesTypes";
 
 test("extractKeys with empty data", () => {
   expect(extractKeys([])).toEqual([]);
