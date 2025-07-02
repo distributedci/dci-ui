@@ -3,11 +3,11 @@ import {
   addDuration,
   addPipelineStatus,
   getLongerTaskFirst,
-} from "./jobStatesActions";
+} from "jobs/job/jobStates/jobStatesActions";
 import { useSearchParams } from "react-router";
-import JobStateRow from "./JobStateFile";
+import JobStateRow from "jobs/job/jobStates/JobStateFile";
 import { EmptyState } from "ui";
-import { IEnhancedJob, IJobStateWithDuration } from "types";
+import type { IEnhancedJob, IJobStateWithDuration } from "types";
 import { humanizeDuration } from "services/date";
 import {
   Button,
@@ -24,8 +24,8 @@ import {
   FileIcon,
   ListIcon,
 } from "@patternfly/react-icons";
-import JobStateStepper from "./JobStateStepper";
-import FileContent from "../files/FileContent";
+import JobStateStepper from "jobs/job/jobStates/JobStateStepper";
+import FileContent from "jobs/job/files/FileContent";
 
 function JobStateName(jobstate: IJobStateWithDuration) {
   let jobStateName = `Job state ${jobstate.status}`;
