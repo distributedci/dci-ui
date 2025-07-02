@@ -1,20 +1,19 @@
 import {
-  BaseQueryFn,
   createApi,
-  FetchArgs,
   fetchBaseQuery,
-  FetchBaseQueryError,
+  type BaseQueryFn,
+  type FetchArgs,
+  type FetchBaseQueryError,
 } from "@reduxjs/toolkit/query/react";
-import { getToken, setJWT } from "services/localStorage";
-import { Filters } from "types";
-import { createSearchFromFilters } from "services/filters";
+import { getToken, setJWT } from "./services/localStorage";
+import { type Filters } from "./types";
+import { createSearchFromFilters } from "./services/filters";
 import { Mutex } from "async-mutex";
 import { manager } from "auth/sso";
-import { loggedOut } from "auth/authSlice";
-import { getDefaultTeam } from "auth/authApi";
+import { getDefaultTeam } from "teams/teamLocalStorage";
 
 export const baseUrl =
-  process.env.REACT_APP_BACKEND_HOST || "https://api.distributed-ci.io";
+  import.meta.env.VITE_BACKEND_HOST || "https://api.distributed-ci.io";
 
 const mutex = new Mutex();
 
@@ -57,11 +56,9 @@ const baseQueryWithReauth: BaseQueryFn<
         if (access_token) {
           setJWT(access_token);
           result = await baseQuery(args, api, extraOptions);
-        } else {
-          api.dispatch(loggedOut());
         }
       } catch (error) {
-        api.dispatch(loggedOut());
+        console.error(error);
       } finally {
         release();
       }
