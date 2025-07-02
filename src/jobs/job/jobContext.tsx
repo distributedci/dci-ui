@@ -1,5 +1,5 @@
 import * as React from "react";
-import { IEnhancedJob } from "types";
+import type { IEnhancedJob } from "types";
 import { useParams } from "react-router";
 import { useGetEnhancedJobQuery } from "jobs/jobsApi";
 import { skipToken } from "@reduxjs/toolkit/query";

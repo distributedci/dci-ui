@@ -20,7 +20,7 @@ import {
   EmptyStateBody,
 } from "@patternfly/react-core";
 import { Breadcrumb, CopyButton, StateLabel } from "ui";
-import {
+import type {
   IComponent,
   IComponentCoverage,
   IComponentWithJobs,
@@ -31,7 +31,7 @@ import { CalendarAltIcon, ClockIcon } from "@patternfly/react-icons";
 import { fromNow, formatDate } from "services/date";
 import { sortByNewestFirst } from "services/sort";
 import { humanizeDuration } from "services/date";
-import { getPercentageOfSuccessfulJobs } from "./stats";
+import { getPercentageOfSuccessfulJobs } from "topics/component/stats";
 import { JobStatusLabel } from "jobs/components";
 import CardLine from "ui/CardLine";
 import LastComponentsJobsBarChart from "analytics/ComponentCoverage/LastComponentsJobsBarChart";
@@ -43,7 +43,7 @@ import { useGetTopicQuery } from "topics/topicsApi";
 import LoadingPageSection from "ui/LoadingPageSection";
 import { useGetComponentQuery } from "components/componentsApi";
 import TopicIcon from "topics/TopicIcon";
-import StatHeaderCard from "./StatHeaderCard";
+import StatHeaderCard from "topics/component/StatHeaderCard";
 import { Table, Thead, Tr, Th, Tbody, Td } from "@patternfly/react-table";
 
 function TopicLink({ topic_id }: { topic_id: string }) {

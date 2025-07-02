@@ -16,7 +16,7 @@ import {
 } from "@patternfly/react-core";
 import { useState } from "react";
 import { AngleLeftIcon, AngleRightIcon } from "@patternfly/react-icons";
-import { ITopic } from "types";
+import type { ITopic } from "types";
 
 export default function NewComponentSubscriptionPanel() {
   const [searchTopics, setSearchTopics] = useState("");

@@ -1,5 +1,5 @@
-import JobStatesList from "jobs/job/jobStates/JobStatesList";
-import { useJob } from "../jobContext";
+import JobStatesList from "./JobStatesList";
+import { useJob } from "jobs/job/jobContext";
 import JobDetailsHeader from "./JobDetailsHeader";
 
 export default function JobStatesPage() {
