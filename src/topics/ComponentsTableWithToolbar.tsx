@@ -1,16 +1,16 @@
 import { useEffect, useState } from "react";
 import { Card, CardBody, CardTitle } from "@patternfly/react-core";
-import { ITopic } from "types";
+import type { ITopic } from "../types";
 import { useLocation, useNavigate } from "react-router";
 import {
   createSearchFromFilters,
   parseFiltersFromSearch,
-} from "services/filters";
-import { Filters } from "types";
-import { useListComponentsQuery } from "components/componentsApi";
-import RHELComponentsTable from "components/RHELComponentsTable";
-import DefaultComponentsTable from "components/ComponentsTable";
-import ComponentsToolbar from "components/ComponentsToolbar";
+} from "../services/filters";
+import type { Filters } from "../types";
+import { useListComponentsQuery } from "../components/componentsApi";
+import RHELComponentsTable from "../components/RHELComponentsTable";
+import DefaultComponentsTable from "../components/ComponentsTable";
+import ComponentsToolbar from "../components/ComponentsToolbar";
 
 export default function ComponentsTableWithToolbar({
   topic,

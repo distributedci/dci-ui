@@ -1,8 +1,8 @@
 import { waitFor } from "@testing-library/react";
-import { renderWithProviders } from "__tests__/renders";
+import { renderWithProviders } from "../__tests__/renders";
 import UserForm from "./UserForm";
 import { vi } from "vitest";
-import { users } from "__tests__/data";
+import { users } from "../__tests__/data";
 import { Button } from "@patternfly/react-core";
 
 test("test create UserForm submit the correct values", async () => {

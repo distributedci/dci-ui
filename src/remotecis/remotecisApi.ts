@@ -5,7 +5,7 @@ import {
   injectListEndpoint,
   injectUpdateEndpoint,
   api,
-} from "api";
+} from "../api";
 import type { ICurrentUser, IRemoteci } from "../types";
 
 const resource = "Remoteci";

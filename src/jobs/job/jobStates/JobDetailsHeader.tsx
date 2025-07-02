@@ -22,17 +22,17 @@ import {
   ExternalLinkAltIcon,
   CodeBranchIcon,
 } from "@patternfly/react-icons";
-import { IEnhancedJob, IResult, IPipeline } from "types";
-import { formatDate, fromNow, humanizeDuration } from "services/date";
+import type { IEnhancedJob, IResult, IPipeline } from "../../../types";
+import { formatDate, fromNow, humanizeDuration } from "../../../services/date";
 import TextAreaEditableOnHover from "../TextAreaEditableOnHover";
 import { Markup } from "interweave";
-import { sortByOldestFirst } from "services/sort";
-import { convertLinksToHtml, getLabelColor } from "jobs/jobUtils";
-import { JobStatusLabel, TestLabels } from "jobs/components";
-import { useGetJobQuery, useUpdateJobMutation } from "jobs/jobsApi";
-import { sumTests } from "jobs/components/TestsLabels";
-import { ComponentsList } from "jobs/components/ComponentsList";
-import TopicIcon from "topics/TopicIcon";
+import { sortByOldestFirst } from "../../../services/sort";
+import { convertLinksToHtml, getLabelColor } from "../../../jobs/jobUtils";
+import { JobStatusLabel, TestLabels } from "../../../jobs/components";
+import { useGetJobQuery, useUpdateJobMutation } from "../../../jobs/jobsApi";
+import { sumTests } from "../../../jobs/components/TestsLabels";
+import { ComponentsList } from "../../../jobs/components/ComponentsList";
+import TopicIcon from "../../../topics/TopicIcon";
 
 interface TestsProps {
   jobId: string;

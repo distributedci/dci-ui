@@ -5,7 +5,7 @@ import {
   InputGroup,
   InputGroupItem,
   MenuToggle,
-  MenuToggleElement,
+  type MenuToggleElement,
   Pagination,
   Toolbar,
   ToolbarContent,
@@ -17,10 +17,10 @@ import {
   getDefaultFilters,
   offsetAndLimitToPage,
   pageAndLimitToOffset,
-} from "services/filters";
-import { Filters } from "types";
-import ListToolbarFilter from "jobs/toolbar/ListToolbarFilter";
-import TextInputToolbarFilter from "jobs/toolbar/TextInputToolbarFilter";
+} from "../services/filters";
+import type { Filters } from "../types";
+import ListToolbarFilter from "../jobs/toolbar/ListToolbarFilter";
+import TextInputToolbarFilter from "../jobs/toolbar/TextInputToolbarFilter";
 
 const Categories = ["Name", "Type", "Tag"] as const;
 

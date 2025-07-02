@@ -24,18 +24,18 @@ import {
   chart_color_green_300,
   chart_color_red_orange_300,
 } from "@patternfly/react-tokens";
-import { Breadcrumb } from "ui";
-import {
+import { Breadcrumb } from "../../ui";
+import type {
   IAnalyticsJob,
   IComponentCoverage,
   IGenericAnalyticsData,
-} from "types";
+} from "../../types";
 import { buildComponentCoverage } from "./componentCoverage";
 import { FilterIcon, WarningTriangleIcon } from "@patternfly/react-icons";
 import { Link } from "react-router";
-import { sortByNewestFirst } from "services/sort";
-import { formatDate } from "services/date";
-import { JobStatusLabel } from "jobs/components";
+import { sortByNewestFirst } from "../../services/sort";
+import { formatDate } from "../../services/date";
+import { JobStatusLabel } from "../../jobs/components";
 import LastComponentsJobsBarChart from "./LastComponentsJobsBarChart";
 import {
   Table,
@@ -46,9 +46,9 @@ import {
   Tbody,
   Td,
 } from "@patternfly/react-table";
-import { useLazyGetAnalyticJobsQuery } from "analytics/analyticsApi";
-import AnalyticsToolbar from "analytics/toolbar/AnalyticsToolbar";
-import ScreeshotNodeButton from "ui/ScreenshotNodeButton";
+import { useLazyGetAnalyticJobsQuery } from "../analyticsApi";
+import AnalyticsToolbar from "../toolbar/AnalyticsToolbar";
+import ScreeshotNodeButton from "../../ui/ScreenshotNodeButton";
 
 function ComponentsCoverage({
   isLoading,

@@ -7,7 +7,7 @@ import {
   GridItem,
   PageSection,
 } from "@patternfly/react-core";
-import { BlinkLogo, Breadcrumb } from "ui";
+import { BlinkLogo, Breadcrumb } from "../../ui";
 import { useState } from "react";
 import { useLazyGetJunitAnalyticsQuery } from "./junitComparisonApi";
 import { TrendChart } from "./TrendChart";

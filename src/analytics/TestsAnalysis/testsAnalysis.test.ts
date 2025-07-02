@@ -1,6 +1,6 @@
-import { IAnalyticsTestsJob } from "types";
+import type { IAnalyticsTestsJob } from "../../types";
 import { analyseTests } from "./testsAnalysis";
-import { analyticsTwoJobs } from "analytics/analyticsTestData";
+import { analyticsTwoJobs } from "../analyticsTestData";
 
 describe("getTestingTrend", () => {
   test("getTestingTrend no data", () => {

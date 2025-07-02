@@ -6,9 +6,9 @@ import {
   ModalHeader,
   ModalVariant,
 } from "@patternfly/react-core";
-import useModal from "hooks/useModal";
+import useModal from "../hooks/useModal";
 import FeederForm from "./FeederForm";
-import { IFeeder } from "types";
+import type { IFeeder } from "../types";
 import { EditAltIcon } from "@patternfly/react-icons";
 
 interface EditFeederModalProps {

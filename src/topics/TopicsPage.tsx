@@ -8,23 +8,23 @@ import {
   Button,
   CardTitle,
 } from "@patternfly/react-core";
-import { EmptyState, Breadcrumb, CardSecondaryTitle, Truncate } from "ui";
+import { EmptyState, Breadcrumb, CardSecondaryTitle, Truncate } from "../ui";
 import { Link, useLocation, useNavigate } from "react-router";
 import { groupTopicsPerProduct } from "./topicsActions";
-import { sortWithSemver } from "services/sort";
+import { sortWithSemver } from "../services/sort";
 import CreateTopicModal from "./CreateTopicModal";
 import { useCreateTopicMutation, useListTopicsQuery } from "./topicsApi";
-import { useListProductsQuery } from "products/productsApi";
-import { useAuth } from "auth/authSelectors";
-import LoadingPageSection from "ui/LoadingPageSection";
-import ProductIcon from "products/ProductIcon";
-import { sortByName } from "services/sort";
+import { useListProductsQuery } from "../products/productsApi";
+import { useAuth } from "../auth/authSelectors";
+import LoadingPageSection from "../ui/LoadingPageSection";
+import ProductIcon from "../products/ProductIcon";
+import { sortByName } from "../services/sort";
 import { useEffect, useState } from "react";
-import { Filters } from "types";
+import type { Filters } from "../types";
 import {
   createSearchFromFilters,
   parseFiltersFromSearch,
-} from "services/filters";
+} from "../services/filters";
 
 function TopicsList() {
   const location = useLocation();
