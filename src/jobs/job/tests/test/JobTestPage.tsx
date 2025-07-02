@@ -9,7 +9,7 @@ import { useParams } from "react-router";
 import { BlinkLogo, EmptyState } from "ui";
 import TestSuites from "./TestSuites";
 import { skipToken } from "@reduxjs/toolkit/query";
-import { useGetJunitQuery } from "../testsApi";
+import { useGetJunitQuery } from "jobs/job/tests/testsApi";
 
 export default function JobTestPage() {
   const { file_id } = useParams();
