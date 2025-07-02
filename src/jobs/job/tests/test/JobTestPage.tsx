@@ -6,7 +6,7 @@ import {
   ContentVariants,
 } from "@patternfly/react-core";
 import { useParams } from "react-router";
-import { BlinkLogo, EmptyState } from "ui";
+import { BlinkLogo, EmptyState } from "@/ui";
 import TestSuites from "./TestSuites";
 import { skipToken } from "@reduxjs/toolkit/query";
 import { useGetJunitQuery } from "../testsApi";

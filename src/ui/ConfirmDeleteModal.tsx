@@ -9,7 +9,7 @@ import {
   ModalHeader,
   ModalVariant,
 } from "@patternfly/react-core";
-import useModal from "hooks/useModal";
+import useModal from "@/hooks/useModal";
 import { t_global_color_status_danger_default } from "@patternfly/react-tokens";
 
 type ConfirmDeleteModalProps = {

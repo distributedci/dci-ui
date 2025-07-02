@@ -1,11 +1,11 @@
 import { waitFor } from "@testing-library/react";
-import { renderWithProviders } from "__tests__/renders";
+import { renderWithProviders } from "@/__tests__/renders";
 import FeederForm from "./FeederForm";
 import { vi } from "vitest";
-import { feeder, teams } from "__tests__/data";
-import { server } from "__tests__/node";
+import { feeder, teams } from "@/__tests__/data";
+import { server } from "@/__tests__/node";
 import { http, HttpResponse } from "msw";
-import { IGetTeams } from "types";
+import type { IGetTeams } from "@/types";
 import { Button } from "@patternfly/react-core";
 
 test("test create FeederForm submit the correct values", async () => {

@@ -6,9 +6,9 @@ import {
 } from "./jobStatesActions";
 import { useSearchParams } from "react-router";
 import JobStateRow from "./JobStateFile";
-import { EmptyState } from "ui";
-import { IEnhancedJob, IJobStateWithDuration } from "types";
-import { humanizeDuration } from "services/date";
+import { EmptyState } from "@/ui";
+import type { IEnhancedJob, IJobStateWithDuration } from "@/types";
+import { humanizeDuration } from "@/services/date";
 import {
   Button,
   Card,

@@ -1,5 +1,5 @@
 import { hideAlert, selectAlerts } from "./alertsSlice";
-import { useAppDispatch, useAppSelector } from "store";
+import { useAppDispatch, useAppSelector } from "@/store";
 import { Alert, AlertActionCloseButton } from "@patternfly/react-core";
 
 export default function Alerts() {

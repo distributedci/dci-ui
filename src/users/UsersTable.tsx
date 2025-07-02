@@ -1,8 +1,8 @@
-import { CopyButton } from "ui";
+import { CopyButton } from "@/ui";
 import { Link } from "react-router";
-import { IUser } from "types";
+import type { IUser } from "@/types";
 import { Table, Thead, Tr, Th, Tbody, Td } from "@patternfly/react-table";
-import { fromNow } from "services/date";
+import { fromNow } from "@/services/date";
 
 interface UsersTableProps {
   users: IUser[];

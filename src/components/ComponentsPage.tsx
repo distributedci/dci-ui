@@ -1,15 +1,15 @@
 import { useListComponentsQuery } from "./componentsApi";
-import { EmptyState, Breadcrumb } from "ui";
+import { EmptyState, Breadcrumb } from "@/ui";
 import { useLocation, useNavigate } from "react-router";
 import { useEffect, useState } from "react";
 import {
   createSearchFromFilters,
   parseFiltersFromSearch,
-} from "services/filters";
-import { Filters } from "types";
+} from "@/services/filters";
+import type { Filters } from "@/types";
 import ComponentsToolbar from "./ComponentsToolbar";
 import ComponentsTable from "./ComponentsTable";
-import LoadingPageSection from "ui/LoadingPageSection";
+import LoadingPageSection from "@/ui/LoadingPageSection";
 import { Content, PageSection } from "@patternfly/react-core";
 
 function Components() {

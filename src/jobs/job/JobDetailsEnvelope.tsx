@@ -1,4 +1,4 @@
-import { Breadcrumb, CopyIconButton } from "ui";
+import { Breadcrumb, CopyIconButton } from "@/ui";
 import { useLocation, useNavigate } from "react-router";
 import {
   PageSection,

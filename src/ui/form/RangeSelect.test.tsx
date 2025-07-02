@@ -1,5 +1,5 @@
 import { waitFor } from "@testing-library/react";
-import { render } from "__tests__/renders";
+import { render } from "@/__tests__/renders";
 import { vi } from "vitest";
 import RangeSelect from "./RangeSelect";
 

@@ -10,13 +10,21 @@ import {
   Skeleton,
   TextInput,
 } from "@patternfly/react-core";
-import { Breadcrumb } from "ui";
+import { Breadcrumb } from "@/ui";
 import { createRef, useEffect, useMemo, useState } from "react";
-import { useGetAnalyticsTestsJobsQuery } from "analytics/analyticsApi";
-import AnalyticsToolbar from "analytics/toolbar/AnalyticsToolbar";
-import { Filters, IAnalyticsTestsJob, IGenericAnalyticsData } from "types";
+import { useGetAnalyticsTestsJobsQuery } from "@/analytics/analyticsApi";
+import AnalyticsToolbar from "@/analytics/toolbar/AnalyticsToolbar";
+import type {
+  Filters,
+  IAnalyticsTestsJob,
+  IGenericAnalyticsData,
+} from "@/types";
 import { skipToken } from "@reduxjs/toolkit/query";
-import { analyseTests, TestcaseEntry, TestCaseResult } from "./testsAnalysis";
+import {
+  analyseTests,
+  type TestcaseEntry,
+  type TestCaseResult,
+} from "./testsAnalysis";
 import { Table, Tbody, Td, Th, Thead, Tr } from "@patternfly/react-table";
 import {
   chart_color_black_200,
@@ -25,7 +33,7 @@ import {
   chart_color_red_orange_300,
   chart_color_red_orange_400,
 } from "@patternfly/react-tokens";
-import ScreeshotNodeButton from "ui/ScreenshotNodeButton";
+import ScreeshotNodeButton from "@/ui/ScreenshotNodeButton";
 import { Link, useLocation, useNavigate } from "react-router";
 import { Document } from "flexsearch";
 import { ExclamationTriangleIcon } from "@patternfly/react-icons";
@@ -35,8 +43,8 @@ import {
   offsetAndLimitToPage,
   pageAndLimitToOffset,
   parseFiltersFromSearch,
-} from "services/filters";
-import { sortByOldestFirst } from "services/sort";
+} from "@/services/filters";
+import { sortByOldestFirst } from "@/services/sort";
 
 const statusColorMap: Record<TestCaseResult, string> = {
   success: chart_color_green_300.var,

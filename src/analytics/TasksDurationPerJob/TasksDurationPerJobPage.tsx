@@ -1,4 +1,4 @@
-import { Breadcrumb } from "ui";
+import { Breadcrumb } from "@/ui";
 import {
   Button,
   Card,
@@ -13,9 +13,9 @@ import {
   ToolbarGroup,
   ToolbarItem,
 } from "@patternfly/react-core";
-import TopicToolbarFilter from "topics/form/TopicToolbarFilter";
+import TopicToolbarFilter from "@/topics/form/TopicToolbarFilter";
 import { useEffect, useState } from "react";
-import { IGraphData, IRefArea } from "types";
+import type { IGraphData, IRefArea } from "@/types";
 import {
   LineChart,
   Line,
@@ -25,14 +25,14 @@ import {
   ResponsiveContainer,
   ReferenceArea,
 } from "recharts";
-import { formatDate, humanizeDuration } from "services/date";
+import { formatDate, humanizeDuration } from "@/services/date";
 import { getDomain } from "./tasksDurationPerJob";
 import { Link, useSearchParams } from "react-router";
 import { LinkIcon } from "@patternfly/react-icons";
 import { DateTime } from "luxon";
 import { Table, Thead, Tr, Th, Tbody, Td } from "@patternfly/react-table";
 import { useLazyGetTasksDurationCumulatedQuery } from "./tasksDurationPerJobApi";
-import RemoteciToolbarFilter from "remotecis/form/RemoteciToolbarFilter";
+import RemoteciToolbarFilter from "@/remotecis/form/RemoteciToolbarFilter";
 
 const CustomTooltip = ({ active, payload }: any) => {
   if (active && payload && payload.length) {

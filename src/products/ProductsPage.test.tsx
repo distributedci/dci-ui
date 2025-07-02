@@ -1,5 +1,5 @@
-import { renderWithProviders } from "__tests__/renders";
-import ProductsPage from "./ProductsPage";
+import { renderWithProviders } from "@/__tests__/renders";
+import ProductsPage from "@/products/ProductsPage";
 import { waitFor } from "@testing-library/react";
 
 test("Should display remotecis in remotecis page", async () => {

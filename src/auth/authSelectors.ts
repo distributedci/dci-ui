@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { selectCurrentUser } from "./authSlice";
-import { useAppSelector } from "store";
+import { useAppSelector } from "@/store";
 
 export const useAuth = () => {
   const currentUser = useAppSelector(selectCurrentUser);

@@ -1,8 +1,8 @@
-import { IJob, Filters, JobsTableListColumn } from "types";
+import type { IJob, Filters, JobsTableListColumn } from "@/types";
 import { Table, Thead, Tr, Th, Tbody } from "@patternfly/react-table";
 import { groupJobsByPipeline } from "./pipelineJobs";
 import JobsTableListRow from "./JobsTableListRow";
-import { tableViewColumnLabels } from "jobs/toolbar/TableViewColumnsSelect";
+import { tableViewColumnLabels } from "@/jobs/toolbar/TableViewColumnsSelect";
 import { styled } from "styled-components";
 import { t_global_border_color_200 } from "@patternfly/react-tokens";
 

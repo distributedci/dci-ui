@@ -8,7 +8,7 @@ import {
   Content,
   Label,
 } from "@patternfly/react-core";
-import { Breadcrumb } from "ui";
+import { Breadcrumb } from "@/ui";
 import { useNavigate } from "react-router";
 import TasksPerJobHeaderImage from "./TasksDurationPerJob/tasks_per_job.png";
 import JunitComparisonHeaderImage from "./JunitComparison/junit_comparison.png";
@@ -17,7 +17,7 @@ import TestsAnalysisHeaderImage from "./TestsAnalysis/TestsAnalysisHeaderImage.j
 import JobStatsHeaderImage from "./jobsStats/job_stats.png";
 import PipelinesHeaderImage from "./Pipelines/pipelines.png";
 import KeyValuesHeaderImage from "./KeyValues/keyvalues.png";
-import DisplayIfBefore from "ui/DisplayIfBefore";
+import DisplayIfBefore from "@/ui/DisplayIfBefore";
 
 export default function AnalyticsPage() {
   const navigate = useNavigate();

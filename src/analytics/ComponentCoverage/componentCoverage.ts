@@ -1,5 +1,5 @@
-import { sortByOldestFirst } from "services/sort";
-import { IComponentCoverage, IAnalyticsJob } from "types";
+import { sortByOldestFirst } from "@/services/sort";
+import type { IComponentCoverage, IAnalyticsJob } from "@/types";
 
 type IComponentCoverageById = {
   [componentId: string]: IComponentCoverage;

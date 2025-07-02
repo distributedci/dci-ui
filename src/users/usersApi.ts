@@ -5,8 +5,8 @@ import {
   injectListEndpoint,
   injectUpdateEndpoint,
   api,
-} from "api";
-import type { ITeam, IUser } from "../types";
+} from "@/api";
+import type { ITeam, IUser } from "@/types";
 
 const resource = "User";
 

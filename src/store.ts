@@ -3,12 +3,12 @@ import {
   configureStore,
   createListenerMiddleware,
 } from "@reduxjs/toolkit";
-import alertsReducer from "./alerts/alertsSlice";
-import authReducer, { loggedOut } from "auth/authSlice";
-import { api } from "api";
-import { rtkQueryErrorLogger } from "middleware";
+import alertsReducer from "@/alerts/alertsSlice";
+import authReducer, { loggedOut } from "@/auth/authSlice";
+import { api } from "@/api";
 import { useDispatch, useSelector } from "react-redux";
-import { removeToken } from "services/localStorage";
+import { removeToken } from "@/services/localStorage";
+import { rtkQueryErrorLogger } from "@/middleware";
 
 const rootReducer = combineReducers({
   alerts: alertsReducer,
@@ -20,7 +20,7 @@ const loggedOutMiddleware = createListenerMiddleware();
 
 loggedOutMiddleware.startListening({
   actionCreator: loggedOut,
-  effect: async (action, listenerApi) => {
+  effect: async (_, listenerApi) => {
     removeToken();
     listenerApi.cancelActiveListeners();
   },

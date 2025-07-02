@@ -1,4 +1,4 @@
-import { createAnalyticsSearchParams } from "./analyticsApi";
+import { createAnalyticsSearchParams } from "@/analytics/analyticsApi";
 
 test("transform data", () => {
   expect(

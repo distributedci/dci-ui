@@ -7,9 +7,9 @@ import {
   ModalHeader,
   ModalVariant,
 } from "@patternfly/react-core";
-import useModal from "hooks/useModal";
+import useModal from "@/hooks/useModal";
 import UserForm from "./UserForm";
-import { IUser } from "types";
+import type { IUser } from "@/types";
 
 interface CreateUserModalProps {
   onSubmit: (user: Partial<IUser>) => void;

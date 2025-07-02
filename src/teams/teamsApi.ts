@@ -5,8 +5,8 @@ import {
   injectUpdateEndpoint,
   injectGetEndpoint,
   api,
-} from "api";
-import type { IProduct, ITeam, IGetProducts, IGetTeams } from "../types";
+} from "@/api";
+import type { IProduct, ITeam, IGetProducts, IGetTeams } from "@/types";
 
 const resource = "Team";
 

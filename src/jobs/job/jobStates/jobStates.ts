@@ -1,4 +1,4 @@
-import { IFile, IFileStatus } from "types";
+import type { IFile, IFileStatus } from "@/types";
 
 export function getFileStatus(file: IFile): IFileStatus {
   return file.name.startsWith("failed/") || file.name.startsWith("item_failed/")

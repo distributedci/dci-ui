@@ -1,8 +1,8 @@
-import {
+import type {
   IAnalyticsJob,
   IAnalyticsKeysValuesJob,
   IAnalyticsResultsJob,
-} from "types";
+} from "@/types";
 
 export const analyticsOneJob: IAnalyticsJob[] = [
   {

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { readValue, saveValue } from "services/localStorage";
+import { readValue, saveValue } from "@/services/localStorage";
 
 export default function useLocalStorage<T>(
   key: string,

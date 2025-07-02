@@ -1,5 +1,5 @@
-import { buildCurrentUser } from "auth/authApi";
-import {
+import { buildCurrentUser } from "@/auth/authApi";
+import type {
   IComponent,
   IFeeder,
   IIdentityTeam,
@@ -8,7 +8,7 @@ import {
   ITeam,
   ITopic,
   IUser,
-} from "types";
+} from "@/types";
 
 export const teams: ITeam[] = [
   {
