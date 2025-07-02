@@ -3,8 +3,8 @@ import { MinusCircleIcon } from "@patternfly/react-icons";
 import { Table, Thead, Tr, Th, Tbody, Td } from "@patternfly/react-table";
 import { skipToken } from "@reduxjs/toolkit/query";
 import { Link } from "react-router";
-import { IUser } from "types";
-import { ConfirmDeleteModal } from "ui";
+import type { IUser } from "@/types";
+import { ConfirmDeleteModal } from "@/ui";
 import AddUserToTeamForm from "./AddUserToTeamsForm";
 import {
   useListUserTeamsQuery,

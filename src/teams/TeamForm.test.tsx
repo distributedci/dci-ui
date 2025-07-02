@@ -1,8 +1,8 @@
 import { waitFor } from "@testing-library/react";
-import { render } from "__tests__/renders";
+import { render } from "@/test/renders";
 import TeamForm from "./TeamForm";
 import { vi } from "vitest";
-import { teams } from "__tests__/data";
+import { teams } from "@/test/data";
 
 test("test create team form submit the correct values", async () => {
   const mockOnSubmit = vi.fn();

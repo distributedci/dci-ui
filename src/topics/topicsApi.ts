@@ -4,8 +4,8 @@ import {
   injectListEndpoint,
   injectUpdateEndpoint,
   api,
-} from "api";
-import type { ITopic } from "../types";
+} from "@/api";
+import type { ITopic } from "@/types";
 
 const resource = "Topic";
 

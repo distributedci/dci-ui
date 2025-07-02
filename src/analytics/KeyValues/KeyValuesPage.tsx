@@ -10,8 +10,8 @@ import {
   PageSection,
   Skeleton,
 } from "@patternfly/react-core";
-import { Breadcrumb } from "ui";
-import { formatDate } from "services/date";
+import { Breadcrumb } from "@/ui";
+import { formatDate } from "@/services/date";
 import { createRef, useEffect, useState } from "react";
 import {
   Bar,
@@ -24,23 +24,31 @@ import {
   Scatter,
   Tooltip,
   XAxis,
-  XAxisProps,
   YAxis,
+  type XAxisProps,
 } from "recharts";
 import { DateTime } from "luxon";
 import { timeDay } from "d3-time";
-import { extractKeys, extractKeysValues, IGraphKeysValues } from "./keyValues";
+import {
+  extractKeys,
+  extractKeysValues,
+  type IGraphKeysValues,
+} from "./keyValues";
 import { FilterIcon, TrashAltIcon } from "@patternfly/react-icons";
-import { useGetAnalyticsKeysValuesJobsQuery } from "analytics/analyticsApi";
-import AnalyticsToolbar from "analytics/toolbar/AnalyticsToolbar";
-import { IAnalyticsKeysValuesJob, IGenericAnalyticsData, IJob } from "types";
+import { useGetAnalyticsKeysValuesJobsQuery } from "@/analytics/analyticsApi";
+import AnalyticsToolbar from "@/analytics/toolbar/AnalyticsToolbar";
+import type {
+  IAnalyticsKeysValuesJob,
+  IGenericAnalyticsData,
+  IJob,
+} from "@/types";
 import KeyValuesAddGraphModal from "./KeyValuesAddGraphModal";
 import { createSearchFromGraphs, parseGraphsFromSearch } from "./filters";
 import { useNavigate, useSearchParams } from "react-router";
-import { IKeyValueGraph } from "./keyValuesTypes";
+import type { IKeyValueGraph } from "./keyValuesTypes";
 import KeyValuesEditGraphModal from "./KeyValuesEditGraphModal";
 import { skipToken } from "@reduxjs/toolkit/query";
-import ScreeshotNodeButton from "ui/ScreenshotNodeButton";
+import ScreeshotNodeButton from "@/ui/ScreenshotNodeButton";
 import { scaleTime } from "d3-scale";
 
 const CustomTooltip = ({ active, payload }: any) => {

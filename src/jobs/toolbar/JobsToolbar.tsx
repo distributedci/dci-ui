@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Filters, JobsTableListColumn } from "types";
+import type { Filters, JobsTableListColumn } from "@/types";
 import {
   ToolbarItem,
   ToolbarGroup,
@@ -12,21 +12,21 @@ import {
   DropdownItem,
   DropdownList,
   MenuToggle,
-  MenuToggleElement,
+  type MenuToggleElement,
 } from "@patternfly/react-core";
 import { SyncAltIcon } from "@patternfly/react-icons";
-import ProductToolbarFilter from "products/form/ProductToolbarFilter";
-import TopicToolbarFilter from "topics/form/TopicToolbarFilter";
-import TeamToolbarFilter from "teams/form/TeamToolbarFilter";
+import ProductToolbarFilter from "@/products/form/ProductToolbarFilter";
+import TopicToolbarFilter from "@/topics/form/TopicToolbarFilter";
+import TeamToolbarFilter from "@/teams/form/TeamToolbarFilter";
 import StatusToolbarFilter from "./StatusToolbarFilter";
 import ListToolbarFilter from "./ListToolbarFilter";
 import TextInputToolbarFilter from "./TextInputToolbarFilter";
 import { useHotkeys } from "react-hotkeys-hook";
 import QLToolbar from "./QLToolbar";
 import TableViewColumnsSelect from "./TableViewColumnsSelect";
-import { offsetAndLimitToPage, pageAndLimitToOffset } from "services/filters";
-import { isUUID } from "services/utils";
-import RemoteciToolbarFilter from "remotecis/form/RemoteciToolbarFilter";
+import { offsetAndLimitToPage, pageAndLimitToOffset } from "@/services/filters";
+import { isUUID } from "@/services/utils";
+import RemoteciToolbarFilter from "@/remotecis/form/RemoteciToolbarFilter";
 
 const Categories = [
   "Remoteci",

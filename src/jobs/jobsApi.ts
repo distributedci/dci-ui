@@ -1,18 +1,18 @@
-import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
+import type { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import {
   injectDeleteEndpoint,
   injectListEndpoint,
   injectGetEndpoint,
   injectUpdateEndpoint,
   api,
-} from "api";
+} from "@/api";
 import type {
   IEnhancedJob,
   IGetJobStates,
   IGetTestsResults,
   IJob,
-} from "../types";
-import { sortByName } from "services/sort";
+} from "@/types";
+import { sortByName } from "@/services/sort";
 
 const resource = "Job";
 

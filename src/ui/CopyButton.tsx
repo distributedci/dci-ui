@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Button, Tooltip, TooltipPosition } from "@patternfly/react-core";
-import copyToClipboard from "services/copyToClipboard";
+import copyToClipboard from "@/services/copyToClipboard";
 import { CopyIcon } from "@patternfly/react-icons";
 
 interface CopyButtonProps {

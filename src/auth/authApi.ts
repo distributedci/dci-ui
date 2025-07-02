@@ -1,6 +1,6 @@
-import { ICurrentUser, IIdentity, IIdentityTeam } from "types";
-import { readValue, saveValue } from "services/localStorage";
-import { api } from "api";
+import type { ICurrentUser, IIdentity, IIdentityTeam } from "@/types";
+import { readValue, saveValue } from "@/services/localStorage";
+import { api } from "@/api";
 
 function buildShortcut(team: IIdentityTeam | null) {
   if (team === null) {

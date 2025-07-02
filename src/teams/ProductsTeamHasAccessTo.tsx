@@ -8,15 +8,15 @@ import {
   Popover,
 } from "@patternfly/react-core";
 import { HelpIcon } from "@patternfly/react-icons";
-import { ITeam } from "types";
+import type { ITeam } from "@/types";
 import { Table, Tr, Tbody, Td } from "@patternfly/react-table";
 import {
   useAddProductToTeamMutation,
   useGetProductIdsTeamHasAccessToQuery,
   useRemoveProductFromTeamMutation,
 } from "./teamsApi";
-import { useListProductsQuery } from "products/productsApi";
-import ProductIcon from "products/ProductIcon";
+import { useListProductsQuery } from "@/products/productsApi";
+import ProductIcon from "@/products/ProductIcon";
 
 function ProductsTeamHasAccessToTable({ team }: { team: ITeam }) {
   const { data, isLoading } = useListProductsQuery();

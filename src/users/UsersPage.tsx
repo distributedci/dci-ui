@@ -11,8 +11,8 @@ import {
   SearchInput,
 } from "@patternfly/react-core";
 import { PlusCircleIcon, SearchIcon } from "@patternfly/react-icons";
-import { EmptyState, Breadcrumb } from "ui";
-import { Filters } from "types";
+import { EmptyState, Breadcrumb } from "@/ui";
+import type { Filters } from "@/types";
 import CreateUserModal from "./CreateUserModal";
 import UsersTable from "./UsersTable";
 import {
@@ -20,11 +20,11 @@ import {
   offsetAndLimitToPage,
   pageAndLimitToOffset,
   parseFiltersFromSearch,
-} from "services/filters";
+} from "@/services/filters";
 import { useLocation, useNavigate } from "react-router";
 import { useCreateUserMutation, useListUsersQuery } from "./usersApi";
-import { useAuth } from "auth/authSelectors";
-import LoadingPageSection from "ui/LoadingPageSection";
+import { useAuth } from "@/auth/authSelectors";
+import LoadingPageSection from "@/ui/LoadingPageSection";
 
 function User() {
   const location = useLocation();

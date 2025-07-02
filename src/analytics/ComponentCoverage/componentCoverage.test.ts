@@ -1,4 +1,4 @@
-import { analyticsOneJob } from "analytics/analyticsTestData";
+import { analyticsOneJob } from "../analyticsTestData";
 import { buildComponentCoverage } from "./componentCoverage";
 
 test("buildComponentCoverage with result", () => {

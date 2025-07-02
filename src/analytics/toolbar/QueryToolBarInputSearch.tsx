@@ -6,16 +6,16 @@ import {
   Popper,
   SearchInput,
 } from "@patternfly/react-core";
-import { useLazyGetSuggestionsQuery } from "analytics/analyticsApi";
+import { useLazyGetSuggestionsQuery } from "@/analytics/analyticsApi";
 import {
   applyCompletion,
-  Completion,
-  CompletionValues,
   extractAutocompleteInfo,
   getCompletions,
-} from "analytics/autocompletion/autocompletion";
+  type Completion,
+  type CompletionValues,
+} from "@/analytics/autocompletion/autocompletion";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { JobStatuses } from "types";
+import type { JobStatuses } from "@/types";
 import { useDebounce } from "use-debounce";
 
 export interface QueryToolBarInputSearchProps

@@ -3,9 +3,9 @@ import {
   FormSelect,
   FormSelectOption,
 } from "@patternfly/react-core";
-import { Controller, FieldError, useFormContext } from "react-hook-form";
+import { Controller, type FieldError, useFormContext } from "react-hook-form";
 import FormErrorMessage from "./FormErrorMessage";
-import { FormGroupProps } from "types";
+import type { FormGroupProps } from "@/types";
 
 export default function SelectFormGroup({
   id,

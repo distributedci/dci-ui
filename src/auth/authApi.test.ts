@@ -1,4 +1,4 @@
-import { ITeam } from "types";
+import { ITeam } from "@/types";
 import { buildCurrentUser } from "./authApi";
 
 test("buildCurrentUser without a default team return the first team", () => {

@@ -1,8 +1,8 @@
 import { ToolbarFilter } from "@patternfly/react-core";
 import ProductSelect from "./ProductSelect";
-import { IProduct, IToolbarFilterProps } from "types";
+import type { IProduct, IToolbarFilterProps } from "@/types";
 import { skipToken } from "@reduxjs/toolkit/query";
-import { useGetProductQuery } from "products/productsApi";
+import { useGetProductQuery } from "@/products/productsApi";
 
 export default function ProductToolbarFilter({
   id,

@@ -1,6 +1,6 @@
-import { api, baseUrl } from "api";
-import { getToken } from "services/localStorage";
-import type { IFile } from "types";
+import { api, baseUrl } from "@/api";
+import { getToken } from "@/services/localStorage";
+import type { IFile } from "@/types";
 
 export const { useGetFileContentQuery, useLazyGetFileContentQuery } = api
   .enhanceEndpoints({ addTagTypes: ["File"] })

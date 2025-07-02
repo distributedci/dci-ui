@@ -6,9 +6,9 @@ import {
   ModalHeader,
   ModalVariant,
 } from "@patternfly/react-core";
-import useModal from "hooks/useModal";
+import useModal from "@/hooks/useModal";
 import TopicForm from "./TopicForm";
-import { ITopic } from "types";
+import type { ITopic } from "@/types";
 
 interface CreateTopicModalProps {
   onSubmit: (topic: Partial<ITopic>) => void;

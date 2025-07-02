@@ -1,6 +1,6 @@
 import { DateTime } from "luxon";
 import { extractPipelinesFromAnalyticsJobs } from "./pipelines";
-import { analyticsTwoResultsJobs } from "analytics/analyticsTestData";
+import { analyticsTwoResultsJobs } from "@/analytics/analyticsTestData";
 
 test("extractPipelinesFromAnalyticsJobs", () => {
   expect(extractPipelinesFromAnalyticsJobs(analyticsTwoResultsJobs)).toEqual([

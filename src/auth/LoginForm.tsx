@@ -1,10 +1,10 @@
 import * as Yup from "yup";
-import { setBasicToken } from "services/localStorage";
-import { hideAllAlerts, showError } from "alerts/alertsSlice";
+import { setBasicToken } from "@/services/localStorage";
+import { hideAllAlerts, showError } from "@/alerts/alertsSlice";
 import { useNavigate, useLocation } from "react-router";
-import { useAppDispatch } from "store";
+import { useAppDispatch } from "@/store";
 import { FormProvider, useForm } from "react-hook-form";
-import TextInputFormGroup from "ui/form/TextInputFormGroup";
+import TextInputFormGroup from "@/ui/form/TextInputFormGroup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Button, Form } from "@patternfly/react-core";
 

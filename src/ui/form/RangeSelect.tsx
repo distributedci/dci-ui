@@ -5,8 +5,8 @@ import {
   FormSelect,
   FormSelectOption,
 } from "@patternfly/react-core";
-import { TimeRange } from "types";
-import { getRangeDates } from "services/date";
+import type { TimeRange } from "@/types";
+import { getRangeDates } from "@/services/date";
 
 export const rangeLabels: { [k in TimeRange]: string } = {
   previousWeek: "Previous week",
