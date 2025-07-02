@@ -1,4 +1,4 @@
-import { IJobStateWithDuration } from "types";
+import { IJobStateWithDuration } from "@/types";
 import {
   ProgressStepper,
   ProgressStep,

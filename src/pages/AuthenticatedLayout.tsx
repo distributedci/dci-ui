@@ -45,7 +45,7 @@ import {
   QuestionCircleIcon,
   UserIcon,
 } from "@patternfly/react-icons";
-import { useTheme } from "ui/Theme/themeContext";
+import { useTheme } from "@/ui/Theme/themeContext";
 import NotAuthenticatedLoadingPage from "./NotAuthenticatedLoadingPage";
 import { loggedOut } from "auth/authSlice";
 import { useAppDispatch } from "store";

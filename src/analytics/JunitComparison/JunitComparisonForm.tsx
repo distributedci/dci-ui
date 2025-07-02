@@ -21,7 +21,7 @@ import RemoteciSelect from "remotecis/form/RemoteciSelect";
 import { DateTime } from "luxon";
 import { useState } from "react";
 import { useSearchParams } from "react-router";
-import ListInputWithChip from "ui/form/ListInputWithChip";
+import ListInputWithChip from "@/ui/form/ListInputWithChip";
 import type {
   JunitComparisonPayload,
   JunitComputationMode,

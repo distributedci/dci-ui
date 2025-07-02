@@ -9,8 +9,8 @@ import {
   JobsTableListColumn,
   TimeRange,
   IPipeline,
-} from "types";
-import { formatDate, fromNow, humanizeDuration } from "services/date";
+} from "@/types";
+import { formatDate, fromNow, humanizeDuration } from "@/services/date";
 import TopicIcon from "topics/TopicIcon";
 import { getBackgroundColor } from "jobs/jobUtils";
 import {
@@ -18,7 +18,7 @@ import {
   JobStatusLabel,
   ComponentsListInJobRow,
 } from "jobs/components";
-import { CopyIconButton } from "ui";
+import { CopyIconButton } from "@/ui";
 import { getPrincipalComponent } from "topics/component/componentSelector";
 import { DateTime } from "luxon";
 import { Tr, Td } from "@patternfly/react-table";

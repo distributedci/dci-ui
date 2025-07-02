@@ -12,17 +12,17 @@ import {
   PageSection,
   Content,
 } from "@patternfly/react-core";
-import { Breadcrumb, CopyButton, EmptyState, StateLabel } from "ui";
-import { ITopic } from "types";
+import { Breadcrumb, CopyButton, EmptyState, StateLabel } from "@/ui";
+import { ITopic } from "@/types";
 import { useParams } from "react-router";
-import CardLine from "ui/CardLine";
+import CardLine from "@/ui/CardLine";
 import { useGetTopicQuery, useUpdateTopicMutation } from "./topicsApi";
 import { skipToken } from "@reduxjs/toolkit/query";
 import EditTopicModal from "./EditTopicModal";
 import ComponentsTableWithToolbar from "./ComponentsTableWithToolbar";
-import { fromNow } from "services/date";
+import { fromNow } from "@/services/date";
 import { useAuth } from "auth/authSelectors";
-import LoadingPageSection from "ui/LoadingPageSection";
+import LoadingPageSection from "@/ui/LoadingPageSection";
 
 function stringifyTopicData(topic: ITopic) {
   try {

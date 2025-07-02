@@ -1,4 +1,4 @@
-import { Breadcrumb } from "ui";
+import { Breadcrumb } from "@/ui";
 import {
   Button,
   Card,
@@ -15,7 +15,7 @@ import {
 } from "@patternfly/react-core";
 import TopicToolbarFilter from "topics/form/TopicToolbarFilter";
 import { useEffect, useState } from "react";
-import { IGraphData, IRefArea } from "types";
+import { IGraphData, IRefArea } from "@/types";
 import {
   LineChart,
   Line,
@@ -25,7 +25,7 @@ import {
   ResponsiveContainer,
   ReferenceArea,
 } from "recharts";
-import { formatDate, humanizeDuration } from "services/date";
+import { formatDate, humanizeDuration } from "@/services/date";
 import { getDomain } from "./tasksDurationPerJob";
 import { Link, useSearchParams } from "react-router";
 import { LinkIcon } from "@patternfly/react-icons";

@@ -1,11 +1,11 @@
 import * as React from "react";
-import { IEnhancedJob } from "types";
+import { IEnhancedJob } from "@/types";
 import { useParams } from "react-router";
 import { useGetEnhancedJobQuery } from "jobs/jobsApi";
 import { skipToken } from "@reduxjs/toolkit/query";
 import JobDetailsEnvelope from "./JobDetailsEnvelope";
 import JobDetailsSkeleton from "./JobDetailsSkeleton";
-import { BlinkLogo } from "ui";
+import { BlinkLogo } from "@/ui";
 import {
   Button,
   EmptyState,

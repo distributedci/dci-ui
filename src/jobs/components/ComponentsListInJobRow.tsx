@@ -3,8 +3,8 @@ import { Label } from "@patternfly/react-core";
 import { Link } from "react-router";
 import { CubesIcon } from "@patternfly/react-icons";
 import styled from "styled-components";
-import { IComponent } from "types";
-import { sortByMainComponentType } from "services/sort";
+import { IComponent } from "@/types";
+import { sortByMainComponentType } from "@/services/sort";
 
 const Component = styled.div`
   white-space: nowrap;

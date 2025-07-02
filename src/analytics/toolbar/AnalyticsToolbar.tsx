@@ -1,10 +1,10 @@
 import { Card, CardBody } from "@patternfly/react-core";
-import QueryToolbar from "analytics/toolbar/QueryToolbar";
+import QueryToolbar from "@/analytics/toolbar/QueryToolbar";
 import {
   AnalyticsToolbarSearch,
   IAnalyticsJob,
   IGenericAnalyticsData,
-} from "types";
+} from "@/types";
 import QueryToolbarInfo from "./QueryToolbarInfo";
 import QueryToolbarSavedSearches from "./QueryToolbarSavedSearches";
 import useLocalStorage from "hooks/useLocalStorage";

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useListRemotecisQuery } from "remotecis/remotecisApi";
-import { IRemoteci } from "types";
-import TypeaheadSelect from "ui/form/TypeaheadSelect";
+import { IRemoteci } from "@/types";
+import TypeaheadSelect from "@/ui/form/TypeaheadSelect";
 
 export default function RemoteciSelect({
   onSelect,

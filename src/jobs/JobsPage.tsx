@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from "react";
-import { EmptyState, Breadcrumb } from "ui";
+import { EmptyState, Breadcrumb } from "@/ui";
 import JobsTableList from "./jobsTableList/JobsTableList";
 import JobsToolbar from "./toolbar/JobsToolbar";
 import { useNavigate, useLocation } from "react-router";
@@ -10,7 +10,7 @@ import {
   PageSection,
   Skeleton,
 } from "@patternfly/react-core";
-import { Filters, JobsTableListColumn } from "types";
+import { Filters, JobsTableListColumn } from "@/types";
 import useLocalStorage from "hooks/useLocalStorage";
 import { useTitle } from "hooks/useTitle";
 import {
@@ -19,9 +19,9 @@ import {
   pageAndLimitToOffset,
   parseFiltersFromSearch,
   getDefaultFilters,
-} from "services/filters";
+} from "@/services/filters";
 import { useListJobsQuery } from "./jobsApi";
-import LoadingPageSection from "ui/LoadingPageSection";
+import LoadingPageSection from "@/ui/LoadingPageSection";
 
 function Jobs() {
   const location = useLocation();

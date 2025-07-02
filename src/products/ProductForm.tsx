@@ -1,8 +1,8 @@
 import * as Yup from "yup";
-import { IProduct } from "types";
+import { IProduct } from "@/types";
 import { FormProvider, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import TextInputFormGroup from "ui/form/TextInputFormGroup";
+import TextInputFormGroup from "@/ui/form/TextInputFormGroup";
 import { Form } from "@patternfly/react-core";
 
 const ProductSchema = Yup.object().shape({

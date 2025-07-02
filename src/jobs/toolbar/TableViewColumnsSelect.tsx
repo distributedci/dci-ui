@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { JobsTableListColumn } from "types";
+import { JobsTableListColumn } from "@/types";
 import {
   Select,
   SelectOption,

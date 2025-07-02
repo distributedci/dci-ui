@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Filters, JobsTableListColumn } from "types";
+import { Filters, JobsTableListColumn } from "@/types";
 import {
   ToolbarItem,
   ToolbarGroup,
@@ -24,8 +24,8 @@ import TextInputToolbarFilter from "./TextInputToolbarFilter";
 import { useHotkeys } from "react-hotkeys-hook";
 import QLToolbar from "./QLToolbar";
 import TableViewColumnsSelect from "./TableViewColumnsSelect";
-import { offsetAndLimitToPage, pageAndLimitToOffset } from "services/filters";
-import { isUUID } from "services/utils";
+import { offsetAndLimitToPage, pageAndLimitToOffset } from "@/services/filters";
+import { isUUID } from "@/services/utils";
 import RemoteciToolbarFilter from "remotecis/form/RemoteciToolbarFilter";
 
 const Categories = [

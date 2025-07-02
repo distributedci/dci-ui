@@ -1,5 +1,5 @@
 import { api } from "api";
-import { IDataFromES, IGraphData } from "types";
+import { IDataFromES, IGraphData } from "@/types";
 import { transform } from "./tasksDurationPerJob";
 
 export const { useLazyGetTasksDurationCumulatedQuery } = api

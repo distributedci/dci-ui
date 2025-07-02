@@ -3,7 +3,7 @@ import {
   addPipelineStatus,
   getLongerTaskFirst,
 } from "./jobStatesActions";
-import { IJobState, IJobStateWithDuration } from "types";
+import { IJobState, IJobStateWithDuration } from "@/types";
 
 test("addDuration in seconds", () => {
   const jobStates = [

@@ -1,5 +1,5 @@
 import { groupTopicsPerProduct } from "./topicsActions";
-import { IProduct, ITopic } from "types";
+import { IProduct, ITopic } from "@/types";
 
 test("groupTopicsPerProduct", () => {
   const topic1 = {

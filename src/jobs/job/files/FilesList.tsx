@@ -1,8 +1,8 @@
-import { EmptyState, RotatingSpinnerIcon } from "ui";
+import { EmptyState, RotatingSpinnerIcon } from "@/ui";
 import File from "./File";
 import { FileArchiveIcon, FileDownloadIcon } from "@patternfly/react-icons";
-import { IEnhancedJob } from "types";
-import { sortByName } from "services/sort";
+import { IEnhancedJob } from "@/types";
+import { sortByName } from "@/services/sort";
 import {
   Button,
   SearchInput,

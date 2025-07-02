@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { EmptyState, Breadcrumb, CopyButton } from "ui";
+import { EmptyState, Breadcrumb, CopyButton } from "@/ui";
 import CreateTeamModal from "./CreateTeamModal";
 import {
   Button,
@@ -16,16 +16,16 @@ import {
 import { Link, useLocation, useNavigate } from "react-router";
 import { Table, Thead, Tr, Th, Tbody, Td } from "@patternfly/react-table";
 import { useAuth } from "auth/authSelectors";
-import { Filters } from "types";
+import { Filters } from "@/types";
 import {
   createSearchFromFilters,
   offsetAndLimitToPage,
   pageAndLimitToOffset,
   parseFiltersFromSearch,
-} from "services/filters";
+} from "@/services/filters";
 import { useCreateTeamMutation, useListTeamsQuery } from "./teamsApi";
-import { fromNow } from "services/date";
-import LoadingPageSection from "ui/LoadingPageSection";
+import { fromNow } from "@/services/date";
+import LoadingPageSection from "@/ui/LoadingPageSection";
 
 function Teams() {
   const location = useLocation();

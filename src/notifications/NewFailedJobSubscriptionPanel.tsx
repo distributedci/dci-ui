@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ICurrentUser, IRemoteci } from "types";
+import { ICurrentUser, IRemoteci } from "@/types";
 import {
   DualListSelector,
   DualListSelectorControl,

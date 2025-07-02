@@ -1,9 +1,22 @@
 import { UserManager } from "oidc-client-ts";
 
-export const SSOUrl = process.env.REACT_APP_SSO_URL || "https://sso.redhat.com";
-const SSORealm = process.env.REACT_APP_SSO_REALM || "redhat-external";
-const SSOClientId = process.env.REACT_APP_SSO_CLIENT_ID || "dci";
-const SSOScope = (process.env.REACT_APP_SSO_SCOPE || "api.dci")
+export const SSOUrl =
+  import.meta.env.VITE_SSO_URL ||
+  process.env.REACT_APP_SSO_URL ||
+  "https://sso.redhat.com";
+const SSORealm =
+  import.meta.env.VITE_SSO_REALM ||
+  process.env.REACT_APP_SSO_REALM ||
+  "redhat-external";
+const SSOClientId =
+  import.meta.env.VITE_SSO_CLIENT_ID ||
+  process.env.REACT_APP_SSO_CLIENT_ID ||
+  "dci";
+const SSOScope = (
+  import.meta.env.VITE_SSO_SCOPE ||
+  process.env.REACT_APP_SSO_SCOPE ||
+  "api.dci"
+)
   .split(",")
   .join(" ");
 

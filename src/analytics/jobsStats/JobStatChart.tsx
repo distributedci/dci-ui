@@ -4,9 +4,8 @@ import {
   Cell,
   Tooltip,
   ResponsiveContainer,
-  PieLabelRenderProps,
 } from "recharts";
-import { IStat } from "./jobStats";
+import { type IStat } from "./jobStats";
 
 const CustomTooltip = ({ active, payload }: any) => {
   if (active && payload && payload.length) {
@@ -31,7 +30,7 @@ const CustomTooltip = ({ active, payload }: any) => {
 
 const RADIAN = Math.PI / 180;
 
-const CustomLabel: React.FC<PieLabelRenderProps> = ({
+const CustomLabel = ({
   cx = 0,
   cy = 0,
   midAngle = 0,

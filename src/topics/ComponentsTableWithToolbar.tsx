@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { Card, CardBody, CardTitle } from "@patternfly/react-core";
-import { ITopic } from "types";
+import { ITopic } from "@/types";
 import { useLocation, useNavigate } from "react-router";
 import {
   createSearchFromFilters,
   parseFiltersFromSearch,
-} from "services/filters";
-import { Filters } from "types";
+} from "@/services/filters";
+import { Filters } from "@/types";
 import { useListComponentsQuery } from "components/componentsApi";
 import RHELComponentsTable from "components/RHELComponentsTable";
 import DefaultComponentsTable from "components/ComponentsTable";

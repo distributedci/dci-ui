@@ -11,10 +11,10 @@ import {
   AnalyticsToolbarSearches,
   TimeRange,
   TimeRanges,
-} from "types";
-import RangeSelect from "ui/form/RangeSelect";
+} from "@/types";
+import RangeSelect from "@/ui/form/RangeSelect";
 import SaveSearchModal from "./SaveSearchModal";
-import { getRangeDates } from "services/date";
+import { getRangeDates } from "@/services/date";
 import { Controller, useForm } from "react-hook-form";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";

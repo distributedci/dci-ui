@@ -1,5 +1,5 @@
 import { Button, PageSection, Content } from "@patternfly/react-core";
-import { ConfirmDeleteModal } from "ui";
+import { ConfirmDeleteModal } from "@/ui";
 import { useNavigate } from "react-router";
 import { useJob } from "../jobContext";
 import { useDeleteJobMutation } from "jobs/jobsApi";

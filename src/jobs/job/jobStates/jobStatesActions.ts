@@ -6,8 +6,8 @@ import {
   IJobStatus,
   IPipelineStatus,
   FinalJobStatuses,
-} from "types";
-import { sortByOldestFirst } from "services/sort";
+} from "@/types";
+import { sortByOldestFirst } from "@/services/sort";
 
 export function addDuration(jobStates: IJobState[]) {
   const { newJobStates } = sortByOldestFirst(jobStates).reduce(

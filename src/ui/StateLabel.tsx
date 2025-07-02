@@ -1,5 +1,5 @@
 import { Label } from "@patternfly/react-core";
-import { state } from "types";
+import { state } from "@/types";
 
 export default function StateLabel({
   state,

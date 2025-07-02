@@ -11,8 +11,8 @@ import type {
   IGetJobStates,
   IGetTestsResults,
   IJob,
-} from "../types";
-import { sortByName } from "services/sort";
+} from "@/types";
+import { sortByName } from "@/services/sort";
 
 const resource = "Job";
 

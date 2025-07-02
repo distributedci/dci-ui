@@ -17,8 +17,8 @@ import {
   getDefaultFilters,
   offsetAndLimitToPage,
   pageAndLimitToOffset,
-} from "services/filters";
-import { Filters } from "types";
+} from "@/services/filters";
+import { Filters } from "@/types";
 import ListToolbarFilter from "jobs/toolbar/ListToolbarFilter";
 import TextInputToolbarFilter from "jobs/toolbar/TextInputToolbarFilter";
 

@@ -1,5 +1,5 @@
 import { Label, LabelGroup, Tooltip } from "@patternfly/react-core";
-import { IResult } from "types";
+import { IResult } from "@/types";
 import { SuccessfixesIcon, RegressionsIcon } from "jobs/components";
 
 export function TestLabels({

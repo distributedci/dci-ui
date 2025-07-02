@@ -9,7 +9,7 @@ import {
   IGenericAnalyticsData,
   IGetAnalyticsJobsEmptyResponse,
   IGetAnalyticsJobsResponse,
-} from "types";
+} from "@/types";
 
 export function createAnalyticsSearchParams(
   obj: Record<string, string | string[] | number | null>,

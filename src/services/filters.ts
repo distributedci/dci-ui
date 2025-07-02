@@ -1,4 +1,4 @@
-import { state, Filters, WhereFilters } from "types";
+import { state, Filters, WhereFilters } from "@/types";
 
 function _extractWhereFilter(filters: Filters): WhereFilters {
   const { limit, offset, sort, query, ...whereFilters } = filters;

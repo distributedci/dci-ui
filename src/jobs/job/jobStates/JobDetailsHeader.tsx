@@ -22,11 +22,11 @@ import {
   ExternalLinkAltIcon,
   CodeBranchIcon,
 } from "@patternfly/react-icons";
-import { IEnhancedJob, IResult, IPipeline } from "types";
-import { formatDate, fromNow, humanizeDuration } from "services/date";
+import { IEnhancedJob, IResult, IPipeline } from "@/types";
+import { formatDate, fromNow, humanizeDuration } from "@/services/date";
 import TextAreaEditableOnHover from "../TextAreaEditableOnHover";
 import { Markup } from "interweave";
-import { sortByOldestFirst } from "services/sort";
+import { sortByOldestFirst } from "@/services/sort";
 import { convertLinksToHtml, getLabelColor } from "jobs/jobUtils";
 import { JobStatusLabel, TestLabels } from "jobs/components";
 import { useGetJobQuery, useUpdateJobMutation } from "jobs/jobsApi";

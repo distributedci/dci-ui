@@ -14,15 +14,15 @@ import {
   Content,
   Skeleton,
 } from "@patternfly/react-core";
-import { Breadcrumb } from "ui";
+import { Breadcrumb } from "@/ui";
 import { t_global_border_color_default } from "@patternfly/react-tokens";
 import { DateTime } from "luxon";
-import { formatDate } from "services/date";
+import { formatDate } from "@/services/date";
 import { createRef, Fragment, useState } from "react";
 import { Link } from "react-router";
-import { IAnalyticsResultsJob, IGenericAnalyticsData, IJobStatus } from "types";
+import { IAnalyticsResultsJob, IGenericAnalyticsData, IJobStatus } from "@/types";
 import { ComponentsList, TestLabels } from "jobs/components";
-import { notEmpty } from "services/utils";
+import { notEmpty } from "@/services/utils";
 import { Table, Thead, Tr, Th, Tbody, Td } from "@patternfly/react-table";
 import { JobStatusLabel } from "jobs/components";
 import {
@@ -38,11 +38,11 @@ import {
   InProgressIcon,
   ResourcesFullIcon,
 } from "@patternfly/react-icons";
-import { humanizeDuration } from "services/date";
-import AnalyticsToolbar from "analytics/toolbar/AnalyticsToolbar";
-import { useLazyGetAnalyticsResultsJobsQuery } from "analytics/analyticsApi";
+import { humanizeDuration } from "@/services/date";
+import AnalyticsToolbar from "@/analytics/toolbar/AnalyticsToolbar";
+import { useLazyGetAnalyticsResultsJobsQuery } from "@/analytics/analyticsApi";
 import JobComment from "jobs/components/JobComment";
-import ScreeshotNodeButton from "ui/ScreenshotNodeButton";
+import ScreeshotNodeButton from "@/ui/ScreenshotNodeButton";
 
 function jobStatusToVariant(status: IJobStatus) {
   switch (status) {

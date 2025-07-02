@@ -6,8 +6,8 @@ import {
   Skeleton,
 } from "@patternfly/react-core";
 import { MinusCircleIcon, PlusCircleIcon } from "@patternfly/react-icons";
-import { ConfirmDeleteModal, CopyButton } from "ui";
-import { ITeam } from "types";
+import { ConfirmDeleteModal, CopyButton } from "@/ui";
+import { ITeam } from "@/types";
 import { Link } from "react-router";
 import {
   useAddUserToTeamMutation,
@@ -15,7 +15,7 @@ import {
   useRemoveUserFromTeamMutation,
 } from "users/usersApi";
 import AddUserToTeamModal from "./AddUserToTeamModal";
-import { sortByName } from "services/sort";
+import { sortByName } from "@/services/sort";
 import { showError, showSuccess } from "alerts/alertsSlice";
 import { Table, Thead, Tr, Th, Tbody, Td } from "@patternfly/react-table";
 import { useAppDispatch } from "store";

@@ -1,4 +1,4 @@
-import { IProduct, ITopic } from "types";
+import { IProduct, ITopic } from "@/types";
 
 interface IProductWithTopics extends IProduct {
   topics: ITopic[];

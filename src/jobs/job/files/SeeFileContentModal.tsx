@@ -6,7 +6,7 @@ import {
   ModalBody,
   ModalHeader,
 } from "@patternfly/react-core";
-import { IFile } from "types";
+import { IFile } from "@/types";
 import useModal from "hooks/useModal";
 import FileContent from "./FileContent";
 

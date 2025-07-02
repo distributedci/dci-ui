@@ -6,7 +6,7 @@ import {
   Content,
   PageSection,
 } from "@patternfly/react-core";
-import { Breadcrumb } from "ui";
+import { Breadcrumb } from "@/ui";
 import NewFailedJobSubscriptionPanel from "./NewFailedJobSubscriptionPanel";
 import NewComponentSubscriptionPanel from "./NewComponentSubscriptionPanel";
 import { useAuth } from "auth/authSelectors";

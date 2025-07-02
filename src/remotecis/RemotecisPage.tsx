@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { CopyButton, EmptyState, ConfirmDeleteModal, Breadcrumb } from "ui";
-import { SeeAuthentificationFileModal } from "ui/Credentials";
+import { CopyButton, EmptyState, ConfirmDeleteModal, Breadcrumb } from "@/ui";
+import { SeeAuthentificationFileModal } from "@/ui/Credentials";
 import {
   Button,
   Content,
@@ -17,7 +17,7 @@ import {
 import { TrashIcon, UserSecretIcon } from "@patternfly/react-icons";
 import CreateRemoteciModal from "./CreateRemoteciModal";
 import EditRemoteciModal from "./EditRemoteciModal";
-import { Filters } from "types";
+import { Filters } from "@/types";
 import { Table, Thead, Tr, Th, Tbody, Td } from "@patternfly/react-table";
 import { useLocation, useNavigate } from "react-router";
 import {
@@ -25,15 +25,15 @@ import {
   offsetAndLimitToPage,
   pageAndLimitToOffset,
   parseFiltersFromSearch,
-} from "services/filters";
+} from "@/services/filters";
 import {
   useCreateRemoteciMutation,
   useDeleteRemoteciMutation,
   useListRemotecisQuery,
   useUpdateRemoteciMutation,
 } from "./remotecisApi";
-import { fromNow } from "services/date";
-import LoadingPageSection from "ui/LoadingPageSection";
+import { fromNow } from "@/services/date";
+import LoadingPageSection from "@/ui/LoadingPageSection";
 import { useAuth } from "auth/authSelectors";
 
 function RemotecisSection() {

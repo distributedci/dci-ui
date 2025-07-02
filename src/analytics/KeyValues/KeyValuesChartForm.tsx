@@ -23,7 +23,7 @@ import {
   getRandomGraphColor,
   IKeyValueGraphKey,
 } from "./keyValuesTypes";
-import { groupByKeys, groupByKeysWithLabel, IGroupByKey } from "types";
+import { groupByKeys, groupByKeysWithLabel, IGroupByKey } from "@/types";
 
 export default function KeyValuesChartForm({
   id,

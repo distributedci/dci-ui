@@ -1,6 +1,6 @@
 import { Card, CardBody, Label } from "@patternfly/react-core";
 import { useJob } from "../jobContext";
-import { EmptyState } from "ui";
+import { EmptyState } from "@/ui";
 import { Table, Tbody, Td, Th, Thead, Tr } from "@patternfly/react-table";
 import { Link } from "react-router";
 import {
@@ -9,7 +9,7 @@ import {
   ExclamationCircleIcon,
   ExclamationTriangleIcon,
 } from "@patternfly/react-icons";
-import { humanizeDuration } from "services/date";
+import { humanizeDuration } from "@/services/date";
 import { sumTests } from "jobs/components/TestsLabels";
 
 export default function JobTestsPage() {

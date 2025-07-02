@@ -8,7 +8,7 @@ import {
 } from "@patternfly/react-core";
 import useModal from "hooks/useModal";
 import ProductForm from "./ProductForm";
-import { IProduct } from "types";
+import { IProduct } from "@/types";
 
 interface CreateProductModalProps {
   onSubmit: (product: Partial<IProduct>) => void;

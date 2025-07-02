@@ -1,11 +1,11 @@
 import { Table, Thead, Tr, Th, Tbody, Td } from "@patternfly/react-table";
-import { CopyButton, StateLabel } from "ui";
-import { sortAlphabetically } from "services/sort";
+import { CopyButton, StateLabel } from "@/ui";
+import { sortAlphabetically } from "@/services/sort";
 import { Link } from "react-router";
 import { Label } from "@patternfly/react-core";
-import { formatDate } from "services/date";
+import { formatDate } from "@/services/date";
 import { DateTime } from "luxon";
-import { Filters, IComponent } from "types";
+import { Filters, IComponent } from "@/types";
 
 export default function ComponentsTable({
   filters,

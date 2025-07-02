@@ -1,12 +1,12 @@
 import { DateTime } from "luxon";
-import { IAnalyticsKeysValuesJob } from "types";
+import { IAnalyticsKeysValuesJob } from "@/types";
 import {
   IGraphBackColor,
   IGraphType,
   IKeyValueGraph,
   hashStringToGraphBackgroundColor,
 } from "./keyValuesTypes";
-import { getJobKey } from "analytics/analyticsJob";
+import { getJobKey } from "@/analytics/analyticsJob";
 
 function generateKey(key1: string, key2: string): string {
   return `${key1}_${key2}`

@@ -1,4 +1,4 @@
-import { state } from "types";
+import { state } from "@/types";
 import {
   parseFiltersFromSearch,
   createSearchFromFilters,

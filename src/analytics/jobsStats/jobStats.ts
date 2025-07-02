@@ -2,9 +2,9 @@ import {
   FinalJobStatuses,
   groupByKeys,
   groupByKeysWithLabel,
-  IAnalyticsJob,
-  IFinalJobStatus,
-} from "types";
+  type IAnalyticsJob,
+  type IFinalJobStatus,
+} from "@/types";
 import {
   chart_color_blue_300,
   chart_color_teal_300,
@@ -14,7 +14,7 @@ import {
   chart_color_purple_300,
   chart_color_yellow_300,
 } from "@patternfly/react-tokens";
-import { getJobKey } from "analytics/analyticsJob";
+import { getJobKey } from "@/analytics/analyticsJob";
 
 export type IGroupByKey = (typeof groupByKeys)[number];
 

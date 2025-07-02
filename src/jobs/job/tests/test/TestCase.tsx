@@ -15,10 +15,10 @@ import {
   WarningTriangleIcon,
 } from "@patternfly/react-icons";
 import { Tbody, Td, Tr } from "@patternfly/react-table";
-import { humanizeDuration } from "services/date";
+import { humanizeDuration } from "@/services/date";
 import { useEffect, useRef, useState } from "react";
-import { ITestCase, ITestCaseActionState, ITestCaseActionType } from "types";
-import { CopyButton } from "ui";
+import { ITestCase, ITestCaseActionState, ITestCaseActionType } from "@/types";
+import { CopyButton } from "@/ui";
 
 function TestCaseIcon({ action }: { action: ITestCaseActionType }) {
   switch (action) {

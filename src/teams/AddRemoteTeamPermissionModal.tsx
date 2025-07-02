@@ -4,7 +4,7 @@ import {
   ModalHeader,
   ModalVariant,
 } from "@patternfly/react-core";
-import { ITeam } from "types";
+import { ITeam } from "@/types";
 import useModal from "hooks/useModal";
 import TeamSelect from "teams/form/TeamSelect";
 

@@ -1,7 +1,7 @@
 import { FormGroup, TextArea } from "@patternfly/react-core";
 import { FieldError, useFormContext } from "react-hook-form";
 import FormErrorMessage from "./FormErrorMessage";
-import { FormGroupProps } from "types";
+import { FormGroupProps } from "@/types";
 
 export default function TextAreaFormGroup({
   id,

@@ -1,6 +1,6 @@
-import { IJobStatus, JobStatuses } from "types";
+import { IJobStatus, JobStatuses } from "@/types";
 import { ToolbarFilter } from "@patternfly/react-core";
-import Select from "ui/form/Select";
+import Select from "@/ui/form/Select";
 
 type StatusToolbarFilterProps = {
   status: string | null;

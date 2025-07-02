@@ -10,11 +10,11 @@ import {
   PageSection,
 } from "@patternfly/react-core";
 import { TrashAltIcon, EditAltIcon } from "@patternfly/react-icons";
-import { ConfirmDeleteModal, Breadcrumb, EmptyState } from "ui";
+import { ConfirmDeleteModal, Breadcrumb, EmptyState } from "@/ui";
 import { useParams, useNavigate } from "react-router";
 import { t_global_color_status_danger_default } from "@patternfly/react-tokens";
 import EditTeamModal from "./EditTeamModal";
-import CardLine from "ui/CardLine";
+import CardLine from "@/ui/CardLine";
 import TeamMembers from "./TeamMembers";
 import TeamComponentsPermissions from "./TeamComponentsPermissions";
 import {
@@ -24,7 +24,7 @@ import {
 } from "./teamsApi";
 import { skipToken } from "@reduxjs/toolkit/query";
 import { useAuth } from "auth/authSelectors";
-import LoadingPageSection from "ui/LoadingPageSection";
+import LoadingPageSection from "@/ui/LoadingPageSection";
 import ProductsTeamHasAccessTo from "./ProductsTeamHasAccessTo";
 
 export default function TeamPage() {

@@ -1,4 +1,4 @@
-import { JobNode, IJob } from "types";
+import { JobNode, IJob } from "@/types";
 
 export function groupJobsByPipeline(jobs: IJob[]): JobNode[] {
   const jobWithChildrenMap: { [id: string]: JobNode } = {};

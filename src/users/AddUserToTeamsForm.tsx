@@ -3,7 +3,7 @@ import * as Yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import TeamSelect from "teams/form/TeamSelect";
-import FormErrorMessage from "ui/form/FormErrorMessage";
+import FormErrorMessage from "@/ui/form/FormErrorMessage";
 
 interface AddUserToTeamFormProps {
   onSubmit: (values: { team_id: string }) => void;

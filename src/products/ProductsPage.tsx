@@ -4,7 +4,7 @@ import {
   Breadcrumb,
   Truncate,
   CardSecondaryTitle,
-} from "ui";
+} from "@/ui";
 import CreateProductModal from "./CreateProductModal";
 import EditProductModal from "./EditProductModal";
 import {
@@ -27,7 +27,7 @@ import {
   useUpdateProductMutation,
 } from "./productsApi";
 import { useAuth } from "auth/authSelectors";
-import LoadingPageSection from "ui/LoadingPageSection";
+import LoadingPageSection from "@/ui/LoadingPageSection";
 import ProductIcon from "./ProductIcon";
 import { useNavigate } from "react-router";
 

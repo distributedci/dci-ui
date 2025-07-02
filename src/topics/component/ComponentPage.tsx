@@ -19,28 +19,28 @@ import {
   EmptyStateVariant,
   EmptyStateBody,
 } from "@patternfly/react-core";
-import { Breadcrumb, CopyButton, StateLabel } from "ui";
+import { Breadcrumb, CopyButton, StateLabel } from "@/ui";
 import {
   IComponent,
   IComponentCoverage,
   IComponentWithJobs,
   IJobStatus,
-} from "types";
+} from "@/types";
 import { useParams, Link } from "react-router";
 import { CalendarAltIcon, ClockIcon } from "@patternfly/react-icons";
-import { fromNow, formatDate } from "services/date";
-import { sortByNewestFirst } from "services/sort";
-import { humanizeDuration } from "services/date";
+import { fromNow, formatDate } from "@/services/date";
+import { sortByNewestFirst } from "@/services/sort";
+import { humanizeDuration } from "@/services/date";
 import { getPercentageOfSuccessfulJobs } from "./stats";
 import { JobStatusLabel } from "jobs/components";
-import CardLine from "ui/CardLine";
-import LastComponentsJobsBarChart from "analytics/ComponentCoverage/LastComponentsJobsBarChart";
+import CardLine from "@/ui/CardLine";
+import LastComponentsJobsBarChart from "@/analytics/ComponentCoverage/LastComponentsJobsBarChart";
 import { DateTime } from "luxon";
 import { useAuth } from "auth/authSelectors";
 import { skipToken } from "@reduxjs/toolkit/query";
 import { useGetTeamQuery } from "teams/teamsApi";
 import { useGetTopicQuery } from "topics/topicsApi";
-import LoadingPageSection from "ui/LoadingPageSection";
+import LoadingPageSection from "@/ui/LoadingPageSection";
 import { useGetComponentQuery } from "components/componentsApi";
 import TopicIcon from "topics/TopicIcon";
 import StatHeaderCard from "./StatHeaderCard";

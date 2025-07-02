@@ -2,7 +2,7 @@ import { extractKeys, extractKeysValues } from "./keyValues";
 import {
   analyticsOneKeysValuesJob,
   analyticsTwoKeysValuesJobs,
-} from "analytics/analyticsTestData";
+} from "@/analytics/analyticsTestData";
 import { IKeyValueGraph } from "./keyValuesTypes";
 
 test("extractKeys with empty data", () => {
