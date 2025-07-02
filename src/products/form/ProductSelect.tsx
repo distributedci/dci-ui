@@ -1,6 +1,6 @@
 import { skipToken } from "@reduxjs/toolkit/query";
 import { useGetProductQuery, useListProductsQuery } from "products/productsApi";
-import { IProduct } from "types";
+import type { IProduct } from "types";
 import Select from "ui/form/Select";
 
 export default function ProductSelect({

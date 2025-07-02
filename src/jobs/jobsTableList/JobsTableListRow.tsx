@@ -1,6 +1,6 @@
 import { Label, LabelGroup } from "@patternfly/react-core";
 import { createSearchParams, Link } from "react-router";
-import {
+import type {
   JobNode,
   IJobStatus,
   IRemoteci,

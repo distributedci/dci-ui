@@ -13,7 +13,7 @@ import {
   Content,
 } from "@patternfly/react-core";
 import { Breadcrumb, CopyButton, EmptyState, StateLabel } from "ui";
-import { ITopic } from "types";
+import type { ITopic } from "types";
 import { useParams } from "react-router";
 import CardLine from "ui/CardLine";
 import { useGetTopicQuery, useUpdateTopicMutation } from "./topicsApi";

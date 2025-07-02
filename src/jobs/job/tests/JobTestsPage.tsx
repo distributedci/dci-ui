@@ -1,5 +1,5 @@
 import { Card, CardBody, Label } from "@patternfly/react-core";
-import { useJob } from "../jobContext";
+import { useJob } from "jobs/job/jobContext";
 import { EmptyState } from "ui";
 import { Table, Tbody, Td, Th, Thead, Tr } from "@patternfly/react-table";
 import { Link } from "react-router";

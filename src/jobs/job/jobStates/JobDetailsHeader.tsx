@@ -22,9 +22,9 @@ import {
   ExternalLinkAltIcon,
   CodeBranchIcon,
 } from "@patternfly/react-icons";
-import { IEnhancedJob, IResult, IPipeline } from "types";
+import type { IEnhancedJob, IResult, IPipeline } from "types";
 import { formatDate, fromNow, humanizeDuration } from "services/date";
-import TextAreaEditableOnHover from "../TextAreaEditableOnHover";
+import TextAreaEditableOnHover from "jobs/job/TextAreaEditableOnHover";
 import { Markup } from "interweave";
 import { sortByOldestFirst } from "services/sort";
 import { convertLinksToHtml, getLabelColor } from "jobs/jobUtils";
