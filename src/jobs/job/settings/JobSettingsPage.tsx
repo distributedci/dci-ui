@@ -1,7 +1,7 @@
 import { Button, PageSection, Content } from "@patternfly/react-core";
 import { ConfirmDeleteModal } from "ui";
 import { useNavigate } from "react-router";
-import { useJob } from "../jobContext";
+import { useJob } from "jobs/job/jobContext";
 import { useDeleteJobMutation } from "jobs/jobsApi";
 
 export default function JobSettingsPage() {

@@ -9,7 +9,7 @@ import {
   ModalHeader,
 } from "@patternfly/react-core";
 import copyToClipboard from "services/copyToClipboard";
-import { IFeeder, IRemoteci } from "types";
+import type { IFeeder, IRemoteci } from "types";
 
 function getContent(
   id: string,

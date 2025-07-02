@@ -15,21 +15,17 @@ import { Breadcrumb } from "ui";
 import { createRef, useEffect, useMemo, useState } from "react";
 import { useGetAnalyticJobsQuery } from "analytics/analyticsApi";
 import AnalyticsToolbar from "analytics/toolbar/AnalyticsToolbar";
-import {
-  groupByKeys,
-  groupByKeysWithLabel,
-  IAnalyticsJob,
-  IGenericAnalyticsData,
-} from "types";
+import { groupByKeys, groupByKeysWithLabel } from "types";
+import type { IAnalyticsJob, IGenericAnalyticsData } from "types";
 import { skipToken } from "@reduxjs/toolkit/query";
 import Select from "ui/form/Select";
 import {
   getJobStats,
-  IGroupByKey,
-  IStat,
-  ISliceByKey,
   sliceByKeys,
   sliceByKeysWithLabel,
+  type IGroupByKey,
+  type IStat,
+  type ISliceByKey,
 } from "./jobStats";
 import JobStatChart from "./JobStatChart";
 import ScreeshotNodeButton from "ui/ScreenshotNodeButton";

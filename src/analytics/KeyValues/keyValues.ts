@@ -1,10 +1,10 @@
 import { DateTime } from "luxon";
-import { IAnalyticsKeysValuesJob } from "types";
-import {
+import type { IAnalyticsKeysValuesJob } from "types";
+import { hashStringToGraphBackgroundColor } from "./keyValuesTypes";
+import type {
   IGraphBackColor,
   IGraphType,
   IKeyValueGraph,
-  hashStringToGraphBackgroundColor,
 } from "./keyValuesTypes";
 import { getJobKey } from "analytics/analyticsJob";
 
