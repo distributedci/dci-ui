@@ -537,6 +537,7 @@ export interface IAnalyticsJob {
     topic_id: string;
     display_name: string;
     type: string;
+    version: string;
   }[];
   comment: string | null;
   configuration: string | null;

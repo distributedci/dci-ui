@@ -149,7 +149,7 @@ async function getAnalyticsJobs<T>(
   }
 }
 const genericIncludes =
-  "id,name,status,created_at,duration,configuration,url,status_reason,comment,pipeline.id,pipeline.created_at,pipeline.name,team.id,team.name,topic.name,components.id,components.topic_id,components.display_name,components.type,remoteci.name,tags";
+  "id,name,status,created_at,duration,configuration,url,status_reason,comment,pipeline.id,pipeline.created_at,pipeline.name,team.id,team.name,topic.name,components.id,components.topic_id,components.version,components.display_name,components.type,remoteci.name,tags";
 
 export const {
   useLazyGetAnalyticJobsQuery,
