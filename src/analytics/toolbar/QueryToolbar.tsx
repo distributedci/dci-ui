@@ -77,12 +77,13 @@ export default function QueryToolbar({
   }, []);
 
   const searchJobs = (values: AnalyticsToolbarSearch) => {
-    const params = {
-      ...values,
-      range: values.range,
-    };
+    const params = new URLSearchParams(window.location.search);
+    params.set("query", values.query);
+    params.set("range", values.range);
+    params.set("after", values.after);
+    params.set("before", values.before);
     setSearchParams(params);
-    onSearch(params);
+    onSearch(values);
   };
 
   return (
@@ -105,31 +106,23 @@ export default function QueryToolbar({
             </TextInputGroup>
           </ToolbarItem>
           <ToolbarItem>
-            <Controller
-              control={control}
-              name="range"
-              render={({ field: { onChange, value } }) => (
-                <RangeSelect
-                  range={value}
-                  onChange={(range, after, before) => {
-                    onChange(range);
-                    setValue("after", after);
-                    setValue("before", before);
-                  }}
-                  after={defaultValues.after}
-                  before={defaultValues.before}
-                  ranges={[
-                    "last7Days",
-                    "last30Days",
-                    "last90Days",
-                    "previousWeek",
-                    "currentWeek",
-                    "yesterday",
-                    "today",
-                    "custom",
-                  ]}
-                />
-              )}
+            <RangeSelect
+              defaultValues={defaultValues}
+              ranges={[
+                "last7Days",
+                "last30Days",
+                "last90Days",
+                "previousWeek",
+                "currentWeek",
+                "yesterday",
+                "today",
+                "custom",
+              ]}
+              onChange={(range, after, before) => {
+                setValue("range", range, { shouldDirty: true });
+                setValue("after", after, { shouldDirty: true });
+                setValue("before", before, { shouldDirty: true });
+              }}
             />
           </ToolbarItem>
           <ToolbarItem>
