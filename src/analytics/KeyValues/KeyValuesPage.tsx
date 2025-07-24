@@ -35,9 +35,10 @@ import {
   type IGraphKeysValues,
 } from "./keyValues";
 import { FilterIcon, TrashAltIcon } from "@patternfly/react-icons";
-import { useGetAnalyticsKeysValuesJobsQuery } from "analytics/analyticsApi";
+import { useLazyGetAnalyticsKeysValuesJobsQuery } from "analytics/analyticsApi";
 import AnalyticsToolbar from "analytics/toolbar/AnalyticsToolbar";
 import type {
+  AnalyticsToolbarSearch,
   IAnalyticsKeysValuesJob,
   IGenericAnalyticsData,
   IJob,
@@ -47,7 +48,6 @@ import { createSearchFromGraphs, parseGraphsFromSearch } from "./filters";
 import { useSearchParams } from "react-router";
 import type { IKeyValueGraph } from "./keyValuesTypes";
 import KeyValuesEditGraphModal from "./KeyValuesEditGraphModal";
-import { skipToken } from "@reduxjs/toolkit/query";
 import ScreeshotNodeButton from "ui/ScreenshotNodeButton";
 import { scaleTime } from "d3-scale";
 
@@ -324,20 +324,13 @@ function KeyValues({
 }
 
 export default function KeyValuesPage() {
-  const [params, setParams] = useState<{
-    query: string;
-    after: string;
-    before: string;
-  }>({
-    query: "",
-    after: "",
-    before: "",
-  });
-  const { query, after, before } = params;
-  const shouldSearch = query !== "" && after !== "" && before !== "";
-  const { data, isLoading, isFetching } = useGetAnalyticsKeysValuesJobsQuery(
-    shouldSearch ? params : skipToken,
-  );
+  const [getAnalyticsKeysValuesJobsQuery, { data, isLoading, isFetching }] =
+    useLazyGetAnalyticsKeysValuesJobsQuery();
+  const search = (values: AnalyticsToolbarSearch) => {
+    if (values.query) {
+      getAnalyticsKeysValuesJobsQuery(values);
+    }
+  };
   return (
     <PageSection>
       <Breadcrumb
@@ -350,8 +343,8 @@ export default function KeyValuesPage() {
       <Content component="h1">Key Values</Content>
       <Content component="p">Graph the key values of your jobs</Content>
       <AnalyticsToolbar
-        onLoad={setParams}
-        onSearch={setParams}
+        onLoad={search}
+        onSearch={search}
         isLoading={isFetching}
         data={data}
       />
