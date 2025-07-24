@@ -16,7 +16,7 @@ export default function AnalyticsJobsModal<T extends IAnalyticsJob>({
   return (
     <>
       <Button variant="link" isInline onClick={show} {...props}>
-        See the job{jobs.length > 1 ? "s" : ""}
+        See the {jobs.length} job{jobs.length > 1 ? "s" : ""}
       </Button>
       .
       <Modal
