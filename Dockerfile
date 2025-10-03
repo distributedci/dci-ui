@@ -3,6 +3,8 @@ FROM registry.access.redhat.com/ubi10/nodejs-22-minimal AS builder
 LABEL name="DCI UI builder image"
 LABEL version="0.3.0"
 LABEL maintainer="DCI Team <distributed-ci@redhat.com>"
+ARG QUAY_EXPIRES_AFTER=never
+LABEL quay.expires-after=${QUAY_EXPIRES_AFTER}
 
 ARG VITE_BACKEND_HOST
 ARG VITE_SSO_URL
