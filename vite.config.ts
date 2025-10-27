@@ -6,6 +6,7 @@ import path from "path";
 
 export default defineConfig({
   plugins: [react(), tsconfigPaths()],
+  base: process.env.VITE_BASE_URL || "/",
   build: {
     outDir: "build",
   },
