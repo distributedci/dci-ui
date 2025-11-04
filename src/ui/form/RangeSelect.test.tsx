@@ -84,7 +84,8 @@ test("nrt test RangeSelect datepicker change before date doesn't reset after dat
   });
   await expect(before).toBeVisible();
   await user.click(before);
-  await user.click(getAllByLabelText("27 December 2024")[1]);
+  const dateButton = getAllByLabelText("27 December 2024")[1];
+  await user.click(dateButton);
   await waitFor(() => {
     expect(mockOnChange.mock.calls.length).toBe(2);
     expect(mockOnChange.mock.calls[1]).toEqual([
