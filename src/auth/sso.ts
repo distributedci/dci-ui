@@ -10,13 +10,14 @@ const SSOScope = (import.meta.env.VITE_SSO_SCOPE || "api.dci")
 const SSOAuthorityURL = `${SSOUrl}/auth/realms/${SSORealm}`;
 export const ProfilePageUrl = `${SSOAuthorityURL}/account/`;
 
+const pathName = import.meta.env.BASE_URL;
 const origin = window.location.origin;
 const settings = {
   authority: SSOAuthorityURL,
   client_id: SSOClientId,
-  redirect_uri: `${origin}/login_callback`,
-  post_logout_redirect_uri: `${origin}/login`,
-  silent_redirect_uri: `${origin}/silent_redirect`,
+  redirect_uri: `${origin}${pathName}login_callback`,
+  post_logout_redirect_uri: `${origin}${pathName}login`,
+  silent_redirect_uri: `${origin}${pathName}silent_redirect`,
   response_type: "code",
   automaticSilentRenew: true,
   scope: SSOScope,

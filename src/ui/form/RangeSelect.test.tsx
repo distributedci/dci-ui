@@ -63,7 +63,7 @@ test("test RangeSelect datepicker before", async () => {
 
 test("nrt test RangeSelect datepicker change before date doesn't reset after date", async () => {
   const mockOnChange = vi.fn();
-  const { user, getByRole, getByLabelText, getAllByLabelText } = render(
+  const { user, getByRole, getByLabelText } = render(
     <RangeSelect
       now="2024-12-10"
       defaultValues={{
@@ -79,13 +79,29 @@ test("nrt test RangeSelect datepicker change before date doesn't reset after dat
   await expect(after).toBeVisible();
   await user.click(after);
   await user.click(getByLabelText("6 December 2024"));
+  await waitFor(() => {
+    const afterInput = getByLabelText(
+      "After input date picker",
+    ) as HTMLInputElement;
+    expect(afterInput.value).toBe("2024-12-06");
+    const popup = document.querySelector(".pf-v6-c-calendar-month");
+    expect(popup).toBeNull();
+  });
+
   const before = await getByRole("button", {
     name: "Toggle before date picker",
   });
   await expect(before).toBeVisible();
   await user.click(before);
-  const dateButton = getAllByLabelText("27 December 2024")[1];
-  await user.click(dateButton);
+  await user.click(getByLabelText("27 December 2024"));
+  await waitFor(() => {
+    const beforeInput = getByLabelText(
+      "Before input date picker",
+    ) as HTMLInputElement;
+    expect(beforeInput.value).toBe("2024-12-27");
+    const popup = document.querySelector(".pf-v6-c-calendar-month");
+    expect(popup).toBeNull();
+  });
   await waitFor(() => {
     expect(mockOnChange.mock.calls.length).toBe(2);
     expect(mockOnChange.mock.calls[1]).toEqual([
