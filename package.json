@@ -15,7 +15,7 @@
     "@patternfly/react-icons": "6.4.0",
     "@patternfly/react-table": "6.4.0",
     "@patternfly/react-tokens": "6.4.0",
-    "@reduxjs/toolkit": "^2.10.0",
+    "@reduxjs/toolkit": "^2.10.1",
     "async-mutex": "^0.5.0",
     "d3-scale": "^4.0.2",
     "d3-time": "^3.1.0",
@@ -41,7 +41,7 @@
   },
   "devDependencies": {
     "@babel/plugin-transform-private-property-in-object": "^7.27.1",
-    "@eslint/js": "^9.31.1",
+    "@eslint/js": "^9.39.1",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.0",
     "@testing-library/user-event": "^14.6.1",
@@ -59,13 +59,13 @@
     "eslint-plugin-jsx-a11y": "^6.10.2",
     "eslint-plugin-react": "^7.37.5",
     "globals": "^16.5.0",
-    "jsdom": "^26.1.0",
+    "jsdom": "^27.1.0",
     "msw": "^2.11.6",
     "prettier": "^3.6.2",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.46.3",
-    "vite": "^7.1.12",
-    "vitest": "^4.0.6"
+    "vite": "^7.2.0",
+    "vitest": "^4.0.7"
   },
   "scripts": {
     "prettier": "prettier --write src",
@@ -73,10 +73,10 @@
     "build": "node --version && vite build",
     "preview": "vite preview",
     "postbuild": "rm build/mockServiceWorker.js",
-    "test": "npm run lint && LANG=en_US.UTF-8 TZ=UTC vitest run",
+    "test": "npm run lint && NO_COLOR=true LANG=en_US.UTF-8 TZ=UTC vitest run",
     "test:watch": "LANG=en_US.UTF-8 TZ=UTC vitest watch",
     "eject": "react-scripts eject",
-    "lint": "eslint"
+    "lint": "eslint --no-color"
   },
   "browserslist": [
     ">0.2%",
