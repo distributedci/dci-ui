@@ -8,10 +8,10 @@ import {
 } from "@patternfly/react-core";
 import useModal from "hooks/useModal";
 import RemoteciForm from "./RemoteciForm";
-import type { IRemoteci } from "types";
+import type { IRemoteciWithApiSecret } from "types";
 
 interface CreateRemoteciModalProps {
-  onSubmit: (remoteci: Partial<IRemoteci>) => void;
+  onSubmit: (remoteci: Partial<IRemoteciWithApiSecret>) => void;
   [x: string]: any;
 }
 

@@ -39,9 +39,16 @@ export interface IRemoteci extends Resource {
   state: string;
   data: dataField;
   public: boolean;
-  api_secret: string;
   created_at: string;
   updated_at: string;
+}
+
+export interface IRemoteciWithTeam extends IRemoteci {
+  team: ITeam;
+}
+
+export interface IRemoteciWithApiSecret extends IRemoteci {
+  api_secret: string;
 }
 
 export interface ITopic extends Resource {
@@ -480,7 +487,7 @@ export interface IGetComponents extends BaseListResponse {
 }
 
 export interface IGetRemotecis extends BaseListResponse {
-  remotecis: IRemoteci[];
+  remotecis: IRemoteciWithTeam[];
 }
 
 export interface Filters {
