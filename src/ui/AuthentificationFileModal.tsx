@@ -9,45 +9,35 @@ import {
   ModalHeader,
 } from "@patternfly/react-core";
 import copyToClipboard from "services/copyToClipboard";
-import type { IFeeder, IRemoteci } from "types";
+import type { IFeeder } from "types";
 
-function getContent(
-  id: string,
-  role: string,
-  api_secret: string,
-  type: "sh" | "yaml",
-) {
+function getContent(id: string, api_secret: string, type: "sh" | "yaml") {
   return type === "sh"
-    ? `DCI_CLIENT_ID='${role}/${id}'
-DCI_API_SECRET='${api_secret}'
-DCI_CS_URL='https://api.distributed-ci.io/'
-export DCI_CLIENT_ID
-export DCI_API_SECRET
-export DCI_CS_URL`
+    ? ` export DCI_CLIENT_ID='feeder/${id}'
+ export DCI_API_SECRET='${api_secret}'
+ export DCI_CS_URL='https://api.distributed-ci.io/'`
     : `---
-  DCI_CLIENT_ID: ${role}/${id}
+  DCI_CLIENT_ID: feeder/${id}
   DCI_API_SECRET: ${api_secret}
   DCI_CS_URL: https://api.distributed-ci.io/`;
 }
 
-interface SeeAuthentificationFileModalProps {
-  resource: IRemoteci | IFeeder;
-  resourceType: "remoteci" | "feeder";
+interface AuthentificationFileModalProps {
+  feeder: IFeeder;
   type?: "sh" | "yaml";
   className?: string;
 }
 
-export function SeeAuthentificationFileModal({
-  resource,
-  resourceType,
+export function AuthentificationFileModal({
+  feeder,
   type = "sh",
   className = "",
-}: SeeAuthentificationFileModalProps) {
+}: AuthentificationFileModalProps) {
   const [show, setShow] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [copied, setCopied] = useState(false);
   const api_secret = showPassword
-    ? resource.api_secret
+    ? feeder.api_secret
     : "****************************************************************";
 
   useEffect(() => {
@@ -69,11 +59,11 @@ export function SeeAuthentificationFileModal({
         onClose={() => setShow(false)}
         variant="large"
       >
-        <ModalHeader title={`DCI credentials for ${resource.name}`} />
+        <ModalHeader title={`DCI credentials for ${feeder.name}`} />
         <ModalBody>
           <CodeBlock>
             <CodeBlockCode>
-              {getContent(resource.id, resourceType, api_secret, type)}
+              {getContent(feeder.id, api_secret, type)}
             </CodeBlockCode>
           </CodeBlock>
         </ModalBody>
@@ -95,12 +85,7 @@ export function SeeAuthentificationFileModal({
           <Button
             key="copy"
             onClick={(event) => {
-              const content = getContent(
-                resource.id,
-                resourceType,
-                resource.api_secret,
-                type,
-              );
+              const content = getContent(feeder.id, feeder.api_secret, type);
               copyToClipboard(event, content);
               setCopied(true);
             }}

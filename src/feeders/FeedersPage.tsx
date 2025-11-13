@@ -8,7 +8,7 @@ import {
   PageSection,
 } from "@patternfly/react-core";
 import { Link } from "react-router";
-import { SeeAuthentificationFileModal } from "ui/Credentials";
+import { AuthentificationFileModal } from "ui/AuthentificationFileModal";
 import { Table, Thead, Tr, Th, Tbody, Td } from "@patternfly/react-table";
 import {
   useCreateFeederMutation,
@@ -64,19 +64,14 @@ function FeedersTable() {
             <Td isActionCell>
               <InputGroup>
                 <InputGroupItem>
-                  <SeeAuthentificationFileModal
+                  <AuthentificationFileModal
                     type="sh"
-                    resourceType="feeder"
-                    resource={feeder}
+                    feeder={feeder}
                     className="pf-v6-u-mr-xs"
                   />
                 </InputGroupItem>
                 <InputGroupItem>
-                  <SeeAuthentificationFileModal
-                    type="yaml"
-                    resourceType="feeder"
-                    resource={feeder}
-                  />
+                  <AuthentificationFileModal type="yaml" feeder={feeder} />
                 </InputGroupItem>
               </InputGroup>
             </Td>

@@ -4,7 +4,7 @@ import type {
   IFeeder,
   IIdentityTeam,
   IProduct,
-  IRemoteci,
+  IRemoteciWithTeam,
   ITeam,
   ITopic,
   IUser,
@@ -173,10 +173,8 @@ export const components: IComponent[] = [
   },
 ];
 
-export const remotecis: IRemoteci[] = [
+export const remotecis: IRemoteciWithTeam[] = [
   {
-    api_secret:
-      "F4trsVQGiMRQgBBsx5AqVugQIGUVqqidaUDzaMn4P243NVa1RchR0jBrTk7yMpYH",
     created_at: "2023-12-05T09:42:14.304617",
     data: {},
     etag: "38a612f7a53613e4ce607753b9eb2210",
@@ -186,6 +184,7 @@ export const remotecis: IRemoteci[] = [
     state: "active",
     team_id: "8ca1e85b-7b5f-4563-a430-f4095bebbda0",
     updated_at: "2023-12-05T09:42:14.304617",
+    team: teams[1],
   },
 ];
 

@@ -1,22 +1,25 @@
 import {
   injectCreateEndpoint,
   injectGetEndpoint,
-  injectDeleteEndpoint,
   injectListEndpoint,
   injectUpdateEndpoint,
   api,
 } from "api";
-import type { ICurrentUser, IRemoteci } from "types";
+import type { RootState } from "store";
+import type {
+  ICurrentUser,
+  IRemoteci,
+  IRemoteciWithApiSecret,
+  IRemoteciWithTeam,
+} from "types";
 
 const resource = "Remoteci";
 
 export const { useCreateRemoteciMutation } =
-  injectCreateEndpoint<IRemoteci>(resource);
+  injectCreateEndpoint<IRemoteciWithApiSecret>(resource);
 export const { useGetRemoteciQuery } = injectGetEndpoint<IRemoteci>(resource);
-export const { useDeleteRemoteciMutation } =
-  injectDeleteEndpoint<IRemoteci>(resource);
-export const { useListRemotecisQuery } =
-  injectListEndpoint<IRemoteci>(resource);
+const listRemotecisApi = injectListEndpoint<IRemoteciWithTeam>(resource);
+export const { useListRemotecisQuery } = listRemotecisApi;
 export const { useUpdateRemoteciMutation } =
   injectUpdateEndpoint<IRemoteci>(resource);
 
@@ -65,3 +68,83 @@ export const {
       }),
     }),
   });
+
+export const {
+  useReactivateRemoteciMutation,
+  useDeactivateRemoteciMutation,
+  useRefreshRemoteciApiSecretMutation,
+} = api.enhanceEndpoints({ addTagTypes: [resource] }).injectEndpoints({
+  endpoints: (builder) => ({
+    refreshRemoteciApiSecret: builder.mutation<
+      {
+        remoteci: IRemoteciWithApiSecret;
+      },
+      IRemoteci
+    >({
+      query(remoteci) {
+        return {
+          url: `/remotecis/${remoteci.id}/api_secret`,
+          headers: { "If-Match": remoteci.etag },
+          method: "PUT",
+        };
+      },
+      async onQueryStarted(_, { dispatch, getState, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          const updatedRemoteci = data.remoteci;
+          const state = getState() as RootState;
+          const remotecisCache = listRemotecisApi.util.selectInvalidatedBy(
+            state,
+            [{ type: resource, id: "LIST" }],
+          );
+          remotecisCache
+            .filter(({ endpointName }) => endpointName === "listRemotecis")
+            .forEach(({ originalArgs }) => {
+              dispatch(
+                listRemotecisApi.util.updateQueryData(
+                  "listRemotecis",
+                  originalArgs,
+                  (draft) => {
+                    const cachedRemoteci = draft.remotecis.find(
+                      (r) => r.id === updatedRemoteci.id,
+                    );
+                    if (cachedRemoteci) {
+                      Object.assign(cachedRemoteci, updatedRemoteci);
+                    }
+                  },
+                ),
+              );
+            });
+        } catch {
+          listRemotecisApi.util.invalidateTags([
+            { type: resource, id: "LIST" },
+          ]);
+        }
+      },
+    }),
+    reactivateRemoteci: builder.mutation<void, IRemoteci>({
+      query(remoteci) {
+        const { id, etag } = remoteci;
+        return {
+          url: `/remotecis/${id}`,
+          headers: { "If-Match": etag },
+          method: "PUT",
+          body: { state: "active" },
+        };
+      },
+      invalidatesTags: (_result, _error, { id }) => [{ type: resource, id }],
+    }),
+    deactivateRemoteci: builder.mutation<void, IRemoteci>({
+      query(remoteci) {
+        const { id, etag } = remoteci;
+        return {
+          url: `/remotecis/${id}`,
+          headers: { "If-Match": etag },
+          method: "PUT",
+          body: { state: "inactive" },
+        };
+      },
+      invalidatesTags: (_result, _error, { id }) => [{ type: resource, id }],
+    }),
+  }),
+});
