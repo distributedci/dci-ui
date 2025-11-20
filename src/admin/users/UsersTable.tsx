@@ -3,6 +3,7 @@ import { Link } from "react-router";
 import type { IUser } from "types";
 import { Table, Thead, Tr, Th, Tbody, Td } from "@patternfly/react-table";
 import { fromNow } from "services/date";
+import { Label } from "@patternfly/react-core";
 
 interface UsersTableProps {
   users: IUser[];
@@ -17,6 +18,7 @@ export default function UsersTable({ users }: UsersTableProps) {
           <Th>Login</Th>
           <Th>Full name</Th>
           <Th>Email</Th>
+          <Th>Active</Th>
           <Th>Red Hat login</Th>
           <Th>Created</Th>
         </Tr>
@@ -28,10 +30,17 @@ export default function UsersTable({ users }: UsersTableProps) {
               <CopyButton text={user.id} />
             </Td>
             <Td dataLabel="Login">
-              <Link to={`/users/${user.id}`}>{user.name}</Link>
+              <Link to={`/admin/users/${user.id}`}>{user.name}</Link>
             </Td>
             <Td dataLabel="Full name">{user.fullname}</Td>
             <Td dataLabel="Email">{user.email}</Td>
+            <Td>
+              {user.state === "active" ? (
+                <Label color="green">active</Label>
+              ) : (
+                <Label color="red">inactive</Label>
+              )}
+            </Td>
             <Td dataLabel="Red Hat login">{user.sso_username}</Td>
             <Td dataLabel="Created">
               <time title={user.created_at} dateTime={user.created_at}>

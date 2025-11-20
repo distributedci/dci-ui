@@ -84,7 +84,7 @@ export default function TypeaheadSelect<T extends Item>({
           placeholder={placeholder}
           value={isOpen ? inputSearch : inputValue}
           onClick={toggleSetIsOpen}
-          onChange={(e, v) => {
+          onChange={(_, v) => {
             setInputSearch(v);
             if (!isOpen) {
               setIsOpen(true);
@@ -116,7 +116,7 @@ export default function TypeaheadSelect<T extends Item>({
     <Select
       id={id}
       isOpen={isOpen}
-      onSelect={(e, v) => {
+      onSelect={(_, v) => {
         const selectedItem = items.find((i) => i.id === (v as string));
         if (selectedItem) {
           onSelect(selectedItem);

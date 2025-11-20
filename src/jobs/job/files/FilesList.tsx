@@ -63,7 +63,7 @@ export default function FilesList({ job }: FilesListProps) {
               <SearchInput
                 placeholder="Find by name"
                 value={textSearch}
-                onChange={(e, value) => setTextSearch(value)}
+                onChange={(_, value) => setTextSearch(value)}
                 onClear={() => setTextSearch("")}
               />
             </ToolbarItem>

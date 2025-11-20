@@ -66,7 +66,9 @@ function TeamComponentsPermissionsTable({ team }: { team: ITeam }) {
           {sortByName(data).map((remoteTeam) => (
             <Tr key={remoteTeam.id}>
               <Td>
-                <Link to={`/teams/${remoteTeam.id}`}>{remoteTeam.name}</Link>
+                <Link to={`/admin/teams/${remoteTeam.id}`}>
+                  {remoteTeam.name}
+                </Link>
               </Td>
               <Td isActionCell>
                 <ConfirmDeleteModal

@@ -1,6 +1,10 @@
 import type { ICurrentUser, IIdentity, IIdentityTeam } from "types";
 import { api } from "api";
-import { getDefaultTeam } from "teams/teamLocalStorage";
+import { getDefaultTeam } from "admin/teams/teamLocalStorage";
+
+const ADMIN_TEAM_NAME = "admin";
+const EPM_TEAM_NAME = "EPM";
+const RED_HAT_TEAM_NAME = "Red Hat";
 
 function buildShortcut(team: IIdentityTeam | null) {
   if (team === null) {
@@ -11,32 +15,52 @@ function buildShortcut(team: IIdentityTeam | null) {
       isReadOnly: false,
     };
   }
-  const adminTeamName = "admin";
-  const EPMTeamName = "EPM";
-  const RedHatTeamName = "Red Hat";
   return {
-    isSuperAdmin: team.name === adminTeamName,
-    hasEPMRole: team.name === adminTeamName || team.name === EPMTeamName,
+    isSuperAdmin: team.name === ADMIN_TEAM_NAME,
+    hasEPMRole: team.name === ADMIN_TEAM_NAME || team.name === EPM_TEAM_NAME,
     hasReadOnlyRole:
-      team.name === adminTeamName ||
-      team.name === EPMTeamName ||
-      team.name === RedHatTeamName,
-    isReadOnly: team.name === RedHatTeamName,
+      team.name === ADMIN_TEAM_NAME ||
+      team.name === EPM_TEAM_NAME ||
+      team.name === RED_HAT_TEAM_NAME,
+    isReadOnly: team.name === RED_HAT_TEAM_NAME,
   };
+}
+
+function _hasAdminPrivilege(team: IIdentityTeam) {
+  return team.name === ADMIN_TEAM_NAME || team.name === EPM_TEAM_NAME;
+}
+
+function _getDisplayName(team: IIdentityTeam) {
+  switch (team.name) {
+    case ADMIN_TEAM_NAME:
+      return "Admin team";
+    case EPM_TEAM_NAME:
+      return "Moderation team";
+    default:
+      return team.name;
+  }
 }
 
 export function buildCurrentUser(
   identity: IIdentity,
   defaultTeam: IIdentityTeam | null,
 ): ICurrentUser {
-  const teams = Object.values(identity.teams).filter(
-    (team) => team.id !== null,
-  );
+  const teams = Object.values(identity.teams)
+    .filter((team) => team.id !== null)
+    .map((team) => ({
+      ...team,
+      hasAdminPrivileges: _hasAdminPrivilege(team),
+      displayName: _getDisplayName(team),
+    }));
   const firstTeam = teams.length === 0 ? null : teams[0];
   const team =
-    defaultTeam === null || !(defaultTeam.id in identity.teams)
-      ? firstTeam
-      : defaultTeam;
+    defaultTeam && defaultTeam.id in identity.teams
+      ? {
+          ...defaultTeam,
+          hasAdminPrivileges: _hasAdminPrivilege(defaultTeam),
+          displayName: _getDisplayName(defaultTeam),
+        }
+      : firstTeam;
   return {
     ...identity,
     teams,

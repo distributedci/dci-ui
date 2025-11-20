@@ -106,14 +106,14 @@ function Jobs() {
             page={offsetAndLimitToPage(filters.offset, filters.limit)}
             itemCount={count}
             variant={PaginationVariant.bottom}
-            onSetPage={(e, newPage) => {
+            onSetPage={(_, newPage) => {
               jobsPageDivRef?.current?.scrollIntoView();
               setFilters({
                 ...filters,
                 offset: pageAndLimitToOffset(newPage, filters.limit),
               });
             }}
-            onPerPageSelect={(e, newPerPage) => {
+            onPerPageSelect={(_, newPerPage) => {
               jobsPageDivRef?.current?.scrollIntoView();
               setFilters({ ...filters, limit: newPerPage });
             }}

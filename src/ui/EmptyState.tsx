@@ -6,12 +6,13 @@ import {
   EmptyStateBody,
   EmptyStateActions,
   EmptyStateFooter,
+  type EmptyStateProps,
 } from "@patternfly/react-core";
 
-interface EmptyStateProps {
+interface DCIEmptyStateProps {
   title: string;
   info?: React.ReactNode;
-  icon?: React.ComponentType<unknown>;
+  icon?: EmptyStateProps["icon"];
   action?: React.ReactNode;
 }
 
@@ -20,7 +21,7 @@ export default function DCIEmptyState({
   info = "Please contact a Distributed CI administrator",
   icon,
   action,
-}: EmptyStateProps) {
+}: DCIEmptyStateProps) {
   return (
     <Bullseye>
       <EmptyState

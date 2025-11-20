@@ -13,7 +13,7 @@ import {
   useAddUserToTeamMutation,
   useListTeamsUserQuery,
   useRemoveUserFromTeamMutation,
-} from "users/usersApi";
+} from "../users/usersApi";
 import AddUserToTeamModal from "./AddUserToTeamModal";
 import { sortByName } from "services/sort";
 import { showError, showSuccess } from "alerts/alertsSlice";
@@ -102,7 +102,7 @@ export default function TeamMembers({
                     <CopyButton text={user.id} />
                   </Td>
                   <Td>
-                    <Link to={`/users/${user.id}`}>{user.name}</Link>
+                    <Link to={`/admin/users/${user.id}`}>{user.name}</Link>
                   </Td>
                   <Td>{user.fullname}</Td>
                   <Td>{user.email}</Td>

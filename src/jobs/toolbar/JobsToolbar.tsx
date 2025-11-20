@@ -17,7 +17,7 @@ import {
 import { SyncAltIcon } from "@patternfly/react-icons";
 import ProductToolbarFilter from "products/form/ProductToolbarFilter";
 import TopicToolbarFilter from "topics/form/TopicToolbarFilter";
-import TeamToolbarFilter from "teams/form/TeamToolbarFilter";
+import TeamToolbarFilter from "admin/teams/form/TeamToolbarFilter";
 import StatusToolbarFilter from "./StatusToolbarFilter";
 import ListToolbarFilter from "./ListToolbarFilter";
 import TextInputToolbarFilter from "./TextInputToolbarFilter";
@@ -242,7 +242,7 @@ export default function JobsToolbar({
                 perPage={filters.limit}
                 page={offsetAndLimitToPage(filters.offset, filters.limit)}
                 itemCount={jobsCount}
-                onSetPage={(e, newPage) =>
+                onSetPage={(_, newPage) =>
                   setFilters({
                     ...filters,
                     offset: pageAndLimitToOffset(newPage, filters.limit),

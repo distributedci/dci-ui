@@ -31,13 +31,13 @@ function Teams() {
   const location = useLocation();
   const navigate = useNavigate();
   const [filters, setFilters] = useState<Filters>(
-    parseFiltersFromSearch(location.search),
+    parseFiltersFromSearch(location.search, { state: null }),
   );
   const [inputSearch, setInputSearch] = useState<string>("");
 
   useEffect(() => {
     const newSearch = createSearchFromFilters(filters);
-    navigate(`/teams${newSearch}`, { replace: true });
+    navigate(`/admin/teams${newSearch}`, { replace: true });
   }, [navigate, filters]);
 
   const { data, isLoading } = useListTeamsQuery(filters);
@@ -70,8 +70,8 @@ function Teams() {
               <SearchInput
                 placeholder="Search a team"
                 value={inputSearch}
-                onChange={(e, search) => setInputSearch(search)}
-                onSearch={(e, name) => {
+                onChange={(_, search) => setInputSearch(search)}
+                onSearch={(_, name) => {
                   if (name.trim().endsWith("*")) {
                     setFiltersAndResetPagination({ name });
                   } else {
@@ -88,13 +88,13 @@ function Teams() {
                   perPage={filters.limit}
                   page={offsetAndLimitToPage(filters.offset, filters.limit)}
                   itemCount={count}
-                  onSetPage={(e, newPage) => {
+                  onSetPage={(_, newPage) => {
                     setFilters({
                       ...filters,
                       offset: pageAndLimitToOffset(newPage, filters.limit),
                     });
                   }}
-                  onPerPageSelect={(e, newPerPage) => {
+                  onPerPageSelect={(_, newPerPage) => {
                     setFilters({ ...filters, limit: newPerPage });
                   }}
                 />
@@ -126,7 +126,7 @@ function Teams() {
                   <CopyButton text={team.id} />
                 </Td>
                 <Td>
-                  <Link to={`/teams/${team.id}`}>{team.name}</Link>
+                  <Link to={`/admin/teams/${team.id}`}>{team.name}</Link>
                 </Td>
                 <Td>
                   {team.external ? <Label color="blue">partner</Label> : null}
@@ -157,14 +157,13 @@ export default function TeamsPage() {
     <PageSection>
       <Breadcrumb links={[{ to: "/", title: "DCI" }, { title: "Teams" }]} />
       <Content component="h1">Teams</Content>
-      <Content component="p">List of DCI teams.</Content>
       {currentUser.hasEPMRole && (
         <div className="pf-v6-u-mb-md">
           <CreateTeamModal
             onSubmit={async (team) => {
               try {
                 const newTeam = await createTeam(team).unwrap();
-                navigate(`/teams/${newTeam.id}`);
+                navigate(`/admin/teams/${newTeam.id}`);
               } catch (error) {
                 console.error("rejected", error);
               }

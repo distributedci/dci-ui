@@ -42,7 +42,7 @@ export default function ListInputWithChip({
       <TextInputGroupMain
         icon={showSearchIcon && <SearchIcon />}
         value={inputValue}
-        onChange={(e, value) => setInputValue(value)}
+        onChange={(_, value) => setInputValue(value)}
         placeholder={placeholder}
         onKeyDown={(event) => {
           if (event.key === "Enter" && items.indexOf(inputValue) === -1) {

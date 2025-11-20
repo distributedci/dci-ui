@@ -178,7 +178,7 @@ export function createSearchFromFilters(
     }
   }
 
-  if (!("query" in finalFilters)) {
+  if (!("query" in finalFilters) && where.length > 0) {
     finalFilters["where"] = where.join(",");
   }
 

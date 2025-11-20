@@ -63,7 +63,7 @@ export default function EditFeederModal({
         onClick={show}
         {...props}
       >
-        Edit {feeder.name}
+        Edit
       </Button>
     </>
   );

@@ -114,7 +114,7 @@ export function JunitComparisonForm({
                       id="topic_1_start_date"
                       value={topic1StartDate || ""}
                       placeholder="Jobs after"
-                      onChange={(e, value) => setTopic1StartDate(value)}
+                      onChange={(_, value) => setTopic1StartDate(value)}
                       appendTo={() => document.body}
                     />
                   </FormGroup>
@@ -125,7 +125,7 @@ export function JunitComparisonForm({
                       id="topic_1_end_date"
                       value={topic1EndDate || ""}
                       placeholder="Jobs before"
-                      onChange={(e, value) => setTopic1EndDate(value)}
+                      onChange={(_, value) => setTopic1EndDate(value)}
                       appendTo={() => document.body}
                     />
                   </FormGroup>
@@ -239,7 +239,7 @@ export function JunitComparisonForm({
                       id="topic_2_start_date"
                       value={topic2StartDate || ""}
                       placeholder="Jobs after"
-                      onChange={(e, value) => setTopic2StartDate(value)}
+                      onChange={(_, value) => setTopic2StartDate(value)}
                       appendTo={() => document.body}
                     />
                   </FormGroup>
@@ -250,7 +250,7 @@ export function JunitComparisonForm({
                       id="topic_2_end_date"
                       value={topic2EndDate || ""}
                       placeholder="Jobs before"
-                      onChange={(e, value) => setTopic2EndDate(value)}
+                      onChange={(_, value) => setTopic2EndDate(value)}
                       appendTo={() => document.body}
                     />
                   </FormGroup>

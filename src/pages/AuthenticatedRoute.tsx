@@ -52,7 +52,8 @@ import { useAppDispatch } from "store";
 import { useAuth } from "auth/authSelectors";
 import { useGetCurrentUserQuery } from "auth/authApi";
 import { ProfilePageUrl } from "auth/sso";
-import { changeCurrentTeam } from "teams/teamLocalStorage";
+import { changeCurrentTeam } from "admin/teams/teamLocalStorage";
+import ReadOnlyBanner from "ui/ReadOnlyBanner";
 
 function UserDropdownMenuMobile() {
   const dispatch = useAppDispatch();
@@ -179,6 +180,13 @@ function UserTeamToolbarItem() {
     );
   }
 
+  const adminTeams = currentUser.teams.filter(
+    (team) => team.hasAdminPrivileges,
+  );
+  const normalTeams = currentUser.teams.filter(
+    (team) => !team.hasAdminPrivileges,
+  );
+
   return (
     <ToolbarItem>
       <Dropdown
@@ -191,15 +199,16 @@ function UserTeamToolbarItem() {
             onClick={() => setIsOpen(!isOpen)}
             isExpanded={isOpen}
           >
-            Team {currentTeam?.name}
+            {currentTeam === null
+              ? "Team"
+              : currentTeam.hasAdminPrivileges
+                ? currentTeam.displayName
+                : `Team ${currentTeam.displayName}`}
           </MenuToggle>
         )}
       >
         <DropdownList>
-          <DropdownItem component="div" isDisabled>
-            <Content component={ContentVariants.small}>Change team:</Content>
-          </DropdownItem>
-          {currentUser.teams.map((team) => (
+          {normalTeams.map((team) => (
             <DropdownItem
               key={team.id}
               isDisabled={currentTeam?.id === team.id}
@@ -209,7 +218,21 @@ function UserTeamToolbarItem() {
                 window.location.replace(location.pathname);
               }}
             >
-              {team.name}
+              {team.displayName}
+            </DropdownItem>
+          ))}
+          {adminTeams.length > 0 && <Divider component="li" key="separator" />}
+          {adminTeams.map((team) => (
+            <DropdownItem
+              key={team.id}
+              isDisabled={currentTeam?.id === team.id}
+              component="button"
+              onClick={() => {
+                changeCurrentTeam(team);
+                window.location.replace(location.pathname);
+              }}
+            >
+              {team.displayName}
             </DropdownItem>
           ))}
         </DropdownList>
@@ -375,7 +398,21 @@ function Sidebar({ isNavOpen }: SidebarProps) {
   const { currentUser } = useAuth();
   if (currentUser === null) return null;
   const currentUserTeams = Object.values(currentUser.teams);
-  const PageNav = (
+
+  const PageNav = currentUser.hasEPMRole ? (
+    <Nav aria-label="Nav">
+      <NavGroup title="Administration">
+        <DCINavItem to="/admin/teams">Teams</DCINavItem>
+        <DCINavItem to="/admin/users">Users</DCINavItem>
+        {currentUser.isSuperAdmin && (
+          <>
+            <DCINavItem to="/admin/remotecis">Remotecis</DCINavItem>
+            <DCINavItem to="/admin/feeders">Feeders</DCINavItem>
+          </>
+        )}
+      </NavGroup>
+    </Nav>
+  ) : (
     <Nav aria-label="Nav">
       <NavGroup title="DCI">
         <DCINavItem to="/analytics">Analytics</DCINavItem>
@@ -383,10 +420,12 @@ function Sidebar({ isNavOpen }: SidebarProps) {
         <DCINavItem to="/products">Products</DCINavItem>
         <DCINavItem to="/topics">Topics</DCINavItem>
         <DCINavItem to="/components">Components</DCINavItem>
-        {currentUserTeams.length === 0 ? null : (
-          <DCINavItem to="/remotecis">Remotecis</DCINavItem>
-        )}
       </NavGroup>
+      {currentUserTeams.length === 0 ? null : (
+        <NavGroup title="Access Management">
+          <DCINavItem to="/remotecis">Remotecis</DCINavItem>
+        </NavGroup>
+      )}
       <NavGroup title=" User Preferences">
         <NavItem>
           <a target="_blank" rel="noopener noreferrer" href={ProfilePageUrl}>
@@ -395,15 +434,6 @@ function Sidebar({ isNavOpen }: SidebarProps) {
         </NavItem>
         <DCINavItem to="/notifications">Notifications</DCINavItem>
       </NavGroup>
-      {currentUser.hasEPMRole && (
-        <NavGroup title="Administration">
-          <DCINavItem to="/teams">Teams</DCINavItem>
-          <DCINavItem to="/users">Users</DCINavItem>
-          {currentUser.isSuperAdmin && (
-            <DCINavItem to="/feeders">Feeders</DCINavItem>
-          )}
-        </NavGroup>
-      )}
     </Nav>
   );
   return (
@@ -413,7 +443,7 @@ function Sidebar({ isNavOpen }: SidebarProps) {
   );
 }
 
-export default function AuthenticatedLayout({ ...props }) {
+export default function AuthenticatedRoute({ ...props }) {
   const [isNavOpen, setIsNavOpen] = useState(window.innerWidth >= 1450);
   const { data: currentUser, isLoading } = useGetCurrentUserQuery();
   const location = useLocation();
@@ -423,23 +453,26 @@ export default function AuthenticatedLayout({ ...props }) {
   }
 
   return currentUser ? (
-    <Page
-      masthead={
-        <Header toggleSidebarVisibility={() => setIsNavOpen(!isNavOpen)} />
-      }
-      sidebar={<Sidebar isNavOpen={isNavOpen} />}
-      isManagedSidebar={false}
-      onPageResize={(_event, { windowSize }) => {
-        if (windowSize >= 1450) {
-          setIsNavOpen(true);
-        } else {
-          setIsNavOpen(false);
+    <>
+      {currentUser.isReadOnly && <ReadOnlyBanner />}
+      <Page
+        masthead={
+          <Header toggleSidebarVisibility={() => setIsNavOpen(!isNavOpen)} />
         }
-      }}
-      {...props}
-    >
-      <Outlet />
-    </Page>
+        sidebar={<Sidebar isNavOpen={isNavOpen} />}
+        isManagedSidebar={false}
+        onPageResize={(_event, { windowSize }) => {
+          if (windowSize >= 1450) {
+            setIsNavOpen(true);
+          } else {
+            setIsNavOpen(false);
+          }
+        }}
+        {...props}
+      >
+        <Outlet />
+      </Page>
+    </>
   ) : (
     <Navigate to="/login" state={{ from: location }} />
   );

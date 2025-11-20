@@ -9,7 +9,7 @@ import {
 } from "@patternfly/react-core";
 import type { ITeam, IUser } from "types";
 import useModal from "hooks/useModal";
-import { useLazySearchUserQuery } from "users/usersApi";
+import { useLazySearchUserQuery } from "../users/usersApi";
 import { Link } from "react-router";
 import { Table, Thead, Tr, Th, Tbody, Td } from "@patternfly/react-table";
 
@@ -45,8 +45,8 @@ export default function AddUserToTeamModal({
           <SearchInput
             placeholder="Find a user by email"
             value={searchEmail}
-            onChange={(e, value) => setSearchEmail(value)}
-            onSearch={(e, value) => {
+            onChange={(_, value) => setSearchEmail(value)}
+            onSearch={(_, value) => {
               const email = value.endsWith("*") ? value : `${value}*`;
               searchUser(email);
             }}
@@ -80,7 +80,7 @@ export default function AddUserToTeamModal({
                 data.users.map((user) => (
                   <Tr key={user.id}>
                     <Td>
-                      <Link to={`/users/${user.id}`} tabIndex={-1}>
+                      <Link to={`/admin/users/${user.id}`} tabIndex={-1}>
                         {user.email}
                       </Link>
                     </Td>

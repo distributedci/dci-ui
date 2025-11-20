@@ -1,7 +1,7 @@
 import { ToolbarFilter } from "@patternfly/react-core";
 import TeamSelect from "./TeamSelect";
 import type { ITeam, IToolbarFilterProps } from "types";
-import { useGetTeamQuery } from "teams/teamsApi";
+import { useGetTeamQuery } from "../teamsApi";
 import { skipToken } from "@reduxjs/toolkit/query";
 
 export default function TeamToolbarFilter({

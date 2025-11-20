@@ -68,6 +68,28 @@ describe("parseFiltersFromSearch", () => {
       type: null,
     });
   });
+  test("parse where from empty search with state null", () => {
+    expect(parseFiltersFromSearch("", { state: null })).toEqual({
+      limit: 20,
+      offset: 0,
+      sort: "-created_at",
+      query: null,
+      state: null,
+      name: null,
+      display_name: null,
+      sso_username: null,
+      email: null,
+      team_id: null,
+      pipeline_id: null,
+      remoteci_id: null,
+      product_id: null,
+      topic_id: null,
+      tags: [],
+      configuration: null,
+      status: null,
+      type: null,
+    });
+  });
   test("parse name from search", () => {
     const { name } = parseFiltersFromSearch("?where=name:RHEL-8*");
     expect(name).toBe("RHEL-8*");
@@ -265,6 +287,13 @@ describe("createSearchFromFilters", () => {
         name: "name1",
       }),
     ).toBe("?limit=20&offset=0&sort=-created_at&where=name:name1,state:active");
+  });
+  test("create search with state null", () => {
+    expect(
+      createSearchFromFilters({
+        state: null,
+      }),
+    ).toBe("?limit=20&offset=0&sort=-created_at");
   });
   test("with query", () => {
     expect(

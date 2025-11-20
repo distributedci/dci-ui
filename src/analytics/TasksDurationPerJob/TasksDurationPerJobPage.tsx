@@ -370,7 +370,7 @@ export default function TasksDurationPerJobPage() {
                     <DatePicker
                       value={after || ""}
                       placeholder="Created after"
-                      onChange={(e, str) => setAfter(str)}
+                      onChange={(_, str) => setAfter(str)}
                       appendTo={() => document.body}
                     />
                   </ToolbarFilter>
@@ -385,7 +385,7 @@ export default function TasksDurationPerJobPage() {
                     <DatePicker
                       value={before || ""}
                       placeholder="Created before"
-                      onChange={(e, str) => setBefore(str)}
+                      onChange={(_, str) => setBefore(str)}
                       appendTo={() => document.body}
                     />
                   </ToolbarFilter>

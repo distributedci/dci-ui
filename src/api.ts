@@ -10,7 +10,7 @@ import { type Filters } from "types";
 import { createSearchFromFilters } from "./services/filters";
 import { Mutex } from "async-mutex";
 import { manager } from "auth/sso";
-import { getDefaultTeam } from "teams/teamLocalStorage";
+import { getDefaultTeam } from "admin/teams/teamLocalStorage";
 
 export const baseUrl =
   import.meta.env.VITE_BACKEND_HOST || "https://api.distributed-ci.io";

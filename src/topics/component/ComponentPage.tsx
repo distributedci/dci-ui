@@ -38,7 +38,7 @@ import LastComponentsJobsBarChart from "analytics/ComponentCoverage/LastComponen
 import { DateTime } from "luxon";
 import { useAuth } from "auth/authSelectors";
 import { skipToken } from "@reduxjs/toolkit/query";
-import { useGetTeamQuery } from "teams/teamsApi";
+import { useGetTeamQuery } from "admin/teams/teamsApi";
 import { useGetTopicQuery } from "topics/topicsApi";
 import LoadingPageSection from "ui/LoadingPageSection";
 import { useGetComponentQuery } from "components/componentsApi";
@@ -180,7 +180,7 @@ function ComponentDetails({
             <CardLine
               className="pf-v6-u-p-md"
               field="Team"
-              value={<Link to={`/teams/${team.id}`}>{team.name}</Link>}
+              value={<Link to={`/admin/teams/${team.id}`}>{team.name}</Link>}
             />
             <Divider />
           </>
@@ -297,7 +297,7 @@ function ContainerComponent({
               <CardLine
                 className="pf-v6-u-p-md"
                 field="Team"
-                value={<Link to={`/teams/${team.id}`}>{team.name}</Link>}
+                value={<Link to={`/admin/teams/${team.id}`}>{team.name}</Link>}
               />
               <Divider />
             </>

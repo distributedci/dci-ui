@@ -10,7 +10,7 @@ import {
   Content,
   SearchInput,
 } from "@patternfly/react-core";
-import { PlusCircleIcon, SearchIcon } from "@patternfly/react-icons";
+import { SearchIcon } from "@patternfly/react-icons";
 import { EmptyState, Breadcrumb } from "ui";
 import type { Filters } from "types";
 import CreateUserModal from "./CreateUserModal";
@@ -30,13 +30,13 @@ function User() {
   const location = useLocation();
   const navigate = useNavigate();
   const [filters, setFilters] = useState<Filters>(
-    parseFiltersFromSearch(location.search),
+    parseFiltersFromSearch(location.search, { state: null }),
   );
   const [inputSearch, setInputSearch] = useState<string>("");
 
   useEffect(() => {
     const newSearch = createSearchFromFilters(filters);
-    navigate(`/users${newSearch}`, { replace: true });
+    navigate(`/admin/users${newSearch}`, { replace: true });
   }, [navigate, filters]);
 
   const { data, isLoading } = useListUsersQuery(filters);
@@ -70,8 +70,8 @@ function User() {
               <SearchInput
                 placeholder="Search by email"
                 value={inputSearch}
-                onChange={(e, search) => setInputSearch(search)}
-                onSearch={(e, email) => {
+                onChange={(_, search) => setInputSearch(search)}
+                onSearch={(_, email) => {
                   if (email.trim().endsWith("*")) {
                     setFiltersAndResetPagination({ email });
                   } else {
@@ -88,13 +88,13 @@ function User() {
                   perPage={filters.limit}
                   page={offsetAndLimitToPage(filters.offset, filters.limit)}
                   itemCount={count}
-                  onSetPage={(e, newPage) => {
+                  onSetPage={(_, newPage) => {
                     setFilters({
                       ...filters,
                       offset: pageAndLimitToOffset(newPage, filters.limit),
                     });
                   }}
-                  onPerPageSelect={(e, newPerPage) => {
+                  onPerPageSelect={(_, newPerPage) => {
                     setFilters({ ...filters, limit: newPerPage });
                   }}
                 />
@@ -145,13 +145,11 @@ export default function UsersPage() {
     <PageSection>
       <Breadcrumb links={[{ to: "/", title: "DCI" }, { title: "Users" }]} />
       <Content component="h1">Users</Content>
-      <Content component="p">List of DCI users.</Content>
       {currentUser.isSuperAdmin && (
         <div className="pf-v6-u-mb-md">
           <CreateUserModal onSubmit={createUser}>
             {(openModal) => (
               <Button
-                icon={<PlusCircleIcon className="pf-v6-u-mr-xs" />}
                 variant="primary"
                 onClick={openModal}
                 isDisabled={isCreating}

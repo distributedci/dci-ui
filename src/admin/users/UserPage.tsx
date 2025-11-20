@@ -21,6 +21,7 @@ import {
 import { skipToken } from "@reduxjs/toolkit/query";
 import LoadingPageSection from "ui/LoadingPageSection";
 import { UserTeamsTable } from "./UserTeamsTable";
+import { currentUser } from "__tests__/data";
 
 export default function UserPage() {
   const navigate = useNavigate();
@@ -46,8 +47,8 @@ export default function UserPage() {
       <Breadcrumb
         links={[
           { to: "/", title: "DCI" },
-          { to: "/users", title: "Users" },
-          { to: `/users/${user_id}`, title: user_id },
+          { to: "/admin/users", title: "Users" },
+          { to: `/admin/users/${user_id}`, title: user_id },
         ]}
       />
       <Content component="h1">{`Edit user ${user.fullname}`}</Content>
@@ -76,41 +77,45 @@ export default function UserPage() {
               <UserTeamsTable user={user} />
             </CardBody>
           </Card>
-          <Card className="pf-v6-u-mt-lg">
-            <CardTitle>
-              <span
-                style={{ color: t_global_color_status_danger_default.value }}
-              >
-                {`Delete ${user.name} user`}
-              </span>
-            </CardTitle>
-            <CardBody>
-              <Content
-                component="p"
-                style={{ color: t_global_color_status_danger_default.value }}
-              >
-                Once you delete a user, there is no going back. Please be
-                certain.
-              </Content>
+          {currentUser.isSuperAdmin && (
+            <Card className="pf-v6-u-mt-lg">
+              <CardTitle>
+                <span
+                  style={{ color: t_global_color_status_danger_default.value }}
+                >
+                  {`Delete ${user.name} user`}
+                </span>
+              </CardTitle>
+              <CardBody>
+                <Content
+                  component="p"
+                  style={{ color: t_global_color_status_danger_default.value }}
+                >
+                  Once you delete a user, there is no going back. Please be
+                  certain.
+                </Content>
 
-              <ConfirmDeleteModal
-                title={`Delete user ${user.name}`}
-                message={`Are you sure you want to delete ${user.name} user?`}
-                onOk={() => deleteUser(user).then(() => navigate("/users"))}
-              >
-                {(openModal) => (
-                  <Button
-                    icon={<TrashAltIcon className="pf-v6-u-mr-sm" />}
-                    variant="secondary"
-                    isDanger
-                    onClick={openModal}
-                  >
-                    Delete this user
-                  </Button>
-                )}
-              </ConfirmDeleteModal>
-            </CardBody>
-          </Card>
+                <ConfirmDeleteModal
+                  title={`Delete user ${user.name}`}
+                  message={`Are you sure you want to delete ${user.name} user?`}
+                  onOk={() =>
+                    deleteUser(user).then(() => navigate("/admin/users"))
+                  }
+                >
+                  {(openModal) => (
+                    <Button
+                      icon={<TrashAltIcon className="pf-v6-u-mr-sm" />}
+                      variant="secondary"
+                      isDanger
+                      onClick={openModal}
+                    >
+                      Delete this user
+                    </Button>
+                  )}
+                </ConfirmDeleteModal>
+              </CardBody>
+            </Card>
+          )}
         </GridItem>
       </Grid>
     </PageSection>

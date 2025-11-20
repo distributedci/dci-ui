@@ -140,13 +140,13 @@ export default function ComponentsToolbar({
                 perPage={filters.limit}
                 page={offsetAndLimitToPage(filters.offset, filters.limit)}
                 itemCount={nbOfComponents}
-                onSetPage={(e, newPage) => {
+                onSetPage={(_, newPage) => {
                   setFilters({
                     ...filters,
                     offset: pageAndLimitToOffset(newPage, filters.limit),
                   });
                 }}
-                onPerPageSelect={(e, newPerPage) => {
+                onPerPageSelect={(_, newPerPage) => {
                   setFilters({ ...filters, limit: newPerPage });
                 }}
               />
