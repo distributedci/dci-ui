@@ -52,8 +52,8 @@ export default function TeamPage() {
       <Breadcrumb
         links={[
           { to: "/", title: "DCI" },
-          { to: "/teams", title: "Teams" },
-          { to: `/teams/${team_id}`, title: team_id },
+          { to: "/admin/teams", title: "Teams" },
+          { to: `/admin/teams/${team_id}`, title: team_id },
         ]}
       />
       <Content component="h1">{`Team ${team.name}`}</Content>
@@ -117,41 +117,44 @@ export default function TeamPage() {
             </CardBody>
           </Card>
           <TeamMembers team={team} className="pf-v6-u-mt-lg" />
-          <Card className="pf-v6-u-mt-lg">
-            <CardTitle>
-              <span
-                style={{ color: t_global_color_status_danger_default.value }}
-              >
-                {`Delete ${team.name} team`}
-              </span>
-            </CardTitle>
-            <CardBody>
-              <Content
-                component="p"
-                style={{ color: t_global_color_status_danger_default.value }}
-              >
-                Once you delete a team, there is no going back. Please be
-                certain.
-              </Content>
-
-              <ConfirmDeleteModal
-                title={`Delete team ${team.name}`}
-                message={`Are you sure you want to delete ${team.name} team?`}
-                onOk={() => deleteTeam(team).then(() => navigate("/teams"))}
-              >
-                {(openModal) => (
-                  <Button
-                    icon={<TrashAltIcon className="pf-v6-u-mr-sm" />}
-                    variant="secondary"
-                    isDanger
-                    onClick={openModal}
-                  >
-                    Delete this team
-                  </Button>
-                )}
-              </ConfirmDeleteModal>
-            </CardBody>
-          </Card>
+          {currentUser.isSuperAdmin && (
+            <Card className="pf-v6-u-mt-lg">
+              <CardTitle>
+                <span
+                  style={{ color: t_global_color_status_danger_default.value }}
+                >
+                  {`Delete ${team.name} team`}
+                </span>
+              </CardTitle>
+              <CardBody>
+                <Content
+                  component="p"
+                  style={{ color: t_global_color_status_danger_default.value }}
+                >
+                  Once you delete a team, there is no going back. Please be
+                  certain.
+                </Content>
+                <ConfirmDeleteModal
+                  title={`Delete team ${team.name}`}
+                  message={`Are you sure you want to delete ${team.name} team?`}
+                  onOk={() =>
+                    deleteTeam(team).then(() => navigate("/admin/teams"))
+                  }
+                >
+                  {(openModal) => (
+                    <Button
+                      icon={<TrashAltIcon className="pf-v6-u-mr-sm" />}
+                      variant="secondary"
+                      isDanger
+                      onClick={openModal}
+                    >
+                      Delete this team
+                    </Button>
+                  )}
+                </ConfirmDeleteModal>
+              </CardBody>
+            </Card>
+          )}
         </GridItem>
         <GridItem span={6}>
           <ProductsTeamHasAccessTo team={team} />

@@ -59,7 +59,9 @@ function FeedersTable() {
             </Td>
             <Td>{feeder.name}</Td>
             <Td>
-              <Link to={`/teams/${feeder.team_id}`}>{feeder.team_id}</Link>
+              <Link to={`/admin/teams/${feeder.team_id}`}>
+                {feeder.team_id}
+              </Link>
             </Td>
             <Td isActionCell>
               <InputGroup>
@@ -98,7 +100,7 @@ function FeedersTable() {
                         isDanger
                         onClick={openModal}
                       >
-                        Delete {feeder.name}
+                        Delete
                       </Button>
                     )}
                   </ConfirmDeleteModal>
@@ -119,11 +121,7 @@ export default function FeedersPage() {
     <PageSection>
       <Breadcrumb links={[{ to: "/", title: "DCI" }, { title: "Feeders" }]} />
       <Content component="h1">Feeders</Content>
-      <Content component="p">
-        A feeder is a script in charge of uploading newer versions of components
-        to the control server.
-      </Content>
-      <div className="pf-v6-u-mb-xl">
+      <div className="pf-v6-u-mb-md">
         <CreateFeederModal onSubmit={createFeeder} isDisabled={isCreating} />
       </div>
       <FeedersTable />

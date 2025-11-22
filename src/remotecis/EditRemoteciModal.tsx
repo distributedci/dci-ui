@@ -39,13 +39,11 @@ export default function EditRemoteciModal({
           id="edit-remoteci-form"
           remoteci={remoteci}
           onSubmit={(editedRemoteci) => {
-            const { id, etag, name, team_id } =
-              editedRemoteci as Partial<IRemoteci>;
+            const { id, etag, name } = editedRemoteci as Partial<IRemoteci>;
             updateRemoteci({
               id,
               etag,
               name,
-              team_id,
             }).finally(() => {
               onClose();
             });

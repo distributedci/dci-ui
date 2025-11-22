@@ -66,7 +66,7 @@ function ProductsTeamHasAccessToTable({ team }: { team: ITeam }) {
                   isLoadingAddProductToTeam ||
                   isLoadingTeamHasAccessTo
                 }
-                onChange={(e, hasAccessToProduct) => {
+                onChange={(_, hasAccessToProduct) => {
                   if (hasAccessToProduct) {
                     addProductToTeam({ team, product });
                   } else {

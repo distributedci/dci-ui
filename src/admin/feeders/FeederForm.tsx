@@ -2,7 +2,7 @@ import { Form, FormGroup } from "@patternfly/react-core";
 import * as Yup from "yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import TeamSelect from "teams/form/TeamSelect";
+import TeamSelect from "admin/teams/form/TeamSelect";
 import type { IFeeder } from "types";
 import FormErrorMessage from "ui/form/FormErrorMessage";
 import TextInputFormGroup from "ui/form/TextInputFormGroup";

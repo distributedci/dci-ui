@@ -51,7 +51,7 @@ export function UserTeamsTable({ user }: { user: IUser }) {
               data.teams.map((team) => (
                 <Tr key={team.id}>
                   <Td noPadding>
-                    <Link to={`/teams/${team.id}`}>{team.name}</Link>
+                    <Link to={`/admin/teams/${team.id}`}>{team.name}</Link>
                   </Td>
                   <Td noPadding isActionCell>
                     <ConfirmDeleteModal

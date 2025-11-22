@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { CopyButton, EmptyState, Breadcrumb } from "ui";
 import {
   Content,
@@ -12,9 +12,7 @@ import {
   ToolbarGroup,
   ToolbarItem,
 } from "@patternfly/react-core";
-import CreateRemoteciModal from "./CreateRemoteciModal";
-import EditRemoteciModal from "./EditRemoteciModal";
-import type { Filters, IRemoteci, IRemoteciWithApiSecret } from "types";
+import type { Filters, IRemoteci } from "types";
 import {
   Table,
   Thead,
@@ -24,7 +22,6 @@ import {
   Td,
   ActionsColumn,
   type IAction,
-  ExpandableRowContent,
 } from "@patternfly/react-table";
 import { useLocation, useNavigate } from "react-router";
 import {
@@ -33,18 +30,16 @@ import {
   pageAndLimitToOffset,
   parseFiltersFromSearch,
 } from "services/filters";
-import {
-  useCreateRemoteciMutation,
-  useDeactivateRemoteciMutation,
-  useListRemotecisQuery,
-  useReactivateRemoteciMutation,
-  useRefreshRemoteciApiSecretMutation,
-} from "./remotecisApi";
+
 import { fromNow } from "services/date";
 import LoadingPageSection from "ui/LoadingPageSection";
 import { useAuth } from "auth/authSelectors";
 import { t_global_color_status_danger_default } from "@patternfly/react-tokens";
-import NewApiSecret from "./NewApiSecret";
+import {
+  useDeactivateRemoteciMutation,
+  useListRemotecisQuery,
+  useReactivateRemoteciMutation,
+} from "remotecis/remotecisApi";
 
 function RemotecisList() {
   const location = useLocation();
@@ -52,25 +47,17 @@ function RemotecisList() {
   const [filters, setFilters] = useState<Filters>(
     parseFiltersFromSearch(location.search, { state: null }),
   );
-  const { currentUser } = useAuth();
   const [inputSearch, setInputSearch] = useState(filters.name || "");
-
-  const [remoteciWithApiSecret, setRemoteciWithApiSecret] =
-    useState<IRemoteciWithApiSecret | null>(null);
-  const [remoteciToEdit, setRemoteciToEdit] = useState<IRemoteci | null>(null);
-  const [createRemoteci, { isLoading: isCreating }] =
-    useCreateRemoteciMutation();
 
   useEffect(() => {
     const newSearch = createSearchFromFilters(filters);
-    navigate(`/remotecis${newSearch}`, { replace: true });
+    navigate(`/admin/remotecis${newSearch}`, { replace: true });
   }, [navigate, filters]);
 
   const { data, isLoading, isFetching } = useListRemotecisQuery(filters);
 
   const [reactivateRemoteci] = useReactivateRemoteciMutation();
   const [deactivateRemoteci] = useDeactivateRemoteciMutation();
-  const [refreshRemoteciApi] = useRefreshRemoteciApiSecretMutation();
 
   const setFiltersAndResetPagination = (f: Partial<Filters>) => {
     setFilters({
@@ -89,23 +76,8 @@ function RemotecisList() {
   }
 
   const buildRemoteciActions = (remoteci: IRemoteci): IAction[] => {
-    const actions: IAction[] = [
-      {
-        title: "Edit remoteci",
-        onClick: () => setRemoteciToEdit(remoteci),
-      },
-      {
-        title: "Regenerate API Secret",
-        onClick: () =>
-          refreshRemoteciApi(remoteci).then((r) =>
-            setRemoteciWithApiSecret(r.data?.remoteci || null),
-          ),
-      },
-    ];
+    const actions: IAction[] = [];
     if (remoteci.state === "active") {
-      actions.push({
-        isSeparator: true,
-      });
       actions.push({
         title: (
           <span style={{ color: t_global_color_status_danger_default.var }}>
@@ -126,17 +98,6 @@ function RemotecisList() {
   const remotecisCount = data._meta.count;
   return (
     <div>
-      <div className="pf-v6-u-mb-lg">
-        <CreateRemoteciModal
-          onSubmit={(remoteci) =>
-            createRemoteci({
-              ...remoteci,
-              team_id: currentUser?.team?.id,
-            }).then((r) => setRemoteciWithApiSecret(r.data || null))
-          }
-          isDisabled={isCreating}
-        />
-      </div>
       <Toolbar id="toolbar-remotecis" collapseListedFiltersBreakpoint="xl">
         <ToolbarContent>
           <ToolbarGroup>
@@ -177,12 +138,6 @@ function RemotecisList() {
           </ToolbarGroup>
         </ToolbarContent>
       </Toolbar>
-      <EditRemoteciModal
-        remoteci={remoteciToEdit}
-        onClose={() => {
-          setRemoteciToEdit(null);
-        }}
-      />
       {isFetching ? (
         <Skeleton />
       ) : data.remotecis.length === 0 ? (
@@ -204,6 +159,8 @@ function RemotecisList() {
               <Th className="text-center">ID</Th>
               <Th>Name</Th>
               <Th className="text-center">Status</Th>
+              <Th className="text-center">Team</Th>
+              <Th>Last auth</Th>
               <Th>Created</Th>
               <Th className="text-center">Actions</Th>
             </Tr>
@@ -212,35 +169,25 @@ function RemotecisList() {
             {data.remotecis.map((remoteci) => {
               const remoteciActions = buildRemoteciActions(remoteci);
               return (
-                <Fragment key={`${remoteci.id}.${remoteci.etag}`}>
-                  <Tr isContentExpanded>
-                    <Td isActionCell>
-                      <CopyButton text={remoteci.id} />
-                    </Td>
-                    <Td>{remoteci.name}</Td>
-                    <Td className="text-center">
-                      {remoteci.state === "active" ? (
-                        <Label color="green">active</Label>
-                      ) : (
-                        <Label color="red">inactive</Label>
-                      )}
-                    </Td>
-                    <Td>{fromNow(remoteci.created_at)}</Td>
-                    <Td className="text-center">
-                      <ActionsColumn items={remoteciActions} />
-                    </Td>
-                  </Tr>
-                  {remoteciWithApiSecret !== null &&
-                    remoteciWithApiSecret.id === remoteci.id && (
-                      <Tr isExpanded>
-                        <Td colSpan={6}>
-                          <ExpandableRowContent>
-                            <NewApiSecret remoteci={remoteciWithApiSecret} />
-                          </ExpandableRowContent>
-                        </Td>
-                      </Tr>
+                <Tr key={`${remoteci.id}.${remoteci.etag}`}>
+                  <Td isActionCell>
+                    <CopyButton text={remoteci.id} />
+                  </Td>
+                  <Td>{remoteci.name}</Td>
+                  <Td className="text-center">
+                    {remoteci.state === "active" ? (
+                      <Label color="green">active</Label>
+                    ) : (
+                      <Label color="red">inactive</Label>
                     )}
-                </Fragment>
+                  </Td>
+                  <Td className="text-center">{remoteci.team.name}</Td>
+                  <Td></Td>
+                  <Td>{fromNow(remoteci.created_at)}</Td>
+                  <Td className="text-center">
+                    <ActionsColumn items={remoteciActions} />
+                  </Td>
+                </Tr>
               );
             })}
           </Tbody>
@@ -250,42 +197,20 @@ function RemotecisList() {
   );
 }
 
-export default function RemotecisPage() {
+export default function AdminRemotecisPage() {
   const { currentUser } = useAuth();
 
   if (!currentUser) return null;
 
   return (
-    <PageSection>
-      <Breadcrumb links={[{ to: "/", title: "DCI" }, { title: "Remotecis" }]} />
-      <Content component="h1">Remotecis</Content>
-      <Content component="p">
-        A remoteci defines how your infrastructure connects to DCI, whether
-        through the{" "}
-        <a
-          href="https://docs.distributed-ci.io/python-dciclient/"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          CLI
-        </a>
-        ,{" "}
-        <a
-          href="https://docs.distributed-ci.io/dci-downloader/"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          DCI Downloader
-        </a>
-        , or Ansible Agents.
-        <br />
-        For better isolation, create one remoteci per jumphost.
-      </Content>
-      {currentUser.team === null ? (
-        <EmptyState title="To create a remoteci, you need to be on a team. Please contact a DCI Administrator or your EPM." />
-      ) : (
+    <>
+      <PageSection>
+        <Breadcrumb
+          links={[{ to: "/", title: "DCI" }, { title: "Admin Remotecis" }]}
+        />
+        <Content component="h1">Remotecis</Content>
         <RemotecisList />
-      )}
-    </PageSection>
+      </PageSection>
+    </>
   );
 }

@@ -74,7 +74,7 @@ export default function DCISelect<T extends Item>({
     <Select
       isOpen={isOpen}
       selected={selected}
-      onSelect={(e, v) => {
+      onSelect={(_, v) => {
         const selectedItem = items.find((i) => i.value === (v as string));
         if (selectedItem) {
           setSelected(selectedItem.label);

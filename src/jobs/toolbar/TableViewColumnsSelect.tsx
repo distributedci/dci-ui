@@ -41,7 +41,7 @@ export default function TableViewColumnsSelect({
       id="tableview-columns-select"
       isOpen={isOpen}
       selected={columns}
-      onSelect={(e, newSelection) => {
+      onSelect={(_, newSelection) => {
         const newColumns = (
           Object.keys(tableViewColumnLabels) as JobsTableListColumn[]
         ).reduce((acc, column) => {

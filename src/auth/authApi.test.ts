@@ -13,9 +13,11 @@ test("buildCurrentUser without a default team return the first team", () => {
         teams: {
           t1: {
             id: "t1",
+            name: "Team 1",
           } as ITeam,
           t2: {
             id: "t2",
+            name: "Team 2",
           } as ITeam,
         },
         timezone: "UTC-04",
@@ -28,9 +30,27 @@ test("buildCurrentUser without a default team return the first team", () => {
     fullname: "Current User",
     id: "i1",
     name: "currentUser",
-    teams: [{ id: "t1" }, { id: "t2" }],
+    teams: [
+      {
+        displayName: "Team 1",
+        hasAdminPrivileges: false,
+        id: "t1",
+        name: "Team 1",
+      },
+      {
+        displayName: "Team 2",
+        hasAdminPrivileges: false,
+        id: "t2",
+        name: "Team 2",
+      },
+    ],
     timezone: "UTC-04",
-    team: { id: "t1" },
+    team: {
+      displayName: "Team 1",
+      hasAdminPrivileges: false,
+      id: "t1",
+      name: "Team 1",
+    },
     isSuperAdmin: false,
     hasEPMRole: false,
     hasReadOnlyRole: false,
@@ -50,15 +70,18 @@ test("buildCurrentUser with a default team return this team", () => {
         teams: {
           t1: {
             id: "t1",
+            name: "Team 1",
           } as ITeam,
           t2: {
             id: "t2",
+            name: "Team 2",
           } as ITeam,
         },
         timezone: "UTC-04",
       },
       {
         id: "t2",
+        name: "Team 2",
       } as ITeam,
     ),
   ).toEqual({
@@ -67,9 +90,27 @@ test("buildCurrentUser with a default team return this team", () => {
     fullname: "Current User",
     id: "i1",
     name: "currentUser",
-    teams: [{ id: "t1" }, { id: "t2" }],
+    teams: [
+      {
+        displayName: "Team 1",
+        hasAdminPrivileges: false,
+        id: "t1",
+        name: "Team 1",
+      },
+      {
+        displayName: "Team 2",
+        hasAdminPrivileges: false,
+        id: "t2",
+        name: "Team 2",
+      },
+    ],
     timezone: "UTC-04",
-    team: { id: "t2" },
+    team: {
+      displayName: "Team 2",
+      hasAdminPrivileges: false,
+      id: "t2",
+      name: "Team 2",
+    },
     isSuperAdmin: false,
     hasEPMRole: false,
     hasReadOnlyRole: false,
@@ -89,15 +130,18 @@ test("buildCurrentUser remove an old team the user doesn't have access to anymor
         teams: {
           t1: {
             id: "t1",
+            name: "Team 1",
           } as ITeam,
           t2: {
             id: "t2",
+            name: "admin",
           } as ITeam,
         },
         timezone: "UTC-04",
       },
       {
         id: "t3",
+        name: "Team 3",
       } as ITeam,
     ),
   ).toEqual({
@@ -106,9 +150,27 @@ test("buildCurrentUser remove an old team the user doesn't have access to anymor
     fullname: "Current User",
     id: "i1",
     name: "currentUser",
-    teams: [{ id: "t1" }, { id: "t2" }],
+    teams: [
+      {
+        displayName: "Team 1",
+        hasAdminPrivileges: false,
+        id: "t1",
+        name: "Team 1",
+      },
+      {
+        displayName: "Admin team",
+        hasAdminPrivileges: true,
+        id: "t2",
+        name: "admin",
+      },
+    ],
     timezone: "UTC-04",
-    team: { id: "t1" },
+    team: {
+      displayName: "Team 1",
+      hasAdminPrivileges: false,
+      id: "t1",
+      name: "Team 1",
+    },
     isSuperAdmin: false,
     hasEPMRole: false,
     hasReadOnlyRole: false,

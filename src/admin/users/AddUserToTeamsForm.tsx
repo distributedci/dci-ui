@@ -2,7 +2,7 @@ import { Button, Flex, FlexItem, Form } from "@patternfly/react-core";
 import * as Yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import TeamSelect from "teams/form/TeamSelect";
+import TeamSelect from "admin/teams/form/TeamSelect";
 import FormErrorMessage from "ui/form/FormErrorMessage";
 
 interface AddUserToTeamFormProps {

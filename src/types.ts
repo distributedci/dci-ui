@@ -128,14 +128,19 @@ export interface IIdentity {
   timezone: string;
 }
 
+export interface ICurrentUserTeam extends IIdentityTeam {
+  hasAdminPrivileges: boolean;
+  displayName: string;
+}
+
 export interface ICurrentUser {
   email: string | null;
   etag: string;
   fullname: string;
   id: string;
   name: string;
-  teams: IIdentityTeam[];
-  team: IIdentityTeam | null;
+  teams: ICurrentUserTeam[];
+  team: ICurrentUserTeam | null;
   timezone: string;
   isSuperAdmin: boolean;
   hasEPMRole: boolean;
@@ -508,7 +513,7 @@ export interface Filters {
   configuration: string | null;
   status: string | null;
   type: string | null;
-  state: state;
+  state: state | null;
 }
 
 export type WhereFilters = Pick<

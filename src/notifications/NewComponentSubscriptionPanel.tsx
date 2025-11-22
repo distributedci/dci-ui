@@ -48,7 +48,7 @@ export default function NewComponentSubscriptionPanel() {
         searchInput={
           <SearchInput
             value={searchTopics}
-            onChange={(e, value) => setSearchTopics(value)}
+            onChange={(_, value) => setSearchTopics(value)}
             onClear={() => setSearchTopics("")}
           />
         }
@@ -100,7 +100,7 @@ export default function NewComponentSubscriptionPanel() {
         searchInput={
           <SearchInput
             value={searchSubscribedTopics}
-            onChange={(e, value) => setSearchSubscribedTopics(value)}
+            onChange={(_, value) => setSearchSubscribedTopics(value)}
             onClear={() => setSearchSubscribedTopics("")}
           />
         }

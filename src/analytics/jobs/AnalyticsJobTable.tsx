@@ -35,9 +35,7 @@ export default function AnalyticsJobTable<T extends IAnalyticsJob>({
                 <Td>
                   <Link to={`/jobs/${job.id}/jobStates`}>{job.name}</Link>
                 </Td>
-                <Td>
-                  <Link to={`/teams/${job.team.id}`}>{job.team.name}</Link>
-                </Td>
+                <Td>{job.team.name}</Td>
                 <Td>{job.pipeline?.name}</Td>
                 <Td>{humanizeDuration(job.duration)}</Td>
                 <Td>{job.created_at}</Td>
