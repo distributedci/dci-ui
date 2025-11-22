@@ -112,7 +112,7 @@ function Teams() {
         <Table id="teams-table" aria-label="Teams table">
           <Thead>
             <Tr>
-              <Th>Id</Th>
+              <Th className="text-center">ID</Th>
               <Th>Team Name</Th>
               <Th>Partner</Th>
               <Th>Active</Th>

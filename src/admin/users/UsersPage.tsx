@@ -26,7 +26,7 @@ import { useCreateUserMutation, useListUsersQuery } from "./usersApi";
 import { useAuth } from "auth/authSelectors";
 import LoadingPageSection from "ui/LoadingPageSection";
 
-function User() {
+function Users() {
   const location = useLocation();
   const navigate = useNavigate();
   const [filters, setFilters] = useState<Filters>(
@@ -160,7 +160,7 @@ export default function UsersPage() {
           </CreateUserModal>
         </div>
       )}
-      <User />
+      <Users />
     </PageSection>
   );
 }

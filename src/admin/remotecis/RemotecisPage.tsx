@@ -182,8 +182,24 @@ function RemotecisList() {
                     )}
                   </Td>
                   <Td className="text-center">{remoteci.team.name}</Td>
-                  <Td></Td>
-                  <Td>{fromNow(remoteci.created_at)}</Td>
+                  <Td>
+                    {remoteci.last_auth_at !== null && (
+                      <time
+                        title={remoteci.last_auth_at}
+                        dateTime={remoteci.last_auth_at}
+                      >
+                        {fromNow(remoteci.last_auth_at)}
+                      </time>
+                    )}
+                  </Td>
+                  <Td>
+                    <time
+                      title={remoteci.created_at}
+                      dateTime={remoteci.created_at}
+                    >
+                      {fromNow(remoteci.created_at)}
+                    </time>
+                  </Td>
                   <Td className="text-center">
                     <ActionsColumn items={remoteciActions} />
                   </Td>
