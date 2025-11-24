@@ -49,3 +49,11 @@ export function saveValue<T>(key: string, value: T, version: number = 1) {
     console.warn(`Error setting localStorage key “${key}”:`, error);
   }
 }
+
+export function removeValue(key: string) {
+  try {
+    window.localStorage.removeItem(key);
+  } catch (error) {
+    console.warn(`Error removing localStorage key “${key}”:`, error);
+  }
+}

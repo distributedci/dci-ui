@@ -1,6 +1,9 @@
 import type { ICurrentUser, IIdentity, IIdentityTeam } from "types";
 import { api } from "api";
-import { getDefaultTeam } from "admin/teams/teamLocalStorage";
+import {
+  getDefaultTeam,
+  removeDefaultTeam,
+} from "admin/teams/teamLocalStorage";
 
 const ADMIN_TEAM_NAME = "admin";
 const EPM_TEAM_NAME = "EPM";
@@ -69,6 +72,15 @@ export function buildCurrentUser(
   };
 }
 
+function getDefaultTeamWithIdentity(identity: IIdentity) {
+  const defaultTeam = getDefaultTeam();
+  if (defaultTeam && defaultTeam.id in identity.teams) {
+    return defaultTeam;
+  }
+  removeDefaultTeam();
+  return null;
+}
+
 export const authApi = api
   .enhanceEndpoints({ addTagTypes: ["Auth"] })
   .injectEndpoints({
@@ -76,8 +88,9 @@ export const authApi = api
       getCurrentUser: builder.query<ICurrentUser, void>({
         query: () => "/identity",
         transformResponse: (response: { identity: IIdentity }) => {
-          const defaultTeam = getDefaultTeam();
-          return buildCurrentUser(response.identity, defaultTeam);
+          const identity = response.identity;
+          const defaultTeam = getDefaultTeamWithIdentity(identity);
+          return buildCurrentUser(identity, defaultTeam);
         },
         transformErrorResponse: () => undefined,
       }),
