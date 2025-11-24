@@ -26,6 +26,7 @@ import { skipToken } from "@reduxjs/toolkit/query";
 import { useAuth } from "auth/authSelectors";
 import LoadingPageSection from "ui/LoadingPageSection";
 import ProductsTeamHasAccessTo from "./ProductsTeamHasAccessTo";
+import TeamsRemotecis from "./TeamsRemotecis";
 
 export default function TeamPage() {
   const { currentUser } = useAuth();
@@ -77,7 +78,7 @@ export default function TeamPage() {
         </div>
       )}
       <Grid hasGutter>
-        <GridItem span={6}>
+        <GridItem>
           <Card>
             <CardTitle>Team information</CardTitle>
             <CardBody>
@@ -116,12 +117,27 @@ export default function TeamPage() {
               />
             </CardBody>
           </Card>
-          <TeamMembers team={team} className="pf-v6-u-mt-lg" />
-          {currentUser.isSuperAdmin && (
-            <Card className="pf-v6-u-mt-lg">
+        </GridItem>
+        <GridItem>
+          <TeamMembers team={team} />
+        </GridItem>
+        <GridItem>
+          <TeamsRemotecis team={team} />
+        </GridItem>
+        <GridItem>
+          <ProductsTeamHasAccessTo team={team} />
+        </GridItem>
+        <GridItem>
+          <TeamComponentsPermissions team={team} />
+        </GridItem>
+        {currentUser.isSuperAdmin && (
+          <GridItem>
+            <Card>
               <CardTitle>
                 <span
-                  style={{ color: t_global_color_status_danger_default.value }}
+                  style={{
+                    color: t_global_color_status_danger_default.value,
+                  }}
                 >
                   {`Delete ${team.name} team`}
                 </span>
@@ -129,7 +145,9 @@ export default function TeamPage() {
               <CardBody>
                 <Content
                   component="p"
-                  style={{ color: t_global_color_status_danger_default.value }}
+                  style={{
+                    color: t_global_color_status_danger_default.value,
+                  }}
                 >
                   Once you delete a team, there is no going back. Please be
                   certain.
@@ -154,12 +172,8 @@ export default function TeamPage() {
                 </ConfirmDeleteModal>
               </CardBody>
             </Card>
-          )}
-        </GridItem>
-        <GridItem span={6}>
-          <ProductsTeamHasAccessTo team={team} />
-          <TeamComponentsPermissions className="pf-v6-u-mt-lg" team={team} />
-        </GridItem>
+          </GridItem>
+        )}
       </Grid>
     </PageSection>
   );

@@ -4,9 +4,7 @@ import {
   Button,
   CardTitle,
   Skeleton,
-  Bullseye,
   EmptyState,
-  EmptyStateVariant,
   EmptyStateBody,
   Content,
 } from "@patternfly/react-core";
@@ -37,15 +35,13 @@ function TeamComponentsPermissionsTable({ team }: { team: ITeam }) {
     );
   }
 
-  if (!data) {
+  if (!data || data.length === 0) {
     return (
-      <Bullseye>
-        <EmptyState variant={EmptyStateVariant.sm}>
-          <EmptyStateBody>
-            {`The ${team.name} team does not have any special access.`}
-          </EmptyStateBody>
-        </EmptyState>
-      </Bullseye>
+      <EmptyState>
+        <EmptyStateBody>
+          {`The ${team.name} team does not have any special access to other teams’ components.`}
+        </EmptyStateBody>
+      </EmptyState>
     );
   }
 

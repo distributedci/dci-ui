@@ -1,9 +1,9 @@
 import { renderWithProviders } from "__tests__/renders";
 import { server } from "__tests__/node";
-import { products, teams, users } from "__tests__/data";
+import { products, remotecis, teams, users } from "__tests__/data";
 import { HttpResponse, http } from "msw";
 import App from "App";
-import type { IGetProducts, IGetUsers } from "types";
+import type { IGetProducts, IGetRemotecis, IGetUsers } from "types";
 
 test("Should display teams in team page", async () => {
   const team = teams[0];
@@ -23,6 +23,19 @@ test("Should display teams in team page", async () => {
           },
           users,
         } as IGetUsers);
+      },
+    ),
+  );
+  server.use(
+    http.get(
+      `https://api.distributed-ci.io/api/v1/teams/${teamId}/remotecis`,
+      () => {
+        return HttpResponse.json({
+          _meta: {
+            count: remotecis.length,
+          },
+          remotecis,
+        } as IGetRemotecis);
       },
     ),
   );
