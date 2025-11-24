@@ -5,6 +5,7 @@ import {
   Content,
   InputGroup,
   InputGroupItem,
+  Label,
   PageSection,
 } from "@patternfly/react-core";
 import { Link } from "react-router";
@@ -47,6 +48,8 @@ function FeedersTable() {
           <Th>Name</Th>
           <Th>Team Owner</Th>
           <Th className="text-center">Authentication</Th>
+          <Th className="text-center">Status</Th>
+          <Th className="text-center">Last auth</Th>
           <Th className="text-center">Created</Th>
           <Th className="text-center">Actions</Th>
         </Tr>
@@ -76,6 +79,23 @@ function FeedersTable() {
                   <AuthentificationFileModal type="yaml" feeder={feeder} />
                 </InputGroupItem>
               </InputGroup>
+            </Td>
+            <Td className="text-center">
+              {feeder.state === "active" ? (
+                <Label color="green">active</Label>
+              ) : (
+                <Label color="red">inactive</Label>
+              )}
+            </Td>
+            <Td className="text-center">
+              {feeder.last_auth_at !== null && (
+                <time
+                  title={feeder.last_auth_at}
+                  dateTime={feeder.last_auth_at}
+                >
+                  {fromNow(feeder.last_auth_at)}
+                </time>
+              )}
             </Td>
             <Td className="text-center">{fromNow(feeder.created_at)}</Td>
             <Td isActionCell>

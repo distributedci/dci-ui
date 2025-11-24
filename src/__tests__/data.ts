@@ -68,6 +68,7 @@ export const users: IUser[] = [
     updated_at: "2024-10-24T09:22:08.805455+00:00",
     timezone: "UTC",
     password: "",
+    last_auth_at: null,
   },
   {
     email: "u2@redhat.com",
@@ -81,6 +82,7 @@ export const users: IUser[] = [
     updated_at: "2024-10-25T10:32:17.548051+00:00",
     timezone: "UTC",
     password: "",
+    last_auth_at: null,
   },
 ];
 
@@ -185,6 +187,7 @@ export const remotecis: IRemoteciWithTeam[] = [
     team_id: "8ca1e85b-7b5f-4563-a430-f4095bebbda0",
     updated_at: "2023-12-05T09:42:14.304617",
     team: teams[1],
+    last_auth_at: null,
   },
 ];
 
@@ -198,4 +201,5 @@ export const feeder: IFeeder = {
   data: {},
   state: "active",
   api_secret: "api_secret",
+  last_auth_at: null,
 };

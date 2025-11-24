@@ -20,6 +20,7 @@ export default function UsersTable({ users }: UsersTableProps) {
           <Th>Email</Th>
           <Th>Active</Th>
           <Th>Red Hat login</Th>
+          <Th>Last auth</Th>
           <Th>Created</Th>
         </Tr>
       </Thead>
@@ -42,6 +43,13 @@ export default function UsersTable({ users }: UsersTableProps) {
               )}
             </Td>
             <Td dataLabel="Red Hat login">{user.sso_username}</Td>
+            <Td>
+              {user.last_auth_at !== null && (
+                <time title={user.last_auth_at} dateTime={user.last_auth_at}>
+                  {fromNow(user.last_auth_at)}
+                </time>
+              )}
+            </Td>
             <Td dataLabel="Created">
               <time title={user.created_at} dateTime={user.created_at}>
                 {fromNow(user.created_at)}

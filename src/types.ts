@@ -41,6 +41,7 @@ export interface IRemoteci extends Resource {
   public: boolean;
   created_at: string;
   updated_at: string;
+  last_auth_at: string | null;
 }
 
 export interface IRemoteciWithTeam extends IRemoteci {
@@ -73,6 +74,7 @@ export interface IUser extends Resource {
   created_at: string;
   updated_at: string;
   password: string;
+  last_auth_at: string | null;
 }
 
 export interface IGetUsers extends BaseListResponse {
@@ -86,6 +88,7 @@ export interface IFeeder extends Resource {
   api_secret: string;
   data: dataField;
   state: state;
+  last_auth_at: string | null;
 }
 
 export const JobStatuses = [
