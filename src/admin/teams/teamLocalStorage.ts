@@ -1,5 +1,5 @@
 import type { IIdentityTeam } from "types";
-import { readValue, saveValue } from "services/localStorage";
+import { readValue, removeValue, saveValue } from "services/localStorage";
 
 const DEFAULT_TEAM_LOCASTORAGE_VALUE = "defaultTeam";
 
@@ -9,4 +9,8 @@ export function getDefaultTeam() {
 
 export function changeCurrentTeam(team: IIdentityTeam) {
   saveValue(DEFAULT_TEAM_LOCASTORAGE_VALUE, team);
+}
+
+export function removeDefaultTeam() {
+  removeValue(DEFAULT_TEAM_LOCASTORAGE_VALUE);
 }
