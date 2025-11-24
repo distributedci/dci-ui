@@ -6,7 +6,14 @@ import {
   injectGetEndpoint,
   api,
 } from "api";
-import type { IProduct, ITeam, IGetProducts, IGetTeams } from "types";
+import type {
+  IProduct,
+  ITeam,
+  IGetProducts,
+  IGetRemotecis,
+  IGetTeams,
+  IRemoteciWithTeam,
+} from "types";
 
 const resource = "Team";
 
@@ -54,6 +61,18 @@ export const {
           };
         },
         invalidatesTags: [{ type: "TeamProductPermissions", id: "LIST" }],
+      }),
+    }),
+  });
+
+export const { useGetTeamsRemotecisQuery } = api
+  .enhanceEndpoints({ addTagTypes: ["TeamsRemotecis"] })
+  .injectEndpoints({
+    endpoints: (builder) => ({
+      getTeamsRemotecis: builder.query<IRemoteciWithTeam[], string>({
+        query: (id) => `/teams/${id}/remotecis`,
+        transformResponse: (response: IGetRemotecis) => response.remotecis,
+        providesTags: [{ type: "TeamsRemotecis", id: "LIST" }],
       }),
     }),
   });

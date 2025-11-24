@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
-import { CopyButton, EmptyState, Breadcrumb } from "ui";
+import { EmptyState, Breadcrumb } from "ui";
 import {
   Content,
-  Label,
   PageSection,
   Pagination,
   SearchInput,
@@ -12,17 +11,7 @@ import {
   ToolbarGroup,
   ToolbarItem,
 } from "@patternfly/react-core";
-import type { Filters, IRemoteci } from "types";
-import {
-  Table,
-  Thead,
-  Tr,
-  Th,
-  Tbody,
-  Td,
-  ActionsColumn,
-  type IAction,
-} from "@patternfly/react-table";
+import type { Filters } from "types";
 import { useLocation, useNavigate } from "react-router";
 import {
   createSearchFromFilters,
@@ -31,15 +20,10 @@ import {
   parseFiltersFromSearch,
 } from "services/filters";
 
-import { fromNow } from "services/date";
 import LoadingPageSection from "ui/LoadingPageSection";
 import { useAuth } from "auth/authSelectors";
-import { t_global_color_status_danger_default } from "@patternfly/react-tokens";
-import {
-  useDeactivateRemoteciMutation,
-  useListRemotecisQuery,
-  useReactivateRemoteciMutation,
-} from "remotecis/remotecisApi";
+import { useListRemotecisQuery } from "remotecis/remotecisApi";
+import RemotecisAdminTable from "./RemotecisAdminTable";
 
 function RemotecisList() {
   const location = useLocation();
@@ -56,9 +40,6 @@ function RemotecisList() {
 
   const { data, isLoading, isFetching } = useListRemotecisQuery(filters);
 
-  const [reactivateRemoteci] = useReactivateRemoteciMutation();
-  const [deactivateRemoteci] = useDeactivateRemoteciMutation();
-
   const setFiltersAndResetPagination = (f: Partial<Filters>) => {
     setFilters({
       ...filters,
@@ -74,26 +55,6 @@ function RemotecisList() {
   if (!data) {
     return <EmptyState title="There is no remotecis" />;
   }
-
-  const buildRemoteciActions = (remoteci: IRemoteci): IAction[] => {
-    const actions: IAction[] = [];
-    if (remoteci.state === "active") {
-      actions.push({
-        title: (
-          <span style={{ color: t_global_color_status_danger_default.var }}>
-            Deactivate
-          </span>
-        ),
-        onClick: () => deactivateRemoteci(remoteci),
-      });
-    } else {
-      actions.push({
-        title: "Reactivate",
-        onClick: () => reactivateRemoteci(remoteci),
-      });
-    }
-    return actions;
-  };
 
   const remotecisCount = data._meta.count;
   return (
@@ -153,61 +114,7 @@ function RemotecisList() {
           />
         )
       ) : (
-        <Table>
-          <Thead>
-            <Tr>
-              <Th className="text-center">ID</Th>
-              <Th>Name</Th>
-              <Th className="text-center">Status</Th>
-              <Th className="text-center">Team</Th>
-              <Th>Last auth</Th>
-              <Th>Created</Th>
-              <Th className="text-center">Actions</Th>
-            </Tr>
-          </Thead>
-          <Tbody>
-            {data.remotecis.map((remoteci) => {
-              const remoteciActions = buildRemoteciActions(remoteci);
-              return (
-                <Tr key={`${remoteci.id}.${remoteci.etag}`}>
-                  <Td isActionCell>
-                    <CopyButton text={remoteci.id} />
-                  </Td>
-                  <Td>{remoteci.name}</Td>
-                  <Td className="text-center">
-                    {remoteci.state === "active" ? (
-                      <Label color="green">active</Label>
-                    ) : (
-                      <Label color="red">inactive</Label>
-                    )}
-                  </Td>
-                  <Td className="text-center">{remoteci.team.name}</Td>
-                  <Td>
-                    {remoteci.last_auth_at !== null && (
-                      <time
-                        title={remoteci.last_auth_at}
-                        dateTime={remoteci.last_auth_at}
-                      >
-                        {fromNow(remoteci.last_auth_at)}
-                      </time>
-                    )}
-                  </Td>
-                  <Td>
-                    <time
-                      title={remoteci.created_at}
-                      dateTime={remoteci.created_at}
-                    >
-                      {fromNow(remoteci.created_at)}
-                    </time>
-                  </Td>
-                  <Td className="text-center">
-                    <ActionsColumn items={remoteciActions} />
-                  </Td>
-                </Tr>
-              );
-            })}
-          </Tbody>
-        </Table>
+        <RemotecisAdminTable remotecis={data.remotecis} />
       )}
     </div>
   );

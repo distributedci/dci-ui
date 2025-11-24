@@ -1,5 +1,5 @@
 import { Fragment, useEffect, useState } from "react";
-import { CopyButton, EmptyState, Breadcrumb } from "ui";
+import { EmptyState, Breadcrumb, CopyIconButton } from "ui";
 import {
   Content,
   Label,
@@ -214,8 +214,15 @@ function RemotecisList() {
               return (
                 <Fragment key={`${remoteci.id}.${remoteci.etag}`}>
                   <Tr isContentExpanded>
-                    <Td isActionCell>
-                      <CopyButton text={remoteci.id} />
+                    <Td>
+                      <span>
+                        <CopyIconButton
+                          text={remoteci.id}
+                          textOnSuccess="copied"
+                          className="pf-v6-u-mr-xs pointer"
+                        />
+                        {remoteci.id}
+                      </span>
                     </Td>
                     <Td>{remoteci.name}</Td>
                     <Td className="text-center">
