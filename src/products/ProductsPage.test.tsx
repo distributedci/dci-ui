@@ -2,7 +2,7 @@ import { renderWithProviders } from "__tests__/renders";
 import ProductsPage from "./ProductsPage";
 import { waitFor } from "@testing-library/react";
 
-test("Should display remotecis in remotecis page", async () => {
+test("Should display products in products page", async () => {
   const { getByText } = renderWithProviders(<ProductsPage />);
   await waitFor(() => {
     expect(
