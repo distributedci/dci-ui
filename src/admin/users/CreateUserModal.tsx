@@ -8,7 +8,7 @@ import {
   ModalVariant,
 } from "@patternfly/react-core";
 import useModal from "hooks/useModal";
-import UserForm from "./UserForm";
+import CreateUserForm from "./CreateUserForm";
 import type { IUser } from "types";
 
 interface CreateUserModalProps {
@@ -32,7 +32,7 @@ export default function CreateUserModal({
       >
         <ModalHeader title="Create a new user" />
         <ModalBody>
-          <UserForm
+          <CreateUserForm
             id="create-user-form"
             onSubmit={(user) => {
               hide();

@@ -4,6 +4,7 @@ import {
   Button,
   CardTitle,
   Skeleton,
+  Label,
 } from "@patternfly/react-core";
 import { MinusCircleIcon, PlusCircleIcon } from "@patternfly/react-icons";
 import { ConfirmDeleteModal, CopyButton } from "ui";
@@ -20,6 +21,7 @@ import { showError, showSuccess } from "alerts/alertsSlice";
 import { Table, Thead, Tr, Th, Tbody, Td } from "@patternfly/react-table";
 import { useAppDispatch } from "store";
 import { skipToken } from "@reduxjs/toolkit/query";
+import { fromNow } from "services/date";
 
 export default function TeamMembers({
   team,
@@ -91,7 +93,10 @@ export default function TeamMembers({
                 <Th>ID</Th>
                 <Th>Login</Th>
                 <Th>Full name</Th>
+                <Th>SSO Username</Th>
                 <Th>Email</Th>
+                <Th>State</Th>
+                <Th>Last auth</Th>
                 <Th screenReaderText="Actions" />
               </Tr>
             </Thead>
@@ -105,7 +110,25 @@ export default function TeamMembers({
                     <Link to={`/admin/users/${user.id}`}>{user.name}</Link>
                   </Td>
                   <Td>{user.fullname}</Td>
+                  <Td>{user.sso_username}</Td>
                   <Td>{user.email}</Td>
+                  <Td>
+                    {user.state === "active" ? (
+                      <Label color="green">active</Label>
+                    ) : (
+                      <Label color="red">inactive</Label>
+                    )}
+                  </Td>
+                  <Td>
+                    {user.last_auth_at !== null && (
+                      <time
+                        title={user.last_auth_at}
+                        dateTime={user.last_auth_at}
+                      >
+                        {fromNow(user.last_auth_at)}
+                      </time>
+                    )}
+                  </Td>
                   <Td isActionCell>
                     <ConfirmDeleteModal
                       title={`Delete ${user.name} from ${team.name}`}

@@ -67,7 +67,6 @@ export const users: IUser[] = [
     created_at: "2024-10-24T09:22:08.805450+00:00",
     updated_at: "2024-10-24T09:22:08.805455+00:00",
     timezone: "UTC",
-    password: "",
     last_auth_at: null,
   },
   {
@@ -81,7 +80,6 @@ export const users: IUser[] = [
     created_at: "2024-10-25T10:32:17.548051+00:00",
     updated_at: "2024-10-25T10:32:17.548051+00:00",
     timezone: "UTC",
-    password: "",
     last_auth_at: null,
   },
 ];

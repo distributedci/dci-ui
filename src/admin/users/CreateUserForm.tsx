@@ -5,7 +5,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import TextInputFormGroup from "ui/form/TextInputFormGroup";
 
-const UserSchema = Yup.object().shape({
+const CreateUserSchema = Yup.object().shape({
   name: Yup.string()
     .required("User name is required")
     .min(2, "User name is too short!"),
@@ -18,20 +18,31 @@ const UserSchema = Yup.object().shape({
   password: Yup.string().required("User password is required"),
 });
 
-export default function UserForm({
+interface IUserCreateForm {
+  name: string;
+  fullname: string;
+  email: string;
+  password: string;
+}
+
+export default function CreateUserForm({
   id,
-  user,
   onSubmit,
   ...props
 }: {
   id: string;
   user?: IUser;
-  onSubmit: (user: IUser | Partial<IUser>) => void;
+  onSubmit: (user: IUserCreateForm) => void;
   [key: string]: any;
 }) {
   const methods = useForm({
-    resolver: yupResolver(UserSchema),
-    defaultValues: user || { name: "", fullname: "", email: "", password: "" },
+    resolver: yupResolver(CreateUserSchema),
+    defaultValues: {
+      name: "",
+      fullname: "",
+      email: "",
+      password: "",
+    },
   });
   return (
     <FormProvider {...methods}>

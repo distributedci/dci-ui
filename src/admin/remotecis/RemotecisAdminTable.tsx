@@ -52,7 +52,7 @@ export default function RemotecisAdminTable({
     <Table borders={false}>
       <Thead>
         <Tr>
-          <Th className="text-center">ID</Th>
+          <Th>ID</Th>
           <Th>Name</Th>
           <Th className="text-center">Status</Th>
           <Th className="text-center">Team</Th>
