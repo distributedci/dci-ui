@@ -128,6 +128,7 @@ function RemotecisList() {
     <div>
       <div className="pf-v6-u-mb-lg">
         <CreateRemoteciModal
+          showReadOnlyWarning={currentUser?.isReadOnly || false}
           onSubmit={(remoteci) =>
             createRemoteci({
               ...remoteci,
@@ -201,7 +202,7 @@ function RemotecisList() {
         <Table>
           <Thead>
             <Tr>
-              <Th className="text-center">ID</Th>
+              <Th>ID</Th>
               <Th>Name</Th>
               <Th className="text-center">Status</Th>
               <Th>Created</Th>
