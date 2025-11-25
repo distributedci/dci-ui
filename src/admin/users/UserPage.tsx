@@ -8,7 +8,7 @@ import {
   CardTitle,
   PageSection,
 } from "@patternfly/react-core";
-import UserForm from "./UserForm";
+import EditUserForm from "./EditUserForm";
 import { TrashAltIcon } from "@patternfly/react-icons";
 import { ConfirmDeleteModal, Breadcrumb, EmptyState } from "ui";
 import { useParams, useNavigate } from "react-router";
@@ -21,11 +21,12 @@ import {
 import { skipToken } from "@reduxjs/toolkit/query";
 import LoadingPageSection from "ui/LoadingPageSection";
 import { UserTeamsTable } from "./UserTeamsTable";
-import { currentUser } from "__tests__/data";
+import { useAuth } from "auth/authSelectors";
 
 export default function UserPage() {
   const navigate = useNavigate();
   const { user_id } = useParams();
+  const { currentUser } = useAuth();
 
   const [updateUser, { isLoading: isUpdating }] = useUpdateUserMutation();
   const [deleteUser] = useDeleteUserMutation();
@@ -57,7 +58,11 @@ export default function UserPage() {
         <GridItem span={6}>
           <Card>
             <CardBody>
-              <UserForm id="user-edit-form" user={user} onSubmit={updateUser} />
+              <EditUserForm
+                id="user-edit-form"
+                user={user}
+                onSubmit={updateUser}
+              />
               <Button
                 variant="primary"
                 type="submit"
@@ -77,7 +82,7 @@ export default function UserPage() {
               <UserTeamsTable user={user} />
             </CardBody>
           </Card>
-          {currentUser.isSuperAdmin && (
+          {currentUser?.isSuperAdmin && (
             <Card className="pf-v6-u-mt-lg">
               <CardTitle>
                 <span

@@ -73,7 +73,6 @@ export interface IUser extends Resource {
   timezone: string;
   created_at: string;
   updated_at: string;
-  password: string;
   last_auth_at: string | null;
 }
 
