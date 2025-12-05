@@ -631,6 +631,55 @@ export interface IAnalyticsTestsJob extends IAnalyticsJob {
   tests: IAnalyticsTest[];
 }
 
+export interface INetworkCard {
+  link_status?: string;
+  firmware_version?: string;
+  interface_name?: string;
+}
+
+export interface IDisk {
+  [key: string]: any;
+}
+
+export interface IHardwareData {
+  node?: string;
+  error?: string;
+  data?: {
+    motherboard?: string | { type?: string };
+    memory?: number | { amount?: number };
+    disks?: IDisk[];
+    network_cards?: INetworkCard[];
+    product?: string;
+    vendor?: string;
+    serial?: string;
+    capabilities?: Record<string, string>;
+    children?: any[];
+    [key: string]: any;
+  };
+  // Legacy format support
+  motherboard?: string | { type?: string };
+  memory?: number | { amount?: number };
+  disks?: IDisk[];
+  network_cards?: INetworkCard[];
+}
+
+export interface IKernelData {
+  node?: string;
+  version?: string;
+  params?: string | Record<string, string>;
+}
+
+export interface IJobExtraDataNode {
+  kernel?: IKernelData;
+  hardware?: IHardwareData;
+}
+
+export type IJobExtraData = IJobExtraDataNode | IJobExtraDataNode[];
+
+export interface IAnalyticsExtraJob extends IAnalyticsJob {
+  extra?: IJobExtraData;
+}
+
 export interface IGenericAnalyticsData<T> {
   jobs: T[];
   _meta: { first_sync_date: string; last_sync_date: string; total: number };

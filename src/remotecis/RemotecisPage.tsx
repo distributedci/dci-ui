@@ -213,7 +213,7 @@ function RemotecisList() {
               const remoteciActions = buildRemoteciActions(remoteci);
               return (
                 <Fragment key={`${remoteci.id}.${remoteci.etag}`}>
-                  <Tr isContentExpanded>
+                  <Tr>
                     <Td>
                       <span>
                         <CopyIconButton

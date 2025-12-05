@@ -7,6 +7,9 @@ import jsxA11y from "eslint-plugin-jsx-a11y";
 
 export default defineConfig([
   {
+    ignores: ["build/**", "node_modules/**"],
+  },
+  {
     files: ["**/*.{js,mjs,cjs,ts,mts,cts,jsx,tsx}"],
     plugins: { js },
     extends: ["js/recommended"],
