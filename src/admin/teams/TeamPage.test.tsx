@@ -70,9 +70,14 @@ test("Should display teams in team page", async () => {
       },
     ),
   );
-  const { findByRole, getByRole } = renderWithProviders(<App />, {
+  const { findByRole, getByRole, findByText } = renderWithProviders(<App />, {
     initialEntries: [`/admin/teams/${teamId}`],
   });
+  
+  // Wait for the team page to load first
+  await findByText("Team members");
+  
+  // Then wait for the user link to appear
   await findByRole("link", { name: users[0].name });
   expect(getByRole("link", { name: users[0].name })).toHaveAttribute(
     "href",
