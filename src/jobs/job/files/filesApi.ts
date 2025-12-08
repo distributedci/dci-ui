@@ -1,6 +1,7 @@
 import { api, baseUrl } from "api";
 import { getToken } from "services/localStorage";
 import type { IFile } from "types";
+import { getBrowserMimeType } from "./filesGetters";
 
 export const { useGetFileContentQuery, useLazyGetFileContentQuery } = api
   .enhanceEndpoints({ addTagTypes: ["File"] })
@@ -29,5 +30,13 @@ export async function getFileContentAsBlob(file: IFile) {
   if (!response.ok) {
     throw new Error(`Error fetching file content: ${response.statusText}`);
   }
-  return await response.blob();
+  const blob = await response.blob();
+  
+  // Translate MIME type for better browser compatibility
+  const translatedMimeType = getBrowserMimeType(file.mime || "");
+  if (translatedMimeType !== file.mime) {
+    return new Blob([blob], { type: translatedMimeType });
+  }
+  
+  return blob;
 }

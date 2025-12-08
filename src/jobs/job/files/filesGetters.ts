@@ -1,5 +1,12 @@
 import type { IFile } from "types";
 
+export function getBrowserMimeType(originalMime: string): string {
+  if (originalMime === "application/dci-analytics+json") {
+    return "application/json";
+  }
+  return originalMime;
+}
+
 export function humanFileSize(size: number) {
   if (!size) return "0 B";
   const i = Math.floor(Math.log(size) / Math.log(1024));
@@ -15,6 +22,7 @@ export function isATextFile(file: IFile) {
     const otherMimesWeWouldLikeToDisplay = [
       "application/junit",
       "application/json",
+      "application/dci-analytics+json",
       "image/svg+xml",
       "application/xhtml+xml",
       "application/xml",
