@@ -4,9 +4,12 @@ interface Resource {
   name: string;
 }
 
-type dataField = {
-  [x: string]: any;
-};
+type JsonPrimitive = string | number | boolean | null;
+type JsonObject = { [key: string]: JsonValue };
+type JsonArray = JsonValue[];
+type JsonValue = JsonPrimitive | JsonObject | JsonArray;
+
+type dataField = JsonValue;
 
 export interface ITeam extends Resource {
   country: string | null;
