@@ -1,6 +1,9 @@
-import { humanFileSize } from "./filesGetters";
+import {
+  humanFileSize,
+  normalizeFile,
+  isATextFile,
+} from "./filesGetters";
 import type { IFile } from "types";
-import { isATextFile } from "./filesGetters";
 
 test("humanFileSize", () => {
   expect(humanFileSize(0)).toEqual("0 B");
@@ -28,4 +31,15 @@ test("isATextFile", () => {
   expect(isATextFile({ mime: "audio/aac" } as IFile)).toBe(false);
   expect(isATextFile({ mime: "font/woff" } as IFile)).toBe(false);
   expect(isATextFile({ mime: null } as IFile)).toBe(false);
+});
+
+test("normalizeFile transform bad mime types in files", () => {
+  expect(normalizeFile({ mime: null } as IFile).mime).toBe(null);
+  expect(
+    normalizeFile({ mime: "application/dci-analytics+json" } as IFile)
+      .mime,
+  ).toBe("application/json");
+  expect(normalizeFile({ mime: "text/plain" } as IFile).mime).toBe(
+    "text/plain",
+  );
 });

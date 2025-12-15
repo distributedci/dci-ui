@@ -1,4 +1,4 @@
-import type { IJobStateWithDuration } from "types";
+import type { IEnhancedJobState } from "types";
 import {
   ProgressStepper,
   ProgressStep,
@@ -8,8 +8,8 @@ import {
 } from "@patternfly/react-core";
 
 interface JobStateStepperProps {
-  jobStates: IJobStateWithDuration[];
-  jobStateSelected: (jobState: IJobStateWithDuration) => void;
+  jobStates: IEnhancedJobState[];
+  jobStateSelected: (jobState: IEnhancedJobState) => void;
   [x: string]: any;
 }
 

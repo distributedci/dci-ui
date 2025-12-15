@@ -1,14 +1,14 @@
 import {
-  addDuration,
-  addPipelineStatus,
+  addDurationAndPipelineStatus,
   getLongerTaskFirst,
 } from "./jobStatesActions";
-import type { IJobState, IJobStateWithDuration } from "types";
+import type { IJobState, IEnhancedJobState } from "types";
 
-test("addDuration in seconds", () => {
+test("addDurationAndPipelineStatus computes duration in seconds", () => {
   const jobStates = [
     {
       created_at: "2018-07-30T04:38:10.000000",
+      status: "success",
       files: [
         {
           created_at: "2018-07-30T04:38:10.000000",
@@ -28,6 +28,8 @@ test("addDuration in seconds", () => {
   const expectedJobStates = [
     {
       created_at: "2018-07-30T04:38:10.000000",
+      status: "success",
+      pipelineStatus: "success",
       duration: 22,
       files: [
         {
@@ -48,13 +50,14 @@ test("addDuration in seconds", () => {
       ],
     },
   ];
-  expect(addDuration(jobStates)).toEqual(expectedJobStates);
+  expect(addDurationAndPipelineStatus(jobStates)).toEqual(expectedJobStates);
 });
 
-test("addDuration get previous updated_at from previous file", () => {
+test("addDurationAndPipelineStatus gets previous updated_at from previous file", () => {
   const jobStates = [
     {
       created_at: "2018-07-30T04:38:08.000000",
+      status: "new",
       files: [
         {
           created_at: "2018-07-30T04:38:08.000000",
@@ -64,6 +67,7 @@ test("addDuration get previous updated_at from previous file", () => {
     } as IJobState,
     {
       created_at: "2018-07-30T04:38:30.000000",
+      status: "success",
       files: [
         {
           created_at: "2018-07-30T04:38:30.000000",
@@ -75,6 +79,8 @@ test("addDuration get previous updated_at from previous file", () => {
   const expectedJobStates = [
     {
       created_at: "2018-07-30T04:38:08.000000",
+      status: "new",
+      pipelineStatus: "success",
       duration: 0,
       files: [
         {
@@ -86,6 +92,8 @@ test("addDuration get previous updated_at from previous file", () => {
     },
     {
       created_at: "2018-07-30T04:38:30.000000",
+      status: "success",
+      pipelineStatus: "success",
       duration: 20,
       files: [
         {
@@ -96,13 +104,14 @@ test("addDuration get previous updated_at from previous file", () => {
       ],
     },
   ];
-  expect(addDuration(jobStates)).toEqual(expectedJobStates);
+  expect(addDurationAndPipelineStatus(jobStates)).toEqual(expectedJobStates);
 });
 
-test("addDuration order jobStates and files per date", () => {
+test("addDurationAndPipelineStatus orders jobStates and files per date", () => {
   const jobStates = [
     {
       created_at: "2018-07-30T04:38:30.000000",
+      status: "success",
       files: [
         {
           created_at: "2018-07-30T04:40:30.000000",
@@ -116,6 +125,7 @@ test("addDuration order jobStates and files per date", () => {
     } as IJobState,
     {
       created_at: "2018-07-30T04:38:08.000000",
+      status: "new",
       files: [
         {
           created_at: "2018-07-30T04:38:08.000000",
@@ -127,6 +137,8 @@ test("addDuration order jobStates and files per date", () => {
   const expectedJobStates = [
     {
       created_at: "2018-07-30T04:38:08.000000",
+      status: "new",
+      pipelineStatus: "success",
       duration: 0,
       files: [
         {
@@ -138,6 +150,8 @@ test("addDuration order jobStates and files per date", () => {
     },
     {
       created_at: "2018-07-30T04:38:30.000000",
+      status: "success",
+      pipelineStatus: "success",
       duration: 140,
       files: [
         {
@@ -153,191 +167,240 @@ test("addDuration order jobStates and files per date", () => {
       ],
     },
   ];
-  expect(addDuration(jobStates)).toEqual(expectedJobStates);
+  expect(addDurationAndPipelineStatus(jobStates)).toEqual(expectedJobStates);
 });
 
-test("addPipelineStatus with last status failure", () => {
+test("addDurationAndPipelineStatus with last status failure", () => {
   const jobStates = [
-    { created_at: "2018-07-30T04:38:10.000000", status: "new" },
-    { created_at: "2018-07-30T04:39:10.000000", status: "new" },
-    { created_at: "2018-07-30T04:40:10.000000", status: "pre-run" },
-    { created_at: "2018-07-30T04:41:10.000000", status: "running" },
-    { created_at: "2018-07-30T04:42:10.000000", status: "failure" },
-  ] as IJobState[];
+    { created_at: "2018-07-30T04:38:10.000000", status: "new", files: [] },
+    { created_at: "2018-07-30T04:39:10.000000", status: "new", files: [] },
+    { created_at: "2018-07-30T04:40:10.000000", status: "pre-run", files: [] },
+    { created_at: "2018-07-30T04:41:10.000000", status: "running", files: [] },
+    { created_at: "2018-07-30T04:42:10.000000", status: "failure", files: [] },
+  ] as unknown as IJobState[];
+
   const expectedJobStates = [
     {
       created_at: "2018-07-30T04:38:10.000000",
       status: "new",
       pipelineStatus: "success",
+      duration: 0,
+      files: [],
     },
     {
       created_at: "2018-07-30T04:39:10.000000",
       status: "new",
       pipelineStatus: "success",
+      duration: 0,
+      files: [],
     },
     {
       created_at: "2018-07-30T04:40:10.000000",
       status: "pre-run",
       pipelineStatus: "success",
+      duration: 0,
+      files: [],
     },
     {
       created_at: "2018-07-30T04:41:10.000000",
       status: "running",
       pipelineStatus: "danger",
+      duration: 0,
+      files: [],
     },
     {
       created_at: "2018-07-30T04:42:10.000000",
       status: "failure",
       pipelineStatus: "danger",
+      duration: 0,
+      files: [],
     },
-  ] as IJobState[];
-  expect(addPipelineStatus(jobStates)).toEqual(expectedJobStates);
+  ];
+  expect(addDurationAndPipelineStatus(jobStates)).toEqual(expectedJobStates);
 });
 
-test("addPipelineStatus with last status success", () => {
+test("addDurationAndPipelineStatus with last status success", () => {
   const jobStates = [
-    { created_at: "2018-07-30T04:38:10.000000", status: "new" },
-    { created_at: "2018-07-30T04:39:10.000000", status: "new" },
-    { created_at: "2018-07-30T04:40:10.000000", status: "pre-run" },
-    { created_at: "2018-07-30T04:41:10.000000", status: "running" },
-    { created_at: "2018-07-30T04:42:10.000000", status: "success" },
-  ] as IJobState[];
+    { created_at: "2018-07-30T04:38:10.000000", status: "new", files: [] },
+    { created_at: "2018-07-30T04:39:10.000000", status: "new", files: [] },
+    { created_at: "2018-07-30T04:40:10.000000", status: "pre-run", files: [] },
+    { created_at: "2018-07-30T04:41:10.000000", status: "running", files: [] },
+    { created_at: "2018-07-30T04:42:10.000000", status: "success", files: [] },
+  ] as unknown as IJobState[];
   const expectedJobStates = [
     {
       created_at: "2018-07-30T04:38:10.000000",
       status: "new",
       pipelineStatus: "success",
+      duration: 0,
+      files: [],
     },
     {
       created_at: "2018-07-30T04:39:10.000000",
       status: "new",
       pipelineStatus: "success",
+      duration: 0,
+      files: [],
     },
     {
       created_at: "2018-07-30T04:40:10.000000",
       status: "pre-run",
       pipelineStatus: "success",
+      duration: 0,
+      files: [],
     },
     {
       created_at: "2018-07-30T04:41:10.000000",
       status: "running",
       pipelineStatus: "success",
+      duration: 0,
+      files: [],
     },
     {
       created_at: "2018-07-30T04:42:10.000000",
       status: "success",
       pipelineStatus: "success",
+      duration: 0,
+      files: [],
     },
-  ] as IJobState[];
-  expect(addPipelineStatus(jobStates)).toEqual(expectedJobStates);
+  ];
+  expect(addDurationAndPipelineStatus(jobStates)).toEqual(expectedJobStates);
 });
 
-test("addPipelineStatus with last status failure unordered", () => {
+test("addDurationAndPipelineStatus with last status failure unordered", () => {
   const jobStates = [
-    { created_at: "2018-07-30T04:42:10.000000", status: "failure" },
-    { created_at: "2018-07-30T04:41:10.000000", status: "running" },
-    { created_at: "2018-07-30T04:40:10.000000", status: "pre-run" },
-    { created_at: "2018-07-30T04:39:10.000000", status: "new" },
-    { created_at: "2018-07-30T04:38:10.000000", status: "new" },
-  ] as IJobState[];
+    { created_at: "2018-07-30T04:42:10.000000", status: "failure", files: [] },
+    { created_at: "2018-07-30T04:41:10.000000", status: "running", files: [] },
+    { created_at: "2018-07-30T04:40:10.000000", status: "pre-run", files: [] },
+    { created_at: "2018-07-30T04:39:10.000000", status: "new", files: [] },
+    { created_at: "2018-07-30T04:38:10.000000", status: "new", files: [] },
+  ] as unknown as IJobState[];
   const expectedJobStates = [
     {
       created_at: "2018-07-30T04:38:10.000000",
       status: "new",
       pipelineStatus: "success",
+      duration: 0,
+      files: [],
     },
     {
       created_at: "2018-07-30T04:39:10.000000",
       status: "new",
       pipelineStatus: "success",
+      duration: 0,
+      files: [],
     },
     {
       created_at: "2018-07-30T04:40:10.000000",
       status: "pre-run",
       pipelineStatus: "success",
+      duration: 0,
+      files: [],
     },
     {
       created_at: "2018-07-30T04:41:10.000000",
       status: "running",
       pipelineStatus: "danger",
+      duration: 0,
+      files: [],
     },
     {
       created_at: "2018-07-30T04:42:10.000000",
       status: "failure",
       pipelineStatus: "danger",
+      duration: 0,
+      files: [],
     },
-  ] as IJobState[];
-  expect(addPipelineStatus(jobStates)).toEqual(expectedJobStates);
+  ];
+  expect(addDurationAndPipelineStatus(jobStates)).toEqual(expectedJobStates);
 });
 
-test("addPipelineStatus with non final status", () => {
+test("addDurationAndPipelineStatus with non final status", () => {
   const jobStates = [
-    { created_at: "2018-07-30T04:38:10.000000", status: "new" },
-    { created_at: "2018-07-30T04:39:10.000000", status: "new" },
-    { created_at: "2018-07-30T04:40:10.000000", status: "pre-run" },
-    { created_at: "2018-07-30T04:41:10.000000", status: "running" },
-  ] as IJobState[];
+    { created_at: "2018-07-30T04:38:10.000000", status: "new", files: [] },
+    { created_at: "2018-07-30T04:39:10.000000", status: "new", files: [] },
+    { created_at: "2018-07-30T04:40:10.000000", status: "pre-run", files: [] },
+    { created_at: "2018-07-30T04:41:10.000000", status: "running", files: [] },
+  ] as unknown as IJobState[];
   const expectedJobStates = [
     {
       created_at: "2018-07-30T04:38:10.000000",
       status: "new",
       pipelineStatus: "success",
+      duration: 0,
+      files: [],
     },
     {
       created_at: "2018-07-30T04:39:10.000000",
       status: "new",
       pipelineStatus: "success",
+      duration: 0,
+      files: [],
     },
     {
       created_at: "2018-07-30T04:40:10.000000",
       status: "pre-run",
       pipelineStatus: "success",
+      duration: 0,
+      files: [],
     },
     {
       created_at: "2018-07-30T04:41:10.000000",
       status: "running",
       pipelineStatus: "info",
+      duration: 0,
+      files: [],
     },
-  ] as IJobState[];
-  expect(addPipelineStatus(jobStates)).toEqual(expectedJobStates);
+  ];
+  expect(addDurationAndPipelineStatus(jobStates)).toEqual(expectedJobStates);
 });
 
-test("addPipelineStatus with running state in the middle", () => {
+test("addDurationAndPipelineStatus with running state in the middle", () => {
   const jobStates = [
-    { created_at: "2018-07-30T04:38:10.000000", status: "new" },
-    { created_at: "2018-07-30T04:39:10.000000", status: "pre-run" },
-    { created_at: "2018-07-30T04:40:10.000000", status: "running" },
-    { created_at: "2018-07-30T04:41:10.000000", status: "post-run" },
-    { created_at: "2018-07-30T04:42:10.000000", status: "success" },
-  ] as IJobState[];
+    { created_at: "2018-07-30T04:38:10.000000", status: "new", files: [] },
+    { created_at: "2018-07-30T04:39:10.000000", status: "pre-run", files: [] },
+    { created_at: "2018-07-30T04:40:10.000000", status: "running", files: [] },
+    { created_at: "2018-07-30T04:41:10.000000", status: "post-run", files: [] },
+    { created_at: "2018-07-30T04:42:10.000000", status: "success", files: [] },
+  ] as unknown as IJobState[];
   const expectedJobStates = [
     {
       created_at: "2018-07-30T04:38:10.000000",
       status: "new",
       pipelineStatus: "success",
+      duration: 0,
+      files: [],
     },
     {
       created_at: "2018-07-30T04:39:10.000000",
       status: "pre-run",
       pipelineStatus: "success",
+      duration: 0,
+      files: [],
     },
     {
       created_at: "2018-07-30T04:40:10.000000",
       status: "running",
       pipelineStatus: "success",
+      duration: 0,
+      files: [],
     },
     {
       created_at: "2018-07-30T04:41:10.000000",
       status: "post-run",
       pipelineStatus: "success",
+      duration: 0,
+      files: [],
     },
     {
       created_at: "2018-07-30T04:42:10.000000",
       status: "success",
       pipelineStatus: "success",
+      duration: 0,
+      files: [],
     },
-  ] as IJobState[];
-  expect(addPipelineStatus(jobStates)).toEqual(expectedJobStates);
+  ];
+  expect(addDurationAndPipelineStatus(jobStates)).toEqual(expectedJobStates);
 });
 
 test("getLongerTaskFirst filter task by duration", () => {
@@ -369,7 +432,7 @@ test("getLongerTaskFirst filter task by duration", () => {
         },
       ],
     },
-  ] as IJobStateWithDuration[];
+  ] as IEnhancedJobState[];
   const expectedTasks = [
     {
       created_at: "2018-07-30T04:38:30.000000",
