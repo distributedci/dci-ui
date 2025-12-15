@@ -30,7 +30,7 @@ export default function SeeFileContentModal({
         variant="large"
       >
         <ModalHeader title={file.name} />
-        <ModalBody className="pf-v6-u-py-md">
+        <ModalBody>
           <CodeBlock>
             <CodeBlockCode>
               <FileContent file={file} />

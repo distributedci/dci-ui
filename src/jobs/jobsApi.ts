@@ -8,17 +8,20 @@ import {
 } from "api";
 import type {
   IEnhancedJob,
-  IGetJobStates,
-  IGetTestsResults,
   IJob,
+  IJobInGetJobs,
+  IJobState,
+  ITest,
 } from "types";
 import { sortByName } from "services/sort";
+import { addDurationAndPipelineStatus } from "./job/jobStates/jobStatesActions";
+import { normalizeFile } from "./job/files/filesGetters";
 
 const resource = "Job";
 
 export const { useGetJobQuery } = injectGetEndpoint<IJob>(resource);
 export const { useDeleteJobMutation } = injectDeleteEndpoint<IJob>(resource);
-export const { useListJobsQuery } = injectListEndpoint<IJob>(resource);
+export const { useListJobsQuery } = injectListEndpoint<IJobInGetJobs>(resource);
 export const { useUpdateJobMutation } = injectUpdateEndpoint<IJob>(resource);
 export const { useGetEnhancedJobQuery } = api
   .enhanceEndpoints({ addTagTypes: ["EnhancedJob", resource] })
@@ -37,16 +40,20 @@ export const { useGetEnhancedJobQuery } = api
             if (getResults.error) {
               return { error: getResults.error as FetchBaseQueryError };
             }
-            const resultsData = getResults.data as IGetTestsResults;
+            const resultsData = getResults.data as { results: ITest[] };
             const getJobState = await fetchWithBQ(`/jobs/${job.id}/jobstates`);
             if (getJobState.error) {
               return { error: getJobState.error as FetchBaseQueryError };
             }
-            const jobStatesData = getJobState.data as IGetJobStates;
+            const jobStatesData = getJobState.data as {
+              jobstates: IJobState[];
+            };
+
             const enhancedJob = {
               ...job,
+              files: job.files.map(normalizeFile),
               tests: sortByName(resultsData.results),
-              jobstates: jobStatesData.jobstates,
+              jobstates: addDurationAndPipelineStatus(jobStatesData.jobstates),
             };
             return { data: enhancedJob as IEnhancedJob };
           } catch (error: unknown) {
@@ -59,7 +66,7 @@ export const { useGetEnhancedJobQuery } = api
             };
           }
         },
-        providesTags: (result, error, id) => [
+        providesTags: (_result, _error, id) => [
           { type: "EnhancedJob", id },
           { type: resource, id },
         ],

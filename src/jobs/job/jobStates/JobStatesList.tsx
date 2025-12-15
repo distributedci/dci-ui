@@ -15,19 +15,15 @@ import {
   FileIcon,
   ListIcon,
 } from "@patternfly/react-icons";
-import {
-  addDuration,
-  addPipelineStatus,
-  getLongerTaskFirst,
-} from "./jobStatesActions";
+import { getLongerTaskFirst } from "./jobStatesActions";
 import JobStateRow from "./JobStateFile";
 import JobStateStepper from "./JobStateStepper";
 import FileContent from "../files/FileContent";
 import { EmptyState } from "ui";
-import type { IEnhancedJob, IJobStateWithDuration } from "types";
+import type { IEnhancedJob, IEnhancedJobState } from "types";
 import { humanizeDuration } from "services/date";
 
-function JobStateName(jobstate: IJobStateWithDuration) {
+function JobStateName(jobstate: IEnhancedJobState) {
   let jobStateName = `Job state ${jobstate.status}`;
   if (jobstate.duration > 0) {
     jobStateName += ` (${humanizeDuration(jobstate.duration)})`;
@@ -87,7 +83,7 @@ export default function JobStatesList({ job }: JobStatesListProps) {
     );
   }
 
-  const jobStates = addDuration(addPipelineStatus(job.jobstates));
+  const jobStates = job.jobstates;
 
   const seeRawLogAction = (
     <CodeBlockAction key="raw-log-action">

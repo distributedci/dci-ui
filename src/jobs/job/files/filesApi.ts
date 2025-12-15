@@ -1,11 +1,19 @@
 import { api, baseUrl } from "api";
 import { getToken } from "services/localStorage";
 import type { IFile } from "types";
+import { normalizeFile } from "./filesGetters";
 
-export const { useGetFileContentQuery, useLazyGetFileContentQuery } = api
+export const { useGetFileContentQuery, useGetFileQuery } = api
   .enhanceEndpoints({ addTagTypes: ["File"] })
   .injectEndpoints({
     endpoints: (builder) => ({
+      getFile: builder.query<IFile, string>({
+        query: (id) => ({
+          url: `/files/${id}`,
+          method: "GET",
+        }),
+        transformResponse: (response: { file: IFile }) => normalizeFile(response.file),
+      }),
       getFileContent: builder.query<string, IFile>({
         query: ({ id }) => ({
           url: `/files/${id}/content`,

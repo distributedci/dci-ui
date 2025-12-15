@@ -1,5 +1,29 @@
 import type { IFile } from "types";
 
+export function normalizeFile(file: IFile): IFile {
+  if (file.mime === null) {
+    return file;
+  }
+  return { ...file, mime: file.mime.replace("dci-analytics+", "") };
+}
+
+export function isJsonFile(file: IFile): boolean {
+  const { mime } = file;
+  if (mime === null) {
+    return false;
+  }
+  return mime === "application/json";
+}
+
+export function formatJsonContent(content: string): string {
+  try {
+    const parsed = JSON.parse(content);
+    return JSON.stringify(parsed, null, 2);
+  } catch {
+    return content;
+  }
+}
+
 export function humanFileSize(size: number) {
   if (!size) return "0 B";
   const i = Math.floor(Math.log(size) / Math.log(1024));

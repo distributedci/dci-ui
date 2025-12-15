@@ -4,9 +4,12 @@ interface Resource {
   name: string;
 }
 
-type dataField = {
-  [x: string]: any;
-};
+type JsonPrimitive = string | number | boolean | null;
+type JsonObject = { [key: string]: JsonValue };
+type JsonArray = JsonValue[];
+type JsonValue = JsonPrimitive | JsonObject | JsonArray;
+
+type dataField = JsonValue;
 
 export interface ITeam extends Resource {
   country: string | null;
@@ -52,17 +55,20 @@ export interface IRemoteciWithApiSecret extends IRemoteci {
   api_secret: string;
 }
 
-export interface ITopic extends Resource {
+export interface ITopicInJobs extends Resource {
   component_types: string[];
   component_types_optional: string[];
-  data: dataField;
   state: state;
   created_at: string;
   updated_at: string;
   export_control: boolean;
   product_id: string;
   next_topic_id: string | null;
+}
+
+export interface ITopic extends ITopicInJobs {
   product: IProduct;
+  data: dataField;
 }
 
 export interface IUser extends Resource {
@@ -164,10 +170,6 @@ export interface ITest {
   total: number;
 }
 
-export interface IGetTestsResults {
-  results: ITest[];
-}
-
 export type ITestCaseActionType = "success" | "skipped" | "failure" | "error";
 export type ITestCaseActionState =
   | "RECOVERED"
@@ -223,7 +225,6 @@ export type state = "active" | "inactive" | "archived";
 
 export interface IFile extends Resource {
   created_at: string;
-  updated_at: string;
   job_id: string;
   jobstate_id: string | null;
   md5: string | null;
@@ -231,6 +232,7 @@ export interface IFile extends Resource {
   size: number;
   state: state;
   team_id: string;
+  updated_at: string;
 }
 
 export interface IFileWithDuration extends IFile {
@@ -252,21 +254,24 @@ export type IFileStatus =
   | "success"
   | "withAWarning";
 
-export interface IJobState {
-  id: string;
-  status: IJobStatus;
-  pipelineStatus?: IPipelineStatus;
-  files: IFile[];
+export interface IJobStateInJob {
   comment: string;
   created_at: string;
+  id: string;
   job_id: string;
+  status: IJobStatus;
 }
 
-export interface IGetJobStates {
-  jobstates: IJobState[];
+export interface IJobState extends IJobStateInJob {
+  files: IFile[];
 }
 
-export interface IJobStateWithDuration extends IJobState {
+
+
+
+
+export interface IEnhancedJobState extends IJobStateInJob {
+  pipelineStatus: IPipelineStatus;
   duration: number;
   files: IFileWithDuration[];
 }
@@ -290,22 +295,27 @@ export interface IResult {
 
 export interface IPipeline extends Resource {
   created_at: string;
-  updated_at: string;
   state: state;
   team_id: string;
+  updated_at: string;
 }
 
 export interface IKeyValue {
+  job_id: string;
   key: string;
   value: number;
 }
 
-export interface IJob extends Resource {
+export interface IJobInGetJobs extends Resource {
   client_version: string | null;
   comment: string | null;
   components: IComponent[];
   configuration: string | null;
+  created_at: string;
   duration: number;
+  keys_values: IKeyValue[];
+  pipeline: IPipeline | null;
+  pipeline_id: string | null;
   previous_job_id: string | null;
   product_id: string;
   remoteci: IRemoteci;
@@ -317,21 +327,23 @@ export interface IJob extends Resource {
   tags: string[] | null;
   team: ITeam;
   team_id: string;
-  topic: ITopic;
+  topic: ITopicInJobs;
   topic_id: string;
   update_previous_job_id: string | null;
-  created_at: string;
   updated_at: string;
   url: string | null;
   user_agent: string;
-  pipeline: IPipeline | null;
-  keys_values: IKeyValue[];
+}
+
+export interface IJob extends IJobInGetJobs {
+  data: dataField;
+  files: IFile[];
+  jobstates: IJobStateInJob[];
 }
 
 export interface IEnhancedJob extends IJob {
-  jobstates: IJobState[];
+  jobstates: IEnhancedJobState[];
   tests: ITest[];
-  files: IFile[];
 }
 
 export interface JobNode extends IJob {

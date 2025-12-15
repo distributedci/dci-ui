@@ -1,39 +1,35 @@
-import { useEffect } from "react";
 import { useParams } from "react-router";
-import { PageSection } from "@patternfly/react-core";
-import { useLazyGetFileContentQuery } from "./filesApi";
+import {
+  CodeBlock,
+  CodeBlockCode,
+  PageSection,
+  Spinner,
+} from "@patternfly/react-core";
+import { useGetFileQuery } from "./filesApi";
 import { EmptyState } from "ui";
-import type { IFile } from "types";
+import FileContent from "./FileContent";
 
 export default function FilePage() {
   const { file_id } = useParams();
-  const [getFileContent, { data: fileContent, isLoading }] =
-    useLazyGetFileContentQuery();
 
-  useEffect(() => {
-    if (file_id) {
-      getFileContent({ id: file_id } as IFile);
-    }
-  }, [file_id, getFileContent]);
-
-  if (!file_id) {
-    return null;
-  }
+  const { data: file, isLoading } = useGetFileQuery(file_id ?? "", {
+    skip: !file_id,
+  });
 
   if (isLoading) {
     return (
       <PageSection hasBodyWrapper={false}>
-        <p>loading...</p>
+        <Spinner size="lg" aria-label="Loading file content" />
       </PageSection>
     );
   }
 
-  if (!fileContent) {
+  if (!file) {
     return (
       <PageSection hasBodyWrapper={false}>
         <EmptyState
           title={`There is no file ${file_id}`}
-          info="Add some jobs to see some info for this topic"
+          info="Do you have the permission to see this file?"
         />
       </PageSection>
     );
@@ -41,7 +37,11 @@ export default function FilePage() {
 
   return (
     <PageSection hasBodyWrapper={false}>
-      <pre style={{ fontSize: "0.8rem" }}>{fileContent}</pre>
+      <CodeBlock>
+        <CodeBlockCode>
+          <FileContent file={file} />
+        </CodeBlockCode>
+      </CodeBlock>
     </PageSection>
   );
 }

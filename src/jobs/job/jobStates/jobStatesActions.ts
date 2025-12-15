@@ -2,48 +2,45 @@ import { DateTime } from "luxon";
 import { FinalJobStatuses } from "types";
 import type {
   IJobState,
-  IJobStateWithDuration,
   IFileWithDuration,
   IJobStatus,
   IPipelineStatus,
+  IEnhancedJobState,
 } from "types";
 import { sortByOldestFirst } from "services/sort";
 
-export function addDuration(jobStates: IJobState[]) {
-  const { newJobStates } = sortByOldestFirst(jobStates).reduce(
-    (acc, jobState) => {
-      const { newFiles, duration } = sortByOldestFirst(jobState.files).reduce(
-        (fileAcc, file) => {
-          const duration = acc.currentDate
-            ? DateTime.fromISO(file.created_at)
-                .diff(acc.currentDate)
-                .as("seconds")
-            : 0;
-          fileAcc.newFiles.push({
-            ...file,
-            duration,
-          });
-          fileAcc.duration += duration;
-          acc.currentDate = DateTime.fromISO(file.updated_at);
-          return fileAcc;
-        },
-        { newFiles: [], duration: 0 } as {
-          newFiles: IFileWithDuration[];
-          duration: number;
-        },
-      );
-      acc.newJobStates.push({
-        ...jobState,
-        files: newFiles,
-        duration,
-      });
-      return acc;
-    },
-    { newJobStates: [], currentDate: null } as {
-      newJobStates: IJobStateWithDuration[];
-      currentDate: DateTime | null;
-    },
-  );
+function _addDuration(jobStates: IJobState[]) {
+  let currentDate: DateTime | null = null;
+
+  const newJobStates: {
+    duration: number;
+    files: IFileWithDuration[];
+  }[] = sortByOldestFirst(jobStates).map((job) => {
+    let jobDuration = 0;
+
+    const newFiles: IFileWithDuration[] = sortByOldestFirst(job.files).map(
+      (file) => {
+        const fileCreated = DateTime.fromISO(file.created_at);
+        const fileUpdated = DateTime.fromISO(file.updated_at);
+
+        const duration = currentDate
+          ? fileCreated.diff(currentDate).as("seconds")
+          : 0;
+        jobDuration += duration;
+
+        currentDate = fileUpdated;
+
+        return { ...file, duration };
+      },
+    );
+
+    return {
+      ...job,
+      files: newFiles,
+      duration: jobDuration,
+    };
+  });
+
   return newJobStates;
 }
 
@@ -61,7 +58,7 @@ function getFinalPipelineStatus(status: IJobStatus): IPipelineStatus {
   }
 }
 
-export function addPipelineStatus(jobStates: IJobState[]) {
+function _addPipelineStatus(jobStates: IJobState[]) {
   return sortByOldestFirst(jobStates).map((jobState, i, arr) => {
     const isTheLastOne = arr.length - 1 === i;
     const isThePenultimate = arr.length > 1 && arr.length - 2 === i;
@@ -83,7 +80,13 @@ export function addPipelineStatus(jobStates: IJobState[]) {
   });
 }
 
-export function getLongerTaskFirst(jobStates: IJobStateWithDuration[]) {
+export function addDurationAndPipelineStatus(
+  jobStates: IJobState[],
+): IEnhancedJobState[] {
+  return _addDuration(_addPipelineStatus(jobStates)) as IEnhancedJobState[];
+}
+
+export function getLongerTaskFirst(jobStates: IEnhancedJobState[]) {
   const tasks: IFileWithDuration[] = [];
   for (let index = 0; index < jobStates.length; index++) {
     const jobState = jobStates[index];
