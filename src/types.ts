@@ -676,13 +676,7 @@ export interface IJobHardwareDataNode {
 
 export type IJobHardwareData = IJobHardwareDataNode | IJobHardwareDataNode[];
 
-export type IJobExtraData = IJobHardwareData;
-
-export interface IAnalyticsHardwareJob extends IAnalyticsJob {
-  hardware?: IJobHardwareData;
-}
-
-export interface IAnalyticsExtraJob extends IAnalyticsJob {
+export interface IAnalyticsJobWithHardware extends IAnalyticsJob {
   extra?: IJobHardwareData;
 }
 

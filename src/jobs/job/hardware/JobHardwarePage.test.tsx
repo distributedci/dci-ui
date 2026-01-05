@@ -6,7 +6,7 @@ import type {
   IEnhancedJob,
   IJobHardwareData,
   IGetAnalyticsJobsResponse,
-  IAnalyticsExtraJob,
+  IAnalyticsJobWithHardware,
 } from "types";
 import { teams, topic, remotecis, products } from "__tests__/data";
 import realHardwareData from "./__tests__/fixtures/hardware-data.json";
@@ -104,7 +104,7 @@ test("Should display empty state when no hardware data", async () => {
           hits: [],
           max_score: null,
         },
-      } as IGetAnalyticsJobsResponse<IAnalyticsExtraJob>);
+      } as IGetAnalyticsJobsResponse<IAnalyticsJobWithHardware>);
     }),
   );
 
@@ -116,7 +116,7 @@ test("Should display empty state when no hardware data", async () => {
 test("Should display kernel and hardware data", async () => {
   server.use(
     ...createHardwareMockHandlers(() => {
-      const mockAnalyticsJob: IAnalyticsExtraJob = {
+      const mockAnalyticsJob: IAnalyticsJobWithHardware = {
         id: jobId,
         name: "test-job",
         status: "success",
@@ -150,7 +150,7 @@ test("Should display kernel and hardware data", async () => {
           ],
           max_score: 1.0,
         },
-      } as IGetAnalyticsJobsResponse<IAnalyticsExtraJob>);
+      } as IGetAnalyticsJobsResponse<IAnalyticsJobWithHardware>);
     }),
   );
 
@@ -176,7 +176,7 @@ test("Should display multiple nodes", async () => {
 
   server.use(
     ...createHardwareMockHandlers(() => {
-      const mockAnalyticsJob: IAnalyticsExtraJob = {
+      const mockAnalyticsJob: IAnalyticsJobWithHardware = {
         id: jobId,
         name: "test-job",
         status: "success",
@@ -210,7 +210,7 @@ test("Should display multiple nodes", async () => {
           ],
           max_score: 1.0,
         },
-      } as IGetAnalyticsJobsResponse<IAnalyticsExtraJob>);
+      } as IGetAnalyticsJobsResponse<IAnalyticsJobWithHardware>);
     }),
   );
 

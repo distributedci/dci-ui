@@ -4,7 +4,7 @@ import type {
   IJobHardwareData,
   IGetAnalyticsJobsResponse,
   IGetAnalyticsJobsEmptyResponse,
-  IAnalyticsExtraJob,
+  IAnalyticsJobWithHardware,
 } from "types";
 import { createAnalyticsSearchParams } from "analytics/analyticsApi";
 
@@ -39,7 +39,7 @@ export const { useGetJobHardwareDataQuery } = api
             }
 
             const data = response.data as
-              | IGetAnalyticsJobsResponse<IAnalyticsExtraJob>
+              | IGetAnalyticsJobsResponse<IAnalyticsJobWithHardware>
               | IGetAnalyticsJobsEmptyResponse;
 
             if (!("hits" in data) || !data.hits || data.hits.hits.length === 0) {
