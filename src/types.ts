@@ -669,15 +669,21 @@ export interface IKernelData {
   params?: string | Record<string, string>;
 }
 
-export interface IJobExtraDataNode {
+export interface IJobHardwareDataNode {
   kernel?: IKernelData;
   hardware?: IHardwareData;
 }
 
-export type IJobExtraData = IJobExtraDataNode | IJobExtraDataNode[];
+export type IJobHardwareData = IJobHardwareDataNode | IJobHardwareDataNode[];
+
+export type IJobExtraData = IJobHardwareData;
+
+export interface IAnalyticsHardwareJob extends IAnalyticsJob {
+  hardware?: IJobHardwareData;
+}
 
 export interface IAnalyticsExtraJob extends IAnalyticsJob {
-  extra?: IJobExtraData;
+  extra?: IJobHardwareData;
 }
 
 export interface IGenericAnalyticsData<T> {

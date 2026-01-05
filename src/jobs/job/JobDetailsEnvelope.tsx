@@ -14,7 +14,7 @@ const endpoints = [
   { title: "Tests", value: "tests" },
   { title: "Files", value: "files" },
   { title: "Settings", value: "settings" },
-  { title: "Extra", value: "extra" },
+  { title: "Hardware", value: "hardware" },
 ];
 
 export default function JobDetailsEnvelope({
