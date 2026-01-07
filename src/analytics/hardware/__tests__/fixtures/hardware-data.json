@@ -1534,10 +1534,7 @@
                             "dev": "8:3",
                             "handle": "GUID:fef0abd0-562d-7f41-8e73-c250a4bf6054",
                             "id": "volume:2",
-                            "logicalname": [
-                              "/dev/sda3",
-                              "/host/boot"
-                            ],
+                            "logicalname": ["/dev/sda3", "/host/boot"],
                             "physid": "3",
                             "serial": "[REMOVED]",
                             "size": 402653184,
@@ -6351,10 +6348,7 @@
             "claimed": true,
             "class": "input",
             "id": "input:0",
-            "logicalname": [
-              "input0",
-              "/dev/input/event0"
-            ],
+            "logicalname": ["input0", "/dev/input/event0"],
             "physid": "3",
             "product": "Power Button"
           },
@@ -6365,10 +6359,7 @@
             "claimed": true,
             "class": "input",
             "id": "input:1",
-            "logicalname": [
-              "input1",
-              "/dev/input/event1"
-            ],
+            "logicalname": ["input1", "/dev/input/event1"],
             "physid": "4",
             "product": "PC Speaker"
           }
@@ -7905,10 +7896,7 @@
                             "dev": "8:3",
                             "handle": "GUID:fef0abd0-562d-7f41-8e73-c250a4bf6054",
                             "id": "volume:2",
-                            "logicalname": [
-                              "/dev/sda3",
-                              "/host/boot"
-                            ],
+                            "logicalname": ["/dev/sda3", "/host/boot"],
                             "physid": "3",
                             "serial": "[REMOVED]",
                             "size": 402653184,
@@ -12724,10 +12712,7 @@
             "claimed": true,
             "class": "input",
             "id": "input:0",
-            "logicalname": [
-              "input0",
-              "/dev/input/event0"
-            ],
+            "logicalname": ["input0", "/dev/input/event0"],
             "physid": "3",
             "product": "Power Button"
           },
@@ -12738,10 +12723,7 @@
             "claimed": true,
             "class": "input",
             "id": "input:1",
-            "logicalname": [
-              "input1",
-              "/dev/input/event1"
-            ],
+            "logicalname": ["input1", "/dev/input/event1"],
             "physid": "4",
             "product": "PC Speaker"
           }

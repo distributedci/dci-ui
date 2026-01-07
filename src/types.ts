@@ -266,10 +266,6 @@ export interface IJobState extends IJobStateInJob {
   files: IFile[];
 }
 
-
-
-
-
 export interface IEnhancedJobState extends IJobStateInJob {
   pipelineStatus: IPipelineStatus;
   duration: number;
@@ -612,7 +608,7 @@ export interface IAnalyticsResultsJob extends IAnalyticsJob {
   }[];
 }
 
-export interface IAnalyticsTestsuite {
+interface IAnalyticsTestsuite {
   name: string;
   testcases?: {
     action: ITestCaseActionType;
@@ -629,55 +625,6 @@ export interface IAnalyticsTest {
 
 export interface IAnalyticsTestsJob extends IAnalyticsJob {
   tests: IAnalyticsTest[];
-}
-
-export interface INetworkCard {
-  link_status?: string;
-  firmware_version?: string;
-  interface_name?: string;
-}
-
-export interface IDisk {
-  [key: string]: any;
-}
-
-export interface IHardwareData {
-  node?: string;
-  error?: string;
-  data?: {
-    motherboard?: string | { type?: string };
-    memory?: number | { amount?: number };
-    disks?: IDisk[];
-    network_cards?: INetworkCard[];
-    product?: string;
-    vendor?: string;
-    serial?: string;
-    capabilities?: Record<string, string>;
-    children?: any[];
-    [key: string]: any;
-  };
-  // Legacy format support
-  motherboard?: string | { type?: string };
-  memory?: number | { amount?: number };
-  disks?: IDisk[];
-  network_cards?: INetworkCard[];
-}
-
-export interface IKernelData {
-  node?: string;
-  version?: string;
-  params?: string | Record<string, string>;
-}
-
-export interface IJobHardwareDataNode {
-  kernel?: IKernelData;
-  hardware?: IHardwareData;
-}
-
-export type IJobHardwareData = IJobHardwareDataNode | IJobHardwareDataNode[];
-
-export interface IAnalyticsJobWithHardware extends IAnalyticsJob {
-  extra?: IJobHardwareData;
 }
 
 export interface IGenericAnalyticsData<T> {

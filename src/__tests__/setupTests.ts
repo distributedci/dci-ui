@@ -9,7 +9,6 @@ beforeAll(() => server.listen());
 afterEach(() => {
   server.resetHandlers();
   cleanup();
-  // Clear localStorage between tests to prevent pollution
   localStorageMock.clear();
 });
 

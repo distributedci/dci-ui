@@ -14,9 +14,9 @@ import {
 import { useMemo, useState } from "react";
 import JSZip from "jszip";
 import FileSaver from "file-saver";
-import { humanFileSize } from "./filesGetters";
 import { Table, Thead, Tr, Th, Tbody } from "@patternfly/react-table";
 import { getFileContentAsBlob } from "./filesApi";
+import { humanizeBytes } from "services/bytes";
 
 interface FilesListProps {
   job: IEnhancedJob;
@@ -93,8 +93,8 @@ export default function FilesList({ job }: FilesListProps) {
                 isDisabled={isDownloading}
               >
                 {textSearch === ""
-                  ? `Download all files (${humanFileSize(filesFilteredSize)})`
-                  : `Download these files (${humanFileSize(filesFilteredSize)})`}
+                  ? `Download all files (${humanizeBytes(filesFilteredSize)})`
+                  : `Download these files (${humanizeBytes(filesFilteredSize)})`}
               </Button>
             </ToolbarItem>
           </ToolbarGroup>

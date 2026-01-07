@@ -13,8 +13,8 @@ const endpoints = [
   { title: "Logs", value: "jobStates" },
   { title: "Tests", value: "tests" },
   { title: "Files", value: "files" },
-  { title: "Settings", value: "settings" },
   { title: "Hardware", value: "hardware" },
+  { title: "Settings", value: "settings" },
 ];
 
 export default function JobDetailsEnvelope({

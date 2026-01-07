@@ -1,6 +1,6 @@
 import FileSaver from "file-saver";
 import { Button } from "@patternfly/react-core";
-import { humanFileSize, isATextFile } from "./filesGetters";
+import { isATextFile } from "./filesGetters";
 import {
   FileDownloadIcon,
   EyeIcon,
@@ -13,6 +13,7 @@ import SeeFileContentModal from "./SeeFileContentModal";
 import { Tr, Td } from "@patternfly/react-table";
 import { useState } from "react";
 import { getFileContentAsBlob } from "./filesApi";
+import { humanizeBytes } from "services/bytes";
 
 interface FileProps {
   file: IFile;
@@ -37,7 +38,7 @@ export default function File({ file }: FileProps) {
           file.name
         )}
       </Td>
-      <Td>{humanFileSize(file.size)}</Td>
+      <Td>{humanizeBytes(file.size)}</Td>
       <Td>{file.mime}</Td>
       <Td className="text-center">
         <Button

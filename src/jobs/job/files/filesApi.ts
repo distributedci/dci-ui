@@ -12,7 +12,8 @@ export const { useGetFileContentQuery, useGetFileQuery } = api
           url: `/files/${id}`,
           method: "GET",
         }),
-        transformResponse: (response: { file: IFile }) => normalizeFile(response.file),
+        transformResponse: (response: { file: IFile }) =>
+          normalizeFile(response.file),
       }),
       getFileContent: builder.query<string, IFile>({
         query: ({ id }) => ({

@@ -5,7 +5,6 @@ import { useGetEnhancedJobQuery } from "jobs/jobsApi";
 import { skipToken } from "@reduxjs/toolkit/query";
 import JobDetailsEnvelope from "./JobDetailsEnvelope";
 import JobDetailsSkeleton from "./JobDetailsSkeleton";
-import { BlinkLogo } from "ui";
 import {
   Button,
   EmptyState,
@@ -36,9 +35,7 @@ function JobProvider({ children }: JobProviderProps) {
   if (isLoading) {
     return (
       <JobDetailsEnvelope job_id={job_id}>
-        <JobDetailsSkeleton>
-          <EmptyState icon={BlinkLogo}></EmptyState>
-        </JobDetailsSkeleton>
+        <JobDetailsSkeleton />
       </JobDetailsEnvelope>
     );
   }
@@ -46,24 +43,22 @@ function JobProvider({ children }: JobProviderProps) {
   if (!job) {
     return (
       <JobDetailsEnvelope job_id={job_id}>
-        <JobDetailsSkeleton>
-          <EmptyState
-            headingLevel="h4"
-            titleText="No job"
-            variant={EmptyStateVariant.xs}
-          >
-            <EmptyStateBody>
-              {`We can't get the job with id ${job_id}.`}
-            </EmptyStateBody>
-            <EmptyStateFooter>
-              <EmptyStateActions>
-                <Button variant="link" onClick={() => navigate("/jobs")}>
-                  See jobs
-                </Button>
-              </EmptyStateActions>
-            </EmptyStateFooter>
-          </EmptyState>
-        </JobDetailsSkeleton>
+        <EmptyState
+          headingLevel="h4"
+          titleText="No job"
+          variant={EmptyStateVariant.xs}
+        >
+          <EmptyStateBody>
+            {`We can't get the job with id ${job_id}.`}
+          </EmptyStateBody>
+          <EmptyStateFooter>
+            <EmptyStateActions>
+              <Button variant="link" onClick={() => navigate("/jobs")}>
+                See jobs
+              </Button>
+            </EmptyStateActions>
+          </EmptyStateFooter>
+        </EmptyState>
       </JobDetailsEnvelope>
     );
   }
