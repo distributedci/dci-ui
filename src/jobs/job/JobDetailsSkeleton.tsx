@@ -1,26 +1,15 @@
-import { PageSection } from "@patternfly/react-core";
-import React from "react";
+import { Card, CardBody, Skeleton } from "@patternfly/react-core";
 
-interface JobDetailsSkeletonProps {
-  children: React.ReactNode;
-}
-
-export default function JobDetailsSkeleton({
-  children,
-}: JobDetailsSkeletonProps) {
+export default function JobDetailsSkeleton() {
   return (
-    <>
-      <PageSection
-        hasBodyWrapper={false}
-        style={{
-          minHeight: "50vh",
-          display: "flex",
-          justifyContent: "center",
-          alignContent: "center",
-        }}
-      >
-        {children}
-      </PageSection>
-    </>
+    <Card>
+      <CardBody>
+        <div
+          style={{ height: "260px", display: "flex", alignItems: "flex-end" }}
+        >
+          <Skeleton height="100%" width="100%" />
+        </div>
+      </CardBody>
+    </Card>
   );
 }

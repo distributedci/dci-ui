@@ -25,6 +25,7 @@ import JobStatesPage from "jobs/job/jobStates/JobStatesPage";
 import JobTestsPage from "jobs/job/tests/JobTestsPage";
 import JobFilesPage from "jobs/job/files/JobFilesPage";
 import JobSettingsPage from "jobs/job/settings/JobSettingsPage";
+import JobHardwarePage from "jobs/job/hardware/JobHardwarePage";
 import FilePage from "jobs/job/files/FilePage";
 import JobTestPage from "jobs/job/tests/test/JobTestPage";
 import ProductsPage from "products/ProductsPage";
@@ -94,6 +95,7 @@ export default function App() {
                     <Route path=":file_id" element={<JobTestPage />} />
                   </Route>
                   <Route path="files" element={<JobFilesPage />} />
+                  <Route path="hardware" element={<JobHardwarePage />} />
                   <Route path="settings" element={<JobSettingsPage />} />
                 </Route>
               </Route>

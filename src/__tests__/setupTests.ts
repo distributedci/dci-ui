@@ -9,6 +9,7 @@ beforeAll(() => server.listen());
 afterEach(() => {
   server.resetHandlers();
   cleanup();
+  localStorageMock.clear();
 });
 
 afterAll(() => server.close());

@@ -266,10 +266,6 @@ export interface IJobState extends IJobStateInJob {
   files: IFile[];
 }
 
-
-
-
-
 export interface IEnhancedJobState extends IJobStateInJob {
   pipelineStatus: IPipelineStatus;
   duration: number;
@@ -612,7 +608,7 @@ export interface IAnalyticsResultsJob extends IAnalyticsJob {
   }[];
 }
 
-export interface IAnalyticsTestsuite {
+interface IAnalyticsTestsuite {
   name: string;
   testcases?: {
     action: ITestCaseActionType;
