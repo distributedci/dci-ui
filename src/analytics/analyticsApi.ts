@@ -152,6 +152,7 @@ export const {
   useLazyGetAnalyticJobsQuery,
   useLazyGetAnalyticsKeysValuesJobsQuery,
   useLazyGetAnalyticsTestsJobsQuery,
+  useLazyGetAnalyticsHardwareJobsQuery,
   useLazyGetSuggestionsQuery,
 } = api.enhanceEndpoints({ addTagTypes: ["Analytics"] }).injectEndpoints({
   endpoints: (builder) => ({
@@ -164,6 +165,21 @@ export const {
           {
             ...arg,
             includes: genericIncludes,
+          },
+          fetchWithBQ,
+        );
+      },
+      providesTags: ["Analytics"],
+    }),
+    getAnalyticsHardwareJobs: builder.query<
+      IGenericAnalyticsData<IAnalyticsJob & { extra?: any }>,
+      AnalyticsToolbarSearch
+    >({
+      async queryFn(arg, _queryApi, _extraOptions, fetchWithBQ) {
+        return getAllAnalyticsJobs<IAnalyticsJob & { extra?: any }>(
+          {
+            ...arg,
+            includes: `${genericIncludes},extra.hardware,extra.kernel`,
           },
           fetchWithBQ,
         );
