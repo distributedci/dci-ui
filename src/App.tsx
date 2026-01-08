@@ -18,6 +18,7 @@ import TasksDurationPerJobPage from "analytics/TasksDurationPerJob/TasksDuration
 import AnalyticsPage from "analytics/AnalyticsPage";
 import JobStatsPage from "analytics/jobsStats/JobStatsPage";
 import ComponentCoveragePage from "analytics/ComponentCoverage/ComponentCoveragePage";
+import HardwareCoveragePage from "analytics/HardwareCoverage/HardwareCoveragePage";
 import JunitComparisonPage from "analytics/JunitComparison/JunitComparisonPage";
 import PipelinesPage from "analytics/Pipelines/PipelinesPage";
 import KeyValuesPage from "analytics/KeyValues/KeyValuesPage";
@@ -74,6 +75,10 @@ export default function App() {
                 <Route
                   path="component_coverage"
                   element={<ComponentCoveragePage />}
+                />
+                <Route
+                  path="hardware_coverage"
+                  element={<HardwareCoveragePage />}
                 />
                 <Route
                   path="tasks_duration_per_job"
