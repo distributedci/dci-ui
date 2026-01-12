@@ -3,6 +3,7 @@ import { useGetJobHardwareDataQuery } from "analytics/hardware/hardwareApi";
 import { EmptyState } from "ui";
 import { skipToken } from "@reduxjs/toolkit/query";
 import JobHardwareNode from "./JobHardwareNode";
+import JobHardwareConsistency from "./JobHardwareConsistency";
 import { sortByName } from "services/sort";
 import { useParams } from "react-router";
 import { ServerGroupIcon } from "@patternfly/react-icons";
@@ -48,6 +49,7 @@ export default function JobHardwarePage() {
 
   return (
     <div>
+      <JobHardwareConsistency nodes={data} />
       {sortByName(data).map((node) => (
         <div key={node.name} className="pf-v6-u-mb-md">
           <JobHardwareNode node={node} />
