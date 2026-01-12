@@ -12,13 +12,13 @@ import {
 } from "./hardwareConsistency";
 
 function ConsistencyAlert({
-  role,
+  roleType,
   result,
 }: {
-  role: "directors" | "workers";
-  result: RoleConsistency[typeof role];
+  roleType: "directors" | "workers";
+  result: RoleConsistency[typeof roleType];
 }) {
-  const roleLabel = role === "directors" ? "Directors" : "Workers";
+  const roleLabel = roleType === "directors" ? "Directors" : "Workers";
 
   if (result.isConsistent) {
     return (
@@ -77,10 +77,10 @@ export default function JobHardwareConsistency({
           Hardware Consistency
         </Content>
         {hasDirectors && (
-          <ConsistencyAlert role="directors" result={consistency.directors} />
+          <ConsistencyAlert roleType="directors" result={consistency.directors} />
         )}
         {hasWorkers && (
-          <ConsistencyAlert role="workers" result={consistency.workers} />
+          <ConsistencyAlert roleType="workers" result={consistency.workers} />
         )}
       </CardBody>
     </Card>
