@@ -5,16 +5,6 @@ import type {
 } from "analytics/hardware/hardwareFormatter";
 import { humanizeBytes } from "services/bytes";
 
-export interface ConsistencyResult {
-  isConsistent: boolean;
-  differences: string[];
-}
-
-export interface RoleConsistency {
-  directors: ConsistencyResult;
-  workers: ConsistencyResult;
-}
-
 function _isIgnoredKernelParamValue(value: string): boolean {
   return value.toLowerCase().startsWith("uuid=");
 }

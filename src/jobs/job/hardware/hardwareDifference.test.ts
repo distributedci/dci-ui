@@ -207,6 +207,14 @@ describe("getHardwareDifferences", () => {
               speed: "1Gbit/s",
               firmwareVersion: "1.0",
             },
+            {
+              vendor: "Vendor2",
+              product: "Card2",
+              interfaceName: "eth1",
+              linkStatus: "up",
+              speed: "1Gbit/s",
+              firmwareVersion: "1.0",
+            },
           ],
         },
       },
@@ -228,10 +236,18 @@ describe("getHardwareDifferences", () => {
           disks: [],
           networkCards: [
             {
-              vendor: "Vendor2",
+              vendor: "Vendor1",
               product: "Card1",
               interfaceName: "eth0",
               linkStatus: "up",
+              speed: "1Gbit/s",
+              firmwareVersion: "1.0",
+            },
+            {
+              vendor: "Vendor2",
+              product: "Card2",
+              interfaceName: "eth1",
+              linkStatus: "down",
               speed: "1Gbit/s",
               firmwareVersion: "1.0",
             },
@@ -241,7 +257,7 @@ describe("getHardwareDifferences", () => {
     ];
 
     expect(getHardwareDifferences(nodes)).toEqual([
-      'Network interface "eth0" differs in: vendor (Vendor1, Vendor2)',
+      'Network interface "eth1" differs in: link status (up, down)',
     ]);
   });
   test("should return differences for different network cards numbers", () => {
