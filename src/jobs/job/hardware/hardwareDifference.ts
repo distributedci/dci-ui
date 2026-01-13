@@ -1,10 +1,10 @@
 import type {
   INode,
   INodeHardware,
-  INodeKernel,
   IDisk,
   INetworkCard,
 } from "analytics/hardware/hardwareFormatter";
+import { humanizeBytes } from "services/bytes";
 
 export interface ConsistencyResult {
   isConsistent: boolean;
@@ -16,34 +16,15 @@ export interface RoleConsistency {
   workers: ConsistencyResult;
 }
 
-export function parseKernelParams(params: string): Map<string, string> {
-  const paramsMap = new Map<string, string>();
-  if (!params || params.trim() === "") return paramsMap;
-
-  const parts = params.split(/\s+/).filter((p) => p.trim() !== "");
-
-  for (const part of parts) {
-    const equalIndex = part.indexOf("=");
-    if (equalIndex === -1) continue;
-
-    const key = part.substring(0, equalIndex);
-    const value = part.substring(equalIndex + 1);
-
-    if (value.startsWith("UUID")) continue;
-
-    paramsMap.set(key, value);
-  }
-
-  return paramsMap;
+function _isIgnoredKernelParamValue(value: string): boolean {
+  return value.toLowerCase().startsWith("uuid=");
 }
 
-export function compareKernel(nodes: INode[]): string[] {
-  const differences: string[] = [];
-  const kernels = nodes
-    .map((node) => node.kernel)
-    .filter((k): k is INodeKernel => k !== null);
+function compareKernel(nodes: INode[]): string[] {
+  const kernels = nodes.map((node) => node.kernel).filter((k) => k !== null);
+  if (kernels.length <= 1) return [];
 
-  if (kernels.length <= 1) return differences;
+  const differences: string[] = [];
 
   const versions = new Set(kernels.map((k) => k.version));
   if (versions.size > 1) {
@@ -52,27 +33,40 @@ export function compareKernel(nodes: INode[]): string[] {
     );
   }
 
-  const paramsMaps = kernels.map((k) => parseKernelParams(k.params));
+  const parameters = kernels.map((k) => k.params);
+
   const allKeys = new Set<string>();
-  paramsMaps.forEach((map) => {
-    map.forEach((_, key) => allKeys.add(key));
-  });
+  for (const parameter of parameters) {
+    Object.keys(parameter).forEach((k) => allKeys.add(k));
+  }
 
   for (const key of allKeys) {
     const values = new Set<string>();
-    paramsMaps.forEach((map) => {
-      const value = map.get(key);
-      if (value !== undefined) {
-        values.add(value);
-      }
-    });
+    let presentCount = 0;
 
-    const keyExistsInAll = paramsMaps.every((map) => map.has(key));
-    if (!keyExistsInAll) {
+    for (const parameter of parameters) {
+      if (key in parameter) {
+        const value = parameter[key];
+        if (!_isIgnoredKernelParamValue(value)) {
+          presentCount++;
+          values.add(value);
+        }
+      }
+    }
+
+    if (presentCount === 0) continue;
+
+    if (presentCount !== parameters.length) {
       differences.push(`Kernel parameter "${key}" is missing in some nodes`);
-    } else if (values.size > 1) {
+    }
+
+    if (values.size > 1) {
       differences.push(
-        `Kernel parameter "${key}" differs: ${Array.from(values).join(", ")}`,
+        `Kernel parameter "${key}" has different values across nodes: ${[
+          ...values,
+        ]
+          .map((v) => `"${v}"`)
+          .join(", ")}`,
       );
     }
   }
@@ -118,9 +112,7 @@ export function compareBasicHardware(nodes: INode[]): string[] {
   const memories = new Set(hardwareList.map((h) => h.memory));
   if (memories.size > 1) {
     differences.push(
-      `Memory differs: ${Array.from(memories)
-        .map((m) => `${(m / 1024 / 1024 / 1024).toFixed(2)} GB`)
-        .join(", ")}`,
+      `Memory differs: ${Array.from(memories).map(humanizeBytes).join(", ")}`,
     );
   }
 
@@ -164,9 +156,7 @@ export function compareDisks(nodes: INode[]): string[] {
       }
       if (sizes.size > 1) {
         issues.push(
-          `size (${Array.from(sizes)
-            .map((s) => `${(s / 1024 / 1024 / 1024).toFixed(2)} GB`)
-            .join(", ")})`,
+          `size (${Array.from(sizes).map(humanizeBytes).join(", ")})`,
         );
       }
       differences.push(
@@ -245,27 +235,14 @@ export function compareNetworkCards(nodes: INode[]): string[] {
   return differences;
 }
 
-function checkRoleConsistency(nodes: INode[]): ConsistencyResult {
-  if (nodes.length <= 1) {
-    return { isConsistent: true, differences: [] };
-  }
+export type INodeDifferences = string[];
 
-  const differences = [
+export function getHardwareDifferences(nodes: INode[]): INodeDifferences {
+  if (nodes.length <= 1) return [];
+  return [
     ...compareKernel(nodes),
     ...compareBasicHardware(nodes),
     ...compareDisks(nodes),
     ...compareNetworkCards(nodes),
   ];
-
-  return { isConsistent: differences.length === 0, differences };
-}
-
-export function checkHardwareConsistency(nodes: INode[]): RoleConsistency {
-  const directors = nodes.filter((node) => node.role === "director");
-  const workers = nodes.filter((node) => node.role === "worker");
-
-  return {
-    directors: checkRoleConsistency(directors),
-    workers: checkRoleConsistency(workers),
-  };
 }

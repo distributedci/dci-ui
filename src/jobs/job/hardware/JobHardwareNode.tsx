@@ -20,6 +20,9 @@ import {} from "@patternfly/react-tokens";
 import { humanizeBytes } from "services/bytes";
 
 function KernelSection({ kernel }: { kernel: INodeKernel }) {
+  const params = Object.entries(kernel.params)
+    .map(([key, value]) => `${key}=${value}`)
+    .join(" ");
   return (
     <>
       <DescriptionListGroup>
@@ -30,7 +33,7 @@ function KernelSection({ kernel }: { kernel: INodeKernel }) {
       </DescriptionListGroup>
       <DescriptionListGroup>
         <DescriptionListTerm>Params</DescriptionListTerm>
-        <DescriptionListDescription>{kernel.params}</DescriptionListDescription>
+        <DescriptionListDescription>{params}</DescriptionListDescription>
       </DescriptionListGroup>
     </>
   );
