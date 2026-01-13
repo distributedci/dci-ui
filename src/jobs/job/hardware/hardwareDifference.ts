@@ -1,6 +1,5 @@
 import type {
   INode,
-  INodeHardware,
   IDisk,
   INetworkCard,
 } from "analytics/hardware/hardwareFormatter";
@@ -21,10 +20,10 @@ function _isIgnoredKernelParamValue(value: string): boolean {
 }
 
 function compareKernel(nodes: INode[]): string[] {
-  const kernels = nodes.map((node) => node.kernel).filter((k) => k !== null);
-  if (kernels.length <= 1) return [];
-
   const differences: string[] = [];
+  const kernels = nodes.map((node) => node.kernel).filter((k) => k !== null);
+
+  if (kernels.length < 2) return differences;
 
   const versions = new Set(kernels.map((k) => k.version));
   if (versions.size > 1) {
@@ -78,9 +77,9 @@ export function compareBasicHardware(nodes: INode[]): string[] {
   const differences: string[] = [];
   const hardwareList = nodes
     .map((node) => node.hardware)
-    .filter((h): h is INodeHardware => h !== null);
+    .filter((h) => h !== null);
 
-  if (hardwareList.length <= 1) return differences;
+  if (hardwareList.length < 2) return differences;
 
   const products = new Set(hardwareList.map((h) => h.product));
   if (products.size > 1) {
@@ -123,9 +122,9 @@ export function compareDisks(nodes: INode[]): string[] {
   const differences: string[] = [];
   const hardwareList = nodes
     .map((node) => node.hardware)
-    .filter((h): h is INodeHardware => h !== null);
+    .filter((h) => h !== null);
 
-  if (hardwareList.length <= 1) return differences;
+  if (hardwareList.length < 2) return differences;
 
   const disksByDevice = new Map<string, IDisk[]>();
 
@@ -172,9 +171,9 @@ export function compareNetworkCards(nodes: INode[]): string[] {
   const differences: string[] = [];
   const hardwareList = nodes
     .map((node) => node.hardware)
-    .filter((h): h is INodeHardware => h !== null);
+    .filter((h) => h !== null);
 
-  if (hardwareList.length <= 1) return differences;
+  if (hardwareList.length < 2) return differences;
 
   const networkCardCounts = hardwareList.map((h) => h.networkCards.length);
   const uniqueCounts = new Set(networkCardCounts);
@@ -199,33 +198,26 @@ export function compareNetworkCards(nodes: INode[]): string[] {
 
   cardsByInterface.forEach((cards, interfaceName) => {
     if (cards.length < 2) return;
-
+    const issues: string[] = [];
     const linkStatuses = new Set(cards.map((c) => c.linkStatus));
+    if (linkStatuses.size > 1) {
+      issues.push(`link status (${Array.from(linkStatuses).join(", ")})`);
+    }
     const firmwareVersions = new Set(cards.map((c) => c.firmwareVersion));
+    if (firmwareVersions.size > 1) {
+      issues.push(
+        `firmware version (${Array.from(firmwareVersions).join(", ")})`,
+      );
+    }
     const vendors = new Set(cards.map((c) => c.vendor));
+    if (vendors.size > 1) {
+      issues.push(`vendor (${Array.from(vendors).join(", ")})`);
+    }
     const products = new Set(cards.map((c) => c.product));
-
-    if (
-      linkStatuses.size > 1 ||
-      firmwareVersions.size > 1 ||
-      vendors.size > 1 ||
-      products.size > 1
-    ) {
-      const issues: string[] = [];
-      if (linkStatuses.size > 1) {
-        issues.push(`link status (${Array.from(linkStatuses).join(", ")})`);
-      }
-      if (firmwareVersions.size > 1) {
-        issues.push(
-          `firmware version (${Array.from(firmwareVersions).join(", ")})`,
-        );
-      }
-      if (vendors.size > 1) {
-        issues.push(`vendor (${Array.from(vendors).join(", ")})`);
-      }
-      if (products.size > 1) {
-        issues.push(`product (${Array.from(products).join(", ")})`);
-      }
+    if (products.size > 1) {
+      issues.push(`product (${Array.from(products).join(", ")})`);
+    }
+    if (issues.length > 0) {
       differences.push(
         `Network interface "${interfaceName}" differs in: ${issues.join(", ")}`,
       );
@@ -238,7 +230,7 @@ export function compareNetworkCards(nodes: INode[]): string[] {
 export type INodeDifferences = string[];
 
 export function getHardwareDifferences(nodes: INode[]): INodeDifferences {
-  if (nodes.length <= 1) return [];
+  if (nodes.length < 2) return [];
   return [
     ...compareKernel(nodes),
     ...compareBasicHardware(nodes),
