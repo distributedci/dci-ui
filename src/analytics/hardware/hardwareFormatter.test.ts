@@ -9,8 +9,20 @@ test("formatHardwareData", () => {
       name: "worker-0.test-lab.example.com",
       kernel: {
         version: "5.14.0-570.64.1.el9_6.x86_64",
-        params:
-          "BOOT_IMAGE=(hd0,gpt3)/boot/ostree/rhcos-fcf7dd9c3b9a4c4bbb02379c0c8eba69c2e642604d73730606e4031e92dff169/vmlinuz-5.14.0-570.64.1.el9_6.x86_64 boot=UUID=374e8e0a-b33f-48e1-bf1d-a0cc9db66c8d cgroup_no_v1=all ignition.platform.id=metal ostree=/ostree/boot.0/rhcos/fcf7dd9c3b9a4c4bbb02379c0c8eba69c2e642604d73730606e4031e92dff169/0 psi=0 root=UUID=3956aaab-98f1-46c8-ad90-68398149e7fe rootflags=prjquota rw= systemd.unified_cgroup_hierarchy=1",
+        params: {
+          BOOT_IMAGE:
+            "(hd0,gpt3)/boot/ostree/rhcos-fcf7dd9c3b9a4c4bbb02379c0c8eba69c2e642604d73730606e4031e92dff169/vmlinuz-5.14.0-570.64.1.el9_6.x86_64",
+          boot: "UUID=374e8e0a-b33f-48e1-bf1d-a0cc9db66c8d",
+          cgroup_no_v1: "all",
+          "ignition.platform.id": "metal",
+          ostree:
+            "/ostree/boot.0/rhcos/fcf7dd9c3b9a4c4bbb02379c0c8eba69c2e642604d73730606e4031e92dff169/0",
+          psi: "0",
+          root: "UUID=3956aaab-98f1-46c8-ad90-68398149e7fe",
+          rootflags: "prjquota",
+          rw: "",
+          "systemd.unified_cgroup_hierarchy": "1",
+        },
       },
       hardware: {
         product: "PowerEdge R740 (SKU=0715;ModelName=PowerEdge R740)",
@@ -72,8 +84,20 @@ test("formatHardwareData", () => {
       name: "worker-1.test-lab.example.com",
       kernel: {
         version: "5.14.0-570.64.1.el9_6.x86_64",
-        params:
-          "BOOT_IMAGE=(hd0,gpt3)/boot/ostree/rhcos-fcf7dd9c3b9a4c4bbb02379c0c8eba69c2e642604d73730606e4031e92dff169/vmlinuz-5.14.0-570.64.1.el9_6.x86_64 boot=UUID=24a32cf3-da78-4bc5-8735-626ca22716a4 cgroup_no_v1=all ignition.platform.id=metal ostree=/ostree/boot.0/rhcos/fcf7dd9c3b9a4c4bbb02379c0c8eba69c2e642604d73730606e4031e92dff169/0 psi=0 root=UUID=f5316d87-57bd-4cdc-84f8-f19d48abeae1 rootflags=prjquota rw= systemd.unified_cgroup_hierarchy=1",
+        params: {
+          BOOT_IMAGE:
+            "(hd0,gpt3)/boot/ostree/rhcos-fcf7dd9c3b9a4c4bbb02379c0c8eba69c2e642604d73730606e4031e92dff169/vmlinuz-5.14.0-570.64.1.el9_6.x86_64",
+          boot: "UUID=24a32cf3-da78-4bc5-8735-626ca22716a4",
+          cgroup_no_v1: "all",
+          "ignition.platform.id": "metal",
+          ostree:
+            "/ostree/boot.0/rhcos/fcf7dd9c3b9a4c4bbb02379c0c8eba69c2e642604d73730606e4031e92dff169/0",
+          psi: "0",
+          root: "UUID=f5316d87-57bd-4cdc-84f8-f19d48abeae1",
+          rootflags: "prjquota",
+          rw: "",
+          "systemd.unified_cgroup_hierarchy": "1",
+        },
       },
       hardware: {
         product: "PowerEdge R740 (SKU=0715;ModelName=PowerEdge R740)",

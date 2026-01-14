@@ -41,12 +41,8 @@ export interface IHardwareData {
 
 export type IKernelDataParams =
   | string
-  | number
-  | boolean
-  | null
-  | undefined
-  | IKernelDataParams[]
-  | { [k: string]: IKernelDataParams };
+  | { [key: string]: IKernelDataParams };
+
 
 export interface IKernelData {
   node?: string;

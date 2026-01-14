@@ -5,54 +5,27 @@ import type {
   IKernelDataParams,
 } from "./hardwareApi";
 
-function _formatKernelParams(params: IKernelDataParams): string {
-  const separator = " ";
-  const nestedSeparator = ".";
+function flattenObject(
+  obj: IKernelDataParams,
+  parentKey = "",
+  out: Record<string, string> = {},
+): Record<string, string> {
+  for (const [key, value] of Object.entries(obj)) {
+    const newKey = parentKey ? `${parentKey}.${key}` : key;
 
-  const output: string[] = [];
-
-  const isObject = (v: unknown): v is Record<string, unknown> =>
-    typeof v === "object" && v !== null && !Array.isArray(v);
-
-  const visit = (value: IKernelDataParams, path: string) => {
-    if (Array.isArray(value)) {
-      for (let i = 0; i < value.length; i++) {
-        const nextPath = path ? `${path}${nestedSeparator}${i}` : String(i);
-        visit(value[i], nextPath);
-      }
-      return;
+    if (typeof value === "string") {
+      out[newKey] = value;
+    } else {
+      flattenObject(value, newKey, out);
     }
-
-    if (isObject(value)) {
-      for (const [k, v] of Object.entries(value)) {
-        const nextPath = path ? `${path}${nestedSeparator}${k}` : k;
-        visit(v as IKernelDataParams, nextPath);
-      }
-      return;
-    }
-
-    if (value === undefined) {
-      output.push(`${path}=undefined`);
-      return;
-    }
-
-    if (value === null) {
-      output.push(`${path}=null`);
-      return;
-    }
-
-    output.push(`${path}=${String(value)}`);
-  };
-
-  visit(params, "");
-
-  return output.join(separator);
+  }
+  return out;
 }
 
 function _parseKernelNode(kernelData: IKernelData): INodeKernel {
   return {
     version: kernelData.version || "N/A",
-    params: _formatKernelParams(kernelData.params),
+    params: kernelData.params ? flattenObject(kernelData.params) : {},
   };
 }
 
@@ -313,9 +286,10 @@ export interface INetworkCard {
   speed: string;
   firmwareVersion: string;
 }
+
 export interface INodeKernel {
   version: string;
-  params: string;
+  params: Record<string, string>;
 }
 export interface INodeHardware {
   product: string;
