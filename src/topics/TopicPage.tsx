@@ -16,12 +16,10 @@ import { Breadcrumb, CopyButton, EmptyState, StateLabel } from "ui";
 import type { ITopic } from "types";
 import { useParams } from "react-router";
 import CardLine from "ui/CardLine";
-import { useGetTopicQuery, useUpdateTopicMutation } from "./topicsApi";
+import { useGetTopicQuery } from "./topicsApi";
 import { skipToken } from "@reduxjs/toolkit/query";
-import EditTopicModal from "./EditTopicModal";
 import ComponentsTableWithToolbar from "./ComponentsTableWithToolbar";
 import { fromNow } from "services/date";
-import { useAuth } from "auth/authSelectors";
 import LoadingPageSection from "ui/LoadingPageSection";
 
 function stringifyTopicData(topic: ITopic) {
@@ -123,10 +121,8 @@ function TopicDetails({ topic }: { topic: ITopic }) {
 }
 
 export default function TopicPage() {
-  const { currentUser } = useAuth();
   const { topic_id } = useParams();
 
-  const [updateTopic, { isLoading: isUpdating }] = useUpdateTopicMutation();
   const { data: topic, isLoading } = useGetTopicQuery(
     topic_id ? topic_id : skipToken,
   );
@@ -155,15 +151,6 @@ export default function TopicPage() {
       />
       <Content component="h1">{`Topic ${topic.name}`}</Content>
       <Content component="p">{`Details page for topic ${topic.name}`}</Content>
-      {currentUser?.isSuperAdmin ? (
-        <div className="pf-v6-u-mb-md">
-          <EditTopicModal
-            topic={topic}
-            onSubmit={updateTopic}
-            isDisabled={isUpdating}
-          />
-        </div>
-      ) : null}
       <TopicDetails topic={topic} />
       <ComponentsTableWithToolbar topic={topic} />
     </PageSection>
