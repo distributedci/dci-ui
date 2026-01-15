@@ -406,6 +406,7 @@ function Sidebar({ isNavOpen }: SidebarProps) {
         <DCINavItem to="/admin/users">Users</DCINavItem>
         {currentUser.isSuperAdmin && (
           <>
+            <DCINavItem to="/admin/topics">Topics</DCINavItem>
             <DCINavItem to="/admin/remotecis">Remotecis</DCINavItem>
             <DCINavItem to="/admin/feeders">Feeders</DCINavItem>
           </>

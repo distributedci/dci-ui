@@ -43,6 +43,7 @@ import AdminTeamPage from "admin/teams/TeamPage";
 import AdminUsersPage from "admin/users/UsersPage";
 import AdminUserPage from "admin/users/UserPage";
 import AdminRemotecisPage from "admin/remotecis/RemotecisPage";
+import AdminTopicsPage from "admin/topics/TopicsPage";
 import AdminFeedersPage from "admin/feeders/FeedersPage";
 
 import Page404 from "pages/Page404";
@@ -126,6 +127,7 @@ export default function App() {
                 <Route index element={<AdminUsersPage />} />
                 <Route path=":user_id" element={<AdminUserPage />} />
               </Route>
+              <Route path="topics" element={<AdminTopicsPage />} />
               <Route path="remotecis" element={<AdminRemotecisPage />} />
               <Route path="feeders" element={<AdminFeedersPage />} />
             </Route>

@@ -57,6 +57,14 @@ export default function AdminPage() {
             <GalleryItem>
               <Card isCompact>
                 <CardTitle>
+                  <Link to={`/admin/topics`}>Topics</Link>
+                </CardTitle>
+                <CardBody>Manage existing topics or create new ones.</CardBody>
+              </Card>
+            </GalleryItem>
+            <GalleryItem>
+              <Card isCompact>
+                <CardTitle>
                   <Link to={`/admin/remotecis`}>Remotecis</Link>
                 </CardTitle>
                 <CardBody>

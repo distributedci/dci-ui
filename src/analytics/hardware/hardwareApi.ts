@@ -39,10 +39,7 @@ export interface IHardwareData {
   network_cards?: INetworkCard[];
 }
 
-export type IKernelDataParams =
-  | string
-  | { [key: string]: IKernelDataParams };
-
+export type IKernelDataParams = string | { [key: string]: IKernelDataParams };
 
 export interface IKernelData {
   node?: string;

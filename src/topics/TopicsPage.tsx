@@ -12,10 +12,8 @@ import { EmptyState, Breadcrumb, CardSecondaryTitle, Truncate } from "ui";
 import { Link, useLocation, useNavigate } from "react-router";
 import { groupTopicsPerProduct } from "./topicsActions";
 import { sortWithSemver } from "services/sort";
-import CreateTopicModal from "./CreateTopicModal";
-import { useCreateTopicMutation, useListTopicsQuery } from "./topicsApi";
+import { useListTopicsQuery } from "./topicsApi";
 import { useListProductsQuery } from "products/productsApi";
-import { useAuth } from "auth/authSelectors";
 import LoadingPageSection from "ui/LoadingPageSection";
 import ProductIcon from "products/ProductIcon";
 import { sortByName } from "services/sort";
@@ -104,9 +102,6 @@ function TopicsList() {
 }
 
 export default function TopicsPage() {
-  const { currentUser } = useAuth();
-  const [createTopic, { isLoading: isCreating }] = useCreateTopicMutation();
-
   return (
     <PageSection>
       <Breadcrumb links={[{ to: "/", title: "DCI" }, { title: "Topics" }]} />
@@ -114,11 +109,6 @@ export default function TopicsPage() {
       <Content component="p">
         Click on the topic that interests you to see its components.
       </Content>
-      {currentUser?.isSuperAdmin && (
-        <div className="pf-v6-u-mb-xl">
-          <CreateTopicModal onSubmit={createTopic} isDisabled={isCreating} />
-        </div>
-      )}
       <TopicsList />
     </PageSection>
   );
