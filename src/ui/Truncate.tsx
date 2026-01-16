@@ -1,10 +1,8 @@
-import { ReactNode } from "react";
-
 export default function Truncate({
   children,
   ...props
 }: {
-  children: ReactNode;
+  children: React.ReactNode;
 }) {
   return (
     <span

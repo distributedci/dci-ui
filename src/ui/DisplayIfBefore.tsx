@@ -1,14 +1,8 @@
-import React, { ReactNode } from "react";
-
-type DisplayIfBeforeProps = {
+interface DisplayIfBeforeProps extends React.PropsWithChildren {
   date: string;
-  children: ReactNode;
-};
+}
 
-const DisplayIfBefore: React.FC<DisplayIfBeforeProps> = ({
-  date,
-  children,
-}) => {
+function DisplayIfBefore({ date, children }: DisplayIfBeforeProps) {
   const expirationDate = new Date(date);
 
   const now = new Date();
@@ -18,6 +12,6 @@ const DisplayIfBefore: React.FC<DisplayIfBeforeProps> = ({
   }
 
   return <>{children}</>;
-};
+}
 
 export default DisplayIfBefore;

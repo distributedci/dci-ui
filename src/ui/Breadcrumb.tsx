@@ -1,10 +1,9 @@
 import { Breadcrumb, BreadcrumbItem } from "@patternfly/react-core";
-import { ReactNode } from "react";
 import { Link } from "react-router";
 
 interface ILink {
   to?: string;
-  title: ReactNode;
+  title: React.ReactNode;
 }
 
 interface DCIBreadcrumbProps {
