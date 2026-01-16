@@ -6,10 +6,14 @@ import LoginPage from "auth/LoginPage";
 import LoginCallbackPage from "auth/LoginCallbackPage";
 import SilentRedirectPage from "auth/SilentRedirectPage";
 import AdminLoginPage from "auth/AdminLoginPage";
+import AdminOrEpmOutlet from "auth/AdminOrEpmOutlet";
+import NonPrivilegedUserOutlet from "auth/NonPrivilegedUserOutlet";
 
-import AuthenticatedRoute from "pages/AuthenticatedRoute";
+import AuthenticatedPage from "pages/AuthenticatedPage";
+import Page404 from "pages/Page404";
+import RedirectPage from "pages/RedirectPage";
+import RetentionPolicyPage from "pages/RetentionPolicyPage";
 
-import NonPrivilegedUserRoute from "pages/NonPrivilegedUserRoute";
 import TasksDurationPerJobPage from "analytics/TasksDurationPerJob/TasksDurationPerJobPage";
 import AnalyticsPage from "analytics/AnalyticsPage";
 import JobStatsPage from "analytics/jobsStats/JobStatsPage";
@@ -18,7 +22,6 @@ import JunitComparisonPage from "analytics/JunitComparison/JunitComparisonPage";
 import PipelinesPage from "analytics/Pipelines/PipelinesPage";
 import KeyValuesPage from "analytics/KeyValues/KeyValuesPage";
 import TestsAnalysisPage from "analytics/TestsAnalysis/TestsAnalysisPage";
-import RedirectPage from "pages/RedirectPage";
 import JobsPage from "jobs/JobsPage";
 import JobPage from "jobs/job/JobPage";
 import JobStatesPage from "jobs/job/jobStates/JobStatesPage";
@@ -36,7 +39,6 @@ import ComponentsPage from "components/ComponentsPage";
 import RemotecisPage from "remotecis/RemotecisPage";
 import NotificationsPage from "notifications/NotificationsPage";
 
-import AdminOrEpmRoute from "pages/AdminOrEpmRoute";
 import AdminPage from "admin/AdminPage";
 import AdminTeamsPage from "admin/teams/AdminTeamsPage";
 import AdminTeamPage from "admin/teams/AdminTeamPage";
@@ -46,8 +48,6 @@ import AdminProductsPage from "admin/products/AdminProductsPage";
 import AdminTopicsPage from "admin/topics/AdminTopicsPage";
 import AdminRemotecisPage from "admin/remotecis/AdminRemotecisPage";
 import AdminFeedersPage from "admin/feeders/AdminFeedersPage";
-
-import Page404 from "pages/Page404";
 
 export default function App() {
   return (
@@ -61,9 +61,10 @@ export default function App() {
             <Route path="login_callback" element={<LoginCallbackPage />} />
             <Route path="silent_redirect" element={<SilentRedirectPage />} />
             <Route path="dci-admin" element={<AdminLoginPage />} />
+            <Route path="retention" element={<RetentionPolicyPage />} />
           </Route>
-          <Route element={<AuthenticatedRoute />}>
-            <Route element={<NonPrivilegedUserRoute />}>
+          <Route element={<AuthenticatedPage />}>
+            <Route element={<NonPrivilegedUserOutlet />}>
               <Route path="analytics">
                 <Route index element={<AnalyticsPage />} />
                 <Route
@@ -118,7 +119,7 @@ export default function App() {
               <Route path="remotecis" element={<RemotecisPage />} />
               <Route path="notifications" element={<NotificationsPage />} />
             </Route>
-            <Route path="admin" element={<AdminOrEpmRoute />}>
+            <Route path="admin" element={<AdminOrEpmOutlet />}>
               <Route index element={<AdminPage />} />
               <Route path="teams">
                 <Route index element={<AdminTeamsPage />} />

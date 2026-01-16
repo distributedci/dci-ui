@@ -1,11 +1,9 @@
-import { ReactNode } from "react";
-
 export default function CardSecondaryTitle({
   children,
   className = "",
   ...props
 }: {
-  children: ReactNode;
+  children: React.ReactNode;
   className?: string;
 }) {
   return (

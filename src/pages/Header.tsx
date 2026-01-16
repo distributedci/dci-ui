@@ -1,18 +1,6 @@
 import { useState } from "react";
+import { useNavigate, useLocation } from "react-router";
 import {
-  Link,
-  useNavigate,
-  useResolvedPath,
-  useLocation,
-  Outlet,
-  Navigate,
-} from "react-router";
-import {
-  Nav,
-  NavGroup,
-  NavItem,
-  Page,
-  PageSidebar,
   Toolbar,
   ToolbarGroup,
   ToolbarItem,
@@ -26,7 +14,6 @@ import {
   ToolbarContent,
   Content,
   ContentVariants,
-  PageSidebarBody,
   ToggleGroup,
   ToggleGroupItem,
   Brand,
@@ -41,68 +28,69 @@ import Logo from "logo.black.svg";
 import LogoWhite from "logo.white.svg";
 import {
   BarsIcon,
-  ExternalLinkAltIcon,
   QuestionCircleIcon,
   UserIcon,
 } from "@patternfly/react-icons";
 import { useTheme } from "ui/Theme/themeContext";
-import NotAuthenticatedLoadingPage from "./NotAuthenticatedLoadingPage";
 import { loggedOut } from "auth/authSlice";
 import { useAppDispatch } from "store";
 import { useAuth } from "auth/authSelectors";
-import { useGetCurrentUserQuery } from "auth/authApi";
 import { ProfilePageUrl } from "auth/sso";
 import { changeCurrentTeam } from "admin/teams/teamLocalStorage";
-import ReadOnlyBanner from "ui/ReadOnlyBanner";
 
-function UserDropdownMenuMobile() {
+function UserDropdownMenuToolbarItemMobile() {
   const dispatch = useAppDispatch();
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
+  const { currentUser } = useAuth();
+
+  if (currentUser === null) return null;
 
   return (
-    <Dropdown
-      isPlain
-      isOpen={isOpen}
-      popperProps={{
-        position: "right",
-      }}
-      onOpenChange={(isOpen: boolean) => setIsOpen(isOpen)}
-      toggle={(toggleRef: React.Ref<MenuToggleElement>) => (
-        <MenuToggle
-          ref={toggleRef}
-          onClick={() => setIsOpen(!isOpen)}
-          isExpanded={isOpen}
-        >
-          <UserIcon />
-        </MenuToggle>
-      )}
-    >
-      <DropdownList>
-        <DropdownItem
-          key="dropdown_kebab_settings"
-          component="a"
-          isExternalLink
-          to={ProfilePageUrl}
-        >
-          My profile
-        </DropdownItem>
-        <DropdownItem
-          key="dropdown_kebab_logout"
-          component="button"
-          onClick={() => {
-            dispatch(loggedOut());
-            navigate("/login");
-          }}
-        >
-          Log out
-        </DropdownItem>
-      </DropdownList>
-    </Dropdown>
+    <ToolbarItem>
+      <Dropdown
+        isPlain
+        isOpen={isOpen}
+        popperProps={{
+          position: "right",
+        }}
+        onOpenChange={(isOpen: boolean) => setIsOpen(isOpen)}
+        toggle={(toggleRef: React.Ref<MenuToggleElement>) => (
+          <MenuToggle
+            ref={toggleRef}
+            onClick={() => setIsOpen(!isOpen)}
+            isExpanded={isOpen}
+          >
+            <UserIcon />
+          </MenuToggle>
+        )}
+      >
+        <DropdownList>
+          <DropdownItem
+            key="dropdown_kebab_settings"
+            component="a"
+            isExternalLink
+            to={ProfilePageUrl}
+          >
+            My profile
+          </DropdownItem>
+          <DropdownItem
+            key="dropdown_kebab_logout"
+            component="button"
+            onClick={() => {
+              dispatch(loggedOut());
+              navigate("/login");
+            }}
+          >
+            Log out
+          </DropdownItem>
+        </DropdownList>
+      </Dropdown>
+    </ToolbarItem>
   );
 }
 
-function UserDropdownMenu() {
+function UserDropdownMenuToolbarItem() {
   const dispatch = useAppDispatch();
   const { currentUser } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
@@ -111,55 +99,57 @@ function UserDropdownMenu() {
   if (currentUser === null) return null;
 
   return (
-    <Dropdown
-      isOpen={isOpen}
-      popperProps={{
-        position: "right",
-      }}
-      onOpenChange={(isOpen: boolean) => setIsOpen(isOpen)}
-      toggle={(toggleRef: React.Ref<MenuToggleElement>) => (
-        <MenuToggle
-          isFullHeight
-          ref={toggleRef}
-          onClick={() => setIsOpen(!isOpen)}
-          isExpanded={isOpen}
-        >
-          {currentUser.fullname || currentUser.name}
-        </MenuToggle>
-      )}
-    >
-      <DropdownList>
-        <DropdownItem key="email" component="div" isDisabled>
-          <Content component={ContentVariants.small}>Email:</Content>
-          <Content component="p">{currentUser.email}</Content>
-        </DropdownItem>
-        <DropdownItem key="team" component="div" isDisabled>
-          <Content component={ContentVariants.small}>Team:</Content>
-          <Content component="p">
-            {currentUser.team ? currentUser.team.name : "no team"}
-          </Content>
-        </DropdownItem>
-        <Divider component="li" />
-        <DropdownItem
-          key="dropdown_user_settings"
-          component="a"
-          isExternalLink
-          to={ProfilePageUrl}
-        >
-          My profile
-        </DropdownItem>
-        <DropdownItem
-          key="dropdown_user_logout"
-          component="button"
-          onClick={() => {
-            dispatch(loggedOut());
-            navigate("/login");
-          }}
-        >
-          Log out
-        </DropdownItem>
-      </DropdownList>
-    </Dropdown>
+    <ToolbarItem>
+      <Dropdown
+        isOpen={isOpen}
+        popperProps={{
+          position: "right",
+        }}
+        onOpenChange={(isOpen: boolean) => setIsOpen(isOpen)}
+        toggle={(toggleRef: React.Ref<MenuToggleElement>) => (
+          <MenuToggle
+            isFullHeight
+            ref={toggleRef}
+            onClick={() => setIsOpen(!isOpen)}
+            isExpanded={isOpen}
+          >
+            {currentUser.fullname || currentUser.name}
+          </MenuToggle>
+        )}
+      >
+        <DropdownList>
+          <DropdownItem key="email" component="div" isDisabled>
+            <Content component={ContentVariants.small}>Email:</Content>
+            <Content component="p">{currentUser.email}</Content>
+          </DropdownItem>
+          <DropdownItem key="team" component="div" isDisabled>
+            <Content component={ContentVariants.small}>Team:</Content>
+            <Content component="p">
+              {currentUser.team ? currentUser.team.name : "no team"}
+            </Content>
+          </DropdownItem>
+          <Divider component="li" />
+          <DropdownItem
+            key="dropdown_user_settings"
+            component="a"
+            isExternalLink
+            to={ProfilePageUrl}
+          >
+            My profile
+          </DropdownItem>
+          <DropdownItem
+            key="dropdown_user_logout"
+            component="button"
+            onClick={() => {
+              dispatch(loggedOut());
+              navigate("/login");
+            }}
+          >
+            Log out
+          </DropdownItem>
+        </DropdownList>
+      </Dropdown>
+    </ToolbarItem>
   );
 }
 
@@ -241,17 +231,19 @@ function UserTeamToolbarItem() {
   );
 }
 
-function DCIDocLinkIcon() {
+function DCIDocLinkToolbarItem() {
   return (
-    <Button
-      icon={<QuestionCircleIcon />}
-      component="a"
-      variant="plain"
-      href="https://docs.distributed-ci.io/"
-      target="top"
-      aria-label="Link to Distributed CI Documentation page"
-      style={{ color: "white" }}
-    ></Button>
+    <ToolbarItem>
+      <Button
+        icon={<QuestionCircleIcon />}
+        component="a"
+        variant="plain"
+        href="https://docs.distributed-ci.io/"
+        target="top"
+        aria-label="Link to Distributed CI Documentation page"
+        style={{ color: "white" }}
+      ></Button>
+    </ToolbarItem>
   );
 }
 
@@ -259,12 +251,9 @@ interface HeaderProps {
   toggleSidebarVisibility: VoidFunction;
 }
 
-function Header({ toggleSidebarVisibility }: HeaderProps) {
+export default function Header({ toggleSidebarVisibility }: HeaderProps) {
   const navigate = useNavigate();
   const { isDark, toggleColor } = useTheme();
-  const { currentUser } = useAuth();
-
-  if (currentUser === null) return null;
 
   return (
     <>
@@ -301,12 +290,8 @@ function Header({ toggleSidebarVisibility }: HeaderProps) {
                 gap={{ default: "gapNone" }}
                 visibility={{ md: "hidden" }}
               >
-                <ToolbarItem>
-                  <DCIDocLinkIcon />
-                </ToolbarItem>
-                <ToolbarItem>
-                  <UserDropdownMenuMobile />
-                </ToolbarItem>
+                <DCIDocLinkToolbarItem />
+                <UserDropdownMenuToolbarItemMobile />
               </ToolbarGroup>
               <ToolbarGroup
                 align={{ default: "alignEnd" }}
@@ -353,129 +338,14 @@ function Header({ toggleSidebarVisibility }: HeaderProps) {
                     />
                   </ToggleGroup>
                 </ToolbarItem>
-                <ToolbarItem>
-                  <DCIDocLinkIcon />
-                </ToolbarItem>
+                <DCIDocLinkToolbarItem />
                 <UserTeamToolbarItem />
-                <ToolbarItem>
-                  <UserDropdownMenu />
-                </ToolbarItem>
+                <UserDropdownMenuToolbarItem />
               </ToolbarGroup>
             </ToolbarContent>
           </Toolbar>
         </MastheadContent>
       </Masthead>
     </>
-  );
-}
-
-function DCINavItem({
-  children,
-  to,
-  ...props
-}: {
-  children: React.ReactNode;
-  to: string;
-  exact?: boolean;
-}) {
-  const location = useLocation();
-  const path = useResolvedPath(to);
-  const isActive = location.pathname.startsWith(path.pathname);
-  return (
-    <NavItem isActive={isActive}>
-      <Link to={to} {...props}>
-        {children}
-      </Link>
-    </NavItem>
-  );
-}
-
-interface SidebarProps {
-  isNavOpen: boolean;
-}
-
-function Sidebar({ isNavOpen }: SidebarProps) {
-  const { currentUser } = useAuth();
-  if (currentUser === null) return null;
-  const currentUserTeams = Object.values(currentUser.teams);
-
-  const PageNav = currentUser.hasEPMRole ? (
-    <Nav aria-label="Nav">
-      <NavGroup title="Administration">
-        <DCINavItem to="/admin/teams">Teams</DCINavItem>
-        <DCINavItem to="/admin/users">Users</DCINavItem>
-        {currentUser.isSuperAdmin && (
-          <>
-            <DCINavItem to="/admin/products">Products</DCINavItem>
-            <DCINavItem to="/admin/topics">Topics</DCINavItem>
-            <DCINavItem to="/admin/remotecis">Remotecis</DCINavItem>
-            <DCINavItem to="/admin/feeders">Feeders</DCINavItem>
-          </>
-        )}
-      </NavGroup>
-    </Nav>
-  ) : (
-    <Nav aria-label="Nav">
-      <NavGroup title="DCI">
-        <DCINavItem to="/analytics">Analytics</DCINavItem>
-        <DCINavItem to="/jobs">Jobs</DCINavItem>
-        <DCINavItem to="/products">Products</DCINavItem>
-        <DCINavItem to="/topics">Topics</DCINavItem>
-        <DCINavItem to="/components">Components</DCINavItem>
-      </NavGroup>
-      {currentUserTeams.length === 0 ? null : (
-        <NavGroup title="Access Management">
-          <DCINavItem to="/remotecis">Remotecis</DCINavItem>
-        </NavGroup>
-      )}
-      <NavGroup title=" User Preferences">
-        <NavItem>
-          <a target="_blank" rel="noopener noreferrer" href={ProfilePageUrl}>
-            My profile <ExternalLinkAltIcon style={{ height: "0.8em" }} />
-          </a>
-        </NavItem>
-        <DCINavItem to="/notifications">Notifications</DCINavItem>
-      </NavGroup>
-    </Nav>
-  );
-  return (
-    <PageSidebar isSidebarOpen={isNavOpen}>
-      <PageSidebarBody>{PageNav}</PageSidebarBody>
-    </PageSidebar>
-  );
-}
-
-export default function AuthenticatedRoute({ ...props }) {
-  const [isNavOpen, setIsNavOpen] = useState(window.innerWidth >= 1450);
-  const { data: currentUser, isLoading } = useGetCurrentUserQuery();
-  const location = useLocation();
-
-  if (isLoading) {
-    return <NotAuthenticatedLoadingPage />;
-  }
-
-  return currentUser ? (
-    <>
-      {currentUser.isReadOnly && <ReadOnlyBanner />}
-      <Page
-        masthead={
-          <Header toggleSidebarVisibility={() => setIsNavOpen(!isNavOpen)} />
-        }
-        sidebar={<Sidebar isNavOpen={isNavOpen} />}
-        isManagedSidebar={false}
-        onPageResize={(_event, { windowSize }) => {
-          if (windowSize >= 1450) {
-            setIsNavOpen(true);
-          } else {
-            setIsNavOpen(false);
-          }
-        }}
-        {...props}
-      >
-        <Outlet />
-      </Page>
-    </>
-  ) : (
-    <Navigate to="/login" state={{ from: location }} />
   );
 }

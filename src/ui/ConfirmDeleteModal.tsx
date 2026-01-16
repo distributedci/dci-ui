@@ -1,4 +1,3 @@
-import type { ReactNode } from "react";
 import {
   Button,
   Content,
@@ -14,7 +13,7 @@ import { t_global_color_status_danger_default } from "@patternfly/react-tokens";
 
 type ConfirmDeleteModalProps = {
   onOk: () => void;
-  children: (open: () => void) => ReactNode;
+  children: (open: () => void) => React.ReactNode;
   title?: string;
   message?: string;
   okButton?: string;

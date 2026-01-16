@@ -1,4 +1,3 @@
-import type { ReactNode } from "react";
 import {
   CodeBlock,
   CodeBlockCode,
@@ -12,7 +11,7 @@ import FileContent from "./FileContent";
 
 interface SeeFileContentModalProps {
   file: IFile;
-  children: (open: () => void) => ReactNode;
+  children: (open: () => void) => React.ReactNode;
 }
 
 export default function SeeFileContentModal({
