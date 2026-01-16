@@ -38,14 +38,14 @@ import NotificationsPage from "notifications/NotificationsPage";
 
 import AdminOrEpmRoute from "pages/AdminOrEpmRoute";
 import AdminPage from "admin/AdminPage";
-import AdminTeamsPage from "admin/teams/TeamsPage";
-import AdminTeamPage from "admin/teams/TeamPage";
-import AdminUsersPage from "admin/users/UsersPage";
-import AdminUserPage from "admin/users/UserPage";
-import AdminRemotecisPage from "admin/remotecis/RemotecisPage";
-import AdminTopicsPage from "admin/topics/TopicsPage";
-import AdminFeedersPage from "admin/feeders/FeedersPage";
-import AdminProductsPage from "admin/products/ProductsPage";
+import AdminTeamsPage from "admin/teams/AdminTeamsPage";
+import AdminTeamPage from "admin/teams/AdminTeamPage";
+import AdminUsersPage from "admin/users/AdminUsersPage";
+import AdminUserPage from "admin/users/AdminUserPage";
+import AdminProductsPage from "admin/products/AdminProductsPage";
+import AdminTopicsPage from "admin/topics/AdminTopicsPage";
+import AdminRemotecisPage from "admin/remotecis/AdminRemotecisPage";
+import AdminFeedersPage from "admin/feeders/AdminFeedersPage";
 
 import Page404 from "pages/Page404";
 
