@@ -31,6 +31,7 @@ export interface IProduct extends Resource {
   description: string;
   created_at: string;
   updated_at: string;
+  state: state;
 }
 
 export interface IGetProducts extends BaseListResponse {
