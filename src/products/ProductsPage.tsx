@@ -1,12 +1,4 @@
-import {
-  EmptyState,
-  ConfirmDeleteModal,
-  Breadcrumb,
-  Truncate,
-  CardSecondaryTitle,
-} from "ui";
-import CreateProductModal from "./CreateProductModal";
-import EditProductModal from "./EditProductModal";
+import { EmptyState, Breadcrumb, Truncate, CardSecondaryTitle } from "ui";
 import {
   Button,
   Card,
@@ -15,18 +7,9 @@ import {
   CardTitle,
   Content,
   Gallery,
-  InputGroup,
-  InputGroupItem,
   PageSection,
 } from "@patternfly/react-core";
-import { TrashIcon } from "@patternfly/react-icons";
-import {
-  useCreateProductMutation,
-  useDeleteProductMutation,
-  useListProductsQuery,
-  useUpdateProductMutation,
-} from "./productsApi";
-import { useAuth } from "auth/authSelectors";
+import { useListProductsQuery } from "./productsApi";
 import LoadingPageSection from "ui/LoadingPageSection";
 import ProductIcon from "./ProductIcon";
 import { useNavigate } from "react-router";
@@ -34,11 +17,6 @@ import { useNavigate } from "react-router";
 function ProductsGallery() {
   const navigate = useNavigate();
   const { data, isLoading } = useListProductsQuery();
-  const [updateProduct, { isLoading: isUpdating }] = useUpdateProductMutation();
-  const [deleteProduct] = useDeleteProductMutation();
-  const { currentUser } = useAuth();
-
-  if (currentUser === null) return null;
 
   if (isLoading) {
     return <LoadingPageSection />;
@@ -52,39 +30,7 @@ function ProductsGallery() {
     <Gallery hasGutter>
       {data.products.map((product) => (
         <Card isCompact key={product.id} id={product.id}>
-          <CardHeader
-            actions={{
-              actions: currentUser.isSuperAdmin ? (
-                <div>
-                  <InputGroup>
-                    <InputGroupItem>
-                      <EditProductModal
-                        onSubmit={updateProduct}
-                        product={product}
-                        isDisabled={isUpdating}
-                      />
-                    </InputGroupItem>
-                    <InputGroupItem>
-                      <ConfirmDeleteModal
-                        title={`Delete product ${product.name}`}
-                        message={`Are you sure you want to delete ${product.name}?`}
-                        onOk={() => deleteProduct(product)}
-                      >
-                        {(openModal) => (
-                          <Button
-                            icon={<TrashIcon />}
-                            variant="link"
-                            isDanger
-                            onClick={openModal}
-                          ></Button>
-                        )}
-                      </ConfirmDeleteModal>
-                    </InputGroupItem>
-                  </InputGroup>
-                </div>
-              ) : null,
-            }}
-          >
+          <CardHeader>
             <ProductIcon name={product.name} style={{ fontSize: "1.2rem" }} />
           </CardHeader>
           <CardTitle>{product.name}</CardTitle>
@@ -112,24 +58,11 @@ function ProductsGallery() {
 }
 
 export default function ProductsPage() {
-  const { currentUser } = useAuth();
-  const [createProduct, { isLoading: isCreating }] = useCreateProductMutation();
-
-  if (currentUser === null) return null;
-
   return (
     <PageSection>
       <Breadcrumb links={[{ to: "/", title: "DCI" }, { title: "Products" }]} />
       <Content component="h1">Products</Content>
       <Content component="p">All available Red Hat products in DCI</Content>
-      {currentUser.isSuperAdmin && (
-        <div className="pf-v6-u-mb-md">
-          <CreateProductModal
-            onSubmit={createProduct}
-            isDisabled={isCreating}
-          />
-        </div>
-      )}
       <ProductsGallery />
     </PageSection>
   );

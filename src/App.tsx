@@ -45,6 +45,7 @@ import AdminUserPage from "admin/users/UserPage";
 import AdminRemotecisPage from "admin/remotecis/RemotecisPage";
 import AdminTopicsPage from "admin/topics/TopicsPage";
 import AdminFeedersPage from "admin/feeders/FeedersPage";
+import AdminProductsPage from "admin/products/ProductsPage";
 
 import Page404 from "pages/Page404";
 
@@ -128,6 +129,7 @@ export default function App() {
                 <Route path=":user_id" element={<AdminUserPage />} />
               </Route>
               <Route path="topics" element={<AdminTopicsPage />} />
+              <Route path="products" element={<AdminProductsPage />} />
               <Route path="remotecis" element={<AdminRemotecisPage />} />
               <Route path="feeders" element={<AdminFeedersPage />} />
             </Route>
