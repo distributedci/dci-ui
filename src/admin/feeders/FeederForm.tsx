@@ -18,8 +18,13 @@ interface FeederFormProps
   extends Omit<React.ComponentProps<typeof Form>, "onSubmit"> {
   id: string;
   feeder?: IFeeder;
-  onSubmit: (values: IFeeder | Partial<IFeeder>) => void;
+  onSubmit: (values: FeederFormValues) => void;
 }
+
+type FeederFormValues = {
+  name: string;
+  team_id: string;
+};
 
 export default function FeederForm({
   id,
@@ -27,7 +32,7 @@ export default function FeederForm({
   onSubmit,
   ...props
 }: FeederFormProps) {
-  const methods = useForm<{ name: string; team_id: string }>({
+  const methods = useForm<FeederFormValues>({
     resolver: yupResolver(FeederSchema),
     defaultValues: feeder || { name: "", team_id: "" },
   });

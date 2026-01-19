@@ -19,7 +19,7 @@ const TeamSchema = Yup.object().shape({
 interface TeamFormProps {
   id: string;
   team?: ITeam;
-  onSubmit: (values: ITeam) => void;
+  onSubmit: (values: TeamFormValues) => void;
 }
 
 type TeamFormValues = {
@@ -41,10 +41,7 @@ export default function TeamForm({ id, team, onSubmit }: TeamFormProps) {
   });
   return (
     <FormProvider {...methods}>
-      <Form
-        id={id}
-        onSubmit={methods.handleSubmit((values) => onSubmit(values as ITeam))}
-      >
+      <Form id={id} onSubmit={methods.handleSubmit(onSubmit)}>
         <TextInputFormGroup
           label="Name"
           id="team_form__name"

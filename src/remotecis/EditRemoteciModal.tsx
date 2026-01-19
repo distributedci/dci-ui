@@ -18,6 +18,7 @@ interface EditRemoteciModalProps {
 export default function EditRemoteciModal({
   remoteci,
   onClose,
+  ...props
 }: EditRemoteciModalProps) {
   if (remoteci === null) return null;
   const [updateRemoteci] = useUpdateRemoteciMutation();
@@ -29,6 +30,7 @@ export default function EditRemoteciModal({
       variant={ModalVariant.medium}
       isOpen
       onClose={onClose}
+      {...props}
     >
       <ModalHeader title={`Edit ${remoteci.name}`} />
       <ModalBody>

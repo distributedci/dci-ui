@@ -32,7 +32,7 @@ import { JobStatusLabel, TestLabels } from "jobs/components";
 import { useGetJobQuery, useUpdateJobMutation } from "jobs/jobsApi";
 import { sumTests } from "jobs/components/TestsLabels";
 import { ComponentsList } from "jobs/components/ComponentsList";
-import TopicIcon from "topics/TopicIcon";
+import ProductIcon from "products/ProductIcon";
 
 interface TestsProps {
   jobId: string;
@@ -264,7 +264,7 @@ export default function JobDetailsHeader({
             </DescriptionListDescription>
           </DescriptionListGroup>
           <DescriptionListGroup>
-            <DescriptionListTerm icon={<TopicIcon name={job.topic?.name} />}>
+            <DescriptionListTerm icon={<ProductIcon name={job.topic?.name} />}>
               Topic
             </DescriptionListTerm>
             <DescriptionListDescription>

@@ -10,7 +10,6 @@ import type {
   IPipeline,
 } from "types";
 import { formatDate, fromNow, humanizeDuration } from "services/date";
-import TopicIcon from "topics/TopicIcon";
 import { getBackgroundColor } from "jobs/jobUtils";
 import {
   TestsLabels,
@@ -28,6 +27,7 @@ import {
 } from "@patternfly/react-tokens";
 import JobKeysValues from "jobs/components/JobKeysValues";
 import type { JobNodeInList } from "./pipelineJobs";
+import ProductIcon from "products/ProductIcon";
 
 interface JobsTableListRowProps {
   job: JobNodeInList;
@@ -155,7 +155,7 @@ export default function JobsTableListRow({
     component:
       principalComponent === null ? null : (
         <Link to={`/components/${principalComponent.id}`}>
-          <TopicIcon name={job.topic?.name} className="pf-v6-u-mr-xs" />
+          <ProductIcon name={job.topic?.name} className="pf-v6-u-mr-xs" />
           {principalComponent.display_name}
         </Link>
       ),
