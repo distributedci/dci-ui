@@ -6,9 +6,8 @@ interface ILink {
   title: React.ReactNode;
 }
 
-interface DCIBreadcrumbProps {
+interface DCIBreadcrumbProps extends React.ComponentProps<typeof Breadcrumb> {
   links: ILink[];
-  [key: string]: any;
 }
 
 export default function DCIBreadcrumb({ links, ...props }: DCIBreadcrumbProps) {

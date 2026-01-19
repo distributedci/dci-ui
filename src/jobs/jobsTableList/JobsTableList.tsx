@@ -1,4 +1,4 @@
-import type { IJob, Filters, JobsTableListColumn } from "types";
+import type { IJobInGetJobs, Filters, JobsTableListColumn } from "types";
 import { Table, Thead, Tr, Th, Tbody } from "@patternfly/react-table";
 import { groupJobsByPipeline } from "./pipelineJobs";
 import JobsTableListRow from "./JobsTableListRow";
@@ -7,7 +7,7 @@ import { styled } from "styled-components";
 import { t_global_border_color_200 } from "@patternfly/react-tokens";
 
 interface JobsTableListProps {
-  jobs: IJob[];
+  jobs: IJobInGetJobs[];
   filters: Filters;
   setFilters: (filters: Filters) => void;
   columns: JobsTableListColumn[];

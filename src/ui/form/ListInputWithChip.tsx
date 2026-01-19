@@ -19,8 +19,7 @@ export default function ListInputWithChip({
   items: string[];
   setItems: (items: string[]) => void;
   placeholder?: string;
-  [key: string]: any;
-}) {
+} & React.ComponentProps<typeof TextInputGroup>) {
   const [inputValue, setInputValue] = useState("");
 
   const showSearchIcon = !items.length;

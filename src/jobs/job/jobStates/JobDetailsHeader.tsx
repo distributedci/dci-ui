@@ -154,9 +154,8 @@ function JobName({ jobId }: { jobId: string }) {
   );
 }
 
-interface JobDetailsHeaderProps {
+interface JobDetailsHeaderProps extends React.ComponentProps<typeof Card> {
   job: IEnhancedJob;
-  [x: string]: any;
 }
 
 export default function JobDetailsHeader({

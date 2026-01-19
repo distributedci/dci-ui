@@ -7,10 +7,9 @@ import {
   CardBody,
 } from "@patternfly/react-core";
 
-interface JobStateStepperProps {
+interface JobStateStepperProps extends React.ComponentProps<typeof Card> {
   jobStates: IEnhancedJobState[];
   jobStateSelected: (jobState: IEnhancedJobState) => void;
-  [x: string]: any;
 }
 
 export default function JobStateStepper({

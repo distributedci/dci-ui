@@ -111,7 +111,7 @@ export function JunitBarChart({
                 dataKey="y"
                 fill="#0066CC"
                 name="# tests"
-                onClick={(d, index) => {
+                onClick={(_, index) => {
                   const lowerBoundary = data.intervals[index];
                   const upperBoundary = data.intervals[index] + interval;
                   const isFirstElement = index === 0;
@@ -125,7 +125,7 @@ export function JunitBarChart({
                   }
                 }}
               >
-                {data.values.map((value, index) => (
+                {data.values.map((_, index) => (
                   <Cell
                     cursor="pointer"
                     fill={

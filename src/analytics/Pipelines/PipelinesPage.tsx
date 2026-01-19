@@ -125,13 +125,11 @@ function PipelineJobInfo({ job, index }: { job: IPipelineJob; index: number }) {
   );
 }
 
-function PipelineCard({
-  pipelineDay,
-  ...props
-}: {
+interface PipelineCardProps extends React.ComponentProps<typeof Card> {
   pipelineDay: IPipelineDay;
-  [key: string]: any;
-}) {
+}
+
+function PipelineCard({ pipelineDay, ...props }: PipelineCardProps) {
   const [seeJobComponents, setSeeJobComponents] = useState(false);
   return (
     <Card {...props}>
@@ -233,15 +231,13 @@ function PipelineCard({
   );
 }
 
-function PipelinesPerDay({
-  isLoading,
-  data,
-  ...props
-}: {
+interface PipelinesPerDayProps
+  extends Omit<React.ComponentProps<typeof Card>, "data"> {
   isLoading: boolean;
   data: IGenericAnalyticsData<IAnalyticsResultsJob> | undefined;
-  [key: string]: any;
-}) {
+}
+
+function PipelinesPerDay({ isLoading, data, ...props }: PipelinesPerDayProps) {
   const graphRef = createRef<HTMLDivElement>();
 
   if (isLoading) {

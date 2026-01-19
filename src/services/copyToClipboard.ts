@@ -1,5 +1,5 @@
 export default function copyToClipboard(
-  event: React.MouseEvent<Element>,
+  event: React.MouseEvent<Element> | React.KeyboardEvent<Element>,
   text: string,
 ) {
   const clipboard = event.currentTarget.parentElement;

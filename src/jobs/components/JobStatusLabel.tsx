@@ -8,13 +8,15 @@ import {
 } from "@patternfly/react-icons";
 import type { IJobStatus } from "types";
 
+interface JobStatusLabelProps
+  extends Omit<React.ComponentProps<typeof Label>, "status"> {
+  status: IJobStatus;
+}
+
 export default function JobStatusLabel({
   status,
   ...props
-}: {
-  status: IJobStatus;
-  [key: string]: any;
-}) {
+}: JobStatusLabelProps) {
   switch (status) {
     case "success":
       return (

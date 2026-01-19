@@ -10,9 +10,9 @@ import useModal from "hooks/useModal";
 import RemoteciForm from "./RemoteciForm";
 import type { IRemoteciWithApiSecret } from "types";
 
-interface CreateRemoteciModalProps {
+interface CreateRemoteciModalProps
+  extends Omit<React.ComponentProps<typeof Button>, "onSubmit"> {
   onSubmit: (remoteci: Partial<IRemoteciWithApiSecret>) => void;
-  [x: string]: any;
 }
 
 export default function CreateRemoteciModal({

@@ -11,24 +11,24 @@ const RemoteciSchema = Yup.object().shape({
     .min(2, "Remoteci name is too short!"),
 });
 
+interface RemoteciFormProps {
+  id: string;
+  remoteci?: IRemoteci;
+  onSubmit: (values: { name: string }) => void;
+}
+
 export default function RemoteciForm({
   id,
   remoteci,
   onSubmit,
-  ...props
-}: {
-  id: string;
-  remoteci?: IRemoteci;
-  onSubmit: (values: { name: string }) => void;
-  [key: string]: any;
-}) {
-  const methods = useForm({
+}: RemoteciFormProps) {
+  const methods = useForm<{ name: string }>({
     resolver: yupResolver(RemoteciSchema),
     defaultValues: remoteci || { name: "" },
   });
   return (
     <FormProvider {...methods}>
-      <Form id={id} onSubmit={methods.handleSubmit(onSubmit)} {...props}>
+      <Form id={id} onSubmit={methods.handleSubmit(onSubmit)}>
         <TextInputFormGroup
           label="Name"
           id="remoteci_form__name"

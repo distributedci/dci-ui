@@ -25,16 +25,18 @@ interface IUserCreateForm {
   password: string;
 }
 
+interface CreateUserFormProps
+  extends Omit<React.ComponentProps<typeof Form>, "onSubmit"> {
+  id: string;
+  user?: IUser;
+  onSubmit: (user: IUserCreateForm) => void;
+}
+
 export default function CreateUserForm({
   id,
   onSubmit,
   ...props
-}: {
-  id: string;
-  user?: IUser;
-  onSubmit: (user: IUserCreateForm) => void;
-  [key: string]: any;
-}) {
+}: CreateUserFormProps) {
   const methods = useForm({
     resolver: yupResolver(CreateUserSchema),
     defaultValues: {

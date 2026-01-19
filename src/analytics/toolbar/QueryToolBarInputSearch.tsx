@@ -173,7 +173,7 @@ export default function QueryToolBarInputSearch({
           id="job-search"
           placeholder="(name='job name') and (status='success')"
           value={value}
-          onChange={(event, value) => {
+          onChange={(_, value) => {
             onChange(value);
             handleCursorPosition();
           }}

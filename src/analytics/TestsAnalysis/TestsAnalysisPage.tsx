@@ -281,13 +281,11 @@ function TestingTrendGraphWithIndex({
   );
 }
 
-function TestingTrendGraph({
-  data,
-  ...props
-}: {
+interface TestingTrendGraphProps extends React.ComponentProps<"div"> {
   data: IAnalyticsTestsJob[];
-  [key: string]: any;
-}) {
+}
+
+function TestingTrendGraph({ data, ...props }: TestingTrendGraphProps) {
   const tests = analyseTests(data);
   const searchIndex = useMemo(() => {
     const idx = new Document<SearchItem>({
@@ -312,15 +310,13 @@ function TestingTrendGraph({
   );
 }
 
-function TestingTrend({
-  isLoading,
-  data,
-  ...props
-}: {
+interface TestingTrendProps
+  extends Omit<React.ComponentProps<typeof Card>, "data"> {
   isLoading: boolean;
   data: IGenericAnalyticsData<IAnalyticsTestsJob> | undefined;
-  [key: string]: any;
-}) {
+}
+
+function TestingTrend({ isLoading, data, ...props }: TestingTrendProps) {
   if (isLoading) {
     return (
       <Card {...props}>

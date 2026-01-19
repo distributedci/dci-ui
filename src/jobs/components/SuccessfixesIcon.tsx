@@ -1,8 +1,7 @@
 import { ThumbsUpIcon } from "@patternfly/react-icons";
 
-interface SuccessfixesIconProps {
+interface SuccessfixesIconProps extends React.ComponentProps<"span"> {
   successfixes: number;
-  [x: string]: any;
 }
 
 export default function SuccessfixesIcon({

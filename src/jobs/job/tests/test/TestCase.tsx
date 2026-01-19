@@ -64,8 +64,7 @@ export function TestCaseState({
   ...props
 }: {
   state: ITestCaseActionState;
-  [x: string]: any;
-}) {
+} & React.ComponentProps<typeof Label>) {
   switch (state) {
     case "ADDED":
       return (
@@ -157,7 +156,7 @@ export default function TestCase({
         <Td modifier="fitContent">{testcase.classname}</Td>
         <Td>{testcase.type}</Td>
       </Tr>
-      <Tr isExpandable isExpanded={isExpanded}>
+      <Tr isExpanded={isExpanded}>
         <Td></Td>
         <Td colSpan={99}>
           <DescriptionList

@@ -5,13 +5,12 @@ import {
   RedhatIcon,
 } from "@patternfly/react-icons";
 
-export default function TopicIcon({
-  name,
-  ...props
-}: {
+interface TopicIconProps
+  extends Omit<React.ComponentProps<typeof BoxIcon>, "name"> {
   name: string | null;
-  [key: string]: any;
-}) {
+}
+
+export default function TopicIcon({ name, ...props }: TopicIconProps) {
   if (name === null) return <BoxIcon {...props} />;
   const lowerTopicName = name.toLowerCase();
   if (lowerTopicName.startsWith("rhel")) return <RedhatIcon {...props} />;

@@ -14,25 +14,21 @@ const FeederSchema = Yup.object().shape({
   team_id: Yup.string().nullable().required("Team is required"),
 });
 
-export default function FeederForm({
-  id,
-  feeder,
-  onSubmit,
-  ...props
-}: {
+interface FeederFormProps {
   id: string;
   feeder?: IFeeder;
   onSubmit: (values: { name: string; team_id: string }) => void;
-  [key: string]: any;
-}) {
-  const methods = useForm({
+}
+
+export default function FeederForm({ id, feeder, onSubmit }: FeederFormProps) {
+  const methods = useForm<{ name: string; team_id: string }>({
     resolver: yupResolver(FeederSchema),
     defaultValues: feeder || { name: "", team_id: "" },
   });
   const teamIdError = methods.formState.errors.team_id;
   return (
     <FormProvider {...methods}>
-      <Form id={id} onSubmit={methods.handleSubmit(onSubmit)} {...props}>
+      <Form id={id} onSubmit={methods.handleSubmit(onSubmit)}>
         <TextInputFormGroup
           label="Name"
           id="feeder_form__name"

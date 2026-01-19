@@ -1,11 +1,10 @@
 import { Label, LabelGroup } from "@patternfly/react-core";
 import { createSearchParams, Link } from "react-router";
 import type {
-  JobNode,
   IJobStatus,
   IRemoteci,
   ITeam,
-  ITopic,
+  ITopicInJobs,
   JobsTableListColumn,
   TimeRange,
   IPipeline,
@@ -28,9 +27,10 @@ import {
   t_global_border_color_300,
 } from "@patternfly/react-tokens";
 import JobKeysValues from "jobs/components/JobKeysValues";
+import type { JobNodeInList } from "./pipelineJobs";
 
 interface JobsTableListRowProps {
-  job: JobNode;
+  job: JobNodeInList;
   level: number;
   borderColorWidth: number;
   statusLabelIndentation: number;
@@ -38,7 +38,7 @@ interface JobsTableListRowProps {
   onTagClicked: (tag: string) => void;
   onRemoteciClicked: (remoteci: IRemoteci) => void;
   onTeamClicked: (team: ITeam) => void;
-  onTopicClicked: (topic: ITopic) => void;
+  onTopicClicked: (topic: ITopicInJobs) => void;
   onConfigurationClicked: (configuration: string) => void;
   onPipelineClicked: (pipeline: IPipeline) => void;
   onStatusClicked: (status: IJobStatus) => void;

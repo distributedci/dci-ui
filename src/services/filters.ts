@@ -134,7 +134,7 @@ export function parseFiltersFromSearch(
   };
 }
 
-type FlexibleFilters = Partial<Filters> & { [key: string]: any };
+type FlexibleFilters = Partial<Filters> & { [key: string]: unknown };
 
 export function createSearchFromFilters(
   partialFilters: FlexibleFilters,

@@ -14,7 +14,7 @@ interface INetworkCard {
 }
 
 interface IDisk {
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 export interface IHardwareData {
@@ -29,8 +29,8 @@ export interface IHardwareData {
     vendor?: string;
     serial?: string;
     capabilities?: Record<string, string>;
-    children?: any[];
-    [key: string]: any;
+    children?: unknown[];
+    [key: string]: unknown;
   };
   // Legacy format support
   motherboard?: string | { type?: string };

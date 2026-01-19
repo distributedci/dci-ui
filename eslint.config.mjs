@@ -6,7 +6,7 @@ import { defineConfig, globalIgnores } from "eslint/config";
 import jsxA11y from "eslint-plugin-jsx-a11y";
 
 export default defineConfig([
-  globalIgnores(["build/**/*"]),
+  globalIgnores(["build/**/*", "public/**/*"]),
   {
     files: ["**/*.{js,mjs,cjs,ts,mts,cts,jsx,tsx}"],
     plugins: { js },
@@ -20,9 +20,13 @@ export default defineConfig([
   pluginReact.configs.flat.recommended,
   jsxA11y.flatConfigs.recommended,
   {
+    settings: {
+      react: {
+        version: "detect",
+      },
+    },
     rules: {
       "react/react-in-jsx-scope": "off",
-      "@typescript-eslint/no-explicit-any": "warn",
     },
   },
 ]);

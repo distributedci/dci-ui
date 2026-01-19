@@ -4,17 +4,22 @@ import { useGetTeamQuery, useListTeamsQuery } from "../teamsApi";
 import type { ITeam } from "types";
 import TypeaheadSelect from "ui/form/TypeaheadSelect";
 
+interface TeamSelectProps
+  extends Omit<
+    React.ComponentProps<typeof TypeaheadSelect<ITeam>>,
+    "items" | "onSearch" | "toggle" | "id" | "onSelect"
+  > {
+  id?: string;
+  value?: string;
+  onSelect: (item: ITeam | null) => void;
+}
+
 export default function TeamSelect({
   onSelect,
   id = "team-select",
   value,
   ...props
-}: {
-  onSelect: (item: ITeam | null) => void;
-  value?: string;
-  id?: string;
-  [key: string]: any;
-}) {
+}: TeamSelectProps) {
   const [search, setSearch] = useState<string | null>(null);
   const { data, isFetching } = useListTeamsQuery({ name: search });
   const { data: team, isFetching: isFetchingTeam } = useGetTeamQuery(

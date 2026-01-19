@@ -95,6 +95,7 @@ export const products: IProduct[] = [
     label: "OPENSHIFT",
     name: "OpenShift",
     updated_at: "2019-12-04T16:11:02.419867",
+    state: "active",
   },
   {
     created_at: "2017-08-21T13:22:41.891867",
@@ -105,6 +106,7 @@ export const products: IProduct[] = [
     label: "RHEL",
     name: "RHEL",
     updated_at: "2018-02-20T12:36:33.595643",
+    state: "active",
   },
   {
     created_at: "2017-08-21T12:27:00.909914",
@@ -115,6 +117,7 @@ export const products: IProduct[] = [
     label: "OPENSTACK",
     name: "OpenStack",
     updated_at: "2017-08-21T12:27:00.909914",
+    state: "active",
   },
 ];
 

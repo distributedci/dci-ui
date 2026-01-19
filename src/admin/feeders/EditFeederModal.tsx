@@ -11,10 +11,10 @@ import FeederForm from "./FeederForm";
 import type { IFeeder } from "types";
 import { EditAltIcon } from "@patternfly/react-icons";
 
-interface EditFeederModalProps {
+interface EditFeederModalProps
+  extends Omit<React.ComponentProps<typeof Button>, "onSubmit"> {
   feeder: IFeeder;
   onSubmit: (feeder: IFeeder | Partial<IFeeder>) => void;
-  [x: string]: any;
 }
 
 export default function EditFeederModal({

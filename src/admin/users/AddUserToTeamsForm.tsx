@@ -5,9 +5,9 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import TeamSelect from "admin/teams/form/TeamSelect";
 import FormErrorMessage from "ui/form/FormErrorMessage";
 
-interface AddUserToTeamFormProps {
+interface AddUserToTeamFormProps
+  extends Omit<React.ComponentProps<typeof Form>, "onSubmit"> {
   onSubmit: (values: { team_id: string }) => void;
-  [key: string]: any;
 }
 
 const AddUserToTeamSchema = Yup.object().shape({

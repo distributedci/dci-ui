@@ -1,8 +1,7 @@
 import { WarningTriangleIcon } from "@patternfly/react-icons";
 
-interface RegressionsIconProps {
+interface RegressionsIconProps extends React.ComponentProps<"span"> {
   regressions: number;
-  [x: string]: any;
 }
 
 export default function RegressionsIcon({

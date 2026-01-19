@@ -63,17 +63,19 @@ function fromTopicToTopicForm(topic: ITopic | undefined): ITopicForm {
   };
 }
 
+interface TopicFormProps
+  extends Omit<React.ComponentProps<typeof Form>, "onSubmit"> {
+  id: string;
+  topic?: ITopic;
+  onSubmit: (values: ITopic) => void;
+}
+
 export default function TopicForm({
   id,
   topic,
   onSubmit,
   ...props
-}: {
-  id: string;
-  topic?: ITopic;
-  onSubmit: (values: ITopic) => void;
-  [key: string]: any;
-}) {
+}: TopicFormProps) {
   const methods = useForm({
     resolver: yupResolver(TopicSchema),
     defaultValues: fromTopicToTopicForm(topic),
@@ -111,7 +113,6 @@ export default function TopicForm({
             id="topic_form__product_id"
             value={topic ? topic.product_id : undefined}
             placeholder="Select a product"
-            hasError={productIdError !== undefined}
             onSelect={(item) => {
               if (item) {
                 methods.setValue("product_id", item.id, {

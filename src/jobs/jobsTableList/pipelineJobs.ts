@@ -1,11 +1,17 @@
-import type { JobNode, IJob } from "types";
+import type { IJobInGetJobs } from "types";
 
-export function groupJobsByPipeline(jobs: IJob[]): {
-  jobNodes: JobNode[];
+export interface JobNodeInList extends IJobInGetJobs {
+  children: JobNodeInList[];
+  index: number;
+  level: number;
+}
+
+export function groupJobsByPipeline(jobs: IJobInGetJobs[]): {
+  jobNodes: JobNodeInList[];
   maxLevel: number;
 } {
-  const jobWithChildrenMap: { [id: string]: JobNode } = {};
-  const jobNodes: JobNode[] = [];
+  const jobWithChildrenMap: { [id: string]: JobNodeInList } = {};
+  const jobNodes: JobNodeInList[] = [];
   let maxLevel = 0;
 
   for (let i = 0; i < jobs.length; i++) {

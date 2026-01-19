@@ -3,10 +3,9 @@ import { Button, Tooltip, TooltipPosition } from "@patternfly/react-core";
 import copyToClipboard from "services/copyToClipboard";
 import { CopyIcon } from "@patternfly/react-icons";
 
-interface CopyButtonProps {
+interface CopyButtonProps extends React.ComponentProps<typeof Button> {
   text: string;
   position?: TooltipPosition;
-  [key: string]: any;
 }
 
 export default function CopyButton({

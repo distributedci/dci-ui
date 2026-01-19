@@ -3,24 +3,26 @@ import { useGetProductQuery, useListProductsQuery } from "products/productsApi";
 import type { IProduct } from "types";
 import Select from "ui/form/Select";
 
+interface ProductSelectProps {
+  value?: string;
+  id?: string;
+  placeholder?: string;
+  onSelect: (item: IProduct | null) => void;
+  onClear?: () => void;
+}
+
 export default function ProductSelect({
   onSelect,
   onClear,
   value,
-  ...props
-}: {
-  onSelect: (item: IProduct | null) => void;
-  onClear?: () => void;
-  value?: string;
-  id?: string;
-  [key: string]: any;
-}) {
+  placeholder,
+}: ProductSelectProps) {
   const { data, isFetching } = useListProductsQuery();
   const { data: product } = useGetProductQuery(value ? value : skipToken);
   const products = data?.products || [];
   return (
     <Select
-      placeholder="Select a product"
+      placeholder={placeholder || "Select a product"}
       onClear={onClear}
       onSelect={(selectedProduct) => {
         if (selectedProduct) {
@@ -38,7 +40,6 @@ export default function ProductSelect({
       }
       items={products.map((p) => ({ ...p, label: p.name, value: p.id }))}
       isLoading={isFetching}
-      {...props}
     />
   );
 }

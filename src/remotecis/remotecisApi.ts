@@ -105,11 +105,11 @@ export const {
                   "listRemotecis",
                   originalArgs,
                   (draft) => {
-                    const cachedRemoteci = draft.remotecis.find(
-                      (r) => r.id === updatedRemoteci.id,
-                    );
-                    if (cachedRemoteci) {
-                      Object.assign(cachedRemoteci, updatedRemoteci);
+                    for (let i = 0; i < draft.remotecis.length; i++) {
+                      if (draft.remotecis[i].id === updatedRemoteci.id) {
+                        Object.assign(draft.remotecis[i], updatedRemoteci);
+                        break;
+                      }
                     }
                   },
                 ),

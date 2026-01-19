@@ -51,7 +51,18 @@ import KeyValuesEditGraphModal from "./KeyValuesEditGraphModal";
 import ScreeshotNodeButton from "ui/ScreenshotNodeButton";
 import { scaleTime } from "d3-scale";
 
-const CustomTooltip = ({ active, payload }: any) => {
+const CustomTooltip = ({
+  active,
+  payload,
+}: {
+  active?: boolean;
+  payload?: Array<{
+    name: string;
+    value: number;
+    stroke: string;
+    payload: IGraphKeysValues["data"][0];
+  }>;
+}) => {
   if (active && payload && payload.length) {
     const jobName = payload[0].payload.name;
     const createdAt = formatDate(
@@ -68,20 +79,13 @@ const CustomTooltip = ({ active, payload }: any) => {
       >
         <p>{`Created on ${createdAt}`}</p>
         <p>{`Job ${jobName}`}</p>
-        {payload.map(
-          (p: {
-            name: string;
-            value: number;
-            stroke: string;
-            payload: IGraphKeysValues["data"][0];
-          }) => (
-            <div key={p.name}>
-              <p style={{ color: p.stroke }}>
-                {p.name}: {p.value}
-              </p>
-            </div>
-          ),
-        )}
+        {payload.map((p) => (
+          <div key={p.name}>
+            <p style={{ color: p.stroke }}>
+              {p.name}: {p.value}
+            </p>
+          </div>
+        ))}
       </div>
     );
   }
@@ -266,7 +270,7 @@ function KeyValuesGraphs({ data }: { data: IAnalyticsKeysValuesJob[] }) {
               <Button
                 onClick={() =>
                   setGraphs((oldGraphs) =>
-                    oldGraphs.filter((g, i) => index !== i),
+                    oldGraphs.filter((_, i) => index !== i),
                   )
                 }
                 variant="plain"
@@ -288,15 +292,13 @@ function KeyValuesGraphs({ data }: { data: IAnalyticsKeysValuesJob[] }) {
   );
 }
 
-function KeyValues({
-  isLoading,
-  data,
-  ...props
-}: {
+interface KeyValuesProps
+  extends Omit<React.ComponentProps<typeof Card>, "data"> {
   isLoading: boolean;
   data: IGenericAnalyticsData<IAnalyticsKeysValuesJob> | undefined;
-  [key: string]: any;
-}) {
+}
+
+function KeyValues({ isLoading, data, ...props }: KeyValuesProps) {
   if (isLoading) {
     return (
       <Card {...props}>

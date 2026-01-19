@@ -34,17 +34,19 @@ interface IUserEditForm {
   state: state;
 }
 
+interface EditUserFormProps
+  extends Omit<React.ComponentProps<typeof Form>, "onSubmit"> {
+  id: string;
+  user: IUser;
+  onSubmit: (user: IUserEditForm) => void;
+}
+
 export default function EditUserForm({
   id,
   user,
   onSubmit,
   ...props
-}: {
-  id: string;
-  user: IUser;
-  onSubmit: (user: IUserEditForm) => void;
-  [key: string]: any;
-}) {
+}: EditUserFormProps) {
   const methods = useForm({
     resolver: yupResolver(EditUserSchema),
     defaultValues: {
