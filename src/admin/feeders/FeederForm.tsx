@@ -1,11 +1,11 @@
-import { Form, FormGroup } from "@patternfly/react-core";
 import * as Yup from "yup";
+import type { IFeeder } from "types";
 import { FormProvider, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import TeamSelect from "admin/teams/form/TeamSelect";
-import type { IFeeder } from "types";
 import FormErrorMessage from "ui/form/FormErrorMessage";
 import TextInputFormGroup from "ui/form/TextInputFormGroup";
+import { Form, FormGroup } from "@patternfly/react-core";
 
 const FeederSchema = Yup.object().shape({
   name: Yup.string()
@@ -14,13 +14,19 @@ const FeederSchema = Yup.object().shape({
   team_id: Yup.string().nullable().required("Team is required"),
 });
 
-interface FeederFormProps {
+interface FeederFormProps
+  extends Omit<React.ComponentProps<typeof Form>, "onSubmit"> {
   id: string;
   feeder?: IFeeder;
-  onSubmit: (values: { name: string; team_id: string }) => void;
+  onSubmit: (values: IFeeder | Partial<IFeeder>) => void;
 }
 
-export default function FeederForm({ id, feeder, onSubmit }: FeederFormProps) {
+export default function FeederForm({
+  id,
+  feeder,
+  onSubmit,
+  ...props
+}: FeederFormProps) {
   const methods = useForm<{ name: string; team_id: string }>({
     resolver: yupResolver(FeederSchema),
     defaultValues: feeder || { name: "", team_id: "" },
@@ -28,7 +34,7 @@ export default function FeederForm({ id, feeder, onSubmit }: FeederFormProps) {
   const teamIdError = methods.formState.errors.team_id;
   return (
     <FormProvider {...methods}>
-      <Form id={id} onSubmit={methods.handleSubmit(onSubmit)}>
+      <Form id={id} onSubmit={methods.handleSubmit(onSubmit)} {...props}>
         <TextInputFormGroup
           label="Name"
           id="feeder_form__name"
