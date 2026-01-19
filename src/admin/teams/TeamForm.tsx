@@ -43,9 +43,7 @@ export default function TeamForm({ id, team, onSubmit }: TeamFormProps) {
     <FormProvider {...methods}>
       <Form
         id={id}
-        onSubmit={methods.handleSubmit((values) => {
-          return onSubmit(values as unknown as ITeam);
-        })}
+        onSubmit={methods.handleSubmit((values) => onSubmit(values as ITeam))}
       >
         <TextInputFormGroup
           label="Name"
