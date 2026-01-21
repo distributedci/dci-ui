@@ -75,7 +75,7 @@ export function extractPipelinesFromAnalyticsJobs(
       datetime: DateTime.fromISO(job.created_at),
       status: job.status,
       status_reason: job.status_reason || "",
-      components: job.components,
+      components: job.components || [],
       comment: job.comment || "",
       results: (job.results || []).reduce(
         (acc, result) => {

@@ -10,9 +10,9 @@ import useModal from "hooks/useModal";
 import FeederForm from "./FeederForm";
 import type { IFeeder } from "types";
 
-interface CreateFeederModalProps {
+interface CreateFeederModalProps
+  extends Omit<React.ComponentProps<typeof Button>, "onSubmit"> {
   onSubmit: (feeder: Partial<IFeeder>) => void;
-  [x: string]: any;
 }
 
 export default function CreateFeederModal({

@@ -42,9 +42,9 @@ import { useGetTeamQuery } from "admin/teams/teamsApi";
 import { useGetTopicQuery } from "topics/topicsApi";
 import LoadingPageSection from "ui/LoadingPageSection";
 import { useGetComponentQuery } from "components/componentsApi";
-import TopicIcon from "topics/TopicIcon";
 import StatHeaderCard from "./StatHeaderCard";
 import { Table, Thead, Tr, Th, Tbody, Td } from "@patternfly/react-table";
+import ProductIcon from "products/ProductIcon";
 
 function TopicLink({ topic_id }: { topic_id: string }) {
   const { data: topic, isLoading } = useGetTopicQuery(topic_id);
@@ -57,7 +57,7 @@ function TopicLink({ topic_id }: { topic_id: string }) {
 
   return (
     <Link to={`/topics/${topic.id}/components`}>
-      <TopicIcon name={topic.name} className="pf-v6-u-mr-xs" />
+      <ProductIcon name={topic.name} className="pf-v6-u-mr-xs" />
       {topic.name}
     </Link>
   );

@@ -29,9 +29,31 @@ function _parseKernelNode(kernelData: IKernelData): INodeKernel {
   };
 }
 
-function findInTree(items: any[], predicate: (item: any) => boolean): any[] {
-  const results: any[] = [];
-  const traverse = (item: any) => {
+interface TreeItem {
+  id?: string;
+  description?: string;
+  class?: string;
+  vendor?: string;
+  product?: string;
+  version?: string;
+  date?: string;
+  size?: number;
+  capacity?: number;
+  units?: string;
+  configuration?: Record<string, unknown>;
+  logicalname?: string | string[];
+  dev?: string;
+  children?: TreeItem[];
+  link?: boolean | string;
+  firmware?: string;
+}
+
+function findInTree(
+  items: TreeItem[],
+  predicate: (item: TreeItem) => boolean,
+): TreeItem[] {
+  const results: TreeItem[] = [];
+  const traverse = (item: TreeItem) => {
     if (predicate(item)) {
       results.push(item);
     }
@@ -64,15 +86,15 @@ function getNetworkProductName(product: string | null | undefined): string {
 
 function _parseHardwareNode(hardware: IHardwareData): INode["hardware"] {
   if (!hardware.data) return null;
-  const children = hardware.data.children || [];
+  const children = (hardware.data.children || []) as TreeItem[];
 
   // memory
   const memoryItems = findInTree(
     children,
-    (item: any) => item.id === "memory" && item.description === "System Memory",
+    (item) => item.id === "memory" && item.description === "System Memory",
   );
   let totalMemory = 0;
-  memoryItems.forEach((mem: any) => {
+  memoryItems.forEach((mem) => {
     if (mem.size && mem.units === "bytes") {
       totalMemory += Number(mem.size);
     }
@@ -85,7 +107,7 @@ function _parseHardwareNode(hardware: IHardwareData): INode["hardware"] {
   // motherboard
   const motherboardItems = findInTree(
     children,
-    (item: any) => item.description === "Motherboard",
+    (item) => item.description === "Motherboard",
   );
   const motherboardFromTree =
     motherboardItems.length > 0 ? motherboardItems[0] : null;
@@ -112,7 +134,7 @@ function _parseHardwareNode(hardware: IHardwareData): INode["hardware"] {
   // bios
   const biosItems = findInTree(
     children,
-    (item: any) => item.id === "firmware" && item.description === "BIOS",
+    (item) => item.id === "firmware" && item.description === "BIOS",
   );
   const bios = biosItems.length > 0 ? biosItems[0] : null;
   const formatBIOS = (): string => {
@@ -127,7 +149,7 @@ function _parseHardwareNode(hardware: IHardwareData): INode["hardware"] {
   //cpu
   const cpuItems = findInTree(
     children,
-    (item: any) => item.id === "cpu" || item.class === "processor",
+    (item) => item.id === "cpu" || item.class === "processor",
   );
   const formatCPU = (): string => {
     if (cpuItems.length === 0) return "N/A";
@@ -178,7 +200,7 @@ function _parseHardwareNode(hardware: IHardwareData): INode["hardware"] {
     if (!cpu.configuration) return 0;
     const config = cpu.configuration;
     const multiplier = cpuItems.length;
-    if (config.cores) {
+    if (config.cores && typeof config.cores === "string") {
       return parseInt(config.cores) * multiplier;
     }
     return 0;
@@ -191,7 +213,7 @@ function _parseHardwareNode(hardware: IHardwareData): INode["hardware"] {
     if (!cpu.configuration) return 0;
     const config = cpu.configuration;
     const multiplier = cpuItems.length;
-    if (config.threads) {
+    if (config.threads && typeof config.threads === "string") {
       return parseInt(config.threads) * multiplier;
     }
     return 0;
@@ -200,11 +222,11 @@ function _parseHardwareNode(hardware: IHardwareData): INode["hardware"] {
   // disks
   const disks = findInTree(
     children,
-    (item: any) =>
+    (item) =>
       item.class === "disk" ||
-      (item.id && item.id.toString().startsWith("disk")),
+      Boolean(item.id && item.id.toString().startsWith("disk")),
   );
-  const formattedDisks: IDisk[] = disks.map((disk: any) => {
+  const formattedDisks: IDisk[] = disks.map((disk) => {
     const deviceName = Array.isArray(disk.logicalname)
       ? disk.logicalname[0]
       : disk.logicalname || disk.dev || "N/A";
@@ -218,42 +240,45 @@ function _parseHardwareNode(hardware: IHardwareData): INode["hardware"] {
   });
 
   // network cards
-  const networkCards = findInTree(
-    children,
-    (item: any) => item.class === "network",
-  );
-  const formattedNetworkCards: INetworkCard[] = networkCards.map(
-    (card: any) => {
-      const link = card.configuration?.link;
-      const linkStatus =
-        link === true || link === "yes"
-          ? "up"
-          : link === false || link === "no"
-            ? "down"
-            : typeof link === "string"
-              ? link
-              : "unknown";
+  const networkCards = findInTree(children, (item) => item.class === "network");
+  const formattedNetworkCards: INetworkCard[] = networkCards.map((card) => {
+    const link = card.configuration?.link;
+    const linkStatus: string =
+      link === true || link === "yes"
+        ? "up"
+        : link === false || link === "no"
+          ? "down"
+          : typeof link === "string"
+            ? link
+            : "unknown";
 
-      const product = getNetworkProductName(card.product);
+    const product = getNetworkProductName(card.product);
 
-      const interfaceName = Array.isArray(card.logicalname)
-        ? card.logicalname[0]
-        : card.logicalname || card.id || "N/A";
+    const interfaceName = Array.isArray(card.logicalname)
+      ? card.logicalname[0]
+      : card.logicalname || card.id || "N/A";
 
-      const speed =
-        card.configuration?.speed ||
-        (card.size ? `${(card.size / 1000000000).toFixed(0)}Gbit/s` : "-");
+    const speedValue = card.configuration?.speed;
+    const speed: string =
+      typeof speedValue === "string"
+        ? speedValue
+        : card.size
+          ? `${(card.size / 1000000000).toFixed(0)}Gbit/s`
+          : "-";
 
-      return {
-        vendor: card.vendor || "N/A",
-        product,
-        interfaceName,
-        linkStatus,
-        speed,
-        firmwareVersion: card.configuration?.firmware || card.version || "N/A",
-      } satisfies INetworkCard;
-    },
-  );
+    const firmwareValue = card.configuration?.firmware || card.version;
+    const firmwareVersion: string =
+      typeof firmwareValue === "string" ? firmwareValue : "N/A";
+
+    return {
+      vendor: card.vendor || "N/A",
+      product,
+      interfaceName,
+      linkStatus,
+      speed,
+      firmwareVersion,
+    } satisfies INetworkCard;
+  });
 
   return {
     product: hardware.data.product || "N/A",

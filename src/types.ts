@@ -525,6 +525,7 @@ export interface Filters {
   status: string | null;
   type: string | null;
   state: state | null;
+  [key: string]: unknown;
 }
 
 export type WhereFilters = Pick<
@@ -670,7 +671,7 @@ export interface FormGroupProps {
   name: string;
   isRequired?: boolean;
   placeholder?: string;
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 export const groupByKeys = [

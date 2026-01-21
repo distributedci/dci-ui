@@ -67,15 +67,15 @@
     "vitest": "^4.0.7"
   },
   "scripts": {
-    "prettier": "prettier --write src",
-    "start": "vite --port 8000",
     "build": "node --version && vite build",
-    "preview": "vite preview",
+    "lint": "eslint --no-color",
     "postbuild": "rm build/mockServiceWorker.js",
-    "test": "npm run lint && NO_COLOR=true LANG=en_US.UTF-8 TZ=UTC vitest run",
+    "prettier": "prettier --write src",
+    "preview": "vite preview",
+    "start": "vite --port 8000",
+    "test": "npm run lint && npm run typecheck && NO_COLOR=true LANG=en_US.UTF-8 TZ=UTC vitest run",
     "test:watch": "LANG=en_US.UTF-8 TZ=UTC vitest watch",
-    "eject": "react-scripts eject",
-    "lint": "eslint --no-color"
+    "typecheck": "tsc -p tsconfig.app.json --noEmit --pretty false"
   },
   "browserslist": [
     ">0.2%",

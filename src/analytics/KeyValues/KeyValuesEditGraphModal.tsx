@@ -12,17 +12,19 @@ import useModal from "hooks/useModal";
 import KeyValuesChartForm from "./KeyValuesChartForm";
 import type { IKeyValueGraph } from "./keyValuesTypes";
 
+interface KeyValuesEditGraphModalProps
+  extends Omit<React.ComponentProps<typeof Button>, "onSubmit"> {
+  keys: string[];
+  graph: IKeyValueGraph;
+  onSubmit: (data: IKeyValueGraph) => void;
+}
+
 export default function KeyValuesEditGraphModal({
   keys,
   onSubmit,
   graph,
   ...props
-}: {
-  keys: string[];
-  graph: IKeyValueGraph;
-  onSubmit: (data: IKeyValueGraph) => void;
-  [key: string]: any;
-}) {
+}: KeyValuesEditGraphModalProps) {
   const { isOpen, show, hide } = useModal(false);
   return (
     <>

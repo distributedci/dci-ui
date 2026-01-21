@@ -2,11 +2,11 @@ import * as React from "react";
 import { InfoCircleIcon } from "@patternfly/react-icons";
 import { Grid, GridItem, Tooltip } from "@patternfly/react-core";
 
-interface CardLineProps {
+interface CardLineProps
+  extends Omit<React.ComponentProps<typeof Grid>, "value"> {
   field: string;
   help?: string;
   value: React.ReactNode;
-  [key: string]: any;
 }
 
 export default function CardLine({

@@ -25,19 +25,21 @@ import {
 } from "./keyValuesTypes";
 import { groupByKeys, groupByKeysWithLabel, type IGroupByKey } from "types";
 
+interface KeyValuesChartFormProps
+  extends Omit<React.ComponentProps<typeof Form>, "onSubmit"> {
+  id: string;
+  keys: string[];
+  onSubmit: (data: IKeyValueGraph) => void;
+  defaultValues?: IKeyValueGraph;
+}
+
 export default function KeyValuesChartForm({
   id,
   keys,
   defaultValues,
   onSubmit,
   ...props
-}: {
-  id: string;
-  keys: string[];
-  onSubmit: (data: IKeyValueGraph) => void;
-  defaultValues?: IKeyValueGraph;
-  [key: string]: any;
-}) {
+}: KeyValuesChartFormProps) {
   const randomColor = getRandomGraphColor();
   const graph: IKeyValueGraph = defaultValues
     ? { ...defaultValues }

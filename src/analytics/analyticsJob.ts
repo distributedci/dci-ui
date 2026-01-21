@@ -17,7 +17,7 @@ export function getJobKey<T extends IAnalyticsJob>(
       }
       break;
     case "component":
-      key = getPrincipalComponent(job.components)?.display_name || null;
+      key = getPrincipalComponent(job.components || [])?.display_name || null;
       break;
     case "name":
       key = job.name;

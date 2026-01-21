@@ -34,7 +34,20 @@ import { Table, Thead, Tr, Th, Tbody, Td } from "@patternfly/react-table";
 import { useLazyGetTasksDurationCumulatedQuery } from "analytics/TasksDurationPerJob/tasksDurationPerJobApi";
 import RemoteciToolbarFilter from "remotecis/form/RemoteciToolbarFilter";
 
-const CustomTooltip = ({ active, payload }: any) => {
+interface CustomTooltipPayload {
+  name: string;
+  value: number;
+  stroke: string;
+  payload: { name: string };
+}
+
+const CustomTooltip = ({
+  active,
+  payload,
+}: {
+  active?: boolean;
+  payload?: CustomTooltipPayload[];
+}) => {
   if (active && payload && payload.length) {
     return (
       <div
@@ -45,8 +58,8 @@ const CustomTooltip = ({ active, payload }: any) => {
         }}
       >
         {payload
-          .sort((p1: any, p2: any) => p2.value - p1.value)
-          .map((p: any) => (
+          .sort((p1, p2) => p2.value - p1.value)
+          .map((p) => (
             <div key={p.name}>
               <p style={{ color: p.stroke }}>{`${p.name.substring(0, 7)} ${
                 p.payload.name
@@ -98,8 +111,12 @@ function Graph({ data }: { data: IGraphData[] }) {
       </div>
       <ResponsiveContainer>
         <LineChart
-          onMouseDown={(e: any) => e && setLeft(e.activeLabel)}
-          onMouseMove={(e: any) => e && left && setRight(e.activeLabel)}
+          onMouseDown={(e: { activeLabel?: string } | null) =>
+            e && e.activeLabel && setLeft(Number(e.activeLabel))
+          }
+          onMouseMove={(e: { activeLabel?: string } | null) =>
+            e && left && e.activeLabel && setRight(Number(e.activeLabel))
+          }
           onMouseUp={() => {
             if (left === right || right === null) {
               setLeft(null);

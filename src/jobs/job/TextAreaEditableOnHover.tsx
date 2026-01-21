@@ -17,15 +17,15 @@ import {
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
-interface TextAreaEditableOnHoverProps {
+interface TextAreaEditableOnHoverProps
+  extends Omit<React.ComponentProps<"div">, "onSubmit"> {
   text: string;
   onSubmit: (text: string) => void;
   children: React.ReactNode;
-  [x: string]: any;
 }
 
 const TextAreaEditableOnHoverSchema = Yup.object().shape({
-  text: Yup.string(),
+  text: Yup.string().required(),
 });
 
 const TextAreaEditable = styled.div`
@@ -49,19 +49,17 @@ export default function TextAreaEditableOnHover({
     register,
     handleSubmit,
     formState: { isValid, isDirty },
-  } = useForm<{ text?: string }>({
+  } = useForm<{ text: string }>({
     resolver: yupResolver(TextAreaEditableOnHoverSchema),
+    defaultValues: { text },
   });
 
   return editModeOn ? (
     <Form
       onSubmit={handleSubmit(({ text }) => {
         setEditModeOne(false);
-        if (text) {
-          onSubmit(text);
-        }
+        onSubmit(text);
       })}
-      {...props}
     >
       <div>
         <div>

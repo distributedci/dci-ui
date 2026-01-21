@@ -1,6 +1,6 @@
 interface IItemWithStatusAndTags {
   status: string;
-  [x: string]: any;
+  id?: string;
 }
 
 export function getPercentageOfSuccessfulJobs(

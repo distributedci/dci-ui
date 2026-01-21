@@ -5,13 +5,15 @@ import { Link } from "react-router";
 import type { IAnalyticsJob } from "types";
 import { humanizeDuration } from "services/date";
 
+interface AnalyticsJobTableProps<T extends IAnalyticsJob>
+  extends React.ComponentProps<typeof Card> {
+  jobs: T[];
+}
+
 export default function AnalyticsJobTable<T extends IAnalyticsJob>({
   jobs,
   ...props
-}: {
-  jobs: T[];
-  [key: string]: any;
-}) {
+}: AnalyticsJobTableProps<T>) {
   return (
     <Card {...props}>
       <CardBody>

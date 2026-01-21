@@ -80,7 +80,7 @@ export default function LastComponentsJobsBarChart({
       <Tooltip
         wrapperStyle={{ zIndex: 1000 }}
         allowEscapeViewBox={{ x: true }}
-        labelFormatter={(label, payloads) => {
+        labelFormatter={(_, payloads) => {
           if (payloads && payloads.length > 1) {
             return `Week ${payloads[0].payload.weekNumber}`;
           }

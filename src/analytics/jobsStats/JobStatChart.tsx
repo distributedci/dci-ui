@@ -8,7 +8,15 @@ import {
 } from "recharts";
 import { type IStat } from "./jobStats";
 
-const CustomTooltip = ({ active, payload }: any) => {
+const CustomTooltip = ({
+  active,
+  payload,
+}: {
+  active?: boolean;
+  payload?: Array<{
+    payload: { label: string; value: number; total: number; fill: string };
+  }>;
+}) => {
   if (active && payload && payload.length) {
     const p = payload[0].payload;
     return (
@@ -31,21 +39,22 @@ const CustomTooltip = ({ active, payload }: any) => {
 
 const RADIAN = Math.PI / 180;
 
-function CustomLabel({
-  cx = 0,
-  cy = 0,
-  midAngle = 0,
-  innerRadius = 0,
-  outerRadius = 0,
-  percent = 0,
-}: {
-  cx: number;
-  cy: number;
-  midAngle: number;
-  innerRadius: number;
-  outerRadius: number;
-  percent: number;
-}) {
+const CustomLabel: PieLabel = (props) => {
+  const {
+    cx = 0,
+    cy = 0,
+    midAngle = 0,
+    innerRadius = 0,
+    outerRadius = 0,
+    percent = 0,
+  } = props as unknown as {
+    cx: number;
+    cy: number;
+    midAngle: number;
+    innerRadius: number;
+    outerRadius: number;
+    percent: number;
+  };
   const cxN = Number(cx);
   const inner = Number(innerRadius);
   const outer = Number(outerRadius);
@@ -64,7 +73,7 @@ function CustomLabel({
       {`${(percent * 100).toFixed(0)}%`}
     </text>
   );
-}
+};
 
 export default function JobStatChart({
   name,
@@ -90,7 +99,7 @@ export default function JobStatChart({
               data={data}
               dataKey="value"
               labelLine={false}
-              label={CustomLabel as PieLabel}
+              label={CustomLabel}
             >
               {data.map((entry, index) => (
                 <Cell key={`cell-${index}`} fill={entry.color} />

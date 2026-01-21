@@ -12,22 +12,25 @@ const TeamSchema = Yup.object().shape({
     .min(2, "Team name is too short!")
     .required("Team name is required"),
   state: Yup.string().required(),
-  external: Yup.boolean(),
-  has_pre_release_access: Yup.boolean(),
+  external: Yup.boolean().required(),
+  has_pre_release_access: Yup.boolean().required(),
 });
 
-export default function TeamForm({
-  id,
-  team,
-  onSubmit,
-  ...props
-}: {
+interface TeamFormProps {
   id: string;
   team?: ITeam;
-  onSubmit: (values: ITeam) => void;
-  [key: string]: any;
-}) {
-  const methods = useForm({
+  onSubmit: (values: TeamFormValues) => void;
+}
+
+type TeamFormValues = {
+  name: string;
+  state: string;
+  external: boolean;
+  has_pre_release_access: boolean;
+};
+
+export default function TeamForm({ id, team, onSubmit }: TeamFormProps) {
+  const methods = useForm<TeamFormValues>({
     resolver: yupResolver(TeamSchema),
     defaultValues: team || {
       name: "",
@@ -38,13 +41,7 @@ export default function TeamForm({
   });
   return (
     <FormProvider {...methods}>
-      <Form
-        id={id}
-        onSubmit={methods.handleSubmit((values) => {
-          return onSubmit(values as ITeam);
-        })}
-        {...props}
-      >
+      <Form id={id} onSubmit={methods.handleSubmit(onSubmit)}>
         <TextInputFormGroup
           label="Name"
           id="team_form__name"

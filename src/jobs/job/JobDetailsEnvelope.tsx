@@ -61,7 +61,7 @@ export default function JobDetailsEnvelope({
       <Content component="h1">Job details</Content>
       <Tabs
         activeKey={activeTabKey}
-        onSelect={(event, tabIndex) => {
+        onSelect={(_, tabIndex) => {
           if (tabIndex !== undefined) {
             const newTabIndex = parseInt(tabIndex as string, 10);
             setActiveTabKey(newTabIndex);

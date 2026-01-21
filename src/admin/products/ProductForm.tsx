@@ -12,17 +12,19 @@ const ProductSchema = Yup.object().shape({
   description: Yup.string(),
 });
 
+interface ProductFormProps
+  extends Omit<React.ComponentProps<typeof Form>, "onSubmit"> {
+  id: string;
+  product?: IProduct;
+  onSubmit: (values: IProduct | Partial<IProduct>) => void;
+}
+
 export default function ProductForm({
   id,
   product,
   onSubmit,
   ...props
-}: {
-  id: string;
-  product?: IProduct;
-  onSubmit: (values: IProduct | Partial<IProduct>) => void;
-  [key: string]: any;
-}) {
+}: ProductFormProps) {
   const methods = useForm({
     resolver: yupResolver(ProductSchema),
     defaultValues: product || { name: "", description: "" },

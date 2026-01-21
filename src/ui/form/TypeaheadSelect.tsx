@@ -40,8 +40,7 @@ export default function TypeaheadSelect<T extends Item>({
   placeholder?: string;
   isFetching?: boolean;
   hasError?: boolean;
-  [key: string]: any;
-}) {
+} & Omit<React.ComponentProps<typeof Select>, "toggle" | "onSelect">) {
   const [isOpen, setIsOpen] = useState(false);
   const [inputValue, setInputValue] = useState<string>("");
   const [inputSearch, setInputSearch] = useState<string>("");

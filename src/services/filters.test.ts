@@ -199,7 +199,6 @@ describe("parseFiltersFromSearch", () => {
   });
   test("nrt page and perPage are removed after parsing", () => {
     const search = "?page=2&perPage=40";
-    // @ts-expect-error page and perPage should be undefined
     const { limit, offset, page, perPage } = parseFiltersFromSearch(search);
     expect(limit).toBe(40);
     expect(offset).toBe(40);

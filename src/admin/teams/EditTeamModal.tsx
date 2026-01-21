@@ -38,7 +38,7 @@ export default function EditTeamModal({
             id="edit-team-form"
             team={team}
             onSubmit={(editedTeam) => {
-              onSubmit(editedTeam);
+              onSubmit(editedTeam as ITeam);
               hide();
             }}
           />

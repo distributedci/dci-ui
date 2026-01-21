@@ -3,10 +3,9 @@ import copyToClipboard from "services/copyToClipboard";
 import { CopyIcon, ClipboardCheckIcon } from "@patternfly/react-icons";
 import { t_global_color_nonstatus_green_200 } from "@patternfly/react-tokens";
 
-interface CopyIconButtonProps {
+interface CopyIconButtonProps extends React.ComponentProps<"span"> {
   text: string;
   textOnSuccess?: string;
-  [key: string]: any;
 }
 
 export default function CopyIconButton({
@@ -39,13 +38,28 @@ export default function CopyIconButton({
     );
   }
 
+  const handleClick = (event: React.MouseEvent<Element>) => {
+    copyToClipboard(event, text);
+    setCopied(true);
+  };
+
+  const handleKeyDown = (event: React.KeyboardEvent<Element>) => {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      copyToClipboard(event, text);
+      setCopied(true);
+    }
+  };
+
   return (
-    <CopyIcon
+    <span
       {...props}
-      onClick={(event) => {
-        copyToClipboard(event, text);
-        setCopied(true);
-      }}
-    />
+      role="button"
+      tabIndex={0}
+      onClick={handleClick}
+      onKeyDown={handleKeyDown}
+    >
+      <CopyIcon />
+    </span>
   );
 }

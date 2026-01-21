@@ -34,9 +34,9 @@ export default function CreateTeamModal({
         <ModalBody>
           <TeamForm
             id="create-team-form"
-            onSubmit={(user) => {
+            onSubmit={(team) => {
+              onSubmit(team as ITeam);
               hide();
-              onSubmit(user);
             }}
           />
         </ModalBody>

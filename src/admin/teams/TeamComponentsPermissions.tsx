@@ -92,13 +92,15 @@ function TeamComponentsPermissionsTable({ team }: { team: ITeam }) {
   );
 }
 
+interface TeamComponentsPermissionsProps
+  extends React.ComponentProps<typeof Card> {
+  team: ITeam;
+}
+
 export default function TeamComponentsPermissions({
   team,
   ...props
-}: {
-  team: ITeam;
-  [key: string]: any;
-}) {
+}: TeamComponentsPermissionsProps) {
   const dispatch = useAppDispatch();
   const [addRemoteTeamPermissionForTheTeam] =
     useAddTeamPermissionForTeamMutation();

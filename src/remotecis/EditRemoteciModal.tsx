@@ -13,7 +13,6 @@ import { useUpdateRemoteciMutation } from "./remotecisApi";
 interface EditRemoteciModalProps {
   remoteci: IRemoteci | null;
   onClose: () => void;
-  [x: string]: any;
 }
 
 export default function EditRemoteciModal({

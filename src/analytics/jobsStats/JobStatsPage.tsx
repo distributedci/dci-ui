@@ -40,8 +40,7 @@ function JobStatsGraphs({
   ...props
 }: {
   data: IAnalyticsJob[];
-  [key: string]: any;
-}) {
+} & React.ComponentProps<"div">) {
   const graphRef = createRef<HTMLDivElement>();
   const [searchParams, setSearchParams] = useSearchParams();
   const [groupByKey, setGroupByKey] = useState<IGroupByKey>(
@@ -206,15 +205,13 @@ function JobStatsGraphs({
   );
 }
 
-function JobStats({
-  isLoading,
-  data,
-  ...props
-}: {
+interface JobStatsProps
+  extends Omit<React.ComponentProps<typeof Card>, "data"> {
   isLoading: boolean;
   data: IGenericAnalyticsData<IAnalyticsJob> | undefined;
-  [key: string]: any;
-}) {
+}
+
+function JobStats({ isLoading, data, ...props }: JobStatsProps) {
   if (isLoading) {
     return (
       <Card {...props}>
