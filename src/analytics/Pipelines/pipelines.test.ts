@@ -1,5 +1,8 @@
 import { DateTime } from "luxon";
-import { extractPipelinesFromAnalyticsJobs } from "./pipelines";
+import {
+  extractPipelinesFromAnalyticsJobs,
+  extractClusterTag,
+} from "./pipelines";
 import { analyticsTwoResultsJobs } from "analytics/analyticsTestData";
 
 test("extractPipelinesFromAnalyticsJobs", () => {
@@ -42,6 +45,7 @@ test("extractPipelinesFromAnalyticsJobs", () => {
                 total: 6,
               },
               duration: 905,
+              tags: ["tag1", "tag 2"],
             },
             {
               id: "347150d9-99e4-496b-8c6b-9c2e37fc61c3",
@@ -72,6 +76,7 @@ test("extractPipelinesFromAnalyticsJobs", () => {
                 total: 6,
               },
               duration: 905,
+              tags: ["tag1", "tag 2"],
             },
           ],
         },
@@ -82,4 +87,16 @@ test("extractPipelinesFromAnalyticsJobs", () => {
 
 test("extractPipelinesFromAnalyticsJobs from 404 not found", () => {
   expect(extractPipelinesFromAnalyticsJobs([])).toEqual([]);
+});
+
+test("extractClusterTag", () => {
+  expect(extractClusterTag([])).toBeNull();
+  expect(extractClusterTag(["tag1", "tag2"])).toBeNull();
+  expect(extractClusterTag(["cluster:server04"])).toBe("cluster:server04");
+  expect(extractClusterTag(["tag1", "cluster:server04", "tag2"])).toBe(
+    "cluster:server04",
+  );
+  expect(extractClusterTag(["cluster:server04", "cluster:server05"])).toBe(
+    "cluster:server04",
+  );
 });

@@ -32,6 +32,7 @@ import { Table, Thead, Tr, Th, Tbody, Td } from "@patternfly/react-table";
 import { JobStatusLabel } from "jobs/components";
 import {
   extractPipelinesFromAnalyticsJobs,
+  extractClusterTag,
   type IPipelineDay,
   type IPipelineJob,
 } from "./pipelines";
@@ -87,7 +88,18 @@ function jobStatusToProgressStepIcon(status: IJobStatus) {
   }
 }
 
+function formatJobNameWithClusterTag(job: IPipelineJob): string {
+  const clusterTag = extractClusterTag(job.tags);
+  if (clusterTag) {
+    // Extract the value after "cluster:" prefix
+    const clusterValue = clusterTag.replace(/^cluster:/, "");
+    return `${job.name} (${clusterValue})`;
+  }
+  return job.name;
+}
+
 function PipelineJobInfo({ job, index }: { job: IPipelineJob; index: number }) {
+  const jobNameWithCluster = formatJobNameWithClusterTag(job);
   return (
     <Td
       style={{
@@ -109,7 +121,7 @@ function PipelineJobInfo({ job, index }: { job: IPipelineJob; index: number }) {
           />
         </div>
         <div style={{ width: "160px" }}>
-          <Link to={`/jobs/${job.id}/jobStates`}>{job.name}</Link>
+          <Link to={`/jobs/${job.id}/jobStates`}>{jobNameWithCluster}</Link>
         </div>
         <div style={{ width: "70px" }}>
           <JobComment comment={job.comment} status_reason={job.status_reason} />
@@ -177,15 +189,18 @@ function PipelineCard({ pipelineDay, ...props }: PipelineCardProps) {
                     style={{ paddingInlineStart: "1rem" }}
                   >
                     <ProgressStepper isCompact>
-                      {pipeline.jobs.map((job) => (
-                        <ProgressStep
-                          key={job.id}
-                          variant={jobStatusToVariant(job.status)}
-                          id={job.name}
-                          titleId={job.name}
-                          icon={jobStatusToProgressStepIcon(job.status)}
-                        />
-                      ))}
+                      {pipeline.jobs.map((job) => {
+                        const jobNameWithCluster = formatJobNameWithClusterTag(job);
+                        return (
+                          <ProgressStep
+                            key={job.id}
+                            variant={jobStatusToVariant(job.status)}
+                            id={jobNameWithCluster}
+                            titleId={jobNameWithCluster}
+                            icon={jobStatusToProgressStepIcon(job.status)}
+                          />
+                        );
+                      })}
                     </ProgressStepper>
                   </Td>
                   <Td
