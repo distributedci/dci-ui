@@ -1,5 +1,6 @@
 import type { BaseQueryFn, FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import { api } from "api";
+import { DateTime } from "luxon";
 import { createSearchParams } from "react-router";
 import type {
   AnalyticsToolbarSearch,
@@ -10,6 +11,7 @@ import type {
   IGenericAnalyticsData,
   IGetAnalyticsJobsEmptyResponse,
   IGetAnalyticsJobsResponse,
+  IJobStats,
 } from "types";
 
 export function createAnalyticsSearchParams(
@@ -153,6 +155,7 @@ export const {
   useLazyGetAnalyticsKeysValuesJobsQuery,
   useLazyGetAnalyticsTestsJobsQuery,
   useLazyGetSuggestionsQuery,
+  useGetDashboardJobsQuery,
 } = api.enhanceEndpoints({ addTagTypes: ["Analytics"] }).injectEndpoints({
   endpoints: (builder) => ({
     getAnalyticJobs: builder.query<
@@ -212,6 +215,104 @@ export const {
           },
           fetchWithBQ,
         );
+      },
+      providesTags: ["Analytics"],
+    }),
+    getDashboardJobs: builder.query<IJobStats, void>({
+      async queryFn(_, _queryApi, _extraOptions, fetchWithBQ) {
+        const today = DateTime.now();
+        const _7daysAgo = today.minus({ days: 7 });
+        const _14daysAgo = _7daysAgo.minus({ days: 7 });
+
+        const before = today.startOf("day").toISODate();
+        const after7Days = _7daysAgo.startOf("day").toISODate();
+        const after14Days = _14daysAgo.startOf("day").toISODate();
+
+        const [
+          previousWeekSuccess,
+          currentWeekSuccess,
+          previousWeekTotal,
+          currentWeekTotal,
+        ] = await Promise.all([
+          getAnalyticsJobs<IAnalyticsJob>(
+            {
+              query: "(status='success')",
+              range: "custom",
+              after: after14Days,
+              before: after7Days,
+              limit: 1,
+              offset: 0,
+              includes: "id",
+            },
+            fetchWithBQ,
+          ),
+          getAnalyticsJobs<IAnalyticsJob>(
+            {
+              query: "(status='success')",
+              range: "custom",
+              after: after7Days,
+              before,
+              limit: 1,
+              offset: 0,
+              includes: "id",
+            },
+            fetchWithBQ,
+          ),
+          getAnalyticsJobs<IAnalyticsJob>(
+            {
+              query: "(status in ['error','failure','success'])",
+              range: "custom",
+              after: after14Days,
+              before: after7Days,
+              limit: 1,
+              offset: 0,
+              includes: "id",
+            },
+            fetchWithBQ,
+          ),
+          getAnalyticsJobs<IAnalyticsJob>(
+            {
+              query: "(status in ['error','failure','success'])",
+              range: "custom",
+              after: after7Days,
+              before,
+              limit: 1,
+              offset: 0,
+              includes: "id",
+            },
+            fetchWithBQ,
+          ),
+        ]);
+
+        if (previousWeekSuccess.error) {
+          return { error: previousWeekSuccess.error as FetchBaseQueryError };
+        }
+
+        if (currentWeekSuccess.error) {
+          return { error: currentWeekSuccess.error as FetchBaseQueryError };
+        }
+
+        if (previousWeekTotal.error) {
+          return { error: previousWeekTotal.error as FetchBaseQueryError };
+        }
+
+        if (currentWeekTotal.error) {
+          return { error: currentWeekTotal.error as FetchBaseQueryError };
+        }
+
+        const successfulJobs = currentWeekSuccess.data._meta.total;
+        const previousSuccessfulJobs = previousWeekSuccess.data._meta.total;
+        const totalJobs = currentWeekTotal.data._meta.total;
+        const previousTotalJobs = previousWeekTotal.data._meta.total;
+
+        return {
+          data: {
+            totalJobs,
+            variationTotalJobs: totalJobs - previousTotalJobs,
+            successfulJobs,
+            variationSuccessfulJobs: successfulJobs - previousSuccessfulJobs,
+          },
+        };
       },
       providesTags: ["Analytics"],
     }),
