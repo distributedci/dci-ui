@@ -18,6 +18,7 @@ import JobStatsHeaderImage from "./jobsStats/job_stats.png";
 import PipelinesHeaderImage from "./Pipelines/pipelines.png";
 import KeyValuesHeaderImage from "./KeyValues/keyvalues.png";
 import DisplayIfBefore from "ui/DisplayIfBefore";
+import JobsStatisticsHeader from "./JobsStatisticsHeader";
 
 export default function AnalyticsPage() {
   const navigate = useNavigate();
@@ -26,10 +27,14 @@ export default function AnalyticsPage() {
     <PageSection>
       <Breadcrumb links={[{ to: "/", title: "DCI" }, { title: "Analytics" }]} />
       <Content component="h1">Analytics</Content>
-      <Content component="p">
+      <Content component="p" className="pf-v6-u-mb-xl">
         DCI Analytics is a service offered by DCI that helps you understand your
         data.
       </Content>
+
+      <Content component="h4">Last 7 days</Content>
+      <JobsStatisticsHeader />
+      <Content component="h4">Dashboards</Content>
       <Gallery
         hasGutter
         maxWidths={{
