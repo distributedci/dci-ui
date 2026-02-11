@@ -16,6 +16,7 @@ import RetentionPolicyPage from "pages/RetentionPolicyPage";
 
 import TasksDurationPerJobPage from "analytics/TasksDurationPerJob/TasksDurationPerJobPage";
 import AnalyticsPage from "analytics/AnalyticsPage";
+import DashboardPage from "analytics/dashboard/DashboardPage";
 import JobStatsPage from "analytics/jobsStats/JobStatsPage";
 import ComponentCoveragePage from "analytics/ComponentCoverage/ComponentCoveragePage";
 import JunitComparisonPage from "analytics/JunitComparison/JunitComparisonPage";
@@ -67,6 +68,7 @@ export default function App() {
             <Route element={<NonPrivilegedUserOutlet />}>
               <Route path="analytics">
                 <Route index element={<AnalyticsPage />} />
+                <Route path="dashboard" element={<DashboardPage />} />
                 <Route
                   path="junit_comparison"
                   element={<JunitComparisonPage />}
