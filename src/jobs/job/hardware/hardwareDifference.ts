@@ -1,9 +1,4 @@
-import type {
-  INode,
-  IDisk,
-  INetworkCard,
-} from "analytics/hardware/hardwareFormatter";
-import { humanizeBytes } from "services/bytes";
+import type { IHardware, INode } from "analytics/hardware/hardwareFormatter";
 
 function _isIgnoredKernelParamValue(value: string): boolean {
   return value.toLowerCase().startsWith("uuid=");
@@ -71,37 +66,39 @@ export function compareBasicHardware(nodes: INode[]): string[] {
 
   if (hardwareList.length < 2) return differences;
 
-  const products = new Set(hardwareList.map((h) => h.product));
+  const products = new Set(hardwareList.map((h) => h.system_model));
   if (products.size > 1) {
     differences.push(`Product differs: ${Array.from(products).join(", ")}`);
   }
 
-  const vendors = new Set(hardwareList.map((h) => h.vendor));
+  const vendors = new Set(hardwareList.map((h) => h.system_vendor));
   if (vendors.size > 1) {
     differences.push(`Vendor differs: ${Array.from(vendors).join(", ")}`);
   }
 
-  const motherboards = new Set(hardwareList.map((h) => h.motherboard));
+  const motherboards = new Set(hardwareList.map((h) => h.system_family));
   if (motherboards.size > 1) {
     differences.push(
       `Motherboard differs: ${Array.from(motherboards).join(", ")}`,
     );
   }
 
-  const biosList = new Set(hardwareList.map((h) => h.bios));
+  const biosList = new Set(hardwareList.map((h) => h.bios_version));
   if (biosList.size > 1) {
     differences.push(`BIOS differs: ${Array.from(biosList).join(", ")}`);
   }
 
-  const cpus = new Set(hardwareList.map((h) => h.cpu));
+  const cpus = new Set(hardwareList.map((h) => h.cpu_model));
   if (cpus.size > 1) {
     differences.push(`CPU differs: ${Array.from(cpus).join(", ")}`);
   }
 
-  const memories = new Set(hardwareList.map((h) => h.memory));
+  const memories = new Set(hardwareList.map((h) => h.memory_total_gb));
   if (memories.size > 1) {
     differences.push(
-      `Memory differs: ${Array.from(memories).map(humanizeBytes).join(", ")}`,
+      `Memory differs: ${Array.from(memories)
+        .map((gb) => `${gb} GB`)
+        .join(", ")}`,
     );
   }
 
@@ -116,40 +113,42 @@ export function compareDisks(nodes: INode[]): string[] {
 
   if (hardwareList.length < 2) return differences;
 
-  const disksByDevice = new Map<string, IDisk[]>();
+  const disksByBusinfo = new Map<string, IHardware["storage_devices"]>();
 
   hardwareList.forEach((hardware) => {
-    hardware.disks.forEach((disk) => {
-      const deviceName = disk.device;
-      if (!disksByDevice.has(deviceName)) {
-        disksByDevice.set(deviceName, []);
+    hardware.storage_devices.forEach((disk) => {
+      const businfo = disk.businfo;
+      if (!disksByBusinfo.has(businfo)) {
+        disksByBusinfo.set(businfo, []);
       }
-      disksByDevice.get(deviceName)!.push(disk);
+      disksByBusinfo.get(businfo)!.push(disk);
     });
   });
 
-  disksByDevice.forEach((disks, deviceName) => {
+  disksByBusinfo.forEach((disks) => {
     if (disks.length < 2) return;
 
-    const products = new Set(disks.map((d) => d.product));
+    const models = new Set(disks.map((d) => d.model));
     const vendors = new Set(disks.map((d) => d.vendor));
-    const sizes = new Set(disks.map((d) => d.size));
+    const sizes = new Set(disks.map((d) => d.size_gb));
 
-    if (products.size > 1 || vendors.size > 1 || sizes.size > 1) {
+    if (models.size > 1 || vendors.size > 1 || sizes.size > 1) {
       const issues: string[] = [];
-      if (products.size > 1) {
-        issues.push(`product (${Array.from(products).join(", ")})`);
+      if (models.size > 1) {
+        issues.push(`product (${Array.from(models).join(", ")})`);
       }
       if (vendors.size > 1) {
         issues.push(`vendor (${Array.from(vendors).join(", ")})`);
       }
       if (sizes.size > 1) {
         issues.push(
-          `size (${Array.from(sizes).map(humanizeBytes).join(", ")})`,
+          `size (${Array.from(sizes)
+            .map((gb) => `${gb} GB`)
+            .join(", ")})`,
         );
       }
       differences.push(
-        `Disk device "${deviceName}" differs in: ${issues.join(", ")}`,
+        `Disk device "/dev/sda" differs in: ${issues.join(", ")}`,
       );
     }
   });
@@ -165,7 +164,9 @@ export function compareNetworkCards(nodes: INode[]): string[] {
 
   if (hardwareList.length < 2) return differences;
 
-  const networkCardCounts = hardwareList.map((h) => h.networkCards.length);
+  const networkCardCounts = hardwareList.map(
+    (h) => h.network_interfaces.length,
+  );
   const uniqueCounts = new Set(networkCardCounts);
 
   if (uniqueCounts.size > 1) {
@@ -174,11 +175,11 @@ export function compareNetworkCards(nodes: INode[]): string[] {
     );
   }
 
-  const cardsByInterface = new Map<string, INetworkCard[]>();
+  const cardsByInterface = new Map<string, IHardware["network_interfaces"]>();
 
   hardwareList.forEach((hardware) => {
-    hardware.networkCards.forEach((card) => {
-      const interfaceName = card.interfaceName;
+    hardware.network_interfaces.forEach((card) => {
+      const interfaceName = card.logical_name;
       if (!cardsByInterface.has(interfaceName)) {
         cardsByInterface.set(interfaceName, []);
       }
@@ -189,11 +190,13 @@ export function compareNetworkCards(nodes: INode[]): string[] {
   cardsByInterface.forEach((cards, interfaceName) => {
     if (cards.length < 2) return;
     const issues: string[] = [];
-    const linkStatuses = new Set(cards.map((c) => c.linkStatus));
+    const linkStatuses = new Set(
+      cards.map((c) => (c.link_status ? "up" : "down")),
+    );
     if (linkStatuses.size > 1) {
       issues.push(`link status (${Array.from(linkStatuses).join(", ")})`);
     }
-    const firmwareVersions = new Set(cards.map((c) => c.firmwareVersion));
+    const firmwareVersions = new Set(cards.map((c) => c.firmware_version));
     if (firmwareVersions.size > 1) {
       issues.push(
         `firmware version (${Array.from(firmwareVersions).join(", ")})`,
@@ -203,7 +206,7 @@ export function compareNetworkCards(nodes: INode[]): string[] {
     if (vendors.size > 1) {
       issues.push(`vendor (${Array.from(vendors).join(", ")})`);
     }
-    const products = new Set(cards.map((c) => c.product));
+    const products = new Set(cards.map((c) => c.model));
     if (products.size > 1) {
       issues.push(`product (${Array.from(products).join(", ")})`);
     }

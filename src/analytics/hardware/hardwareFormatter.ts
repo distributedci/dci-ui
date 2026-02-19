@@ -1,22 +1,15 @@
-import type {
-  IHardwareData,
-  IJobHardwareData,
-  IKernelData,
-  IKernelDataParams,
-} from "./hardwareApi";
-
 function flattenObject(
   obj: IKernelDataParams,
   parentKey = "",
   out: Record<string, string> = {},
 ): Record<string, string> {
-  for (const [key, value] of Object.entries(obj)) {
+  for (const [key, value] of Object.entries(obj || {})) {
     const newKey = parentKey ? `${parentKey}.${key}` : key;
 
     if (typeof value === "string") {
       out[newKey] = value;
     } else {
-      flattenObject(value, newKey, out);
+      if (value !== undefined) flattenObject(value, newKey, out);
     }
   }
   return out;
@@ -29,318 +22,7 @@ function _parseKernelNode(kernelData: IKernelData): INodeKernel {
   };
 }
 
-interface TreeItem {
-  id?: string;
-  description?: string;
-  class?: string;
-  vendor?: string;
-  product?: string;
-  version?: string;
-  date?: string;
-  size?: number;
-  capacity?: number;
-  units?: string;
-  configuration?: Record<string, unknown>;
-  logicalname?: string | string[];
-  dev?: string;
-  children?: TreeItem[];
-  link?: boolean | string;
-  firmware?: string;
-}
-
-function findInTree(
-  items: TreeItem[],
-  predicate: (item: TreeItem) => boolean,
-): TreeItem[] {
-  const results: TreeItem[] = [];
-  const traverse = (item: TreeItem) => {
-    if (predicate(item)) {
-      results.push(item);
-    }
-    if (item.children && Array.isArray(item.children)) {
-      item.children.forEach(traverse);
-    }
-  };
-  items.forEach(traverse);
-  return results;
-}
-
-function getNumberValueOrAmount(
-  memory: number | { amount?: number } | undefined,
-): number {
-  if (typeof memory === "number") {
-    return memory;
-  }
-
-  if (typeof memory === "object" && memory !== null) {
-    return memory.amount ?? 0;
-  }
-
-  return 0;
-}
-
-function getNetworkProductName(product: string | null | undefined): string {
-  if (!product) return "N/A";
-  return product.replace(/\[[0-9A-Fa-f]{4}:([0-9A-Fa-f]{4})\]/g, "[$1]");
-}
-
-function _parseHardwareNode(hardware: IHardwareData): INode["hardware"] {
-  if (!hardware.data) return null;
-  const children = (hardware.data.children || []) as TreeItem[];
-
-  // memory
-  const memoryItems = findInTree(
-    children,
-    (item) => item.id === "memory" && item.description === "System Memory",
-  );
-  let totalMemory = 0;
-  memoryItems.forEach((mem) => {
-    if (mem.size && mem.units === "bytes") {
-      totalMemory += Number(mem.size);
-    }
-  });
-  const memory =
-    totalMemory > 0
-      ? totalMemory
-      : getNumberValueOrAmount(hardware.data.memory);
-
-  // motherboard
-  const motherboardItems = findInTree(
-    children,
-    (item) => item.description === "Motherboard",
-  );
-  const motherboardFromTree =
-    motherboardItems.length > 0 ? motherboardItems[0] : null;
-  const motherboardDirect = hardware.data.motherboard;
-  const formatMotherboard = (): string => {
-    if (motherboardDirect) {
-      if (typeof motherboardDirect === "string") {
-        return motherboardDirect;
-      } else if (motherboardDirect.type) {
-        return motherboardDirect.type;
-      }
-    }
-    if (motherboardFromTree) {
-      const parts: string[] = [];
-      if (motherboardFromTree.vendor) parts.push(motherboardFromTree.vendor);
-      if (motherboardFromTree.product) parts.push(motherboardFromTree.product);
-      if (motherboardFromTree.version)
-        parts.push(`v${motherboardFromTree.version}`);
-      return parts.length > 0 ? parts.join(" ") : "N/A";
-    }
-    return "N/A";
-  };
-
-  // bios
-  const biosItems = findInTree(
-    children,
-    (item) => item.id === "firmware" && item.description === "BIOS",
-  );
-  const bios = biosItems.length > 0 ? biosItems[0] : null;
-  const formatBIOS = (): string => {
-    if (!bios) return "N/A";
-    const parts: string[] = [];
-    if (bios.vendor) parts.push(bios.vendor);
-    if (bios.version) parts.push(bios.version);
-    if (bios.date) parts.push(`(${bios.date})`);
-    return parts.length > 0 ? parts.join(" ") : "N/A";
-  };
-
-  //cpu
-  const cpuItems = findInTree(
-    children,
-    (item) => item.id === "cpu" || item.class === "processor",
-  );
-  const formatCPU = (): string => {
-    if (cpuItems.length === 0) return "N/A";
-
-    const cpu = cpuItems[0];
-    const parts: string[] = [];
-
-    if (cpuItems.length > 1) {
-      parts.push(`${cpuItems.length} x`);
-    }
-
-    if (cpu.vendor) parts.push(cpu.vendor);
-    if (cpu.product) parts.push(cpu.product);
-
-    return parts.length > 0 ? parts.join(" ") : "N/A";
-  };
-
-  // cpu frequency
-  const getCPUFrequency = (): number => {
-    if (cpuItems.length === 0) return 0;
-    const cpu = cpuItems[0];
-    if (cpu.size && cpu.units === "Hz") {
-      return cpu.size;
-    }
-    if (cpu.capacity && cpu.units === "Hz") {
-      return cpu.capacity;
-    }
-    return 0;
-  };
-
-  // cpu capacity
-  const getCPUCapacity = (): number => {
-    if (cpuItems.length === 0) return 0;
-    const cpu = cpuItems[0];
-    if (cpu.size && cpu.units === "Hz") {
-      return cpu.size;
-    }
-    if (cpu.capacity && cpu.units === "Hz") {
-      return cpu.capacity;
-    }
-    return 0;
-  };
-
-  // nb core
-  const getNbCore = (): number => {
-    if (cpuItems.length === 0) return 0;
-    const cpu = cpuItems[0];
-    if (!cpu.configuration) return 0;
-    const config = cpu.configuration;
-    const multiplier = cpuItems.length;
-    if (config.cores && typeof config.cores === "string") {
-      return parseInt(config.cores) * multiplier;
-    }
-    return 0;
-  };
-
-  // nb thread
-  const getNbThread = (): number => {
-    if (cpuItems.length === 0) return 0;
-    const cpu = cpuItems[0];
-    if (!cpu.configuration) return 0;
-    const config = cpu.configuration;
-    const multiplier = cpuItems.length;
-    if (config.threads && typeof config.threads === "string") {
-      return parseInt(config.threads) * multiplier;
-    }
-    return 0;
-  };
-
-  // disks
-  const disks = findInTree(
-    children,
-    (item) =>
-      item.class === "disk" ||
-      Boolean(item.id && item.id.toString().startsWith("disk")),
-  );
-  const formattedDisks: IDisk[] = disks.map((disk) => {
-    const deviceName = Array.isArray(disk.logicalname)
-      ? disk.logicalname[0]
-      : disk.logicalname || disk.dev || "N/A";
-    const diskSize = getNumberValueOrAmount(disk.size);
-    return {
-      device: deviceName,
-      product: disk.product || "N/A",
-      vendor: disk.vendor || "N/A",
-      size: diskSize,
-    };
-  });
-
-  // network cards
-  const networkCards = findInTree(children, (item) => item.class === "network");
-  const formattedNetworkCards: INetworkCard[] = networkCards.map((card) => {
-    const link = card.configuration?.link;
-    const linkStatus: string =
-      link === true || link === "yes"
-        ? "up"
-        : link === false || link === "no"
-          ? "down"
-          : typeof link === "string"
-            ? link
-            : "unknown";
-
-    const product = getNetworkProductName(card.product);
-
-    const interfaceName = Array.isArray(card.logicalname)
-      ? card.logicalname[0]
-      : card.logicalname || card.id || "N/A";
-
-    const speedValue = card.configuration?.speed;
-    const speed: string =
-      typeof speedValue === "string"
-        ? speedValue
-        : card.size
-          ? `${(card.size / 1000000000).toFixed(0)}Gbit/s`
-          : "-";
-
-    const firmwareValue = card.configuration?.firmware || card.version;
-    const firmwareVersion: string =
-      typeof firmwareValue === "string" ? firmwareValue : "N/A";
-
-    return {
-      vendor: card.vendor || "N/A",
-      product,
-      interfaceName,
-      linkStatus,
-      speed,
-      firmwareVersion,
-    } satisfies INetworkCard;
-  });
-
-  return {
-    product: hardware.data.product || "N/A",
-    vendor: hardware.data.vendor || "N/A",
-    motherboard: formatMotherboard(),
-    bios: formatBIOS(),
-    cpu: formatCPU(),
-    nbCore: getNbCore(),
-    nbThread: getNbThread(),
-    cpuFrequency: getCPUFrequency(),
-    cpuCapacity: getCPUCapacity(),
-    memory,
-    disks: formattedDisks,
-    networkCards: formattedNetworkCards,
-  };
-}
-
 type NodeRole = "director" | "worker" | "unknown";
-export interface IDisk {
-  device: string;
-  product: string;
-  vendor: string;
-  size: number;
-}
-export interface INetworkCard {
-  vendor: string;
-  product: string;
-  interfaceName: string;
-  linkStatus: string;
-  speed: string;
-  firmwareVersion: string;
-}
-
-export interface INodeKernel {
-  version: string;
-  params: Record<string, string>;
-}
-export interface INodeHardware {
-  product: string;
-  vendor: string;
-  motherboard: string;
-  bios: string;
-  cpu: string;
-  nbCore: number;
-  nbThread: number;
-  cpuFrequency: number;
-  cpuCapacity: number;
-  memory: number;
-  disks: IDisk[];
-  networkCards: INetworkCard[];
-}
-export interface INode {
-  name: string;
-  kernel: INodeKernel | null;
-  hardware: INodeHardware | null;
-  role: NodeRole;
-}
-
-function asArray<T>(v: T | T[] | undefined): T[] {
-  if (!v) return [];
-  return Array.isArray(v) ? v : [v];
-}
 
 function getNodeRole(nodeName: string): NodeRole {
   const name = nodeName.toLowerCase();
@@ -356,33 +38,136 @@ function getNodeRole(nodeName: string): NodeRole {
   return "unknown";
 }
 
+export interface NetworkInterface {
+  autonegotiation: boolean;
+  businfo: string;
+  description: string;
+  device_id: string;
+  driver: string;
+  driver_version: string;
+  duplex: string | null;
+  firmware: string;
+  firmware_ncsi?: string;
+  firmware_psid?: string;
+  firmware_nvm?: string;
+  firmware_version: string;
+  is_virtual_function: boolean;
+  link_status: boolean;
+  logical_name: string;
+  model: string;
+  speed_mbps: number | null;
+  subdevice_id: string | null;
+  subproduct: string | null;
+  subvendor: string | null;
+  subvendor_id: string | null;
+  vendor: string;
+  vendor_id: string;
+}
+
+export interface StorageDevice {
+  businfo: string;
+  description: string;
+  device_id: string | null;
+  firmware: string | null;
+  model: string;
+  size_gb: number;
+  type: string;
+  vendor: string;
+  vendor_id: string | null;
+  version: string;
+}
+
+export interface IHardware {
+  bios_date: string;
+  bios_type: string;
+  bios_vendor: string;
+  bios_version: string;
+  cpu_frequency_mhz: number;
+  cpu_model: string;
+  cpu_sockets: number;
+  cpu_total_cores: number;
+  cpu_total_threads: number;
+  cpu_vendor: string;
+  filename: string;
+  memory_dimm_count: number;
+  memory_total_gb: number;
+  network_interfaces: NetworkInterface[];
+  node: string;
+  storage_devices: StorageDevice[];
+  system_family: string;
+  system_model: string;
+  system_sku: string;
+  system_vendor: string;
+}
+
+export type IKernelDataParams =
+  | string
+  | string[]
+  | undefined
+  | { [key: string]: IKernelDataParams };
+
+export interface IKernelData {
+  node: string;
+  version: string;
+  params?: IKernelDataParams;
+}
+
+export interface ESNode {
+  node?: string;
+  hardware: IHardware;
+  kernel?: IKernelData;
+}
+
+export interface INodeKernel {
+  version: string;
+  params: Record<string, string>;
+}
+
+export interface INode {
+  name: string;
+  role: NodeRole;
+  nodeIndex: number;
+  kernel: INodeKernel | null;
+  hardware: IHardware;
+}
+
+function extractNodeIndex(nodeName: string): number {
+  const match = nodeName.match(/(\d+)/);
+  return match ? parseInt(match[1], 10) : 0;
+}
+
+export function orderNodes(nodes: INode[]): INode[] {
+  const roleOrder: Record<NodeRole, number> = {
+    director: 0,
+    worker: 1,
+    unknown: 2,
+  };
+
+  return [...nodes].sort((a, b) => {
+    const roleComparison = roleOrder[a.role] - roleOrder[b.role];
+    if (roleComparison !== 0) {
+      return roleComparison;
+    }
+    return a.nodeIndex - b.nodeIndex;
+  });
+}
+
 export function formatHardwareData(
-  hardware: IJobHardwareData | null | undefined,
+  ESNodes: ESNode[] | null | undefined,
 ): INode[] {
-  if (!hardware) return [];
-  const nodes: Record<string, INode> = {};
-  const hardwareNodes = asArray(hardware);
-  for (const node of hardwareNodes) {
-    const nodeName =
-      "kernel" in node && node.kernel.node
-        ? node.kernel.node
-        : "hardware" in node
-          ? node.hardware.node || "Unknown Node"
-          : "Unknown Node";
+  if (!ESNodes) return [];
+  const nodes: INode[] = [];
 
-    const currentNode = (nodes[nodeName] ??= {
+  for (const node of ESNodes) {
+    const nodeName = node.node || node.hardware.node;
+    nodes.push({
       name: nodeName,
-      kernel: null,
-      hardware: null,
       role: getNodeRole(nodeName),
+      nodeIndex: extractNodeIndex(nodeName),
+      kernel: node.kernel === undefined ? null : _parseKernelNode(node.kernel),
+      hardware: node.hardware,
     });
-
-    if ("kernel" in node && node.kernel.node) {
-      currentNode.kernel = _parseKernelNode(node.kernel);
-    }
-    if ("hardware" in node && node.hardware.node) {
-      currentNode.hardware = _parseHardwareNode(node.hardware);
-    }
   }
-  return Object.values(nodes);
+
+  return orderNodes(nodes);
 }

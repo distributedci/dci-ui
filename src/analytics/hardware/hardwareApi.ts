@@ -5,61 +5,12 @@ import type {
   IGetAnalyticsJobsEmptyResponse,
 } from "types";
 import { createAnalyticsSearchParams } from "analytics/analyticsApi";
-import { formatHardwareData, type INode } from "./hardwareFormatter";
-
-interface INetworkCard {
-  link_status?: string;
-  firmware_version?: string;
-  interface_name?: string;
-}
-
-interface IDisk {
-  [key: string]: unknown;
-}
-
-export interface IHardwareData {
-  node?: string;
-  error?: string;
-  data?: {
-    motherboard?: string | { type?: string };
-    memory?: number | { amount?: number };
-    disks?: IDisk[];
-    network_cards?: INetworkCard[];
-    product?: string;
-    vendor?: string;
-    serial?: string;
-    capabilities?: Record<string, string>;
-    children?: unknown[];
-    [key: string]: unknown;
-  };
-  // Legacy format support
-  motherboard?: string | { type?: string };
-  memory?: number | { amount?: number };
-  disks?: IDisk[];
-  network_cards?: INetworkCard[];
-}
-
-export type IKernelDataParams = string | { [key: string]: IKernelDataParams };
-
-export interface IKernelData {
-  node?: string;
-  version?: string;
-  params?: IKernelDataParams;
-}
-
-type IJobHardwareDataNode =
-  | {
-      kernel: IKernelData;
-    }
-  | {
-      hardware: IHardwareData;
-    };
-
-export type IJobHardwareData = IJobHardwareDataNode | IJobHardwareDataNode[];
+import { formatHardwareData } from "./hardwareFormatter";
+import type { INode, ESNode } from "./hardwareFormatter";
 
 interface IAnalyticsJobWithHardware {
   id: string;
-  extra?: IJobHardwareData;
+  nodes?: ESNode[];
 }
 
 export const { useGetJobHardwareDataQuery } = api
@@ -74,18 +25,19 @@ export const { useGetJobHardwareDataQuery } = api
           fetchWithBQ: Parameters<BaseQueryFn>[0],
         ) {
           try {
-            const includes =
-              "id,extra.kernel.node,extra.kernel.version,extra.kernel.params,extra.hardware";
+            const includes = "id,nodes";
+            const excludes =
+              "nodes.hardware.pci_accelerators,nodes.hardware.pci_other_devices,nodes.hardware.pci_network_controllers,nodes.hardware.pci_storage_controllers,nodes.hardware.pci_usb_controllers,";
             const params = createAnalyticsSearchParams({
               query: `id='${jobId}'`,
               offset: 0,
               limit: 1,
               sort: "-created_at",
               includes,
+              excludes,
               from: null,
               to: null,
             });
-
             const response = await fetchWithBQ(`/analytics/jobs?${params}`);
             if (response.error) {
               console.error("Error fetching hardware data:", response.error);
@@ -105,7 +57,7 @@ export const { useGetJobHardwareDataQuery } = api
             }
 
             const job = data.hits.hits[0]._source;
-            return { data: formatHardwareData(job.extra) };
+            return { data: formatHardwareData(job.nodes) };
           } catch (error) {
             console.log(error);
             return {

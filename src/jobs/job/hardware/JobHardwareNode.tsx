@@ -10,14 +10,10 @@ import {
 } from "@patternfly/react-core";
 import { Table, Tbody, Td, Th, Thead, Tr } from "@patternfly/react-table";
 import type {
+  IHardware,
   INode,
-  INodeHardware,
   INodeKernel,
-  IDisk,
-  INetworkCard,
 } from "analytics/hardware/hardwareFormatter";
-import {} from "@patternfly/react-tokens";
-import { humanizeBytes } from "services/bytes";
 
 function KernelSection({ kernel }: { kernel: INodeKernel }) {
   const params = Object.entries(kernel.params)
@@ -39,90 +35,98 @@ function KernelSection({ kernel }: { kernel: INodeKernel }) {
   );
 }
 
-const formatCPUCores = (cores: number, threads: number): string => {
-  if (cores === 0 || threads === 0) return "N/A";
+const formatSystem = (hardware: IHardware) => {
   const parts: string[] = [];
-  if (cores) {
-    parts.push(`${cores} cores`);
+  if (hardware.system_vendor) parts.push(hardware.system_vendor);
+  if (hardware.system_model) parts.push(hardware.system_model);
+  if (hardware.system_sku) parts.push(`(sku: ${hardware.system_sku})`);
+  return parts.length > 0 ? parts.join(" ") : "N/A";
+};
+
+const formatBios = (hardware: IHardware) => {
+  const parts: string[] = [];
+  if (hardware.bios_vendor) parts.push(hardware.bios_vendor);
+  if (hardware.bios_version) parts.push(hardware.bios_version);
+  if (hardware.bios_date) parts.push(`(${hardware.bios_date})`);
+  return parts.length > 0 ? parts.join(" ") : "N/A";
+};
+
+const formatCPU = (hardware: IHardware): string => {
+  const parts: string[] = [];
+  if (hardware.cpu_model) parts.push(hardware.cpu_model);
+  if (hardware.cpu_sockets > 0) parts.push(`${hardware.cpu_sockets} sockets`);
+  if (hardware.cpu_total_threads > 0)
+    parts.push(`${hardware.cpu_total_threads} threads`);
+  return parts.length > 0 ? parts.join(", ") : "N/A";
+};
+
+const formatCPUCores = (hardware: IHardware): string => {
+  if (hardware.cpu_total_cores === 0 || hardware.cpu_total_threads === 0)
+    return "N/A";
+  const parts: string[] = [];
+  if (hardware.cpu_total_cores) {
+    parts.push(`${hardware.cpu_total_cores} cores`);
   }
-  if (threads) {
-    parts.push(`${threads} threads`);
+  if (hardware.cpu_total_threads) {
+    parts.push(`${hardware.cpu_total_threads} threads`);
   }
   return parts.length > 0 ? parts.join(", ") : "N/A";
 };
 
-const formatCPUFrequency = (
-  cpuFrequency: number,
-  cpuCapacity: number,
-): string => {
-  if (cpuFrequency === 0 || cpuCapacity === 0) return "N/A";
-
-  const parts: string[] = [];
-
-  if (cpuFrequency) {
-    const ghz = cpuFrequency / 1000000000;
-    parts.push(`${ghz.toFixed(2)} GHz`);
-  }
-  if (cpuCapacity) {
-    const maxGhz = cpuCapacity / 1000000000;
-    parts.push(`(max ${maxGhz.toFixed(2)} GHz)`);
-  }
-
-  return parts.length > 0 ? parts.join(" ") : "N/A";
+const formatCPUFrequency = (hardware: IHardware): string => {
+  if (hardware.cpu_frequency_mhz === 0) return "N/A";
+  const ghz = hardware.cpu_frequency_mhz / 1000;
+  return `${ghz.toFixed(2)} GHz`;
 };
 
-function HardwareSection({ hardware }: { hardware: INodeHardware }) {
+const formatMemory = (hardware: IHardware): string => {
+  return `${hardware.memory_total_gb} GB`;
+};
+
+function HardwareSection({ hardware }: { hardware: IHardware }) {
   return (
     <>
       <DescriptionListGroup>
-        <DescriptionListTerm>Product</DescriptionListTerm>
+        <DescriptionListTerm>System</DescriptionListTerm>
         <DescriptionListDescription>
-          {hardware.product}
-        </DescriptionListDescription>
-      </DescriptionListGroup>
-      <DescriptionListGroup>
-        <DescriptionListTerm>Vendor</DescriptionListTerm>
-        <DescriptionListDescription>
-          {hardware.vendor}
-        </DescriptionListDescription>
-      </DescriptionListGroup>
-      <DescriptionListGroup>
-        <DescriptionListTerm>Motherboard</DescriptionListTerm>
-        <DescriptionListDescription>
-          {hardware.motherboard}
+          {formatSystem(hardware)}
         </DescriptionListDescription>
       </DescriptionListGroup>
       <DescriptionListGroup>
         <DescriptionListTerm>BIOS</DescriptionListTerm>
-        <DescriptionListDescription>{hardware.bios}</DescriptionListDescription>
+        <DescriptionListDescription>
+          {formatBios(hardware)}
+        </DescriptionListDescription>
       </DescriptionListGroup>
       <DescriptionListGroup>
         <DescriptionListTerm>CPU</DescriptionListTerm>
-        <DescriptionListDescription>{hardware.cpu}</DescriptionListDescription>
+        <DescriptionListDescription>
+          {formatCPU(hardware)}
+        </DescriptionListDescription>
       </DescriptionListGroup>
       <DescriptionListGroup>
         <DescriptionListTerm>Cores/Threads</DescriptionListTerm>
         <DescriptionListDescription>
-          {formatCPUCores(hardware.nbCore, hardware.nbThread)}
+          {formatCPUCores(hardware)}
         </DescriptionListDescription>
       </DescriptionListGroup>
       <DescriptionListGroup>
         <DescriptionListTerm>CPU Frequency</DescriptionListTerm>
         <DescriptionListDescription>
-          {formatCPUFrequency(hardware.cpuFrequency, hardware.cpuCapacity)}
+          {formatCPUFrequency(hardware)}
         </DescriptionListDescription>
       </DescriptionListGroup>
       <DescriptionListGroup>
         <DescriptionListTerm>Memory</DescriptionListTerm>
         <DescriptionListDescription>
-          {humanizeBytes(hardware.memory)}
+          {formatMemory(hardware)}
         </DescriptionListDescription>
       </DescriptionListGroup>
     </>
   );
 }
 
-function DiskSection({ disks }: { disks: IDisk[] }) {
+function DiskSection({ disks }: { disks: IHardware["storage_devices"] }) {
   return (
     <div>
       <Content component={ContentVariants.h4} className="pf-v6-u-mb-sm">
@@ -131,19 +135,21 @@ function DiskSection({ disks }: { disks: IDisk[] }) {
       <Table variant="compact" borders={false}>
         <Thead>
           <Tr>
-            <Th>Device</Th>
-            <Th>Product</Th>
             <Th>Vendor</Th>
+            <Th>Description</Th>
+            <Th>Model</Th>
             <Th>Size</Th>
           </Tr>
         </Thead>
         <Tbody>
           {disks.map((disk, index) => (
             <Tr key={index}>
-              <Td>{disk.device}</Td>
-              <Td>{disk.product}</Td>
               <Td>{disk.vendor}</Td>
-              <Td>{humanizeBytes(disk.size)}</Td>
+              <Td>{disk.description}</Td>
+              <Td style={{ textTransform: "capitalize" }}>
+                {disk.model.toLowerCase()}
+              </Td>
+              <Td>{`${disk.size_gb} GB`}</Td>
             </Tr>
           ))}
         </Tbody>
@@ -152,7 +158,11 @@ function DiskSection({ disks }: { disks: IDisk[] }) {
   );
 }
 
-function NetworkCardSection({ cards }: { cards: INetworkCard[] }) {
+function NetworkCardSection({
+  cards,
+}: {
+  cards: IHardware["network_interfaces"];
+}) {
   return (
     <div>
       <Content component={ContentVariants.h4} className="pf-v6-u-mb-sm">
@@ -162,10 +172,9 @@ function NetworkCardSection({ cards }: { cards: INetworkCard[] }) {
         <Thead>
           <Tr>
             <Th>Vendor</Th>
-            <Th>Product</Th>
             <Th>Interface Name</Th>
-            <Th>Link Status</Th>
-            <Th>Speed</Th>
+            <Th className="text-center">Link Status</Th>
+            <Th className="text-center">Speed</Th>
             <Th>Firmware Version</Th>
           </Tr>
         </Thead>
@@ -173,22 +182,19 @@ function NetworkCardSection({ cards }: { cards: INetworkCard[] }) {
           {cards.map((card, index) => (
             <Tr key={index}>
               <Td>{card.vendor}</Td>
-              <Td>{card.product}</Td>
-              <Td>{card.interfaceName}</Td>
+              <Td>{card.logical_name}</Td>
               <Td
+                className="text-center"
                 style={{
-                  color:
-                    card.linkStatus === "up"
-                      ? "green"
-                      : card.linkStatus === "down"
-                        ? "red"
-                        : "inherit",
+                  color: card.link_status ? "green" : "red",
                 }}
               >
-                {card.linkStatus}
+                {card.link_status ? "up" : "down"}
               </Td>
-              <Td>{card.speed}</Td>
-              <Td>{card.firmwareVersion}</Td>
+              <Td className="text-center">
+                {card.speed_mbps !== null && `${card.speed_mbps} MBps`}
+              </Td>
+              <Td>{card.firmware}</Td>
             </Tr>
           ))}
         </Tbody>
@@ -214,11 +220,11 @@ export default function JobHardwareNode({ node }: { node: INode }) {
           {node.hardware !== null && (
             <HardwareSection hardware={node.hardware} />
           )}
-          {node.hardware && node.hardware.disks.length > 0 && (
-            <DiskSection disks={node.hardware.disks} />
+          {node.hardware && node.hardware.storage_devices.length > 0 && (
+            <DiskSection disks={node.hardware.storage_devices} />
           )}
-          {node.hardware && node.hardware.networkCards.length > 0 && (
-            <NetworkCardSection cards={node.hardware.networkCards} />
+          {node.hardware && node.hardware.network_interfaces.length > 0 && (
+            <NetworkCardSection cards={node.hardware.network_interfaces} />
           )}
         </DescriptionList>
       </CardBody>
