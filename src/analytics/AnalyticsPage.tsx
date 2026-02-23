@@ -41,6 +41,23 @@ export default function AnalyticsPage() {
           default: "1fr",
         }}
       >
+        <Card
+          className="pointer"
+          onClick={() => navigate("/analytics/dashboard")}
+        >
+          <CardHeader>
+            <img
+              src={JobStatsHeaderImage}
+              alt="Dashboard"
+              height={100}
+              width="auto"
+            />
+          </CardHeader>
+          <CardTitle>Dashboard</CardTitle>
+          <CardBody>
+            Get a quick overview of your jobs activity with key metrics and trends.
+          </CardBody>
+        </Card>
         <Card className="pointer" onClick={() => navigate("/analytics/tests")}>
           <CardHeader>
             <img
