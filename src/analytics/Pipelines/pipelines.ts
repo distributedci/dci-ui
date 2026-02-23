@@ -1,6 +1,18 @@
 import { DateTime } from "luxon";
 import type { IAnalyticsResultsJob, IJobStatus } from "types";
 
+/**
+ * Extracts the cluster tag from a tags array.
+ * Returns the cluster tag if it matches the format "cluster:*", otherwise returns null.
+ */
+export function extractClusterTag(tags: string[]): string | null {
+  if (!tags || tags.length === 0) {
+    return null;
+  }
+  const clusterTag = tags.find((tag) => tag.startsWith("cluster:"));
+  return clusterTag || null;
+}
+
 export interface IPipelineJob {
   id: string;
   name: string;
@@ -17,6 +29,7 @@ export interface IPipelineJob {
     total: number;
   };
   duration: number;
+  tags: string[];
 }
 
 interface IPipeline {
@@ -95,6 +108,7 @@ export function extractPipelinesFromAnalyticsJobs(
         },
       ),
       duration: job.duration,
+      tags: job.tags,
     });
   });
   return Object.values(daysMap)
