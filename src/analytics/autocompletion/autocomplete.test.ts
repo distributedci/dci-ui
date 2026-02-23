@@ -219,6 +219,29 @@ describe("getCompletions: input", () => {
       defaultOptions,
     );
   });
+  test("nrt nodes.hardware.network_interfaces.*", () => {
+    runAutocompleteTest(
+      [
+        {
+          type: "(nodes.hardware.ne",
+          input: "(nodes.hardware.ne",
+          autocomplete: [
+            "nodes.hardware.network_interfaces.model",
+            "nodes.hardware.network_interfaces.autonegotiation",
+            "nodes.hardware.network_interfaces.businfo",
+            "nodes.hardware.network_interfaces.description",
+            "nodes.hardware.network_interfaces.device_id",
+            "nodes.hardware.network_interfaces.driver",
+            "nodes.hardware.network_interfaces.driver_version",
+            "nodes.hardware.network_interfaces.duplex",
+            "nodes.hardware.network_interfaces.firmware",
+            "nodes.hardware.network_interfaces.firmware_ncsi",
+          ],
+        },
+      ],
+      defaultOptions,
+    );
+  });
 });
 
 describe("parseInput", () => {

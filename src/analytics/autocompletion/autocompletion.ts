@@ -31,6 +31,56 @@ const FIELDS = [
   "tests.testsuites.testcases.name",
   "tests.testsuites.testcases.action",
   "tests.testsuites.testcases.classname",
+  "nodes.hardware.bios_date",
+  "nodes.hardware.bios_type",
+  "nodes.hardware.bios_vendor",
+  "nodes.hardware.bios_version",
+  "nodes.hardware.cpu_frequency_mhz",
+  "nodes.hardware.cpu_model",
+  "nodes.hardware.cpu_sockets",
+  "nodes.hardware.cpu_total_cores",
+  "nodes.hardware.cpu_total_threads",
+  "nodes.hardware.cpu_vendor",
+  "nodes.hardware.filename",
+  "nodes.hardware.memory_dimm_count",
+  "nodes.hardware.memory_total_gb",
+  "nodes.hardware.network_interfaces.autonegotiation",
+  "nodes.hardware.network_interfaces.businfo",
+  "nodes.hardware.network_interfaces.description",
+  "nodes.hardware.network_interfaces.device_id",
+  "nodes.hardware.network_interfaces.driver",
+  "nodes.hardware.network_interfaces.driver_version",
+  "nodes.hardware.network_interfaces.duplex",
+  "nodes.hardware.network_interfaces.firmware",
+  "nodes.hardware.network_interfaces.firmware_ncsi",
+  "nodes.hardware.network_interfaces.firmware_version",
+  "nodes.hardware.network_interfaces.is_virtual_function",
+  "nodes.hardware.network_interfaces.link_status",
+  "nodes.hardware.network_interfaces.logical_name",
+  "nodes.hardware.network_interfaces.model",
+  "nodes.hardware.network_interfaces.speed_mbps",
+  "nodes.hardware.network_interfaces.subdevice_id",
+  "nodes.hardware.network_interfaces.subproduct",
+  "nodes.hardware.network_interfaces.subvendor",
+  "nodes.hardware.network_interfaces.subvendor_id",
+  "nodes.hardware.network_interfaces.vendor",
+  "nodes.hardware.network_interfaces.vendor_id",
+  "nodes.hardware.node",
+  "nodes.hardware.storage_devices.businfo",
+  "nodes.hardware.storage_devices.description",
+  "nodes.hardware.storage_devices.device_id",
+  "nodes.hardware.storage_devices.firmware",
+  "nodes.hardware.storage_devices.model",
+  "nodes.hardware.storage_devices.size_gb",
+  "nodes.hardware.storage_devices.type",
+  "nodes.hardware.storage_devices.vendor",
+  "nodes.hardware.storage_devices.vendor_id",
+  "nodes.hardware.storage_devices.version",
+  "nodes.hardware.system_family",
+  "nodes.hardware.system_model",
+  "nodes.hardware.system_sku",
+  "nodes.hardware.system_vendor",
+  "nodes.kernel.version",
 ] as const;
 export type FieldName = (typeof FIELDS)[number];
 export type FieldType = "string" | "number" | "boolean" | "list";
@@ -89,6 +139,68 @@ export const defaultOptions: AutoCompletionOptions = {
     { name: "tests.testsuites.testcases.name", type: "string" },
     { name: "tests.testsuites.testcases.action", type: "string" },
     { name: "tests.testsuites.testcases.classname", type: "string" },
+    { name: "nodes.hardware.network_interfaces.model", type: "string" },
+    { name: "nodes.hardware.cpu_model", type: "string" },
+    { name: "nodes.hardware.bios_version", type: "string" },
+    { name: "nodes.hardware.storage_devices.model", type: "string" },
+    { name: "nodes.hardware.storage_devices.version", type: "string" },
+    { name: "nodes.kernel.version", type: "string" },
+    { name: "nodes.hardware.node", type: "string" },
+    { name: "nodes.hardware.system_model", type: "string" },
+    { name: "nodes.hardware.cpu_total_cores", type: "number" },
+    { name: "nodes.hardware.bios_date", type: "string" },
+    { name: "nodes.hardware.bios_type", type: "string" },
+    { name: "nodes.hardware.bios_vendor", type: "string" },
+    { name: "nodes.hardware.cpu_frequency_mhz", type: "number" },
+    { name: "nodes.hardware.cpu_sockets", type: "number" },
+    { name: "nodes.hardware.cpu_total_threads", type: "number" },
+    { name: "nodes.hardware.cpu_vendor", type: "string" },
+    { name: "nodes.hardware.filename", type: "string" },
+    { name: "nodes.hardware.memory_dimm_count", type: "number" },
+    { name: "nodes.hardware.memory_total_gb", type: "number" },
+    {
+      name: "nodes.hardware.network_interfaces.autonegotiation",
+      type: "boolean",
+    },
+    { name: "nodes.hardware.network_interfaces.businfo", type: "string" },
+    { name: "nodes.hardware.network_interfaces.description", type: "string" },
+    { name: "nodes.hardware.network_interfaces.device_id", type: "string" },
+    { name: "nodes.hardware.network_interfaces.driver", type: "string" },
+    {
+      name: "nodes.hardware.network_interfaces.driver_version",
+      type: "string",
+    },
+    { name: "nodes.hardware.network_interfaces.duplex", type: "string" },
+    { name: "nodes.hardware.network_interfaces.firmware", type: "string" },
+    { name: "nodes.hardware.network_interfaces.firmware_ncsi", type: "string" },
+    {
+      name: "nodes.hardware.network_interfaces.firmware_version",
+      type: "string",
+    },
+    {
+      name: "nodes.hardware.network_interfaces.is_virtual_function",
+      type: "boolean",
+    },
+    { name: "nodes.hardware.network_interfaces.link_status", type: "boolean" },
+    { name: "nodes.hardware.network_interfaces.logical_name", type: "string" },
+    { name: "nodes.hardware.network_interfaces.speed_mbps", type: "number" },
+    { name: "nodes.hardware.network_interfaces.subdevice_id", type: "string" },
+    { name: "nodes.hardware.network_interfaces.subproduct", type: "string" },
+    { name: "nodes.hardware.network_interfaces.subvendor", type: "string" },
+    { name: "nodes.hardware.network_interfaces.subvendor_id", type: "string" },
+    { name: "nodes.hardware.network_interfaces.vendor", type: "string" },
+    { name: "nodes.hardware.network_interfaces.vendor_id", type: "string" },
+    { name: "nodes.hardware.storage_devices.businfo", type: "string" },
+    { name: "nodes.hardware.storage_devices.description", type: "string" },
+    { name: "nodes.hardware.storage_devices.device_id", type: "string" },
+    { name: "nodes.hardware.storage_devices.firmware", type: "string" },
+    { name: "nodes.hardware.storage_devices.size_gb", type: "number" },
+    { name: "nodes.hardware.storage_devices.type", type: "string" },
+    { name: "nodes.hardware.storage_devices.vendor", type: "string" },
+    { name: "nodes.hardware.storage_devices.vendor_id", type: "string" },
+    { name: "nodes.hardware.system_family", type: "string" },
+    { name: "nodes.hardware.system_sku", type: "string" },
+    { name: "nodes.hardware.system_vendor", type: "string" },
   ],
   operators: {
     comparison: {
@@ -118,7 +230,7 @@ export function parseInput(input: string): ParseOutput {
     return null;
   }
   const fieldOpValRegex =
-    /\(\s*(\w+(?:\.\w*)?)\s*(in|not_in|!=|=~|>=|<=|=|>|<)?(?:\s*\[?')?(\w+)?/;
+    /\(\s*([\w.]+)\s*(in|not_in|!=|=~|>=|<=|=|>|<)?(?:\s*\[?')?(\w+)?/;
   const match = afterParenthesis.match(fieldOpValRegex);
   if (!match) return null;
   const [, field, rawOperator, rawValue] = match;
@@ -221,11 +333,13 @@ export function applyCompletion({
   }
 
   const parsedInput = parseInput(prefix);
-  if (parsedInput === null)
+  if (parsedInput === null) {
+    const newValue = completion.insertText + suffix;
     return {
-      newValue: value,
-      newCursor: cursor,
+      newValue,
+      newCursor: completion.insertText.length,
     };
+  }
   const { field, operator, lastParenthesisIndex } = parsedInput;
   const completeField = FIELDS.find((f) => f === field) || null;
   let elements = [];
