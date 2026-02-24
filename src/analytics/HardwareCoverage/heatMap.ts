@@ -1,6 +1,9 @@
 import type { IAnalyticsJob } from "types";
-import { formatHardwareData, type INode } from "analytics/hardware/hardwareFormatter";
-import type { IJobHardwareData } from "analytics/hardware/hardwareApi";
+import {
+  formatHardwareData,
+  type INode,
+  type ESNode,
+} from "analytics/hardware/hardwareFormatter";
 import { humanizeBytes } from "services/bytes";
 
 export type HeatMapMatrix = {
@@ -41,85 +44,87 @@ export const HARDWARE_TYPES = [
 export type HardwareType = (typeof HARDWARE_TYPES)[number];
 
 // Extract hardware values from a node based on hardware type
-// Returns an array because some types (disks, networkCards) can have multiple values
+// Uses IHardware from hardwareFormatter (storage_devices, network_interfaces)
 function getHardwareValues(
   node: INode,
   hardwareType: HardwareType,
 ): string[] {
   if (!node.hardware) return [];
 
+  const h = node.hardware;
+
   switch (hardwareType) {
     case "product":
-      return node.hardware.product && node.hardware.product !== "N/A"
-        ? [node.hardware.product]
+      return h.system_model && h.system_model !== "N/A"
+        ? [h.system_model]
         : [];
     case "vendor":
-      return node.hardware.vendor && node.hardware.vendor !== "N/A"
-        ? [node.hardware.vendor]
+      return h.system_vendor && h.system_vendor !== "N/A"
+        ? [h.system_vendor]
         : [];
     case "motherboard":
-      return node.hardware.motherboard && node.hardware.motherboard !== "N/A"
-        ? [node.hardware.motherboard]
+      return h.system_family && h.system_family !== "N/A"
+        ? [h.system_family]
         : [];
     case "bios":
-      return node.hardware.bios && node.hardware.bios !== "N/A"
-        ? [node.hardware.bios]
+      return h.bios_version && h.bios_version !== "N/A"
+        ? [h.bios_version]
         : [];
     case "cpu":
-      return node.hardware.cpu && node.hardware.cpu !== "N/A"
-        ? [node.hardware.cpu]
+      return h.cpu_model && h.cpu_model !== "N/A"
+        ? [h.cpu_model]
         : [];
     case "disk.vendor":
-      return node.hardware.disks
-        .map((disk) => disk.vendor)
+      return (h.storage_devices ?? [])
+        .map((d) => d.vendor)
         .filter((v) => v && v !== "N/A");
     case "disk.product":
-      return node.hardware.disks
-        .map((disk) => disk.product)
+      return (h.storage_devices ?? [])
+        .map((d) => d.model)
         .filter((v) => v && v !== "N/A");
     case "disk.device":
-      return node.hardware.disks
-        .map((disk) => disk.device)
+      return (h.storage_devices ?? [])
+        .map((d) => d.description || d.businfo)
         .filter((v) => v && v !== "N/A");
     case "networkCard.vendor":
-      return node.hardware.networkCards
-        .map((card) => card.vendor)
+      return (h.network_interfaces ?? [])
+        .map((ni) => ni.vendor)
         .filter((v) => v && v !== "N/A");
     case "networkCard.product":
-      return node.hardware.networkCards
-        .map((card) => card.product)
+      return (h.network_interfaces ?? [])
+        .map((ni) => ni.model)
         .filter((v) => v && v !== "N/A");
     case "networkCard.interfaceName":
-      return node.hardware.networkCards
-        .map((card) => card.interfaceName)
+      return (h.network_interfaces ?? [])
+        .map((ni) => ni.logical_name)
         .filter((v) => v && v !== "N/A");
     case "memory":
-      return node.hardware.memory > 0
-        ? [humanizeBytes(node.hardware.memory)]
+      return h.memory_total_gb > 0
+        ? [humanizeBytes(h.memory_total_gb * 1024 * 1024 * 1024)]
         : [];
     case "nbCore":
-      return node.hardware.nbCore > 0
-        ? [`${node.hardware.nbCore} cores`]
+      return h.cpu_total_cores > 0
+        ? [`${h.cpu_total_cores} cores`]
         : [];
     case "nbThread":
-      return node.hardware.nbThread > 0
-        ? [`${node.hardware.nbThread} threads`]
+      return h.cpu_total_threads > 0
+        ? [`${h.cpu_total_threads} threads`]
         : [];
     default:
       return [];
   }
 }
 
-// Extract hardware data from job's extra field
+// Extract hardware data from job's nodes field (DCI API structure)
 function extractHardwareFromJob(
-  job: IAnalyticsJob & { extra?: IJobHardwareData },
+  job: IAnalyticsJob & { nodes?: ESNode[] },
 ): INode[] {
-  if (!job.extra) return [];
-  return formatHardwareData(job.extra);
+  if (!job.nodes) return [];
+  return formatHardwareData(job.nodes);
 }
 
 export function createHardwareCoverageHeatMap(
-  jobs: (IAnalyticsJob & { extra?: IJobHardwareData })[],
+  jobs: (IAnalyticsJob & { nodes?: ESNode[] })[],
   hardwareType: HardwareType,
   targetComponentType: string,
 ): HeatMapMatrix {

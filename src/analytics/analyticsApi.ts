@@ -175,14 +175,14 @@ export const {
       providesTags: ["Analytics"],
     }),
     getAnalyticsHardwareJobs: builder.query<
-      IGenericAnalyticsData<IAnalyticsJob & { extra?: any }>,
+      IGenericAnalyticsData<IAnalyticsJob & { nodes?: import("analytics/hardware/hardwareFormatter").ESNode[] }>,
       AnalyticsToolbarSearch
     >({
       async queryFn(arg, _queryApi, _extraOptions, fetchWithBQ) {
-        return getAllAnalyticsJobs<IAnalyticsJob & { extra?: any }>(
+        return getAllAnalyticsJobs<IAnalyticsJob & { nodes?: import("analytics/hardware/hardwareFormatter").ESNode[] }>(
           {
             ...arg,
-            includes: `${genericIncludes},extra.hardware,extra.kernel`,
+            includes: `${genericIncludes},nodes`,
           },
           fetchWithBQ,
         );

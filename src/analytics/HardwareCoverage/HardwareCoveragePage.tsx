@@ -28,7 +28,6 @@ import {
   type HardwareType,
 } from "./heatMap";
 import HeatMapTable from "./HeatMapTable";
-import type { IJobHardwareData } from "analytics/hardware/hardwareApi";
 
 function getUniqueComponentTypes(jobs: IAnalyticsJob[]): string[] {
   const typeSet = new Set<string>();
@@ -45,7 +44,7 @@ function getUniqueComponentTypes(jobs: IAnalyticsJob[]): string[] {
 function HardwareCoverageCard({
   data,
 }: {
-  data: IGenericAnalyticsData<IAnalyticsJob & { extra?: IJobHardwareData }>;
+  data: IGenericAnalyticsData<IAnalyticsJob & { nodes?: import("analytics/hardware/hardwareFormatter").ESNode[] }>;
 }) {
   const [searchParams, setSearchParams] = useSearchParams();
   const graphRef = createRef<HTMLTableElement>();
@@ -108,7 +107,7 @@ function HardwareCoverageCard({
                           search.length === 0 ||
                           c.name.toLowerCase().includes(search.toLowerCase()),
                       )
-                      .slice(0, 10)}
+                      .slice(0, 50)}
                     onSelect={(selection) => {
                       if (selection) {
                         setHardwareType(selection.name);
@@ -135,7 +134,7 @@ function HardwareCoverageCard({
                           search.length === 0 ||
                           c.toLowerCase().includes(search.toLowerCase()),
                       )
-                      .slice(0, 10)
+                      .slice(0, 50)
                       .map((key) => ({
                         id: key,
                         name: key,
@@ -177,7 +176,7 @@ function HardwareCoverage({
   data,
 }: {
   isLoading: boolean;
-  data: IGenericAnalyticsData<IAnalyticsJob & { extra?: IJobHardwareData }> | undefined;
+  data: IGenericAnalyticsData<IAnalyticsJob & { nodes?: import("analytics/hardware/hardwareFormatter").ESNode[] }> | undefined;
 }) {
   if (isLoading) {
     return (
