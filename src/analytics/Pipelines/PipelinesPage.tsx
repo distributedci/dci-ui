@@ -151,7 +151,10 @@ function PipelineCard({ pipelineDay, ...props }: PipelineCardProps) {
         }}
       >
         <CardTitle>
-          {formatDate(pipelineDay.datetime, DateTime.DATE_MED_WITH_WEEKDAY)}
+          {formatDate(pipelineDay.datetime, DateTime.DATE_MED_WITH_WEEKDAY)}{" "}
+          {pipelineDay.pipelines.length > 0 && (
+            <span className="pf-v6-u-font-weight-normal">{`- ${pipelineDay.pipelines.length} pipeline${pipelineDay.pipelines.length > 1 && "s"}`}</span>
+          )}
         </CardTitle>
       </CardHeader>
       <CardBody style={{ overflow: "auto" }}>
