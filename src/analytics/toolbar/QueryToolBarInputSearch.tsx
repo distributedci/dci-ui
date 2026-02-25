@@ -2,21 +2,25 @@ import {
   Menu,
   MenuContent,
   MenuItem,
+  MenuItemAction,
   MenuList,
   Popper,
   SearchInput,
 } from "@patternfly/react-core";
+import { TimesIcon } from "@patternfly/react-icons";
 import { useLazyGetSuggestionsQuery } from "analytics/analyticsApi";
 import {
   applyCompletion,
-  extractAutocompleteInfo,
   getCompletions,
   type Completion,
-  type CompletionValues,
+  type AutoCompletionValues,
+  type CompletionContext,
+  defaultCompletionContext,
 } from "analytics/autocompletion/autocompletion";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { JobStatuses } from "types";
 import { useDebounce } from "use-debounce";
+import useSearchHistory from "hooks/useSearchHistory";
 
 export interface QueryToolBarInputSearchProps
   extends Omit<React.HTMLProps<HTMLInputElement>, "onChange"> {
@@ -32,34 +36,41 @@ export default function QueryToolBarInputSearch({
 }: QueryToolBarInputSearchProps) {
   const [cursor, setCursor] = useState(0);
   const [focusedIndex, setFocusedIndex] = useState<number | null>(null);
-  const [completions, setCompletions] = useState<Completion[]>([]);
   const [debouncedValue] = useDebounce(value, 1000);
-  const [suggestions, setSuggestions] = useState<CompletionValues>({
+  const [suggestions, setSuggestions] = useState<AutoCompletionValues>({
     status: [...JobStatuses],
   });
+  const [queries, addQuery, deleteQuery] = useSearchHistory();
+  const [completionContext, setCompletionContext] = useState<CompletionContext>(
+    {
+      ...defaultCompletionContext,
+      values: suggestions,
+      history: {
+        queries,
+        maxSuggestions: 2,
+      },
+    },
+  );
   const [apiSearch, setApiSearch] = useState<{
     field: string;
     value: string;
   } | null>(null);
-  const isAutocompleteOpen = completions.length > 0;
+  const isAutocompleteOpen = completionContext.completions.length > 0;
   const searchInputRef = useRef<HTMLInputElement | null>(null);
   const autocompleteRef = useRef<HTMLDivElement | null>(null);
   const [getApiSuggestions] = useLazyGetSuggestionsQuery();
 
   const _applyCompletion = useCallback(
-    (value: string, cursor: number, completion: Completion | undefined) => {
+    (completion: Completion | undefined) => {
       if (completion) {
-        const { newValue, newCursor } = applyCompletion({
-          value,
-          cursor,
-          completion,
-        });
-        onChange(newValue);
-        setCursor(newCursor);
+        const newContext = applyCompletion(completionContext, completion);
+        setCompletionContext(newContext);
+        onChange(newContext.input);
+        setCursor(newContext.cursor);
         setFocusedIndex(null);
       }
     },
-    [onChange],
+    [onChange, completionContext],
   );
 
   const handleCursorPosition = () => {
@@ -71,13 +82,38 @@ export default function QueryToolBarInputSearch({
 
   useEffect(() => {
     if (value) {
-      setCompletions(getCompletions(value, cursor, suggestions));
+      setCompletionContext(
+        getCompletions({
+          input: value,
+          cursor,
+          values: suggestions,
+          history: {
+            queries,
+            maxSuggestions: 2,
+          },
+          completions: [],
+          syntax: null,
+        }),
+      );
     }
-  }, [value, cursor, suggestions]);
+  }, [value, suggestions, queries]);
 
   useEffect(() => {
     if (debouncedValue) {
-      setApiSearch(extractAutocompleteInfo(debouncedValue, cursor));
+      const syntax = completionContext.syntax;
+      if (
+        syntax &&
+        syntax.type === "value" &&
+        syntax.fieldName &&
+        syntax.prefix !== undefined
+      ) {
+        setApiSearch({
+          field: syntax.fieldName,
+          value: syntax.prefix,
+        });
+      } else {
+        setApiSearch(null);
+      }
     }
   }, [debouncedValue, cursor]);
 
@@ -86,46 +122,65 @@ export default function QueryToolBarInputSearch({
       getApiSuggestions(apiSearch.field).then((response) => {
         setSuggestions((prev) => ({
           ...prev,
-          [apiSearch.field]: response.data,
+          [apiSearch.field]: response.data || [],
         }));
       });
     }
   }, [apiSearch, getApiSuggestions]);
 
   useEffect(() => {
-    if (completions.length === 0) {
+    if (completionContext.completions.length === 0) {
       setFocusedIndex(null);
     }
-  }, [completions]);
+  }, [completionContext.completions]);
+
+  useEffect(() => {
+    const input = searchInputRef.current;
+    if (input && document.activeElement === input) {
+      setTimeout(() => {
+        input.setSelectionRange(cursor, cursor);
+      }, 0);
+    }
+  }, [cursor, value]);
 
   useEffect(() => {
     const handleKeydown = (event: KeyboardEvent) => {
       if (event.key === "Escape" && isAutocompleteOpen) {
-        setCompletions([]);
+        setCompletionContext({
+          ...completionContext,
+          completions: [],
+          syntax: null,
+        });
         setFocusedIndex(null);
       }
-
       if (event.key === "ArrowDown" && isAutocompleteOpen) {
         event.preventDefault();
         setFocusedIndex((prev) => {
-          if (prev === null || prev >= completions.length - 1) return 0;
+          if (prev === null || prev >= completionContext.completions.length - 1)
+            return 0;
           return prev + 1;
         });
       } else if (event.key === "ArrowUp" && isAutocompleteOpen) {
         event.preventDefault();
         setFocusedIndex((prev) => {
-          if (prev === null || prev <= 0) return completions.length - 1;
+          if (prev === null || prev <= 0)
+            return completionContext.completions.length - 1;
           return prev - 1;
         });
       } else if (event.key === "Enter") {
         if (focusedIndex === null) {
-          setCompletions([]);
+          setCompletionContext({
+            ...completionContext,
+            completions: [],
+            syntax: null,
+          });
           setFocusedIndex(null);
+          addQuery(value);
           onSubmit();
         } else {
           event.preventDefault();
-          const completion = completions[focusedIndex];
-          _applyCompletion(value, cursor, completion);
+          const completion = completionContext.completions[focusedIndex];
+          _applyCompletion(completion);
         }
       }
     };
@@ -146,7 +201,8 @@ export default function QueryToolBarInputSearch({
     onSubmit,
     value,
     cursor,
-    completions,
+    completionContext,
+    addQuery,
   ]);
 
   useEffect(() => {
@@ -157,7 +213,11 @@ export default function QueryToolBarInputSearch({
         autocompleteRef.current &&
         !autocompleteRef.current.contains(event.target as Node)
       ) {
-        setCompletions([]);
+        setCompletionContext({
+          ...completionContext,
+          completions: [],
+          syntax: null,
+        });
       }
     };
     window.addEventListener("click", handleClickOutside);
@@ -171,7 +231,7 @@ export default function QueryToolBarInputSearch({
       trigger={
         <SearchInput
           id="job-search"
-          placeholder="(name='job name') and (status='success')"
+          placeholder="Try: (name = 'job name') and (status = 'success')"
           value={value}
           onChange={(_, value) => {
             onChange(value);
@@ -190,21 +250,34 @@ export default function QueryToolBarInputSearch({
             completionValue?: string | number,
           ) => {
             event?.stopPropagation();
-            const completion = completions.find(
+            const completion = completionContext.completions.find(
               (c) => c.value === completionValue,
             );
-            _applyCompletion(value, cursor, completion);
+            _applyCompletion(completion);
             searchInputRef?.current?.focus();
           }}
         >
           <MenuContent>
             <MenuList>
-              {completions.map((option, index) => (
+              {completionContext.completions.map((option, index) => (
                 <MenuItem
                   itemId={option.value}
                   key={index}
                   isFocused={index === focusedIndex}
                   isActive={index === focusedIndex}
+                  actions={
+                    option.type === "history" ? (
+                      <MenuItemAction
+                        actionId="delete"
+                        icon={<TimesIcon />}
+                        aria-label="delete"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          deleteQuery(option.value);
+                        }}
+                      />
+                    ) : undefined
+                  }
                 >
                   {option.value}
                 </MenuItem>

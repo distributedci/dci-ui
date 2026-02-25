@@ -1,41 +1,4 @@
-const FIELDS = [
-  "name",
-  "tags",
-  "comment",
-  "status",
-  "team.name",
-  "components.type",
-  "components.tags",
-  "topic.name",
-  "remoteci.name",
-  "pipeline.name",
-  "results.success",
-  "id",
-  "configuration",
-  "created_at",
-  "keys_values",
-  "status_reason",
-  "duration",
-  "pipeline.id",
-  "pipeline.created_at",
-  "components.id",
-  "components.topic_id",
-  "components.display_name",
-  "results.errors",
-  "results.failures",
-  "results.skips",
-  "results.total",
-  "team.id",
-  "components.name",
-  "tests.name",
-  "tests.testsuites.testcases.name",
-  "tests.testsuites.testcases.action",
-  "tests.testsuites.testcases.classname",
-] as const;
-export type FieldName = (typeof FIELDS)[number];
 export type FieldType = "string" | "number" | "boolean" | "list";
-export type Field = { name: FieldName; type: FieldType };
-export type Completion = { value: string; insertText: string };
 export type ComparisonOperator =
   | "="
   | "!="
@@ -47,14 +10,21 @@ export type ComparisonOperator =
   | ">="
   | "<=";
 export type LogicalOperator = "and" | "or";
+export type ListOperator = "in" | "not_in";
+export type NumericOperator = ">" | "<" | ">=" | "<=";
+
+const MAX_COMPLETIONS = 10;
+
 export interface AutoCompletionOptions {
-  fields: Field[];
+  fields: Array<{
+    name: string;
+    type: FieldType;
+  }>;
   operators: {
     comparison: Record<FieldType, ComparisonOperator[]>;
     logical: LogicalOperator[];
   };
 }
-export type AutoCompletionValues = Partial<Record<FieldName, string[]>>;
 export const defaultOptions: AutoCompletionOptions = {
   fields: [
     { name: "tags", type: "list" },
@@ -89,6 +59,68 @@ export const defaultOptions: AutoCompletionOptions = {
     { name: "tests.testsuites.testcases.name", type: "string" },
     { name: "tests.testsuites.testcases.action", type: "string" },
     { name: "tests.testsuites.testcases.classname", type: "string" },
+    { name: "nodes.hardware.network_interfaces.model", type: "string" },
+    { name: "nodes.hardware.cpu_model", type: "string" },
+    { name: "nodes.hardware.bios_version", type: "string" },
+    { name: "nodes.hardware.storage_devices.model", type: "string" },
+    { name: "nodes.hardware.storage_devices.version", type: "string" },
+    { name: "nodes.kernel.version", type: "string" },
+    { name: "nodes.hardware.node", type: "string" },
+    { name: "nodes.hardware.system_model", type: "string" },
+    { name: "nodes.hardware.cpu_total_cores", type: "number" },
+    { name: "nodes.hardware.bios_date", type: "string" },
+    { name: "nodes.hardware.bios_type", type: "string" },
+    { name: "nodes.hardware.bios_vendor", type: "string" },
+    { name: "nodes.hardware.cpu_frequency_mhz", type: "number" },
+    { name: "nodes.hardware.cpu_sockets", type: "number" },
+    { name: "nodes.hardware.cpu_total_threads", type: "number" },
+    { name: "nodes.hardware.cpu_vendor", type: "string" },
+    { name: "nodes.hardware.filename", type: "string" },
+    { name: "nodes.hardware.memory_dimm_count", type: "number" },
+    { name: "nodes.hardware.memory_total_gb", type: "number" },
+    {
+      name: "nodes.hardware.network_interfaces.autonegotiation",
+      type: "boolean",
+    },
+    { name: "nodes.hardware.network_interfaces.businfo", type: "string" },
+    { name: "nodes.hardware.network_interfaces.description", type: "string" },
+    { name: "nodes.hardware.network_interfaces.device_id", type: "string" },
+    { name: "nodes.hardware.network_interfaces.driver", type: "string" },
+    {
+      name: "nodes.hardware.network_interfaces.driver_version",
+      type: "string",
+    },
+    { name: "nodes.hardware.network_interfaces.duplex", type: "string" },
+    { name: "nodes.hardware.network_interfaces.firmware", type: "string" },
+    { name: "nodes.hardware.network_interfaces.firmware_ncsi", type: "string" },
+    {
+      name: "nodes.hardware.network_interfaces.firmware_version",
+      type: "string",
+    },
+    {
+      name: "nodes.hardware.network_interfaces.is_virtual_function",
+      type: "boolean",
+    },
+    { name: "nodes.hardware.network_interfaces.link_status", type: "boolean" },
+    { name: "nodes.hardware.network_interfaces.logical_name", type: "string" },
+    { name: "nodes.hardware.network_interfaces.speed_mbps", type: "number" },
+    { name: "nodes.hardware.network_interfaces.subdevice_id", type: "string" },
+    { name: "nodes.hardware.network_interfaces.subproduct", type: "string" },
+    { name: "nodes.hardware.network_interfaces.subvendor", type: "string" },
+    { name: "nodes.hardware.network_interfaces.subvendor_id", type: "string" },
+    { name: "nodes.hardware.network_interfaces.vendor", type: "string" },
+    { name: "nodes.hardware.network_interfaces.vendor_id", type: "string" },
+    { name: "nodes.hardware.storage_devices.businfo", type: "string" },
+    { name: "nodes.hardware.storage_devices.description", type: "string" },
+    { name: "nodes.hardware.storage_devices.device_id", type: "string" },
+    { name: "nodes.hardware.storage_devices.firmware", type: "string" },
+    { name: "nodes.hardware.storage_devices.size_gb", type: "number" },
+    { name: "nodes.hardware.storage_devices.type", type: "string" },
+    { name: "nodes.hardware.storage_devices.vendor", type: "string" },
+    { name: "nodes.hardware.storage_devices.vendor_id", type: "string" },
+    { name: "nodes.hardware.system_family", type: "string" },
+    { name: "nodes.hardware.system_sku", type: "string" },
+    { name: "nodes.hardware.system_vendor", type: "string" },
   ],
   operators: {
     comparison: {
@@ -101,181 +133,444 @@ export const defaultOptions: AutoCompletionOptions = {
   },
 };
 
-type ParseOutput = {
-  lastParenthesisIndex: number;
-  field: string;
-  operator: ComparisonOperator | null;
-  value: string | null;
-} | null;
+export type AutoCompletionValues = Record<string, string[]>;
 
-export function parseInput(input: string): ParseOutput {
-  const lastParenthesisIndex = input.lastIndexOf("(");
-  if (lastParenthesisIndex === -1) {
-    return null;
-  }
-  const afterParenthesis = input.slice(lastParenthesisIndex).trim();
-  if (afterParenthesis.endsWith(")")) {
-    return null;
-  }
-  const fieldOpValRegex =
-    /\(\s*(\w+(?:\.\w*)?)\s*(in|not_in|!=|=~|>=|<=|=|>|<)?(?:\s*\[?')?(\w+)?/;
-  const match = afterParenthesis.match(fieldOpValRegex);
-  if (!match) return null;
-  const [, field, rawOperator, rawValue] = match;
-  const operator = (rawOperator as ComparisonOperator) || null;
-  const value =
-    afterParenthesis.endsWith("'") && !rawValue ? "" : rawValue || null;
-  return { lastParenthesisIndex, field, operator, value };
-}
+export type AutoCompletionHistory = {
+  queries: string[];
+  maxSuggestions: number;
+};
 
-export type CompletionValues = Partial<Record<FieldName, string[]>>;
-
-export function getCompletions(
-  input: string,
-  cursor: number,
-  completionValues: CompletionValues = {},
-  options: AutoCompletionOptions = defaultOptions,
-): Completion[] {
-  const prefix = input.slice(0, cursor).trim().toLowerCase();
-
-  if (prefix === "") {
-    return [];
-  }
-
-  const lastParenthesisIndex = prefix.lastIndexOf("(");
-  if (lastParenthesisIndex === -1) {
-    return [];
-  }
-
-  if (prefix[prefix.length - 1] === ")") {
-    return options.operators.logical.map((op) => {
-      return {
-        value: op,
-        insertText: ` ${op} (`,
-      };
-    });
-  }
-
-  if (prefix.endsWith("(")) {
-    return options.fields.slice(0, 10).map((field) => ({
-      value: field.name,
-      insertText: `${field.name} `,
-    }));
-  }
-
-  const parsedInput = parseInput(prefix);
-  if (parsedInput === null) return [];
-  const { field, operator, value } = parsedInput;
-  const completeField = options.fields.find((f) => f.name === field) || null;
-  if (completeField && operator) {
-    const asyncValues = completionValues[completeField.name] ?? [];
-    const filteredAsyncValues =
-      value === null
-        ? asyncValues
-        : asyncValues.filter((v) => v.toLowerCase().startsWith(value));
-    return filteredAsyncValues.slice(0, 10).map((v) => {
-      return {
-        value: v,
-        insertText:
-          operator === "in" || operator === "not_in" ? `${v}'])` : `${v}')`,
-      };
-    });
-  }
-
-  if (completeField) {
-    return options.operators.comparison[completeField.type].map((op) => {
-      return {
-        value: op,
-        insertText: op === "in" || op === "not_in" ? ` ${op} ['` : `${op}'`,
-      };
-    });
-  }
-
-  return options.fields
-    .filter((f) => f.name.toLowerCase().startsWith(field))
-    .slice(0, 10)
-    .map((f) => ({
-      value: f.name,
-      insertText: `${f.name} `,
-    }));
-}
-
-export function applyCompletion({
-  value,
-  cursor,
-  completion,
-}: {
+export type Completion = {
   value: string;
+  insertText: string;
+  type: "history" | "field" | "operator" | "value";
+};
+
+export type Syntax = {
+  type: "field" | "operator" | "value" | "logical";
+  fieldName?: string;
+  operator?: string;
+  prefix?: string;
+  replaceStart?: number;
+  replaceEnd?: number;
+};
+
+export interface CompletionContext {
+  input: string;
   cursor: number;
-  completion: Completion;
-}): { newValue: string; newCursor: number } {
-  const prefix = value.slice(0, cursor);
-  const suffix = value.slice(cursor);
+  options?: AutoCompletionOptions;
+  values: AutoCompletionValues;
+  history: AutoCompletionHistory;
+  completions: Completion[];
+  syntax: Syntax | null;
+}
 
-  if (prefix.endsWith(")") || prefix.endsWith("(")) {
-    const v = prefix + completion.insertText + suffix;
-    return {
-      newValue: v,
-      newCursor: v.length,
-    };
-  }
+export const defaultCompletionContext: CompletionContext = {
+  input: "",
+  cursor: 0,
+  values: {},
+  history: { queries: [], maxSuggestions: 2 },
+  completions: [],
+  syntax: null,
+};
 
-  const parsedInput = parseInput(prefix);
-  if (parsedInput === null)
-    return {
-      newValue: value,
-      newCursor: cursor,
-    };
-  const { field, operator, lastParenthesisIndex } = parsedInput;
-  const completeField = FIELDS.find((f) => f === field) || null;
-  let elements = [];
-  if (completeField && operator) {
-    elements = [value, completion.insertText, suffix];
-  } else if (completeField) {
-    elements = [
-      value.slice(0, lastParenthesisIndex + 1),
-      completeField,
-      completion.insertText,
-      suffix,
-    ];
-  } else {
-    elements = [
-      value.slice(0, lastParenthesisIndex + 1),
-      completion.insertText,
-      suffix,
-    ];
-  }
+function createCompletion(
+  value: string,
+  type: "history" | "field" | "operator" | "value",
+): Completion {
+  return { value, insertText: value, type };
+}
 
-  const newValue = elements.filter((e) => e !== null && e !== "").join("");
-  const newCursor = newValue.length;
+function createValueContext(
+  fieldName: string,
+  operator: string,
+  prefix: string,
+  cursor: number,
+): Syntax {
   return {
-    newValue,
-    newCursor,
+    type: "value",
+    fieldName,
+    operator,
+    prefix,
+    replaceStart: cursor - prefix.length,
+    replaceEnd: cursor,
   };
 }
 
-type AutocompleteInfo = { field: string; value: string } | null;
-
-export function extractAutocompleteInfo(
-  input: string,
+function parseValueSyntax(
+  textBeforeCursor: string,
   cursor: number,
-): AutocompleteInfo {
-  const textUpToCursor = input.slice(0, cursor);
+): Syntax | null {
+  const notEqualMatch = textBeforeCursor.match(
+    /(?:^|\()([a-zA-Z0-9._]+)\s*!=\s*'([^']*)$/,
+  );
+  if (notEqualMatch) {
+    return createValueContext(notEqualMatch[1], "!=", notEqualMatch[2], cursor);
+  }
 
-  const patterns = [
-    /\(?([\w.]+)\s*(?:!=|=~|>=|<=|=|>|<)\s*'([^']*)$/,
-    /\(?([\w.]+)\s+(?:in|not_in)\s+\[\s*(?:'[^']*'\s*,\s*)*'([^']*)$/,
-  ];
+  const equalMatch = textBeforeCursor.match(
+    /(?:^|\()([a-zA-Z0-9._]+)\s*=\s*'([^']*)$/,
+  );
+  if (equalMatch) {
+    return createValueContext(equalMatch[1], "=", equalMatch[2], cursor);
+  }
 
-  for (const pattern of patterns) {
-    const match = textUpToCursor.match(pattern);
-    if (match) {
-      return {
-        field: match[1],
-        value: match[2],
-      };
-    }
+  const inMultipleMatch = textBeforeCursor.match(
+    /(?:^|\()([a-zA-Z0-9._]+)\s+(in|not_in)\s+\['[^']*',\s*'([^']*)$/,
+  );
+  if (inMultipleMatch) {
+    return createValueContext(
+      inMultipleMatch[1],
+      inMultipleMatch[2],
+      inMultipleMatch[3],
+      cursor,
+    );
+  }
+
+  const inMatch = textBeforeCursor.match(
+    /(?:^|\()([a-zA-Z0-9._]+)\s+(in|not_in)\s+\['\s*([^']*)$/,
+  );
+  if (inMatch) {
+    return createValueContext(inMatch[1], inMatch[2], inMatch[3], cursor);
   }
 
   return null;
+}
+
+function parseOperatorSyntax(
+  textBeforeCursor: string,
+  input: string,
+  cursor: number,
+): Syntax | null {
+  const fieldWithSpaceMatch = textBeforeCursor.match(/\(([a-zA-Z0-9._]+)\s$/);
+  if (fieldWithSpaceMatch) {
+    return {
+      type: "operator",
+      fieldName: fieldWithSpaceMatch[1],
+    };
+  }
+
+  const fieldWithSpaceNoParenMatch =
+    textBeforeCursor.match(/^([a-zA-Z0-9._]+)\s$/);
+  if (fieldWithSpaceNoParenMatch) {
+    return {
+      type: "operator",
+      fieldName: fieldWithSpaceNoParenMatch[1],
+    };
+  }
+
+  const fieldWithoutSpaceMatch = textBeforeCursor.match(
+    /(?:^|\()([a-zA-Z0-9._]+)$/,
+  );
+  if (fieldWithoutSpaceMatch && input[cursor] === " ") {
+    return {
+      type: "operator",
+      fieldName: fieldWithoutSpaceMatch[1],
+    };
+  }
+
+  return null;
+}
+
+function parseLogicialSyntax(textBeforeCursor: string): Syntax | null {
+  if (/\)\s*$/.test(textBeforeCursor)) {
+    return { type: "logical" };
+  }
+  return null;
+}
+
+function parseFieldSyntax(
+  textBeforeCursor: string,
+  cursor: number,
+): Syntax | null {
+  const fieldPrefixMatch = textBeforeCursor.match(/(?:^|\()([a-zA-Z0-9._]*)$/);
+  if (fieldPrefixMatch) {
+    const prefix = fieldPrefixMatch[1];
+    const replaceStart = cursor - prefix.length;
+    return {
+      type: "field",
+      prefix,
+      replaceStart,
+      replaceEnd: cursor,
+    };
+  }
+
+  return null;
+}
+
+export function _parseSyntax(input: string, cursor: number): Syntax | null {
+  const textBeforeCursor = input.slice(0, cursor);
+
+  const logicalSyntax = parseLogicialSyntax(textBeforeCursor);
+  if (logicalSyntax) {
+    return logicalSyntax;
+  }
+
+  const valueContext = parseValueSyntax(textBeforeCursor, cursor);
+  if (valueContext) {
+    return valueContext;
+  }
+
+  const operatorContext = parseOperatorSyntax(textBeforeCursor, input, cursor);
+  if (operatorContext) {
+    return operatorContext;
+  }
+
+  const fieldContext = parseFieldSyntax(textBeforeCursor, cursor);
+  if (fieldContext) {
+    return fieldContext;
+  }
+
+  return null;
+}
+
+export function getCompletions(
+  completionContext: CompletionContext,
+): CompletionContext {
+  const {
+    input,
+    cursor,
+    options = defaultOptions,
+    values: completionValues,
+    history,
+  } = completionContext;
+
+  if (input.length === 0) {
+    return { ...defaultCompletionContext };
+  }
+
+  const result: Completion[] = [];
+
+  if (history && history.queries.length > 0) {
+    const matchingQueries = history.queries.filter(
+      (query) => query.includes(input) && query.length != input.length,
+    );
+
+    result.push(
+      ...matchingQueries
+        .slice(0, history.maxSuggestions)
+        .map((query) => createCompletion(query, "history")),
+    );
+  }
+
+  const syntax = _parseSyntax(input, cursor);
+  if (!syntax) {
+    return {
+      ...completionContext,
+      completions: result.slice(0, MAX_COMPLETIONS),
+      syntax: null,
+    };
+  }
+
+  if (syntax.type === "logical") {
+    const textBeforeCursor = input.slice(0, cursor);
+    if (textBeforeCursor.endsWith(" ")) {
+      result.push(
+        ...options.operators.logical.map((op) =>
+          createCompletion(op, "operator"),
+        ),
+      );
+    }
+  } else if (syntax.type === "value" && syntax.fieldName) {
+    const values = completionValues[syntax.fieldName];
+    if (values) {
+      const prefix = syntax.prefix || "";
+      const filteredValues =
+        prefix === ""
+          ? values
+          : values.filter((value) => value.startsWith(prefix));
+
+      result.push(...filteredValues.map((v) => createCompletion(v, "value")));
+    }
+  } else if (syntax.type === "operator" && syntax.fieldName) {
+    if (input.includes("(")) {
+      const field = options.fields.find((f) => f.name === syntax.fieldName);
+      if (field) {
+        const operators = options.operators.comparison[field.type];
+        result.push(...operators.map((op) => createCompletion(op, "operator")));
+      }
+    }
+  } else if (syntax.type === "field") {
+    const prefix = syntax.prefix!;
+    if (syntax.replaceStart !== 0) {
+      if (prefix === "") {
+        const filteredFields = options.fields.slice(0, MAX_COMPLETIONS);
+        result.push(
+          ...filteredFields.map((field) =>
+            createCompletion(field.name, "field"),
+          ),
+        );
+      } else {
+        const exactMatch = options.fields.find((f) => f.name === prefix);
+        if (!exactMatch) {
+          const filteredFields = options.fields
+            .filter((field) => field.name.startsWith(prefix))
+            .slice(0, MAX_COMPLETIONS);
+
+          result.push(
+            ...filteredFields.map((field) =>
+              createCompletion(field.name, "field"),
+            ),
+          );
+        }
+      }
+    }
+  }
+
+  return {
+    ...completionContext,
+    completions: result.slice(0, MAX_COMPLETIONS),
+    syntax,
+  };
+}
+
+function isListOperator(
+  operator: ComparisonOperator,
+): operator is ListOperator {
+  return operator === "in" || operator === "not_in";
+}
+
+function isNumericOperator(
+  operator: ComparisonOperator,
+): operator is NumericOperator {
+  return (
+    operator === ">" ||
+    operator === "<" ||
+    operator === ">=" ||
+    operator === "<="
+  );
+}
+
+function getClosingPattern(
+  operator: ComparisonOperator,
+  before: string,
+): string {
+  if (isListOperator(operator)) {
+    if (before.endsWith(", '")) {
+      return "'";
+    }
+    return "'])";
+  }
+
+  return "')";
+}
+
+function getOperatorSuffixAndOffset(operator: ComparisonOperator): {
+  suffix: string;
+  offset: number;
+} {
+  if (isListOperator(operator)) {
+    return {
+      suffix: " [''])",
+      offset: 3,
+    };
+  }
+
+  if (isNumericOperator(operator)) {
+    return {
+      suffix: " )",
+      offset: 1,
+    };
+  }
+
+  return {
+    suffix: " '')",
+    offset: 2,
+  };
+}
+
+export function applyCompletion(
+  completionContext: CompletionContext,
+  completion: Completion,
+): CompletionContext {
+  const { input: value, cursor, syntax } = completionContext;
+
+  if (completion.type === "history") {
+    return {
+      ...completionContext,
+      input: completion.value,
+      cursor: completion.value.length,
+    };
+  }
+
+  if (!syntax) {
+    return completionContext;
+  }
+
+  const textAfterCursor = value.slice(cursor);
+  let newValue = value;
+  let newCursor = cursor;
+
+  if (syntax.type === "logical") {
+    const textBeforeCursor = value.slice(0, cursor);
+    const hasTrailingSpace = textBeforeCursor.endsWith(") ");
+
+    let before = value.slice(0, cursor);
+    const prefix = " ";
+    const suffix = " (";
+    let afterCursor = textAfterCursor;
+
+    if (hasTrailingSpace) {
+      before = value.slice(0, cursor - 1);
+    }
+
+    if (textAfterCursor[0] === " ") {
+      afterCursor = textAfterCursor.slice(1);
+    }
+
+    newValue = before + prefix + completion.insertText + suffix + afterCursor;
+    newCursor =
+      before.length +
+      prefix.length +
+      completion.insertText.length +
+      suffix.length;
+  } else if (syntax.type === "value" && syntax.replaceStart !== undefined) {
+    const before = value.slice(0, syntax.replaceStart);
+    let suffix = "";
+    let cursorOffset = 0;
+
+    const expectedClosing = getClosingPattern(
+      syntax.operator as ComparisonOperator,
+      before,
+    );
+
+    if (!textAfterCursor.startsWith(expectedClosing)) {
+      suffix = expectedClosing;
+    } else {
+      cursorOffset = expectedClosing.length;
+    }
+
+    newValue = before + completion.insertText + suffix + textAfterCursor;
+    newCursor = before.length + completion.insertText.length + cursorOffset;
+  } else if (syntax.type === "operator") {
+    const before = value.slice(0, cursor);
+    let prefix = "";
+    let afterCursor = textAfterCursor;
+
+    if (value[cursor - 1] !== " ") {
+      prefix = " ";
+    }
+
+    if (textAfterCursor[0] === " ") {
+      afterCursor = textAfterCursor.slice(1);
+    }
+
+    const { suffix, offset } = getOperatorSuffixAndOffset(
+      completion.value as ComparisonOperator,
+    );
+
+    newValue = before + prefix + completion.insertText + suffix + afterCursor;
+    newCursor =
+      before.length + prefix.length + completion.insertText.length + offset;
+  } else if (syntax.type === "field" && syntax.replaceStart !== undefined) {
+    const before = value.slice(0, syntax.replaceStart);
+    newValue = before + completion.insertText + " " + textAfterCursor;
+    newCursor = before.length + completion.insertText.length;
+  }
+
+  return {
+    ...completionContext,
+    input: newValue,
+    cursor: newCursor,
+  };
 }
