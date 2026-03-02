@@ -39,42 +39,42 @@ function getNodeRole(nodeName: string): NodeRole {
 }
 
 export interface NetworkInterface {
-  autonegotiation: boolean;
-  businfo: string;
-  description: string;
-  device_id: string;
-  driver: string;
-  driver_version: string;
+  autonegotiation: boolean | null;
+  businfo: string | null;
+  description: string | null;
+  device_id: string | null;
+  driver: string | null;
+  driver_version: string | null;
   duplex: string | null;
-  firmware: string;
-  firmware_ncsi?: string;
-  firmware_psid?: string;
-  firmware_nvm?: string;
-  firmware_version: string;
-  is_virtual_function: boolean;
-  link_status: boolean;
-  logical_name: string;
-  model: string;
+  firmware: string | null;
+  firmware_ncsi?: string | null;
+  firmware_psid?: string | null;
+  firmware_nvm?: string | null;
+  firmware_version: string | null;
+  is_virtual_function: boolean | null;
+  link_status: boolean | null;
+  logical_name: string | null;
+  model: string | null;
   speed_mbps: number | null;
   subdevice_id: string | null;
   subproduct: string | null;
   subvendor: string | null;
   subvendor_id: string | null;
-  vendor: string;
-  vendor_id: string;
+  vendor: string | null;
+  vendor_id: string | null;
 }
 
 export interface StorageDevice {
-  businfo: string;
-  description: string;
+  businfo: string | null;
+  description: string | null;
   device_id: string | null;
   firmware: string | null;
-  model: string;
-  size_gb: number;
-  type: string;
-  vendor: string;
+  model: string | null;
+  size_gb: number | null;
+  type: string | null;
+  vendor: string | null;
   vendor_id: string | null;
-  version: string;
+  version: string | null;
 }
 
 export interface IHardware {
@@ -159,7 +159,7 @@ export function formatHardwareData(
   const nodes: INode[] = [];
 
   for (const node of ESNodes) {
-    const nodeName = node.node || node.hardware.node;
+    const nodeName = node.node || node.hardware.node || "";
     nodes.push({
       name: nodeName,
       role: getNodeRole(nodeName),

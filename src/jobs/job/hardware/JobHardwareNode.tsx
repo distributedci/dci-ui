@@ -147,7 +147,7 @@ function DiskSection({ disks }: { disks: IHardware["storage_devices"] }) {
               <Td>{disk.vendor}</Td>
               <Td>{disk.description}</Td>
               <Td style={{ textTransform: "capitalize" }}>
-                {disk.model.toLowerCase()}
+                {disk.model?.toLowerCase()}
               </Td>
               <Td>{`${disk.size_gb} GB`}</Td>
             </Tr>
