@@ -55,10 +55,25 @@ export default function QueryToolBarInputSearch({
     field: string;
     value: string;
   } | null>(null);
+  const loadedFieldsRef = useRef<Set<string>>(new Set());
+  const suggestionsRef = useRef(suggestions);
+  const queriesRef = useRef(queries);
   const isAutocompleteOpen = completionContext.completions.length > 0;
   const searchInputRef = useRef<HTMLInputElement | null>(null);
   const autocompleteRef = useRef<HTMLDivElement | null>(null);
   const [getApiSuggestions] = useLazyGetSuggestionsQuery();
+
+  // don't rerender component when suggestions change
+  // avoid maximum update depth exceeded
+  useEffect(() => {
+    suggestionsRef.current = suggestions;
+  }, [suggestions]);
+
+  // don't rerender component when queries change
+  // avoid maximum update depth exceeded
+  useEffect(() => {
+    queriesRef.current = queries;
+  }, [queries]);
 
   const _applyCompletion = useCallback(
     (completion: Completion | undefined) => {
@@ -86,9 +101,9 @@ export default function QueryToolBarInputSearch({
         getCompletions({
           input: value,
           cursor,
-          values: suggestions,
+          values: suggestionsRef.current,
           history: {
-            queries,
+            queries: queriesRef.current,
             maxSuggestions: 2,
           },
           completions: [],
@@ -96,7 +111,7 @@ export default function QueryToolBarInputSearch({
         }),
       );
     }
-  }, [value, suggestions, queries]);
+  }, [value, cursor]);
 
   useEffect(() => {
     if (debouncedValue) {
@@ -115,10 +130,11 @@ export default function QueryToolBarInputSearch({
         setApiSearch(null);
       }
     }
-  }, [debouncedValue, cursor]);
+  }, [debouncedValue, completionContext.syntax]);
 
   useEffect(() => {
-    if (apiSearch) {
+    if (apiSearch && !loadedFieldsRef.current.has(apiSearch.field)) {
+      loadedFieldsRef.current.add(apiSearch.field);
       getApiSuggestions(apiSearch.field).then((response) => {
         setSuggestions((prev) => ({
           ...prev,
