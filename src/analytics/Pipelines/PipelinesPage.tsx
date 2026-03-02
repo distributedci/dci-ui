@@ -19,7 +19,7 @@ import { t_global_border_color_default } from "@patternfly/react-tokens";
 import { DateTime } from "luxon";
 import { formatDate } from "services/date";
 import { createRef, Fragment, useState } from "react";
-import { Link } from "react-router";
+import { createSearchParams, Link } from "react-router";
 import type {
   AnalyticsToolbarSearch,
   IAnalyticsResultsJob,
@@ -195,7 +195,14 @@ function PipelineCard({ pipelineDay, ...props }: PipelineCardProps) {
                     rowSpan={seeJobComponents ? 2 : 1}
                     style={{ verticalAlign: "middle" }}
                   >
-                    <Link to={`/jobs?where=pipeline_id:${pipeline.id}`}>
+                    <Link
+                      to={{
+                        pathname: "/jobs",
+                        search: createSearchParams({
+                          where: `pipeline_id:${pipeline.id}`,
+                        }).toString(),
+                      }}
+                    >
                       <Truncate content={pipeline.name} />
                     </Link>
                   </Td>
