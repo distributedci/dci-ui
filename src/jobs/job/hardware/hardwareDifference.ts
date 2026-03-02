@@ -117,7 +117,7 @@ export function compareDisks(nodes: INode[]): string[] {
 
   hardwareList.forEach((hardware) => {
     hardware.storage_devices.forEach((disk) => {
-      const businfo = disk.businfo;
+      const businfo = disk.businfo || "";
       if (!disksByBusinfo.has(businfo)) {
         disksByBusinfo.set(businfo, []);
       }
@@ -179,7 +179,7 @@ export function compareNetworkCards(nodes: INode[]): string[] {
 
   hardwareList.forEach((hardware) => {
     hardware.network_interfaces.forEach((card) => {
-      const interfaceName = card.logical_name;
+      const interfaceName = card.logical_name || "";
       if (!cardsByInterface.has(interfaceName)) {
         cardsByInterface.set(interfaceName, []);
       }
