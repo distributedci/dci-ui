@@ -89,7 +89,7 @@ export default function JobStatesList({ job }: JobStatesListProps) {
     <CodeBlockAction key="raw-log-action">
       <Button
         variant="plain"
-        aria-label="Play icon"
+        aria-label="See raw log button"
         icon={<FileIcon />}
         isDisabled={!hasRawLogFile}
         onClick={() => {
@@ -105,7 +105,7 @@ export default function JobStatesList({ job }: JobStatesListProps) {
     <CodeBlockAction key="sort-action">
       <Button
         variant="plain"
-        aria-label="Play icon"
+        aria-label="Filter by duration or date button"
         icon={
           sort === "date" ? <SortAmountDownIcon /> : <SortAmountDownAltIcon />
         }

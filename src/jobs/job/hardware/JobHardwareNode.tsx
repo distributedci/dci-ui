@@ -14,6 +14,7 @@ import type {
   INode,
   INodeKernel,
 } from "analytics/hardware/hardwareFormatter";
+import SeeHardwareDataModal from "./SeeHardwareDataModal";
 
 function KernelSection({ kernel }: { kernel: INodeKernel }) {
   const params = Object.entries(kernel.params)
@@ -171,6 +172,7 @@ function NetworkCardSection({
       <Table variant="compact" borders={false}>
         <Thead>
           <Tr>
+            <Th>Model</Th>
             <Th>Vendor</Th>
             <Th>Interface Name</Th>
             <Th className="text-center">Link Status</Th>
@@ -181,6 +183,7 @@ function NetworkCardSection({
         <Tbody>
           {cards.map((card, index) => (
             <Tr key={index}>
+              <Td>{card.model}</Td>
               <Td>{card.vendor}</Td>
               <Td>{card.logical_name}</Td>
               <Td
@@ -203,17 +206,30 @@ function NetworkCardSection({
   );
 }
 
-export default function JobHardwareNode({ node }: { node: INode }) {
+export default function JobHardwareNode({
+  jobId,
+  node,
+}: {
+  jobId: string;
+  node: INode;
+}) {
   return (
     <Card>
       <CardBody>
         <Content component={ContentVariants.h3} className="pf-v6-u-mb-md">
-          {node.role === "director"
-            ? "Director"
-            : node.role === "worker"
-              ? "Worker"
-              : ""}{" "}
-          {node.name}
+          <div className="flex items-center justify-between">
+            <div>
+              {node.role === "director"
+                ? "Director"
+                : node.role === "worker"
+                  ? "Worker"
+                  : ""}{" "}
+              {node.name}
+            </div>
+            <div>
+              <SeeHardwareDataModal jobId={jobId} node={node} />
+            </div>
+          </div>
         </Content>
         <DescriptionList isHorizontal>
           {node.kernel !== null && <KernelSection kernel={node.kernel} />}
