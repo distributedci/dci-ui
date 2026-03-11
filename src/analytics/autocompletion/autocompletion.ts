@@ -565,7 +565,7 @@ export function applyCompletion(
   } else if (syntax.type === "field" && syntax.replaceStart !== undefined) {
     const before = value.slice(0, syntax.replaceStart);
     newValue = before + completion.insertText + " " + textAfterCursor;
-    newCursor = before.length + completion.insertText.length;
+    newCursor = before.length + completion.insertText.length + 1;
   }
 
   return {
