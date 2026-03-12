@@ -109,6 +109,20 @@ class AutocompleteTestBuilder {
     return this;
   }
 
+  backspace(count: number = 1): this {
+    if (this.cursor === 0) {
+      return this;
+    }
+
+    const charsToDelete = Math.min(count, this.cursor);
+    const before = this.input.slice(0, this.cursor - charsToDelete);
+    const after = this.input.slice(this.cursor);
+    this.input = before + after;
+    this.cursor -= charsToDelete;
+    this.updateCompletions();
+    return this;
+  }
+
   enter(): this {
     if (this.focusedIndex >= 0 && this.focusedIndex < this.completions.length) {
       const completion = this.completions[this.focusedIndex];
@@ -268,7 +282,7 @@ describe("Autocomplete arrow navigation", () => {
       .expectCursor(1)
       .expectInput("(")
       .enter()
-      .expectCursor(5)
+      .expectCursor(6)
       .expectInput("(tags ")
       .expectCompletions(["in", "not_in"]);
   });
@@ -289,8 +303,8 @@ describe("Autocomplete arrow navigation", () => {
       ])
       .arrowDown(2)
       .enter()
-      .expectCursor(16)
       .expectInput("(components.name ")
+      .expectCursor(17)
       .expectCompletions(["=", "!=", "in", "not_in", "=~"]);
   });
   test("arrow down 11 times return on first choice", () => {
@@ -310,8 +324,8 @@ describe("Autocomplete arrow navigation", () => {
       ])
       .arrowDown(11)
       .enter()
-      .expectCursor(5)
       .expectInput("(tags ")
+      .expectCursor(6)
       .expectCompletions(["in", "not_in"]);
   });
 });
@@ -392,6 +406,20 @@ describe("Autocomplete completionValues", () => {
 });
 
 describe("AutocompleteTestBuilder complex scenarios", () => {
+  test("nrt select autocompletion position cursor at the right place", () => {
+    autocomplete()
+      .type("(to")
+      .expectCompletions(["topic.name"])
+      .selectCompletion("topic.name")
+      .expectInput("(topic.name ")
+      .expectCursor(12)
+      .backspace(12)
+      .expectInput("")
+      .expectCursor(0)
+      .type("(to")
+      .expectCompletions(["topic.name"]);
+  });
+
   test("completion are displayed when user type space", () => {
     autocomplete()
       .type("(tags")
