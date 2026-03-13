@@ -118,6 +118,99 @@ export const defaultOptions: AutoCompletionOptions = {
     { name: "nodes.hardware.storage_devices.type", type: "string" },
     { name: "nodes.hardware.storage_devices.vendor", type: "string" },
     { name: "nodes.hardware.storage_devices.vendor_id", type: "string" },
+    { name: "nodes.hardware.pci_accelerators.businfo", type: "string" },
+    { name: "nodes.hardware.pci_accelerators.description", type: "string" },
+    { name: "nodes.hardware.pci_accelerators.device_id", type: "string" },
+    {
+      name: "nodes.hardware.pci_accelerators.is_virtual_function",
+      type: "boolean",
+    },
+    { name: "nodes.hardware.pci_accelerators.logical_name", type: "string" },
+    { name: "nodes.hardware.pci_accelerators.model", type: "string" },
+    { name: "nodes.hardware.pci_accelerators.subdevice_id", type: "string" },
+    { name: "nodes.hardware.pci_accelerators.subproduct", type: "string" },
+    { name: "nodes.hardware.pci_accelerators.subvendor", type: "string" },
+    { name: "nodes.hardware.pci_accelerators.subvendor_id", type: "string" },
+    { name: "nodes.hardware.pci_accelerators.vendor", type: "string" },
+    { name: "nodes.hardware.pci_accelerators.vendor_id", type: "string" },
+    { name: "nodes.hardware.pci_network_controllers.businfo", type: "string" },
+    {
+      name: "nodes.hardware.pci_network_controllers.description",
+      type: "string",
+    },
+    {
+      name: "nodes.hardware.pci_network_controllers.device_id",
+      type: "string",
+    },
+    {
+      name: "nodes.hardware.pci_network_controllers.is_virtual_function",
+      type: "boolean",
+    },
+    {
+      name: "nodes.hardware.pci_network_controllers.logical_name",
+      type: "string",
+    },
+    { name: "nodes.hardware.pci_network_controllers.model", type: "string" },
+    {
+      name: "nodes.hardware.pci_network_controllers.subdevice_id",
+      type: "string",
+    },
+    {
+      name: "nodes.hardware.pci_network_controllers.subproduct",
+      type: "string",
+    },
+    {
+      name: "nodes.hardware.pci_network_controllers.subvendor",
+      type: "string",
+    },
+    {
+      name: "nodes.hardware.pci_network_controllers.subvendor_id",
+      type: "string",
+    },
+    { name: "nodes.hardware.pci_network_controllers.vendor", type: "string" },
+    {
+      name: "nodes.hardware.pci_network_controllers.vendor_id",
+      type: "string",
+    },
+    { name: "nodes.hardware.pci_storage_controllers.businfo", type: "string" },
+    {
+      name: "nodes.hardware.pci_storage_controllers.description",
+      type: "string",
+    },
+    {
+      name: "nodes.hardware.pci_storage_controllers.device_id",
+      type: "string",
+    },
+    {
+      name: "nodes.hardware.pci_storage_controllers.is_virtual_function",
+      type: "boolean",
+    },
+    {
+      name: "nodes.hardware.pci_storage_controllers.logical_name",
+      type: "string",
+    },
+    { name: "nodes.hardware.pci_storage_controllers.model", type: "string" },
+    {
+      name: "nodes.hardware.pci_storage_controllers.subdevice_id",
+      type: "string",
+    },
+    {
+      name: "nodes.hardware.pci_storage_controllers.subproduct",
+      type: "string",
+    },
+    {
+      name: "nodes.hardware.pci_storage_controllers.subvendor",
+      type: "string",
+    },
+    {
+      name: "nodes.hardware.pci_storage_controllers.subvendor_id",
+      type: "string",
+    },
+    { name: "nodes.hardware.pci_storage_controllers.vendor", type: "string" },
+    {
+      name: "nodes.hardware.pci_storage_controllers.vendor_id",
+      type: "string",
+    },
     { name: "nodes.hardware.system_family", type: "string" },
     { name: "nodes.hardware.system_sku", type: "string" },
     { name: "nodes.hardware.system_vendor", type: "string" },
