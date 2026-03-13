@@ -88,6 +88,7 @@ export interface IHardware {
   cpu_total_cores: number;
   cpu_total_threads: number;
   cpu_vendor: string;
+  file_id: string;
   filename: string;
   memory_dimm_count: number;
   memory_total_gb: number;

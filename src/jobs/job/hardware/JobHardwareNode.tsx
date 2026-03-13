@@ -206,13 +206,7 @@ function NetworkCardSection({
   );
 }
 
-export default function JobHardwareNode({
-  jobId,
-  node,
-}: {
-  jobId: string;
-  node: INode;
-}) {
+export default function JobHardwareNode({ node }: { node: INode }) {
   return (
     <Card>
       <CardBody>
@@ -227,7 +221,7 @@ export default function JobHardwareNode({
               {node.name}
             </div>
             <div>
-              <SeeHardwareDataModal jobId={jobId} node={node} />
+              <SeeHardwareDataModal node={node} />
             </div>
           </div>
         </Content>

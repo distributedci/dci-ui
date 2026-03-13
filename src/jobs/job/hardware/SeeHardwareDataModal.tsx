@@ -13,12 +13,10 @@ import { FileIcon } from "@patternfly/react-icons";
 import { Link } from "react-router";
 
 interface SeeHardwareDataModalProps {
-  jobId: string;
   node: INode;
 }
 
 export default function SeeHardwareDataModal({
-  jobId,
   node,
 }: SeeHardwareDataModalProps) {
   const { isOpen, show, hide } = useModal(false);
@@ -37,7 +35,7 @@ export default function SeeHardwareDataModal({
             <h1>Raw hardware data for {node.name}</h1>
             <p>
               The data are normalized from the file{" "}
-              <Link to={`/jobs/${jobId}/files`}>
+              <Link to={`/files/${node.hardware.file_id}`} target="_blank">
                 {node.hardware.filename || "unknown file"}
               </Link>
             </p>
@@ -55,12 +53,12 @@ export default function SeeHardwareDataModal({
       </Modal>
       <Button
         variant="secondary"
-        aria-label="See ES data button"
+        aria-label="See raw data button"
         icon={<FileIcon />}
         onClick={show}
         size="sm"
       >
-        {isOpen ? "hide ES data" : "see ES data"}
+        {isOpen ? "hide raw data" : "see raw data"}
       </Button>
     </>
   );

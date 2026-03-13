@@ -5,7 +5,7 @@ import JobHardwareNode from "./JobHardwareNode";
 
 test("Should format Cores/Threads, CPU frequency and memory correctly", async () => {
   const nodes = formatHardwareData(nodesData);
-  const { findByText } = render(<JobHardwareNode jobId="" node={nodes[0]} />);
+  const { findByText } = render(<JobHardwareNode node={nodes[0]} />);
 
   expect(await findByText(/Director master-0/i)).toBeInTheDocument();
   expect(await findByText(/512 GB/i)).toBeInTheDocument();

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import copyToClipboard from "services/copyToClipboard";
-import { CopyIcon, ClipboardCheckIcon } from "@patternfly/react-icons";
-import { t_global_color_nonstatus_green_200 } from "@patternfly/react-tokens";
+import { CopyIcon, CheckSquareIcon } from "@patternfly/react-icons";
+import { t_color_green_60 } from "@patternfly/react-tokens";
 
 interface CopyIconButtonProps extends React.ComponentProps<"span"> {
   text: string;
@@ -29,16 +29,17 @@ export default function CopyIconButton({
       <span
         {...props}
         style={{
-          color: t_global_color_nonstatus_green_200.value,
+          color: t_color_green_60.value,
         }}
       >
-        <ClipboardCheckIcon />
+        <CheckSquareIcon />
         {textOnSuccess && <span>{textOnSuccess}</span>}
       </span>
     );
   }
 
   const handleClick = (event: React.MouseEvent<Element>) => {
+    event.preventDefault();
     copyToClipboard(event, text);
     setCopied(true);
   };

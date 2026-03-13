@@ -1,5 +1,5 @@
 import { EmptyState, RotatingSpinnerIcon } from "ui";
-import File from "./File";
+import FileRow from "./FileRow";
 import { FileArchiveIcon, FileDownloadIcon } from "@patternfly/react-icons";
 import type { IEnhancedJob } from "types";
 import { sortByName } from "services/sort";
@@ -119,7 +119,7 @@ export default function FilesList({ job }: FilesListProps) {
             </Thead>
             <Tbody>
               {filesFiltered.map((file) => (
-                <File key={file.id} file={file} />
+                <FileRow key={file.id} file={file} />
               ))}
             </Tbody>
           </Table>
