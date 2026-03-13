@@ -9,7 +9,8 @@ export type ComparisonOperator =
   | "=~"
   | ">="
   | "<=";
-export type LogicalOperator = "and" | "or";
+export const LOGICAL_OPERATORS = ["and", "or"] as const;
+export type LogicalOperator = (typeof LOGICAL_OPERATORS)[number];
 export type ListOperator = "in" | "not_in";
 export type NumericOperator = ">" | "<" | ">=" | "<=";
 
@@ -222,7 +223,7 @@ export const defaultOptions: AutoCompletionOptions = {
       boolean: ["=", "!="],
       list: ["in", "not_in"],
     },
-    logical: ["and", "or"],
+    logical: [...LOGICAL_OPERATORS],
   },
 };
 
@@ -666,4 +667,32 @@ export function applyCompletion(
     input: newValue,
     cursor: newCursor,
   };
+}
+
+export function isESQueryValid(query: string): boolean {
+  const isQueryIsEmpty = query.trim() === "";
+  if (isQueryIsEmpty) {
+    return false;
+  }
+
+  const logicalOperatorPattern = LOGICAL_OPERATORS.join("|");
+  const endsWithLogicalOperator = new RegExp(
+    `\\s+(${logicalOperatorPattern})\\s*$`,
+  ).test(query);
+  if (endsWithLogicalOperator) {
+    return false;
+  }
+
+  let openParens = 0;
+  let closeParens = 0;
+  for (const char of query) {
+    if (char === "(") openParens++;
+    if (char === ")") closeParens++;
+  }
+
+  if (openParens === 0 || closeParens === 0 || openParens !== closeParens) {
+    return false;
+  }
+
+  return true;
 }

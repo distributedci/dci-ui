@@ -1,13 +1,23 @@
 import {
+  Button,
+  ButtonVariant,
+  Icon,
   Menu,
   MenuContent,
   MenuItem,
   MenuItemAction,
   MenuList,
   Popper,
-  SearchInput,
+  TextInputGroup,
+  TextInputGroupMain,
+  TextInputGroupUtilities,
 } from "@patternfly/react-core";
-import { TimesIcon } from "@patternfly/react-icons";
+import {
+  CheckCircleIcon,
+  ExclamationCircleIcon,
+  SearchIcon,
+  TimesIcon,
+} from "@patternfly/react-icons";
 import { useLazyGetSuggestionsQuery } from "analytics/analyticsApi";
 import {
   applyCompletion,
@@ -16,6 +26,7 @@ import {
   type AutoCompletionValues,
   type CompletionContext,
   defaultCompletionContext,
+  isESQueryValid,
 } from "analytics/autocompletion/autocompletion";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { JobStatuses } from "types";
@@ -191,7 +202,9 @@ export default function QueryToolBarInputSearch({
             syntax: null,
           });
           setFocusedIndex(null);
-          addQuery(value);
+          if (isESQueryValid(value)) {
+            addQuery(value);
+          }
           onSubmit();
         } else {
           event.preventDefault();
@@ -245,17 +258,42 @@ export default function QueryToolBarInputSearch({
   return (
     <Popper
       trigger={
-        <SearchInput
-          id="job-search"
-          placeholder="Try: (name = 'job name') and (status = 'success')"
-          value={value}
-          onChange={(_, value) => {
-            onChange(value);
-            handleCursorPosition();
-          }}
-          onClear={() => onChange("")}
-          ref={searchInputRef}
-        />
+        <TextInputGroup>
+          <TextInputGroupMain
+            id="job-search"
+            icon={
+              value === "" ? (
+                <SearchIcon />
+              ) : isESQueryValid(value) ? (
+                <Icon status="success">
+                  <CheckCircleIcon />
+                </Icon>
+              ) : (
+                <Icon status="danger">
+                  <ExclamationCircleIcon />
+                </Icon>
+              )
+            }
+            innerRef={searchInputRef}
+            value={value}
+            placeholder="Try: (name = 'job name') and (status = 'success')"
+            aria-label="DCI Analytics search input"
+            onChange={(_, value) => {
+              onChange(value);
+              handleCursorPosition();
+            }}
+          />
+          <TextInputGroupUtilities>
+            {value !== "" && (
+              <Button
+                variant={ButtonVariant.plain}
+                aria-label="Clear"
+                onClick={() => onChange("")}
+                icon={<TimesIcon />}
+              />
+            )}
+          </TextInputGroupUtilities>
+        </TextInputGroup>
       }
       triggerRef={searchInputRef}
       popper={

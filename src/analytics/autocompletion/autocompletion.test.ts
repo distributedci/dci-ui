@@ -3,6 +3,7 @@ import {
   applyCompletion,
   defaultOptions,
   getCompletions,
+  isESQueryValid,
   type AutoCompletionHistory,
   type AutoCompletionOptions,
   type AutoCompletionValues,
@@ -797,6 +798,77 @@ describe("_parseInput", () => {
       prefix: "to",
       replaceStart: 28,
       replaceEnd: 30,
+    });
+  });
+});
+
+describe("Test validateESQuery", () => {
+  describe("is valid if", () => {
+    test("it contains open and close parenthesis", () => {
+      expect(isESQueryValid("(topic.name = 'RHEL-9.4')")).toBe(true);
+    });
+    test("simple query with = operator", () => {
+      expect(isESQueryValid("(status='success')")).toBe(true);
+    });
+    test("simple query with != operator", () => {
+      expect(isESQueryValid("(name!='test')")).toBe(true);
+    });
+    test("query with in operator", () => {
+      expect(isESQueryValid("(tags in ['tag1', 'tag2'])")).toBe(true);
+    });
+    test("query with not_in operator", () => {
+      expect(
+        isESQueryValid("(topic.name not_in ['RHEL-9.4', 'RHEL-9.3'])"),
+      ).toBe(true);
+    });
+    test("query with > operator", () => {
+      expect(isESQueryValid("(duration > 100)")).toBe(true);
+    });
+    test("query with < operator", () => {
+      expect(isESQueryValid("(duration < 500)")).toBe(true);
+    });
+    test("query with >= operator", () => {
+      expect(isESQueryValid("(results.total >= 10)")).toBe(true);
+    });
+    test("query with <= operator", () => {
+      expect(isESQueryValid("(results.failures <= 5)")).toBe(true);
+    });
+    test("query with =~ operator (regex)", () => {
+      expect(isESQueryValid("(name =~ 'test.*')")).toBe(true);
+    });
+    test("query with and operator", () => {
+      expect(isESQueryValid("(status='success') and (name='foo')")).toBe(true);
+    });
+    test("query with or operator", () => {
+      expect(isESQueryValid("(status='success') or (status='error')")).toBe(
+        true,
+      );
+    });
+    test("complex query with multiple conditions", () => {
+      expect(
+        isESQueryValid(
+          "(status='success') and (name='foo') or (team.name='QE')",
+        ),
+      ).toBe(true);
+    });
+    test("nested field names", () => {
+      expect(isESQueryValid("(components.name='R2D2')")).toBe(true);
+    });
+    test("deeply nested field names", () => {
+      expect(isESQueryValid("(tests.testsuites.testcases.name='test1')")).toBe(
+        true,
+      );
+    });
+  });
+  describe("is not valid if", () => {
+    test("empty", () => {
+      expect(isESQueryValid("")).toBe(false);
+    });
+    test("doesnt have closing parenthesis", () => {
+      expect(isESQueryValid("(topic.name='RHEL-9.4') or (to")).toBe(false);
+    });
+    test("finish with operator", () => {
+      expect(isESQueryValid("(topic.name='RHEL-9.4') or")).toBe(false);
     });
   });
 });
