@@ -1,4 +1,4 @@
-import { Breadcrumb, CopyIconButton } from "ui";
+import { Breadcrumb, BreadcrumbCopyItem } from "ui";
 import { useLocation, useNavigate } from "react-router";
 import {
   PageSection,
@@ -45,16 +45,7 @@ export default function JobDetailsEnvelope({
           { to: "/jobs", title: "Jobs" },
           {
             to: `/jobs/${job_id}`,
-            title: (
-              <span>
-                {job_id}
-                <CopyIconButton
-                  text={job_id}
-                  textOnSuccess="copied"
-                  className="pf-v6-u-ml-xs pointer"
-                />
-              </span>
-            ),
+            title: <BreadcrumbCopyItem text={job_id} />,
           },
         ]}
       />

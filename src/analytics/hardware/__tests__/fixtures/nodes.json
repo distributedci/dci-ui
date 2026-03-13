@@ -11,6 +11,7 @@
       "cpu_total_cores": 40,
       "cpu_total_threads": 80,
       "cpu_vendor": "vendor2",
+      "file_id": "e1f2a3b4-c5d6-7890-abcd-ef1234567890",
       "filename": "hardware.worker-1.json",
       "memory_dimm_count": 16,
       "memory_total_gb": 512.0,
@@ -366,6 +367,7 @@
     }
   },
   {
+    "file_id": "f2a3b4c5-d6e7-8901-bcde-f12345678901",
     "filename": "kernel.master-0.json",
     "hardware": {
       "bios_date": "07/31/2024",
@@ -378,6 +380,7 @@
       "cpu_total_cores": 40,
       "cpu_total_threads": 80,
       "cpu_vendor": "vendor2",
+      "file_id": "a3b4c5d6-e7f8-9012-cdef-123456789012",
       "filename": "hardware.master-0.json",
       "memory_dimm_count": 16,
       "memory_total_gb": 512.0,
@@ -724,6 +727,7 @@
       "cpu_total_cores": 40,
       "cpu_total_threads": 80,
       "cpu_vendor": "vendor2",
+      "file_id": "b4c5d6e7-f8a9-0123-def1-234567890123",
       "filename": "hardware.master-2.json",
       "memory_dimm_count": 16,
       "memory_total_gb": 512.0,
@@ -1070,6 +1074,7 @@
       "cpu_total_cores": 40,
       "cpu_total_threads": 80,
       "cpu_vendor": "vendor2",
+      "file_id": "c5d6e7f8-a9b0-1234-ef12-345678901234",
       "filename": "hardware.worker-0.json",
       "memory_dimm_count": 16,
       "memory_total_gb": 512.0,
@@ -1436,6 +1441,7 @@
       "cpu_total_cores": 40,
       "cpu_total_threads": 80,
       "cpu_vendor": "vendor2",
+      "file_id": "d6e7f8a9-b0c1-2345-f123-456789012345",
       "filename": "hardware.worker-3.json",
       "memory_dimm_count": 16,
       "memory_total_gb": 512.0,
@@ -1791,6 +1797,7 @@
     }
   },
   {
+    "file_id": "e7f8a9b0-c1d2-3456-1234-567890123456",
     "filename": "kernel.master-1.json",
     "hardware": {
       "bios_date": "07/31/2024",
@@ -1803,6 +1810,7 @@
       "cpu_total_cores": 40,
       "cpu_total_threads": 80,
       "cpu_vendor": "vendor2",
+      "file_id": "f8a9b0c1-d2e3-4567-2345-678901234567",
       "filename": "hardware.master-1.json",
       "memory_dimm_count": 16,
       "memory_total_gb": 512.0,
@@ -2138,6 +2146,7 @@
     }
   },
   {
+    "file_id": "a9b0c1d2-e3f4-5678-3456-789012345678",
     "filename": "kernel.worker-2.json",
     "hardware": {
       "bios_date": "07/31/2024",
@@ -2150,6 +2159,7 @@
       "cpu_total_cores": 40,
       "cpu_total_threads": 80,
       "cpu_vendor": "vendor2",
+      "file_id": "b0c1d2e3-f4a5-6789-4567-890123456789",
       "filename": "hardware.worker-2.json",
       "memory_dimm_count": 16,
       "memory_total_gb": 512.0,

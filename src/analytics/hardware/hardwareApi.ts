@@ -27,7 +27,7 @@ export const { useGetJobHardwareDataQuery } = api
           try {
             const includes = "id,nodes";
             const excludes =
-              "nodes.hardware.pci_accelerators,nodes.hardware.pci_other_devices,nodes.hardware.pci_network_controllers,nodes.hardware.pci_storage_controllers,nodes.hardware.pci_usb_controllers,";
+              "nodes.hardware.pci_other_devices,nodes.hardware.pci_usb_controllers";
             const params = createAnalyticsSearchParams({
               query: `id='${jobId}'`,
               offset: 0,

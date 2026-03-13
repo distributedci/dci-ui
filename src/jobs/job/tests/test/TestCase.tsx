@@ -159,11 +159,7 @@ export default function TestCase({
       <Tr isExpanded={isExpanded}>
         <Td></Td>
         <Td colSpan={99}>
-          <DescriptionList
-            columnModifier={{
-              default: "2Col",
-            }}
-          >
+          <DescriptionList columnModifier={{ default: "2Col" }}>
             <DescriptionListGroup>
               <DescriptionListTerm>Message</DescriptionListTerm>
               <DescriptionListDescription>

@@ -1,6 +1,7 @@
 export { default as BackgroundImage } from "./BackgroundImage";
 export { default as BlinkLogo } from "./blinkLogo/BlinkLogo";
-export { default as Breadcrumb } from "./Breadcrumb";
+export { default as Breadcrumb } from "./breadcrumb/Breadcrumb";
+export { default as BreadcrumbCopyItem } from "./breadcrumb/BreadcrumbCopyItem";
 export { default as CardSecondaryTitle } from "./CardSecondaryTitle";
 export { default as ConfirmDeleteModal } from "./ConfirmDeleteModal";
 export { default as CopyButton } from "./CopyButton";

@@ -16,10 +16,6 @@ export default function JobHardwarePage() {
     job_id ? job_id : skipToken,
   );
 
-  if (job_id === undefined) {
-    return;
-  }
-
   if (isLoading) {
     return <JobDetailsSkeleton />;
   }
@@ -56,7 +52,7 @@ export default function JobHardwarePage() {
       <JobHardwareDifferences nodes={data} />
       {sortByName(data).map((node) => (
         <div key={node.name} className="pf-v6-u-mb-md">
-          <JobHardwareNode jobId={job_id} node={node} />
+          <JobHardwareNode node={node} />
         </div>
       ))}
     </div>

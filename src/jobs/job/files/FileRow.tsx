@@ -15,11 +15,11 @@ import { useState } from "react";
 import { getFileContentAsBlob } from "./filesApi";
 import { humanizeBytes } from "services/bytes";
 
-interface FileProps {
+interface FileRowProps {
   file: IFile;
 }
 
-export default function File({ file }: FileProps) {
+export default function FileRow({ file }: FileRowProps) {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const isText = isATextFile(file);
