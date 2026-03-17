@@ -13,6 +13,7 @@ import type {
   IHardware,
   INode,
   INodeKernel,
+  NetworkInterface,
 } from "analytics/hardware/hardwareFormatter";
 import SeeHardwareDataModal from "./SeeHardwareDataModal";
 
@@ -159,6 +160,12 @@ function DiskSection({ disks }: { disks: IHardware["storage_devices"] }) {
   );
 }
 
+function getModelName(card: NetworkInterface) {
+  const vendorId = card.vendor_id || "N/A";
+  const deviceId = card.device_id || "N/A";
+  return `${card.model} [${vendorId}:${deviceId}]`;
+}
+
 function NetworkCardSection({
   cards,
 }: {
@@ -183,7 +190,7 @@ function NetworkCardSection({
         <Tbody>
           {cards.map((card, index) => (
             <Tr key={index}>
-              <Td>{card.model}</Td>
+              <Td>{getModelName(card)}</Td>
               <Td>{card.vendor}</Td>
               <Td>{card.logical_name}</Td>
               <Td
