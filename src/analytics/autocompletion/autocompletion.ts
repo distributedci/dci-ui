@@ -48,6 +48,7 @@ export const defaultOptions: AutoCompletionOptions = {
     { name: "components.id", type: "string" },
     { name: "components.topic_id", type: "string" },
     { name: "components.display_name", type: "string" },
+    { name: "components.version", type: "string" },
     { name: "comment", type: "string" },
     { name: "team.id", type: "string" },
     { name: "results.success", type: "number" },
