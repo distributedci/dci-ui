@@ -48,7 +48,7 @@ export function extractPipelinesFromAnalyticsJobs(
     };
   } = {};
   [...data].reverse().forEach((job) => {
-    if (job.pipeline === null) return;
+    if (!job.pipeline) return;
     const pipelineDate = job.pipeline.created_at.split("T")[0];
 
     if (!daysMap[pipelineDate]) {

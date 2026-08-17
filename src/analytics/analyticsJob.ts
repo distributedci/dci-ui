@@ -12,7 +12,7 @@ export function getJobKey<T extends IAnalyticsJob>(
       key = job.topic.name;
       break;
     case "pipeline":
-      if (job.pipeline !== null) {
+      if (job.pipeline) {
         key = job.pipeline.name;
       }
       break;
