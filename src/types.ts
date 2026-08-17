@@ -587,7 +587,7 @@ export interface IAnalyticsJob {
   remoteci: {
     name: string;
   };
-  pipeline: {
+  pipeline?: {
     id: string;
     created_at: string;
     name: string;
