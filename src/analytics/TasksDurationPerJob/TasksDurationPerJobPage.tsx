@@ -111,10 +111,10 @@ function Graph({ data }: { data: IGraphData[] }) {
       </div>
       <ResponsiveContainer>
         <LineChart
-          onMouseDown={(e: { activeLabel?: string } | null) =>
+          onMouseDown={(e: { activeLabel?: string | number } | null) =>
             e && e.activeLabel && setLeft(Number(e.activeLabel))
           }
-          onMouseMove={(e: { activeLabel?: string } | null) =>
+          onMouseMove={(e: { activeLabel?: string | number } | null) =>
             e && left && e.activeLabel && setRight(Number(e.activeLabel))
           }
           onMouseUp={() => {
