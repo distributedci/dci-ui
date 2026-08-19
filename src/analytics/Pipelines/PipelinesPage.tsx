@@ -304,7 +304,10 @@ export default function PipelinesPage() {
     useLazyGetAnalyticsResultsJobsQuery();
   const search = (values: AnalyticsToolbarSearch) => {
     if (values.query) {
-      getAnalyticJobs(values);
+      getAnalyticJobs({
+        ...values,
+        query: `${values.query} and (pipeline.id != '')`,
+      });
     }
   };
   return (
