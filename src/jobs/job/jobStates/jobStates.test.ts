@@ -60,4 +60,14 @@ test("buildFileTitle", () => {
       "warn/TASK [mirror-ocp-release : Read release_image from release.txt]",
     ),
   ).toBe("TASK [mirror-ocp-release : Read release_image from release.txt]");
+  expect(buildFileTitle("ignored/TASK [Run the pre-run hook]")).toBe(
+    "TASK [Run the pre-run hook]",
+  );
+  // a status prefix combined with the warn decoration is fully stripped
+  expect(buildFileTitle("ignored/warn/TASK [Install nightly catalog]")).toBe(
+    "TASK [Install nightly catalog]",
+  );
+  expect(buildFileTitle("skipped/warn/TASK [Check ansible version]")).toBe(
+    "TASK [Check ansible version]",
+  );
 });
