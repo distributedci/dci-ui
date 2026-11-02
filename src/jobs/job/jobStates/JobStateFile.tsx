@@ -37,7 +37,7 @@ const backgroundTaskColors: Record<IFileStatus, string> = {
   failed: t_global_color_nonstatus_red_default.var,
   unreachable: t_global_color_nonstatus_orange_default.var,
   skipped: t_global_color_nonstatus_blue_default.var,
-  ignored: t_global_color_nonstatus_blue_default.var,
+  ignored: t_global_color_nonstatus_purple_default.var,
   success: t_global_color_nonstatus_green_default.var,
   withAWarning: t_global_color_nonstatus_purple_default.var,
 };
@@ -46,7 +46,7 @@ const textTaskColors: Record<IFileStatus, string> = {
   failed: t_global_text_color_nonstatus_on_red_default.var,
   unreachable: t_global_text_color_nonstatus_on_orange_default.var,
   skipped: t_global_text_color_nonstatus_on_blue_default.var,
-  ignored: t_global_text_color_nonstatus_on_blue_default.var,
+  ignored: t_global_text_color_nonstatus_on_purple_default.var,
   success: t_global_text_color_nonstatus_on_green_default.var,
   withAWarning: t_global_text_color_nonstatus_on_purple_default.var,
 };

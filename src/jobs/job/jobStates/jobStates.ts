@@ -15,13 +15,14 @@ export function getFileStatus(file: IFile): IFileStatus {
 }
 
 export function buildFileTitle(fileName: string) {
+  // Strip any run of status prefixes, in any order
   const re = new RegExp(
-    "^((failed|unreachable|skipped|warn)/)?(PLAY|TASK)(.*)",
+    "^((?:(?:failed|unreachable|skipped|ignored|warn)/)+)?(PLAY|TASK)(.*)",
   );
   let title;
 
   if (re.test(fileName)) {
-    title = fileName.replace(re, "$3$4");
+    title = fileName.replace(re, "$2$3");
   } else {
     title = `TASK [${fileName}] `;
   }
