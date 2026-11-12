@@ -78,6 +78,10 @@ export interface StorageDevice {
 }
 
 export interface IHardware {
+  bmc?: {
+    vendor: string | null;
+    version: string | null;
+  } | null;
   bios_date: string;
   bios_type: string;
   bios_vendor: string;
@@ -102,10 +106,7 @@ export interface IHardware {
 }
 
 export type IKernelDataParams =
-  | string
-  | string[]
-  | undefined
-  | { [key: string]: IKernelDataParams };
+  string | string[] | undefined | { [key: string]: IKernelDataParams };
 
 export interface IKernelData {
   node: string;

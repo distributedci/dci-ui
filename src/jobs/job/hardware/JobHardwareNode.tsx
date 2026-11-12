@@ -101,6 +101,14 @@ function HardwareSection({ hardware }: { hardware: IHardware }) {
         </DescriptionListDescription>
       </DescriptionListGroup>
       <DescriptionListGroup>
+        <DescriptionListTerm>BMC</DescriptionListTerm>
+        <DescriptionListDescription>
+          {[hardware.bmc?.vendor, hardware.bmc?.version]
+            .filter(Boolean)
+            .join(" ") || "N/A"}
+        </DescriptionListDescription>
+      </DescriptionListGroup>
+      <DescriptionListGroup>
         <DescriptionListTerm>CPU</DescriptionListTerm>
         <DescriptionListDescription>
           {formatCPU(hardware)}
